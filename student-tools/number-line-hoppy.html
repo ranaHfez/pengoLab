@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hop with Hoppy – Number Line</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:linear-gradient(#E7F5FF 0%,#FFFDF7 45%);font-family:'Fredoka','Poppins','Comic Sans MS',sans-serif;color:#343A40;min-height:100vh}
+  .wrap{max-width:1000px;margin:0 auto;padding:18px 16px 28px;display:flex;flex-direction:column;gap:14px}
+  header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  h1{margin:0;font-size:clamp(30px,6vw,50px);color:#2B8A3E;line-height:1.05}
+  h1 span{color:#7048E8}
+  .top-tools{display:flex;gap:8px;flex-wrap:wrap}
+  .pill{font:inherit;font-size:17px;font-weight:700;border:3px solid #7048E8;background:#fff;color:#6741D9;border-radius:999px;padding:6px 16px;cursor:pointer;min-height:44px}
+  .pill[aria-pressed="true"]{background:#7048E8;color:#fff}
+  .pill.sound{border-color:#868E96;color:#495057}
+
+  .card{background:#fff;border:3px solid #DEE2E6;border-radius:22px;padding:12px}
+  .challenge{display:none;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;background:#FFF3BF;border:3px dashed #E67700;border-radius:18px;padding:10px 14px;font-size:clamp(20px,4vw,28px);font-weight:700;color:#D9480F}
+  .challenge.on{display:flex}
+  .challenge .small{font-size:17px;font-weight:600;color:#6C6F73}
+
+  .hint{text-align:center;font-size:18px;font-weight:600;color:#495057;margin:0}
+  svg#line{width:100%;height:auto;display:block;touch-action:manipulation}
+  .num{font-family:inherit;font-weight:700;fill:#343A40;user-select:none}
+
+  .eqbox{text-align:center;font-size:clamp(26px,5.5vw,42px);font-weight:700;min-height:1.4em;line-height:1.3}
+  .eqbox .st{color:#7048E8}
+  .eqbox .plus{color:#2B8A3E}
+  .eqbox .minus{color:#C92A2A}
+  .eqbox .res{display:inline-block;background:#FFD43B;border-radius:12px;padding:0 12px;color:#212529}
+
+  .controls{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center}
+  .hopbtn{font:inherit;font-size:clamp(18px,3.6vw,24px);font-weight:700;border:none;border-radius:18px;padding:14px 10px;cursor:pointer;color:#fff;min-height:64px;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 5px 0 rgba(0,0,0,.18);transition:transform .08s}
+  .hopbtn:active{transform:translateY(3px);box-shadow:0 2px 0 rgba(0,0,0,.18)}
+  .hopbtn.back{background:#E03131}
+  .hopbtn.fwd{background:#2F9E44}
+  .hopbtn:disabled{opacity:.45;cursor:not-allowed}
+  .stepper{display:flex;flex-direction:column;align-items:center;gap:4px}
+  .stepper .lbl{font-size:16px;font-weight:600;color:#6C6F73}
+  .stepper .row{display:flex;align-items:center;gap:8px}
+  .sbtn{font:inherit;width:48px;height:48px;border-radius:50%;border:3px solid #7048E8;background:#fff;color:#7048E8;font-size:28px;font-weight:700;cursor:pointer;line-height:1}
+  .size{min-width:70px;text-align:center;font-size:44px;font-weight:700;color:#7048E8}
+
+  .actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .btn{font:inherit;font-size:20px;font-weight:700;border:none;border-radius:14px;padding:12px 24px;cursor:pointer;color:#fff;min-height:48px}
+  .btn.undo{background:#4263EB}
+  .btn.clear{background:#E03131}
+  .btn.check{background:#E67700}
+  .btn.newq{background:#7048E8}
+  .btn:disabled{opacity:.4;cursor:not-allowed}
+  footer{display:flex;justify-content:flex-end;font-size:16px;font-weight:600;color:#6C6F73}
+
+  #frogInner{transform-box:fill-box;transform-origin:50% 100%;animation:idle 2.4s ease-in-out infinite}
+  @keyframes idle{0%,100%{transform:scale(1,1)}50%{transform:scale(1.04,.96)}}
+  #frogInner.squash{animation:squash .25s ease-out}
+  @keyframes squash{0%{transform:scale(1.25,.75)}100%{transform:scale(1,1)}}
+  #frogInner.shake{animation:shake .5s ease-in-out}
+  @keyframes shake{0%,100%{transform:rotate(0)}20%{transform:rotate(-14deg)}40%{transform:rotate(12deg)}60%{transform:rotate(-8deg)}80%{transform:rotate(5deg)}}
+  .lid{animation:blink 4s infinite}
+  @keyframes blink{0%,92%,100%{transform:scaleY(0)}95%{transform:scaleY(1)}}
+  .lid{transform-box:fill-box;transform-origin:50% 0%}
+
+  .confetti{position:fixed;top:-20px;width:12px;height:18px;border-radius:3px;z-index:50;pointer-events:none;animation:fall linear forwards}
+  @keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+  @media (max-width:560px){.controls{grid-template-columns:1fr 1fr}.stepper{grid-column:1 / -1;order:-1}}
+</style>
+<!-- Shared template: Home button and shared pieces. Keep this. -->
+<link rel="stylesheet" href="../shared/theme.css">
+<script src="../shared/theme.js" defer></script>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Hop with <span>Hoppy!</span></h1>
+    <div class="top-tools">
+      <div class="top-tools" role="group" aria-label="Number line size">
+        <button class="pill range" data-max="10" aria-pressed="false">0–10</button>
+        <button class="pill range" data-max="20" aria-pressed="true">0–20</button>
+        <button class="pill range" data-max="100" aria-pressed="false">0–100</button>
+      </div>
+      <button class="pill" id="modeBtn" aria-pressed="false">Challenge mode</button>
+      <button class="pill sound" id="soundBtn" aria-pressed="true">Sound: on</button>
+    </div>
+  </header>
+
+  <div class="challenge" id="challenge" aria-live="polite">
+    <span id="qText"></span>
+    <span class="small">Put Hoppy on the start, hop, then press Check!</span>
+  </div>
+
+  <p class="hint" id="hint">Tap a number to put Hoppy there. Then hop forward to add or back to subtract!</p>
+
+  <div class="card">
+    <svg id="line" viewBox="0 0 1000 330" role="img" aria-label="Number line with Hoppy the frog">
+      <g id="arcs"></g>
+      <g id="ticks"></g>
+      <ellipse id="pad" cx="0" cy="252" rx="34" ry="9" fill="#8CE99A" stroke="#2F9E44" stroke-width="2"/>
+      <g id="frog">
+        <g id="frogInner">
+          <!-- legs -->
+          <ellipse cx="-22" cy="-6" rx="14" ry="7" fill="#37B24D"/>
+          <ellipse cx="22" cy="-6" rx="14" ry="7" fill="#37B24D"/>
+          <!-- body -->
+          <ellipse cx="0" cy="-26" rx="30" ry="24" fill="#51CF66" stroke="#2B8A3E" stroke-width="3"/>
+          <ellipse cx="0" cy="-18" rx="18" ry="12" fill="#D3F9D8"/>
+          <!-- eyes -->
+          <circle cx="-14" cy="-50" r="12" fill="#51CF66" stroke="#2B8A3E" stroke-width="3"/>
+          <circle cx="14" cy="-50" r="12" fill="#51CF66" stroke="#2B8A3E" stroke-width="3"/>
+          <circle cx="-14" cy="-50" r="8" fill="#fff"/>
+          <circle cx="14" cy="-50" r="8" fill="#fff"/>
+          <circle id="pupL" cx="-12" cy="-50" r="4" fill="#212529"/>
+          <circle id="pupR" cx="16" cy="-50" r="4" fill="#212529"/>
+          <rect class="lid" x="-22" y="-58" width="16" height="16" rx="8" fill="#40C057"/>
+          <rect class="lid" x="6" y="-58" width="16" height="16" rx="8" fill="#40C057"/>
+          <!-- face -->
+          <path d="M-12 -30 Q0 -20 12 -30" fill="none" stroke="#2B8A3E" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="-20" cy="-32" r="4" fill="#FFA8A8" opacity=".8"/>
+          <circle cx="20" cy="-32" r="4" fill="#FFA8A8" opacity=".8"/>
+          <!-- little crown of fun -->
+          <path d="M-8 -66 l4 -8 4 6 4 -6 4 8 z" fill="#FAB005" stroke="#E67700" stroke-width="1.5"/>
+        </g>
+        <g id="bubble" opacity="0">
+          <rect id="bubRect" x="-60" y="-118" width="120" height="38" rx="14" fill="#fff" stroke="#343A40" stroke-width="2.5"/>
+          <path d="M-6 -81 L0 -70 L8 -81" fill="#fff" stroke="#343A40" stroke-width="2.5" stroke-linejoin="round"/>
+          <rect x="-7" y="-83" width="16" height="4" fill="#fff"/>
+          <text id="bubText" x="0" y="-92" text-anchor="middle" font-size="20" font-weight="700" fill="#343A40" font-family="Fredoka, Poppins, sans-serif"></text>
+        </g>
+      </g>
+      <rect id="hit" x="20" y="150" width="960" height="180" fill="transparent" style="cursor:pointer"/>
+    </svg>
+  </div>
+
+  <div class="eqbox" id="eq" aria-live="polite"></div>
+
+  <div class="controls">
+    <button class="hopbtn back" id="backBtn">
+      <svg width="34" height="22" viewBox="0 0 40 24" aria-hidden="true"><path d="M38 12H6M14 4l-8 8 8 8" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Hop back (−)</span>
+    </button>
+    <div class="stepper">
+      <span class="lbl">Hop size</span>
+      <div class="row">
+        <button class="sbtn" id="minusSize" aria-label="Smaller hop">−</button>
+        <span class="size" id="sizeTxt">1</span>
+        <button class="sbtn" id="plusSize" aria-label="Bigger hop">+</button>
+      </div>
+    </div>
+    <button class="hopbtn fwd" id="fwdBtn">
+      <span>Hop forward (+)</span>
+      <svg width="34" height="22" viewBox="0 0 40 24" aria-hidden="true"><path d="M2 12h32M26 4l8 8-8 8" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+
+  <div class="actions">
+    <button class="btn undo" id="undoBtn">Undo</button>
+    <button class="btn clear" id="clearBtn">Clear</button>
+    <button class="btn check" id="checkBtn" hidden>Check</button>
+    <button class="btn newq" id="newBtn" hidden>New question</button>
+  </div>
+  <footer>T.Rana Elsisi</footer>
+</div>
+
+<script>
+(function(){
+  var SVGNS='http://www.w3.org/2000/svg';
+  var X0=50, X1=950, LY=250;
+  var min=0, max=20, start=0, hops=[], size=1, busy=false, sound=true, challengeOn=false, q=null, frogPos=0;
+
+  var svg=document.getElementById('line'), ticksG=document.getElementById('ticks'), arcsG=document.getElementById('arcs');
+  var frog=document.getElementById('frog'), frogInner=document.getElementById('frogInner'), pad=document.getElementById('pad');
+  var bubble=document.getElementById('bubble'), bubText=document.getElementById('bubText'), bubRect=document.getElementById('bubRect');
+  var eq=document.getElementById('eq'), hint=document.getElementById('hint');
+  var fwdBtn=document.getElementById('fwdBtn'), backBtn=document.getElementById('backBtn');
+  var undoBtn=document.getElementById('undoBtn'), clearBtn=document.getElementById('clearBtn');
+  var checkBtn=document.getElementById('checkBtn'), newBtn=document.getElementById('newBtn');
+  var sizeTxt=document.getElementById('sizeTxt');
+
+  var FWD=['Boing!','Wheee!','Ribbit!','Hop hop!','I can fly!','Yahoo!','Super hop!'];
+  var BACK=['Moonwalk!','Beep beep, reversing!','Backwards boing!','Reverse ribbit!','Whoops-a-daisy!'];
+  var OOPS=['Oops! I\'d fall in the pond!','Too far! Splash!','No more line there!'];
+  var YAY=['Ribbit-tastic!','You\'re a hop star!','Frog-tastic!','Hoppy is happy!'];
+  var TRY=['Hmm… try again!','Not yet, ribbit!','Check your hops!'];
+  function pick(a){return a[Math.floor(Math.random()*a.length)];}
+
+  function X(n){return X0+(n-min)/(max-min)*(X1-X0);}
+  function current(){var p=start;hops.forEach(function(h){p+=h;});return p;}
+
+  // ---------- sound ----------
+  var ctx=null;
+  function ac(){ if(!ctx){ try{ctx=new (window.AudioContext||window.webkitAudioContext)();}catch(e){ctx=null;} } return ctx; }
+  function tone(f1,f2,dur,type,vol,delay){
+    if(!sound) return; var c=ac(); if(!c) return;
+    var t=c.currentTime+(delay||0), o=c.createOscillator(), g=c.createGain();
+    o.type=type||'sine'; o.frequency.setValueAtTime(f1,t); o.frequency.exponentialRampToValueAtTime(f2,t+dur);
+    g.gain.setValueAtTime(vol||.25,t); g.gain.exponentialRampToValueAtTime(.001,t+dur);
+    o.connect(g); g.connect(c.destination); o.start(t); o.stop(t+dur+.02);
+  }
+  function sBoing(back){ back?tone(700,250,.35,'triangle'):tone(250,800,.35,'triangle'); }
+  function sLand(){ tone(160,90,.12,'sine',.3); }
+  function sOops(){ tone(500,90,.6,'sawtooth',.12); }
+  function sYay(){ [523,659,784,1047].forEach(function(f,i){tone(f,f,.18,'square',.08,i*.12);}); }
+  function sNo(){ tone(300,200,.25,'square',.08); tone(220,150,.3,'square',.08,.22); }
+
+  // ---------- drawing ----------
+  function el(name,attrs,parent,text){var e=document.createElementNS(SVGNS,name);for(var k in attrs)e.setAttribute(k,attrs[k]);if(text!==undefined)e.textContent=text;parent.appendChild(e);return e;}
+
+  function drawTicks(){
+    ticksG.innerHTML='';
+    el('line',{x1:X0-20,y1:LY,x2:X1+20,y2:LY,stroke:'#343A40','stroke-width':5,'stroke-linecap':'round'},ticksG);
+    el('path',{d:'M'+(X0-30)+' '+LY+' l14 -10 v20 z',fill:'#343A40'},ticksG);
+    el('path',{d:'M'+(X1+30)+' '+LY+' l-14 -10 v20 z',fill:'#343A40'},ticksG);
+    for(var n=min;n<=max;n++){
+      var big = max<=20 || n%10===0, mid = max>20 && n%5===0;
+      var h = big?16:(mid?11:6);
+      el('line',{x1:X(n),y1:LY-h,x2:X(n),y2:LY+h,stroke:'#343A40','stroke-width':big?4:2,'stroke-linecap':'round'},ticksG);
+      if(big || (max>20 && mid)){
+        var fs = max<=10?30:(max<=20?24:(n%10===0?22:15));
+        el('text',{x:X(n),y:LY+(big?46:38),'text-anchor':'middle','font-size':fs,'class':'num',fill:(max>20&&!big)?'#868E96':'#343A40'},ticksG,n);
+      }
+    }
+  }
+
+  function arcPath(a,b){
+    var x1=X(a), x2=X(b), d=Math.abs(x2-x1), up=Math.min(140,Math.max(40,d*0.55));
+    var cy=LY-2*up;
+    return {d:'M'+x1+' '+LY+' Q'+((x1+x2)/2)+' '+cy+' '+x2+' '+LY, x1:x1,x2:x2,cy:cy,apex:LY-up};
+  }
+
+  function drawArcs(){
+    arcsG.innerHTML='';
+    var p=start;
+    hops.forEach(function(h){
+      var a=arcPath(p,p+h), col=h>0?'#2F9E44':'#E03131';
+      el('path',{d:a.d,fill:'none',stroke:col,'stroke-width':4,'stroke-dasharray':'2 9','stroke-linecap':'round'},arcsG);
+      // arrow head at end
+      var ex=a.x2, dir=h>0?1:-1;
+      el('path',{d:'M'+(ex-dir*14)+' '+(LY-16)+' L'+ex+' '+(LY-3)+' L'+(ex-dir*2)+' '+(LY-20)+' z',fill:col},arcsG);
+      var lx=(a.x1+a.x2)/2, ly=a.apex-12;
+      el('rect',{x:lx-26,y:ly-22,width:52,height:30,rx:10,fill:'#fff',stroke:col,'stroke-width':2.5},arcsG);
+      el('text',{x:lx,y:ly,'text-anchor':'middle','font-size':21,'font-weight':700,fill:col,'font-family':'Fredoka, Poppins, sans-serif'},arcsG,(h>0?'+':'−')+Math.abs(h));
+      p+=h;
+    });
+  }
+
+  function placeFrog(x,y){ frog.setAttribute('transform','translate('+x+' '+y+')'); }
+  function look(dir){ var dx=dir>0?2:(dir<0?-2:0); document.getElementById('pupL').setAttribute('cx',-14+dx); document.getElementById('pupR').setAttribute('cx',14+dx); }
+
+  var bubTimer=null;
+  function say(t,ms){
+    bubText.textContent=t;
+    var w=Math.max(90,t.length*11+28); bubRect.setAttribute('x',-w/2); bubRect.setAttribute('width',w);
+    // keep bubble inside the picture
+    var fx=X(frogPos), shift=0; if(fx-w/2<4) shift=4-(fx-w/2); if(fx+w/2>996) shift=996-(fx+w/2);
+    bubble.setAttribute('transform','translate('+shift+' 0)');
+    bubble.setAttribute('opacity','1');
+    clearTimeout(bubTimer); bubTimer=setTimeout(function(){bubble.setAttribute('opacity','0');},ms||1600);
+  }
+
+  function retrigger(cls){ frogInner.classList.remove('squash','shake'); void frogInner.getBBox(); frogInner.classList.add(cls); setTimeout(function(){frogInner.classList.remove(cls);},600); }
+
+  function animateHop(a,b,done){
+    var arc=arcPath(a,b), t0=null, dur=Math.min(1100,450+Math.abs(b-a)*(max>20?25:60));
+    look(b-a); bubble.setAttribute('opacity','0');
+    function step(ts){
+      if(!t0) t0=ts; var t=Math.min(1,(ts-t0)/dur), e=t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+      var mx=(arc.x1+arc.x2)/2;
+      var x=(1-e)*(1-e)*arc.x1+2*(1-e)*e*mx+e*e*arc.x2;
+      var y=(1-e)*(1-e)*LY+2*(1-e)*e*arc.cy+e*e*LY;
+      placeFrog(x,y-4);
+      if(t<1) requestAnimationFrame(step); else done();
+    }
+    requestAnimationFrame(step);
+  }
+
+  // ---------- state ----------
+  function renderEq(final){
+    var s='<span class="st">'+start+'</span>';
+    hops.forEach(function(h){ s+=' <span class="'+(h>0?'plus':'minus')+'">'+(h>0?'+':'−')+' '+Math.abs(h)+'</span>'; });
+    if(hops.length) s+=' = <span class="res">'+current()+'</span>';
+    eq.innerHTML=s;
+  }
+  function updateButtons(){
+    var c=current();
+    sizeTxt.textContent=size;
+    undoBtn.disabled=busy||!hops.length; clearBtn.disabled=busy;
+    fwdBtn.disabled=busy; backBtn.disabled=busy;
+    checkBtn.disabled=busy||!hops.length;
+  }
+  function redraw(){
+    frogPos=current(); drawArcs(); pad.setAttribute('cx',X(start)); placeFrog(X(frogPos),LY-4); renderEq(); updateButtons();
+  }
+
+  function hop(dir){
+    if(busy) return;
+    var c=current(), n=c+dir*size;
+    if(n<min||n>max){
+      sOops(); retrigger('shake'); say(pick(OOPS),2000);
+      hint.textContent='Hoppy can only hop between '+min+' and '+max+'. Try a smaller hop!';
+      return;
+    }
+    busy=true; updateButtons(); sBoing(dir<0);
+    hops.push(dir*size); drawArcs(); renderEq();
+    eq.querySelector('.res').textContent='?';
+    animateHop(c,n,function(){
+      busy=false; frogPos=n; sLand(); retrigger('squash'); say(dir>0?pick(FWD):pick(BACK)); renderEq(); updateButtons(); look(0);
+      hint.textContent='Hoppy landed on '+n+'! Hop again, or press Undo / Clear.';
+    });
+  }
+
+  function setStart(n){
+    if(busy) return;
+    start=n; hops=[]; redraw(); sLand(); retrigger('squash'); say('Ribbit! I\'m on '+n,1300);
+    hint.textContent='Hoppy is on '+n+'. Choose a hop size, then hop forward (+) or back (−).';
+  }
+
+  function svgNumberAt(evt){
+    var pt=svg.createSVGPoint(); pt.x=evt.clientX; pt.y=evt.clientY;
+    var p=pt.matrixTransform(svg.getScreenCTM().inverse());
+    var n=Math.round(min+(p.x-X0)/(X1-X0)*(max-min)); return Math.max(min,Math.min(max,n));
+  }
+  document.getElementById('hit').addEventListener('click',function(e){ setStart(svgNumberAt(e)); });
+
+  fwdBtn.onclick=function(){hop(1);}; backBtn.onclick=function(){hop(-1);};
+  document.getElementById('plusSize').onclick=function(){ if(size<10){size++;updateButtons();} };
+  document.getElementById('minusSize').onclick=function(){ if(size>1){size--;updateButtons();} };
+  undoBtn.onclick=function(){ if(busy||!hops.length) return; hops.pop(); redraw(); say('Rewind!',900); tone(600,300,.2,'triangle',.15); };
+  clearBtn.onclick=function(){ if(busy) return; hops=[]; start=min; redraw(); say('All clean!',1100); hint.textContent='Tap a number to put Hoppy there. Then hop!'; };
+
+  document.querySelectorAll('.range').forEach(function(b){
+    b.onclick=function(){
+      if(busy) return;
+      document.querySelectorAll('.range').forEach(function(x){x.setAttribute('aria-pressed','false');});
+      b.setAttribute('aria-pressed','true'); max=+b.dataset.max; start=min; hops=[];
+      if(max===100 && size<10) size=10; if(max<=20 && size>5) size=1;
+      drawTicks(); redraw(); if(challengeOn) newQuestion();
+    };
+  });
+
+  document.getElementById('soundBtn').onclick=function(){ sound=!sound; this.setAttribute('aria-pressed',sound); this.textContent='Sound: '+(sound?'on':'off'); };
+
+  // ---------- challenge ----------
+  var modeBtn=document.getElementById('modeBtn'), chBox=document.getElementById('challenge'), qText=document.getElementById('qText');
+  function rnd(a,b){return a+Math.floor(Math.random()*(b-a+1));}
+  function newQuestion(){
+    var add=Math.random()<.5, a, b, top=max, bmax=max===10?5:(max===20?10:30);
+    if(max===100){ b=[10,20,30,5,7,8,12,15][rnd(0,7)]; } else b=rnd(1,bmax);
+    if(add){ a=rnd(min,top-b); } else { a=rnd(min+b,top); }
+    q={a:a,b:b,add:add,ans:add?a+b:a-b};
+    qText.textContent=a+' '+(add?'+':'−')+' '+b+' = ?';
+    hops=[]; start=min; redraw();
+    hint.textContent='Tap '+a+' to put Hoppy on the start, then make your hops.';
+    say('Help me solve it!',1500);
+  }
+  modeBtn.onclick=function(){
+    if(busy) return;
+    challengeOn=!challengeOn; modeBtn.setAttribute('aria-pressed',challengeOn);
+    chBox.classList.toggle('on',challengeOn); checkBtn.hidden=!challengeOn; newBtn.hidden=!challengeOn;
+    if(challengeOn) newQuestion(); else { hops=[]; start=min; redraw(); hint.textContent='Tap a number to put Hoppy there. Then hop!'; }
+  };
+  newBtn.onclick=function(){ if(!busy) newQuestion(); };
+  checkBtn.onclick=function(){
+    if(busy||!q) return;
+    var total=0; hops.forEach(function(h){total+=h;});
+    var okStart=start===q.a, okEnd=current()===q.ans, okDir=q.add?total===q.b:total===-q.b;
+    if(okStart && okEnd && okDir){
+      sYay(); retrigger('squash'); say(pick(YAY),2200); confetti();
+      qText.textContent=q.a+' '+(q.add?'+':'−')+' '+q.b+' = '+q.ans;
+      hint.textContent='Yes! Hoppy landed on '+q.ans+'. Press New question for another one.';
+    } else {
+      sNo(); retrigger('shake'); say(pick(TRY),1800);
+      hint.textContent = !okStart ? 'Start on '+q.a+' first. Tap '+q.a+' on the line.'
+        : (q.add ? 'Adding means hopping forward. Hop '+q.b+' in total.' : 'Subtracting means hopping back. Hop back '+q.b+' in total.');
+    }
+  };
+
+  function confetti(){
+    var cols=['#FF6B6B','#FAB005','#51CF66','#4DABF7','#7048E8','#F06595'];
+    for(var i=0;i<70;i++){
+      var d=document.createElement('div'); d.className='confetti';
+      d.style.left=Math.random()*100+'vw'; d.style.background=cols[i%cols.length];
+      d.style.animationDuration=(1.6+Math.random()*1.6)+'s'; d.style.animationDelay=(Math.random()*.4)+'s';
+      document.body.appendChild(d); (function(d){setTimeout(function(){d.remove();},3800);})(d);
+    }
+  }
+
+  drawTicks(); redraw();
+  setTimeout(function(){ say('Hi! I\'m Hoppy!',2000); },400);
+})();
+</script>
+</body>
+</html>

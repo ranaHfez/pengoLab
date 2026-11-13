@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Multiply by 10 — enVision Math 3, Topic 2, Lesson 4</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #2B2B26;
+    --ink-soft: #5B5A50;
+    --paper: #FBF8F1;
+    --panel: #FFFFFF;
+    --board: #2F4F42;
+    --board-soft: #3E6455;
+    --rod: #E8873A;
+    --rod-soft: #FBD9B8;
+    --unit: #3B82A6;
+    --unit-soft: #CFE7EF;
+    --good: #4C8C4A;
+    --good-soft: #DFF0DC;
+    --bad: #D65C4F;
+    --bad-soft: #FBE1DC;
+    --line: #E4DFD0;
+    --shadow: rgba(43, 43, 38, 0.14);
+    color-scheme: light;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ink: #F1EDE2;
+      --ink-soft: #C7C2B2;
+      --paper: #1C1E19;
+      --panel: #262924;
+      --board: #16241E;
+      --board-soft: #223A30;
+      --rod-soft: #4A3220;
+      --unit-soft: #1E3540;
+      --good-soft: #1F3620;
+      --bad-soft: #3A231F;
+      --line: #39392F;
+      --shadow: rgba(0, 0, 0, 0.4);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #F1EDE2;
+    --ink-soft: #C7C2B2;
+    --paper: #1C1E19;
+    --panel: #262924;
+    --board: #16241E;
+    --board-soft: #223A30;
+    --rod-soft: #4A3220;
+    --unit-soft: #1E3540;
+    --good-soft: #1F3620;
+    --bad-soft: #3A231F;
+    --line: #39392F;
+    --shadow: rgba(0, 0, 0, 0.4);
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  h1, h2, h3, .display {
+    font-family: 'Baloo 2', system-ui, sans-serif;
+    font-weight: 700;
+    margin: 0;
+  }
+  .hero {
+    background: linear-gradient(165deg, var(--board) 0%, var(--board-soft) 100%);
+    color: #FBF8F1;
+    padding: env(safe-area-inset-top, 0px) 0 0 0;
+  }
+  .hero-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 28px 20px 26px;
+  }
+  .crumb {
+    font-size: 0.92rem;
+    color: #C9DCD1;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+  .hero h1 {
+    font-size: clamp(1.6rem, 4.2vw, 2.35rem);
+    margin-top: 6px;
+    line-height: 1.15;
+  }
+  .hero p {
+    margin-top: 10px;
+    max-width: 62ch;
+    color: #E4EFE9;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+  .hero-stat {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
+    background: rgba(251, 248, 241, 0.12);
+    border: 1px solid rgba(251, 248, 241, 0.22);
+    padding: 8px 14px;
+    border-radius: 100px;
+    font-size: 0.92rem;
+    font-weight: 600;
+  }
+  .stars { color: #F4C15C; font-size: 1.05rem; letter-spacing: 2px; }
+
+  nav.tabs {
+    position: sticky;
+    top: env(safe-area-inset-top, 0px);
+    z-index: 5;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+  }
+  .tabs-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    overflow-x: auto;
+    padding: 0 20px;
+  }
+  .tab-btn {
+    flex: none;
+    appearance: none;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    color: var(--ink-soft);
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 0.94rem;
+    padding: 14px 14px 12px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .tab-btn .n {
+    display: inline-block;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: var(--line);
+    color: var(--ink-soft);
+    font-size: 0.72rem;
+    line-height: 20px;
+    text-align: center;
+    margin-right: 7px;
+  }
+  .tab-btn.active { color: var(--ink); border-bottom-color: var(--rod); }
+  .tab-btn.active .n { background: var(--rod); color: #fff; }
+  .tab-btn.done .n { background: var(--good); color: #fff; }
+  .tab-btn:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid var(--unit); outline-offset: 2px; }
+
+  main { max-width: 900px; margin: 0 auto; padding: 26px 20px 60px; }
+  .panel { display: none; }
+  .panel.active { display: block; animation: rise 0.35s ease; }
+  @keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 22px;
+    box-shadow: 0 6px 20px var(--shadow);
+  }
+  .card + .card { margin-top: 16px; }
+  .card h2 { font-size: 1.3rem; }
+  .card .lede { color: var(--ink-soft); margin-top: 6px; line-height: 1.5; font-size: 0.98rem; }
+
+  .btn {
+    appearance: none;
+    border: none;
+    border-radius: 12px;
+    padding: 11px 18px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: transform 0.12s ease;
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn-primary { background: var(--rod); color: #fff; }
+  .btn-secondary { background: var(--unit-soft); color: var(--ink); }
+  .btn-ghost { background: transparent; color: var(--ink-soft); border: 1.5px solid var(--line); }
+  .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+  /* Warm-up */
+  .sequence { display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0; }
+  .seq-tile {
+    min-width: 58px; height: 58px; padding: 0 6px;
+    border-radius: 12px; display: flex; align-items: center; justify-content: center;
+    font-family: 'Baloo 2', sans-serif; font-size: 1.15rem; font-weight: 700;
+    background: var(--rod-soft); color: var(--ink);
+  }
+  .seq-tile.blank {
+    background: var(--panel); border: 2px dashed var(--line); color: var(--ink-soft);
+  }
+  .choice-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+  .choice-btn {
+    background: var(--panel); border: 2px solid var(--line); border-radius: 12px;
+    padding: 12px 20px; font-family: 'Baloo 2', sans-serif; font-size: 1.05rem; font-weight: 700;
+    color: var(--ink); cursor: pointer;
+  }
+  .choice-btn:hover { border-color: var(--unit); }
+  .choice-btn.correct { background: var(--good-soft); border-color: var(--good); }
+  .choice-btn.wrong { background: var(--bad-soft); border-color: var(--bad); }
+
+  .round-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+  .pill { background: var(--board-soft); color: #fff; font-size: 0.8rem; font-weight: 700; padding: 4px 12px; border-radius: 100px; }
+  .feedback { margin-top: 14px; font-weight: 700; min-height: 1.3em; }
+  .feedback.good { color: var(--good); }
+  .feedback.bad { color: var(--bad); }
+
+  /* Activity 1: model builder */
+  .factor-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0; }
+  .factor-btn {
+    width: 42px; height: 42px; border-radius: 10px; border: 2px solid var(--line);
+    background: var(--panel); font-family: 'Inter', sans-serif; font-weight: 700; cursor: pointer;
+  }
+  .factor-btn.selected { background: var(--unit); border-color: var(--unit); color: #fff; }
+  .model-stage {
+    margin-top: 18px; padding: 16px; border-radius: 14px; background: var(--paper);
+    border: 1px dashed var(--line); min-height: 90px;
+    display: flex; flex-wrap: wrap; gap: 8px; align-content: flex-start;
+  }
+  .rod {
+    height: 24px; border-radius: 6px; background: var(--rod);
+    display: flex; align-items: center; justify-content: flex-end; padding-right: 4px;
+    color: #fff; font-size: 0.68rem; font-weight: 700; opacity: 0;
+    animation: pop 0.35s ease forwards;
+  }
+  @keyframes pop { from { opacity: 0; transform: scaleX(0.4); } to { opacity: 1; transform: scaleX(1); } }
+  .answer-row { display: flex; align-items: center; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
+  .answer-row input {
+    width: 110px; padding: 10px 12px; border-radius: 10px; border: 2px solid var(--line);
+    font-family: 'Baloo 2', sans-serif; font-size: 1.1rem; background: var(--panel); color: var(--ink);
+  }
+  .hint-box {
+    margin-top: 14px; background: var(--unit-soft); border-radius: 12px; padding: 12px 14px;
+    font-size: 0.9rem; color: var(--ink); display: none;
+  }
+  .hint-box.show { display: block; }
+
+  /* Activity 2: detective cards */
+  .case-card {
+    background: var(--paper); border: 1px solid var(--line); border-radius: 14px;
+    padding: 16px; margin-top: 14px;
+  }
+  .equation { font-family: 'Baloo 2', sans-serif; font-size: 1.5rem; margin: 6px 0 14px; }
+  .equation .mystery { color: var(--rod); }
+
+  /* Activity 3: story problems */
+  .story-scene {
+    background: var(--paper); border-radius: 14px; border: 1px solid var(--line);
+    padding: 16px; margin-top: 14px;
+  }
+  .story-scene p { line-height: 1.55; margin: 0 0 10px; }
+  .story-icon { font-size: 1.6rem; margin-right: 6px; }
+
+  .progress-bar { height: 8px; background: var(--line); border-radius: 100px; overflow: hidden; margin-top: 10px; }
+  .progress-fill { height: 100%; background: var(--rod); border-radius: 100px; transition: width 0.4s ease; width: 0%; }
+
+  .done-banner {
+    display: none; text-align: center; padding: 26px 16px;
+  }
+  .done-banner.show { display: block; }
+  .done-banner .big { font-size: 2.4rem; }
+
+  footer.teacher-note {
+    max-width: 900px; margin: 0 auto; padding: 0 20px 50px;
+    color: var(--ink-soft); font-size: 0.85rem; line-height: 1.5;
+  }
+</style>
+
+<!-- Shared template: colors, fonts, sounds, buttons, mascots. Keep this. -->
+<link rel="stylesheet" href="../../shared/theme.css">
+<script src="../../shared/theme.js" defer></script>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="crumb">enVision Mathematics · Grade 3 · Volume 1 · Topic 2</div>
+    <h1>Lesson 2-4: Multiply by 10</h1>
+    <p>Today we use patterns to multiply any number by 10 — by building models, skip-counting, and spotting the shortcut hiding inside every ×10 fact.</p>
+    <div class="hero-stat">Stars earned: <span class="stars" id="starDisplay">☆☆☆☆</span></div>
+  </div>
+</div>
+
+<nav class="tabs">
+  <div class="tabs-inner" id="tabBar">
+    <button class="tab-btn active" data-panel="warmup"><span class="n">1</span>Warm-Up</button>
+    <button class="tab-btn" data-panel="act1"><span class="n">2</span>Build the Model</button>
+    <button class="tab-btn" data-panel="act2"><span class="n">3</span>Missing Factor</button>
+    <button class="tab-btn" data-panel="act3"><span class="n">4</span>Real World</button>
+  </div>
+</nav>
+
+<main>
+
+  <!-- WARM-UP -->
+  <section class="panel active" id="panel-warmup">
+    <div class="card">
+      <h2>Skip-Count Sprint</h2>
+      <p class="lede">Counting by 10s is the pattern behind every ×10 fact. Fill in the missing number in each sequence — five quick rounds.</p>
+      <div class="round-meta">
+        <span class="pill" id="wuRoundLabel">Round 1 of 5</span>
+        <span id="wuScoreLabel" style="font-weight:700; color:var(--ink-soft);">Correct: 0</span>
+      </div>
+      <div class="sequence" id="wuSequence"></div>
+      <div class="choice-row" id="wuChoices"></div>
+      <div class="feedback" id="wuFeedback"></div>
+      <div class="done-banner" id="wuDone">
+        <div class="big">🎉</div>
+        <h3>Warm-up complete!</h3>
+        <p class="lede">Nice skip-counting. Head to <strong>Build the Model</strong> next.</p>
+        <button class="btn btn-primary" onclick="goToPanel('act1')" style="margin-top:12px;">Start Activity 1</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACTIVITY 1 -->
+  <section class="panel" id="panel-act1">
+    <div class="card">
+      <h2>Build the Model</h2>
+      <p class="lede">Pick a factor, then build it as groups of 10. Each bar is one group of ten — watch how fast the total grows.</p>
+      <div class="factor-row" id="factorRow"></div>
+      <div class="model-stage" id="modelStage">
+        <span style="color:var(--ink-soft); font-size:0.9rem;">Pick a factor above, then press Build.</span>
+      </div>
+      <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
+        <button class="btn btn-secondary" id="buildBtn">Build groups</button>
+        <button class="btn btn-ghost" id="hintBtn1">Show a hint</button>
+      </div>
+      <div class="hint-box" id="hintBox1">When you multiply by 10, the digit just shifts one place left — 6 becomes 60, 9 becomes 90. Counting the groups by tens gets you there too!</div>
+      <div class="answer-row">
+        <label for="ans1" style="font-weight:700;">Total:</label>
+        <input type="text" id="ans1" inputmode="numeric" placeholder="?">
+        <button class="btn btn-primary" id="check1">Check</button>
+      </div>
+      <div class="feedback" id="fb1"></div>
+      <div class="progress-bar"><div class="progress-fill" id="prog1"></div></div>
+      <div class="done-banner" id="a1Done">
+        <div class="big">✅</div>
+        <h3>You built 5 models!</h3>
+        <p class="lede">You've got the ×10 shift down. On to <strong>Missing Factor Detective</strong>.</p>
+        <button class="btn btn-primary" onclick="goToPanel('act2')" style="margin-top:12px;">Start Activity 2</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACTIVITY 2 -->
+  <section class="panel" id="panel-act2">
+    <div class="card">
+      <h2>Missing Factor Detective</h2>
+      <p class="lede">Each case hides one clue. Use the ×10 pattern to solve it — every case has exactly one 10 in it.</p>
+      <div class="round-meta">
+        <span class="pill" id="a2RoundLabel">Case 1 of 5</span>
+        <span id="a2ScoreLabel" style="font-weight:700; color:var(--ink-soft);">Solved: 0</span>
+      </div>
+      <div class="case-card">
+        <div class="equation" id="a2Equation"></div>
+        <div class="choice-row" id="a2Choices"></div>
+        <div class="feedback" id="a2Feedback"></div>
+      </div>
+      <div class="done-banner" id="a2Done">
+        <div class="big">🕵️</div>
+        <h3>Case closed — all five solved!</h3>
+        <p class="lede">Great detective work. Last stop: <strong>Real World</strong> problems.</p>
+        <button class="btn btn-primary" onclick="goToPanel('act3')" style="margin-top:12px;">Start Activity 3</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACTIVITY 3 -->
+  <section class="panel" id="panel-act3">
+    <div class="card">
+      <h2>Real World: Multiply by 10</h2>
+      <p class="lede">Read each scene and choose the answer. Think about what's being grouped by 10.</p>
+      <div class="round-meta">
+        <span class="pill" id="a3RoundLabel">Problem 1 of 4</span>
+        <span id="a3ScoreLabel" style="font-weight:700; color:var(--ink-soft);">Correct: 0</span>
+      </div>
+      <div class="story-scene">
+        <p id="a3Story"></p>
+        <div class="choice-row" id="a3Choices"></div>
+        <div class="feedback" id="a3Feedback"></div>
+      </div>
+      <div class="done-banner" id="a3Done">
+        <div class="big">🏆</div>
+        <h3>Lesson complete!</h3>
+        <p class="lede">You warmed up, built models, cracked missing-factor cases, and solved real-world problems — all with ×10 facts.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="teacher-note">
+  Teacher note: each activity awards one star on completion (max 4). Use the tabs to revisit any section, or click a numbered tab to jump ahead for review or reteach groups.
+</footer>
+
+<script>
+  // ---------- shared state ----------
+  let stars = 0;
+  function awardStar(tabId) {
+    stars = Math.min(4, stars + 1);
+    document.getElementById('starDisplay').textContent = '★'.repeat(stars) + '☆'.repeat(4 - stars);
+    const tab = document.querySelector('.tab-btn[data-panel="' + tabId + '"]');
+    if (tab) tab.classList.add('done');
+  }
+
+  function goToPanel(id) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
+    document.getElementById('panel-' + id).classList.add('active');
+    document.querySelector('.tab-btn[data-panel="' + id + '"]').classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => goToPanel(btn.dataset.panel));
+  });
+
+  // ---------- WARM-UP: skip-count sprint ----------
+  const wuRounds = [
+    { seq: [10,20,30,null,50], answer: 40, choices: [35,40,45,60] },
+    { seq: [50,60,null,80,90], answer: 70, choices: [65,70,75,90] },
+    { seq: [null,20,30,40,50], answer: 10, choices: [0,5,10,15] },
+    { seq: [30,40,50,60,null], answer: 70, choices: [65,70,75,80] },
+    { seq: [60,null,80,90,100], answer: 70, choices: [65,70,75,72] }
+  ];
+  let wuIndex = 0, wuScore = 0;
+  function renderWarmup() {
+    const r = wuRounds[wuIndex];
+    document.getElementById('wuRoundLabel').textContent = 'Round ' + (wuIndex+1) + ' of ' + wuRounds.length;
+    document.getElementById('wuScoreLabel').textContent = 'Correct: ' + wuScore;
+    const seqEl = document.getElementById('wuSequence');
+    seqEl.innerHTML = '';
+    r.seq.forEach(n => {
+      const d = document.createElement('div');
+      d.className = 'seq-tile' + (n === null ? ' blank' : '');
+      d.textContent = n === null ? '?' : n;
+      seqEl.appendChild(d);
+    });
+    const choicesEl = document.getElementById('wuChoices');
+    choicesEl.innerHTML = '';
+    document.getElementById('wuFeedback').textContent = '';
+    document.getElementById('wuFeedback').className = 'feedback';
+    const shuffled = [...r.choices].sort(() => Math.random() - 0.5);
+    shuffled.forEach(c => {
+      const b = document.createElement('button');
+      b.className = 'choice-btn';
+      b.textContent = c;
+      b.onclick = () => handleWarmupChoice(b, c, r.answer);
+      choicesEl.appendChild(b);
+    });
+  }
+  function handleWarmupChoice(btn, chosen, correct) {
+    document.querySelectorAll('#wuChoices .choice-btn').forEach(b => b.disabled = true);
+    const fb = document.getElementById('wuFeedback');
+    if (chosen === correct) {
+      btn.classList.add('correct');
+      fb.textContent = 'Yes! Counting by 10s, the pattern jumps straight to ' + correct + '.';
+      fb.className = 'feedback good';
+      wuScore++;
+    } else {
+      btn.classList.add('wrong');
+      fb.textContent = 'Not quite — the missing number is ' + correct + '. Count by tens to check it.';
+      fb.className = 'feedback bad';
+    }
+    setTimeout(() => {
+      wuIndex++;
+      if (wuIndex < wuRounds.length) {
+        renderWarmup();
+      } else {
+        document.getElementById('wuScoreLabel').textContent = 'Correct: ' + wuScore;
+        document.querySelector('#panel-warmup .card > h2').insertAdjacentElement;
+        document.getElementById('wuDone').classList.add('show');
+        awardStar('warmup');
+      }
+    }, 1100);
+  }
+  renderWarmup();
+
+  // ---------- ACTIVITY 1: build the model ----------
+  const factorRow = document.getElementById('factorRow');
+  let selectedFactor = null;
+  for (let i = 1; i <= 10; i++) {
+    const b = document.createElement('button');
+    b.className = 'factor-btn';
+    b.textContent = i;
+    b.onclick = () => {
+      document.querySelectorAll('.factor-btn').forEach(x => x.classList.remove('selected'));
+      b.classList.add('selected');
+      selectedFactor = i;
+    };
+    factorRow.appendChild(b);
+  }
+  let a1Built = 0, a1Correct = 0;
+  document.getElementById('buildBtn').addEventListener('click', () => {
+    if (!selectedFactor) { return; }
+    const stage = document.getElementById('modelStage');
+    stage.innerHTML = '';
+    for (let i = 0; i < selectedFactor; i++) {
+      const rod = document.createElement('div');
+      rod.className = 'rod';
+      rod.style.width = '100%';
+      rod.style.animationDelay = (i * 0.06) + 's';
+      rod.textContent = '10';
+      stage.appendChild(rod);
+    }
+    document.getElementById('ans1').value = '';
+    document.getElementById('fb1').textContent = '';
+    document.getElementById('fb1').className = 'feedback';
+  });
+  document.getElementById('hintBtn1').addEventListener('click', () => {
+    document.getElementById('hintBox1').classList.toggle('show');
+  });
+  document.getElementById('check1').addEventListener('click', () => {
+    if (!selectedFactor) {
+      document.getElementById('fb1').textContent = 'Pick a factor and build the groups first.';
+      document.getElementById('fb1').className = 'feedback bad';
+      return;
+    }
+    const val = parseInt(document.getElementById('ans1').value, 10);
+    const correct = selectedFactor * 10;
+    const fb = document.getElementById('fb1');
+    if (val === correct) {
+      fb.textContent = 'Correct! ' + selectedFactor + ' groups of 10 is ' + correct + '.';
+      fb.className = 'feedback good';
+      a1Built++;
+      a1Correct++;
+      document.getElementById('prog1').style.width = Math.min(100, (a1Built/5)*100) + '%';
+      selectedFactor = null;
+      document.querySelectorAll('.factor-btn').forEach(x => x.classList.remove('selected'));
+      if (a1Built >= 5) {
+        setTimeout(() => {
+          document.getElementById('a1Done').classList.add('show');
+          awardStar('act1');
+        }, 500);
+      }
+    } else {
+      fb.textContent = 'Try again — count the rods on the board, each one is worth 10.';
+      fb.className = 'feedback bad';
+    }
+  });
+
+  // ---------- ACTIVITY 2: missing factor detective ----------
+  const a2Cases = [
+    { text: '6 × 10 = <span class="mystery">?</span>', answer: 60, choices: [16, 60, 610, 6] },
+    { text: '<span class="mystery">?</span> × 10 = 80', answer: 8, choices: [80, 18, 8, 90] },
+    { text: '10 × <span class="mystery">?</span> = 30', answer: 3, choices: [30, 13, 3, 20] },
+    { text: '<span class="mystery">?</span> × 10 = 100', answer: 10, choices: [1, 100, 10, 11] },
+    { text: '9 × <span class="mystery">?</span> = 90', answer: 10, choices: [9, 90, 10, 19] }
+  ];
+  let a2Index = 0, a2Score = 0;
+  function renderA2() {
+    const c = a2Cases[a2Index];
+    document.getElementById('a2RoundLabel').textContent = 'Case ' + (a2Index+1) + ' of ' + a2Cases.length;
+    document.getElementById('a2ScoreLabel').textContent = 'Solved: ' + a2Score;
+    document.getElementById('a2Equation').innerHTML = c.text;
+    const choicesEl = document.getElementById('a2Choices');
+    choicesEl.innerHTML = '';
+    document.getElementById('a2Feedback').textContent = '';
+    document.getElementById('a2Feedback').className = 'feedback';
+    const shuffled = [...c.choices].sort(() => Math.random() - 0.5);
+    shuffled.forEach(ch => {
+      const b = document.createElement('button');
+      b.className = 'choice-btn';
+      b.textContent = ch;
+      b.onclick = () => handleA2Choice(b, ch, c.answer);
+      choicesEl.appendChild(b);
+    });
+  }
+  function handleA2Choice(btn, chosen, correct) {
+    document.querySelectorAll('#a2Choices .choice-btn').forEach(b => b.disabled = true);
+    const fb = document.getElementById('a2Feedback');
+    if (chosen === correct) {
+      btn.classList.add('correct');
+      fb.textContent = 'Case solved! The missing number is ' + correct + '.';
+      fb.className = 'feedback good';
+      a2Score++;
+    } else {
+      btn.classList.add('wrong');
+      fb.textContent = 'Good try — the missing number was ' + correct + '.';
+      fb.className = 'feedback bad';
+    }
+    setTimeout(() => {
+      a2Index++;
+      if (a2Index < a2Cases.length) {
+        renderA2();
+      } else {
+        document.getElementById('a2ScoreLabel').textContent = 'Solved: ' + a2Score;
+        document.getElementById('a2Done').classList.add('show');
+        awardStar('act2');
+      }
+    }, 1100);
+  }
+  renderA2();
+
+  // ---------- ACTIVITY 3: real world ----------
+  const a3Problems = [
+    { icon: '🖍️', text: 'Each box holds 10 crayons. Mr. Ruiz has 7 boxes. How many crayons in all?', answer: 70, choices: [70, 17, 60, 700] },
+    { icon: '🚌', text: 'A parking lot has 10 rows of buses. Each row has 4 buses. How many buses are there?', answer: 40, choices: [14, 40, 44, 400] },
+    { icon: '🎟️', text: 'Tickets come in books of 10. The school bought 9 books. How many tickets is that?', answer: 90, choices: [19, 90, 99, 900] },
+    { icon: '🍓', text: 'Each basket holds 10 strawberries. There are 5 baskets. How many strawberries in total?', answer: 50, choices: [15, 55, 50, 500] }
+  ];
+  let a3Index = 0, a3Score = 0;
+  function renderA3() {
+    const p = a3Problems[a3Index];
+    document.getElementById('a3RoundLabel').textContent = 'Problem ' + (a3Index+1) + ' of ' + a3Problems.length;
+    document.getElementById('a3ScoreLabel').textContent = 'Correct: ' + a3Score;
+    document.getElementById('a3Story').innerHTML = '<span class="story-icon">' + p.icon + '</span>' + p.text;
+    const choicesEl = document.getElementById('a3Choices');
+    choicesEl.innerHTML = '';
+    document.getElementById('a3Feedback').textContent = '';
+    document.getElementById('a3Feedback').className = 'feedback';
+    const shuffled = [...p.choices].sort(() => Math.random() - 0.5);
+    shuffled.forEach(ch => {
+      const b = document.createElement('button');
+      b.className = 'choice-btn';
+      b.textContent = ch;
+      b.onclick = () => handleA3Choice(b, ch, p.answer);
+      choicesEl.appendChild(b);
+    });
+  }
+  function handleA3Choice(btn, chosen, correct) {
+    document.querySelectorAll('#a3Choices .choice-btn').forEach(b => b.disabled = true);
+    const fb = document.getElementById('a3Feedback');
+    if (chosen === correct) {
+      btn.classList.add('correct');
+      fb.textContent = 'That\'s right — ' + correct + '!';
+      fb.className = 'feedback good';
+      a3Score++;
+    } else {
+      btn.classList.add('wrong');
+      fb.textContent = 'Close — the answer is ' + correct + '. Multiply the groups by 10.';
+      fb.className = 'feedback bad';
+    }
+    setTimeout(() => {
+      a3Index++;
+      if (a3Index < a3Problems.length) {
+        renderA3();
+      } else {
+        document.getElementById('a3ScoreLabel').textContent = 'Correct: ' + a3Score;
+        document.getElementById('a3Done').classList.add('show');
+        awardStar('act3');
+      }
+    }, 1100);
+  }
+  renderA3();
+</script>
+</body>
+</html>

@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>2 and 5 as Factors — Grade 3 Interactive Lesson</title>
+<style>
+:root{
+  --bg:#f7f4ee; --card:#ffffff; --ink:#2b2620; --sub:#6b6355;
+  --accent:#e0572b; --accent2:#2b7a5b; --accent3:#2f6fed; --accent4:#c9a227;
+  --line:#e8e1d3; --good:#2b7a5b; --bad:#c0392b; --chip:#f0ead9;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#1c1a16; --card:#26231d; --ink:#f2ede2; --sub:#b9b0a0;
+    --line:#3a352c; --chip:#332f26;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#1c1a16; --card:#26231d; --ink:#f2ede2; --sub:#b9b0a0;
+  --line:#3a352c; --chip:#332f26;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px);}
+*{box-sizing:border-box;}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
+  min-height:100%;
+}
+header{
+  padding:22px 18px 14px; text-align:center; border-bottom:4px solid var(--accent);
+  background:linear-gradient(180deg,var(--card),var(--bg));
+}
+header h1{margin:0 0 4px; font-size:1.5rem;}
+header p{margin:0; color:var(--sub); font-size:.95rem;}
+nav{
+  display:flex; gap:6px; flex-wrap:wrap; justify-content:center;
+  padding:12px; background:var(--card); position:sticky; top:0; z-index:10;
+  border-bottom:1px solid var(--line);
+}
+nav button{
+  border:2px solid var(--line); background:var(--chip); color:var(--ink);
+  padding:8px 12px; border-radius:20px; cursor:pointer; font-size:.85rem; font-weight:600;
+}
+nav button.active{background:var(--accent); border-color:var(--accent); color:#fff;}
+main{max-width:820px; margin:0 auto; padding:18px 14px 60px;}
+.panel{display:none; animation:fade .25s ease;}
+.panel.active{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+.card{
+  background:var(--card); border:1px solid var(--line); border-radius:14px;
+  padding:18px; margin-bottom:14px;
+}
+.card h2{margin-top:0; font-size:1.15rem;}
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+@media(max-width:520px){.grid2{grid-template-columns:1fr;}}
+.tag{
+  display:inline-block; background:var(--chip); color:var(--sub); font-size:.75rem;
+  padding:3px 9px; border-radius:10px; margin:2px 4px 2px 0; font-weight:600;
+}
+ul{padding-left:20px; margin:8px 0;}
+.big-btn{
+  background:var(--accent); color:#fff; border:none; padding:10px 18px;
+  border-radius:10px; font-size:1rem; font-weight:700; cursor:pointer; margin-top:8px;
+}
+.big-btn:active{transform:scale(.97);}
+.big-btn.alt{background:var(--accent3);}
+.big-btn.green{background:var(--accent2);}
+.scorebar{
+  display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;
+  background:var(--chip); border-radius:10px; padding:8px 14px; margin-bottom:12px; font-weight:700;
+}
+.scorebar span{font-size:.9rem; color:var(--sub); font-weight:600;}
+.qbox{
+  text-align:center; font-size:2rem; font-weight:800; margin:18px 0; color:var(--accent);
+}
+.choices{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+.choices button{
+  padding:16px; font-size:1.2rem; font-weight:700; border-radius:12px;
+  border:2px solid var(--line); background:var(--card); color:var(--ink); cursor:pointer;
+}
+.choices button:hover{border-color:var(--accent);}
+.choices button.correct{background:var(--good); color:#fff; border-color:var(--good);}
+.choices button.wrong{background:var(--bad); color:#fff; border-color:var(--bad);}
+.feedback{text-align:center; font-weight:700; min-height:24px; margin-bottom:6px;}
+.seq{display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin:18px 0;}
+.seq .num{
+  background:var(--chip); border-radius:10px; padding:12px 14px; font-size:1.3rem; font-weight:800; min-width:46px; text-align:center;
+}
+.seq .blank{background:var(--accent4); color:#fff;}
+.arraywrap{display:flex; flex-direction:column; align-items:center; gap:10px; margin-top:10px;}
+.agrid{display:grid; gap:4px;}
+.acell{
+  width:28px; height:28px; border-radius:6px; border:1px solid var(--line);
+  background:var(--card); cursor:pointer;
+}
+.acell.filled{background:var(--accent3); border-color:var(--accent3);}
+.timerwrap{background:var(--chip); border-radius:8px; height:10px; overflow:hidden; margin-bottom:10px;}
+.timerbar{height:100%; background:var(--accent); width:100%; transition:width .3s linear;}
+footer{text-align:center; color:var(--sub); font-size:.8rem; padding:16px;}
+.hearts{font-size:1.1rem;}
+</style>
+
+<!-- Shared template: colors, fonts, sounds, buttons, mascots. Keep this. -->
+<link rel="stylesheet" href="../../shared/theme.css">
+<script src="../../shared/theme.js" defer></script>
+</head>
+<body>
+<header>
+  <h1>🔢 2 and 5 as Factors</h1>
+  <p>enVision Math • Grade 3 • Topic 2, Lesson 1 — Interactive Lesson Plan</p>
+</header>
+
+<nav id="nav"></nav>
+
+<main>
+
+<!-- OVERVIEW -->
+<section class="panel" id="panel-overview">
+  <div class="card">
+    <h2>📋 Lesson Plan Overview</h2>
+    <span class="tag">Standard: 3.OA.A.1</span><span class="tag">3.OA.C.7</span><span class="tag">⏱ 45–50 min</span>
+    <p><strong>Objective:</strong> Students will multiply using 2 and 5 as factors by applying skip counting and doubling strategies, and will represent multiplication facts as equal-group arrays.</p>
+    <div class="grid2">
+      <div>
+        <h3 style="margin-bottom:4px;">Vocabulary</h3>
+        <ul><li><strong>Factor</strong> — a number multiplied to find a product</li><li><strong>Product</strong> — the answer to a multiplication problem</li><li><strong>Array</strong> — objects in equal rows and columns</li><li><strong>Skip counting</strong> — counting forward by a number other than 1</li></ul>
+      </div>
+      <div>
+        <h3 style="margin-bottom:4px;">Materials</h3>
+        <ul><li>This interactive webpage (device per student/pair)</li><li>Whiteboard for anchor chart</li><li>Counters or connecting cubes (optional)</li><li>Exit ticket (paper or digital)</li></ul>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <h2>🗓️ Lesson Flow</h2>
+    <ul>
+      <li><strong>1. Warm-Up (5 min):</strong> Skip Counting Sprint — activate prior counting-by-5s and counting-by-2s skills.</li>
+      <li><strong>2. Mini-Lesson (8 min):</strong> Teacher models doubling for ×2 and skip counting for ×5 using an array on the board (e.g., 3 rows of 5 counters).</li>
+      <li><strong>3. Game 1 — Double Trouble (7 min):</strong> Practice ×2 facts through doubling.</li>
+      <li><strong>4. Game 2 — High Five (7 min):</strong> Practice ×5 facts through skip counting.</li>
+      <li><strong>5. Game 3 — Array Builder (8 min):</strong> Build arrays to connect facts to visual models.</li>
+      <li><strong>6. Game 4 — Boss Challenge (7 min):</strong> Timed mixed-fact fluency check.</li>
+      <li><strong>7. Wrap-Up (3 min):</strong> Exit ticket — "How does doubling help with ×2? How does skip counting help with ×5?"</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h2>🎯 Teaching Tips</h2>
+    <ul>
+      <li>Emphasize: <strong>×2 = double the number</strong> (2 × 6 is the same as 6 + 6).</li>
+      <li>Emphasize: <strong>×5 facts always end in 0 or 5</strong> — great pattern for students to notice.</li>
+      <li>Let students play in pairs and talk through strategies out loud.</li>
+      <li>Use the tabs above to move between activities — no downloads needed.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- WARM UP -->
+<section class="panel" id="panel-warmup">
+  <div class="card">
+    <h2>🚀 Warm-Up: Skip Counting Sprint</h2>
+    <p>Find the missing number in each skip-counting pattern (by 2s or 5s). 8 rounds.</p>
+    <div class="scorebar"><div>Score: <span id="wu-score">0</span>/8</div><span id="wu-progress">Round 1 of 8</span></div>
+    <div class="seq" id="wu-seq"></div>
+    <div class="choices" id="wu-choices"></div>
+    <div class="feedback" id="wu-feedback"></div>
+    <button class="big-btn" id="wu-restart">🔄 Restart</button>
+  </div>
+</section>
+
+<!-- GAME 1 -->
+<section class="panel" id="panel-g1">
+  <div class="card">
+    <h2>✖️2 Double Trouble</h2>
+    <p>Multiply by 2! Remember: ×2 means <strong>double it</strong>. 10 questions.</p>
+    <div class="scorebar"><div>Score: <span id="g1-score">0</span>/10</div><div class="hearts" id="g1-hearts">❤️❤️❤️</div></div>
+    <div class="qbox" id="g1-q"></div>
+    <div class="choices" id="g1-choices"></div>
+    <div class="feedback" id="g1-feedback"></div>
+    <button class="big-btn" id="g1-restart">🔄 Restart</button>
+  </div>
+</section>
+
+<!-- GAME 2 -->
+<section class="panel" id="panel-g2">
+  <div class="card">
+    <h2>🖐️ High Five</h2>
+    <p>Multiply by 5! Tip: skip count by 5s — the product always ends in 0 or 5. 10 questions.</p>
+    <div class="scorebar"><div>Score: <span id="g2-score">0</span>/10</div><div class="hearts" id="g2-hearts">❤️❤️❤️</div></div>
+    <div class="qbox" id="g2-q"></div>
+    <div class="choices" id="g2-choices"></div>
+    <div class="feedback" id="g2-feedback"></div>
+    <button class="big-btn" id="g2-restart">🔄 Restart</button>
+  </div>
+</section>
+
+<!-- GAME 3 -->
+<section class="panel" id="panel-g3">
+  <div class="card">
+    <h2>🧱 Array Builder</h2>
+    <p>Click cells to build the array shown, filling the <strong>top-left</strong> rows and columns exactly. Then check your work!</p>
+    <div class="scorebar"><div>Built: <span id="g3-score">0</span>/6</div><span id="g3-target">Build 2 × 5</span></div>
+    <div class="arraywrap">
+      <div class="agrid" id="g3-grid"></div>
+      <div>
+        <button class="big-btn green" id="g3-check">✅ Check Array</button>
+        <button class="big-btn alt" id="g3-clear">🧹 Clear</button>
+      </div>
+    </div>
+    <div class="feedback" id="g3-feedback"></div>
+  </div>
+</section>
+
+<!-- GAME 4 -->
+<section class="panel" id="panel-g4">
+  <div class="card">
+    <h2>👑 Boss Challenge</h2>
+    <p>Mixed ×2 and ×5 facts! Beat the boss score of <strong>10</strong> before 3 misses or time runs out. 12 second timer per question.</p>
+    <div class="scorebar"><div>Score: <span id="g4-score">0</span></div><div class="hearts" id="g4-hearts">❤️❤️❤️</div></div>
+    <div class="timerwrap"><div class="timerbar" id="g4-timerbar"></div></div>
+    <div class="qbox" id="g4-q">Press Start!</div>
+    <div class="choices" id="g4-choices"></div>
+    <div class="feedback" id="g4-feedback"></div>
+    <button class="big-btn" id="g4-start">▶️ Start Boss Challenge</button>
+  </div>
+</section>
+
+</main>
+<footer>Grade 3 • enVision Math • Topic 2, Lesson 1 — 2 and 5 as Factors</footer>
+
+<script>
+const tabs=[["overview","📋 Overview"],["warmup","🚀 Warm-Up"],["g1","✖️2 Double Trouble"],["g2","🖐️ High Five"],["g3","🧱 Array Builder"],["g4","👑 Boss Challenge"]];
+const navEl=document.getElementById("nav");
+tabs.forEach(([id,label],i)=>{
+  const b=document.createElement("button");
+  b.textContent=label; b.dataset.id=id; if(i===0)b.classList.add("active");
+  b.onclick=()=>showPanel(id);
+  navEl.appendChild(b);
+});
+function showPanel(id){
+  document.querySelectorAll(".panel").forEach(p=>p.classList.remove("active"));
+  document.getElementById("panel-"+id).classList.add("active");
+  document.querySelectorAll("#nav button").forEach(b=>b.classList.toggle("active",b.dataset.id===id));
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+showPanel("overview");
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function rand(min,max){return Math.floor(Math.random()*(max-min+1))+min;}
+
+/* ---------- WARM UP: Skip Counting Sprint ---------- */
+let wuRound=0, wuScore=0, wuStep=0;
+function wuNew(){
+  const step=Math.random()<0.5?2:5;
+  const start=step*rand(0,6);
+  const seq=[start,start+step,start+step*2,start+step*3,start+step*4];
+  const blankIdx=rand(1,3);
+  const answer=seq[blankIdx];
+  wuStep=step;
+  document.getElementById("wu-seq").innerHTML="";
+  seq.forEach((n,i)=>{
+    const d=document.createElement("div");
+    d.className="num"+(i===blankIdx?" blank":"");
+    d.textContent=i===blankIdx?"?":n;
+    document.getElementById("wu-seq").appendChild(d);
+  });
+  let opts=shuffle([answer,answer+step,answer-step,answer+ (step===2?1:2)].filter((v,i,a)=>a.indexOf(v)===i && v>=0));
+  while(opts.length<4)opts.push(answer+opts.length*3+1);
+  opts=shuffle(opts.slice(0,4));
+  const cWrap=document.getElementById("wu-choices"); cWrap.innerHTML="";
+  opts.forEach(o=>{
+    const b=document.createElement("button");
+    b.textContent=o;
+    b.onclick=()=>wuCheck(o,answer,b);
+    cWrap.appendChild(b);
+  });
+  document.getElementById("wu-feedback").textContent="";
+  document.getElementById("wu-progress").textContent=`Round ${wuRound+1} of 8`;
+}
+function wuCheck(pick,answer,btn){
+  document.querySelectorAll("#wu-choices button").forEach(b=>b.disabled=true);
+  if(pick===answer){btn.classList.add("correct"); wuScore++; document.getElementById("wu-feedback").textContent="✅ Correct! Counting by "+wuStep+"s.";}
+  else{btn.classList.add("wrong"); document.getElementById("wu-feedback").textContent="❌ The answer was "+answer+".";}
+  document.getElementById("wu-score").textContent=wuScore;
+  wuRound++;
+  setTimeout(()=>{ if(wuRound<8) wuNew(); else document.getElementById("wu-feedback").textContent=`🎉 Finished! Score: ${wuScore}/8`; },1100);
+}
+document.getElementById("wu-restart").onclick=()=>{wuRound=0;wuScore=0;document.getElementById("wu-score").textContent=0;wuNew();};
+wuNew();
+
+/* ---------- Generic fact-quiz engine for Game 1 & 2 ---------- */
+function makeFactGame(factor,prefix,total){
+  let score=0, q=0, lives=3, used=[];
+  const scoreEl=document.getElementById(prefix+"-score");
+  const heartsEl=document.getElementById(prefix+"-hearts");
+  function nextQ(){
+    if(lives<=0){document.getElementById(prefix+"-q").textContent="💥 Game Over!"; document.getElementById(prefix+"-choices").innerHTML=""; document.getElementById(prefix+"-feedback").textContent=`Final score: ${score}/${total}`; return;}
+    if(q>=total){document.getElementById(prefix+"-q").textContent="🎉 Complete!"; document.getElementById(prefix+"-choices").innerHTML=""; document.getElementById(prefix+"-feedback").textContent=`Final score: ${score}/${total}`; return;}
+    let n=rand(0,10);
+    if(used.length<11 && used.includes(n)){ while(used.includes(n)) n=rand(0,10); }
+    used.push(n);
+    const answer=factor*n;
+    document.getElementById(prefix+"-q").textContent=`${factor} × ${n} = ?`;
+    let opts=shuffle([answer,answer+factor,Math.max(0,answer-factor),answer+ (factor===2?4:10)]);
+    const cWrap=document.getElementById(prefix+"-choices"); cWrap.innerHTML="";
+    opts.forEach(o=>{
+      const b=document.createElement("button");
+      b.textContent=o;
+      b.onclick=()=>{
+        document.querySelectorAll("#"+prefix+"-choices button").forEach(x=>x.disabled=true);
+        if(o===answer){b.classList.add("correct"); score++; document.getElementById(prefix+"-feedback").textContent="✅ Nice work!";}
+        else{b.classList.add("wrong"); lives--; heartsEl.textContent="❤️".repeat(Math.max(lives,0))+"🖤".repeat(3-Math.max(lives,0)); document.getElementById(prefix+"-feedback").textContent=`❌ ${factor} × ${n} = ${answer}`;}
+        scoreEl.textContent=score;
+        q++;
+        setTimeout(nextQ,1000);
+      };
+      cWrap.appendChild(b);
+    });
+    document.getElementById(prefix+"-feedback").textContent="";
+  }
+  document.getElementById(prefix+"-restart").onclick=()=>{score=0;q=0;lives=3;used=[];scoreEl.textContent=0;heartsEl.textContent="❤️❤️❤️";nextQ();};
+  nextQ();
+}
+makeFactGame(2,"g1",10);
+makeFactGame(5,"g2",10);
+
+/* ---------- GAME 3: Array Builder ---------- */
+const G3_ROWS=5, G3_COLS=10;
+let g3built=0, g3r=2, g3c=5, g3filled=new Set();
+function g3newTarget(){
+  g3r = Math.random()<0.5?2:5;
+  g3c = rand(2,7);
+  document.getElementById("g3-target").textContent=`Build ${g3r} × ${g3c}`;
+  g3filled=new Set();
+  g3drawGrid();
+}
+function g3drawGrid(){
+  const grid=document.getElementById("g3-grid");
+  grid.style.gridTemplateColumns=`repeat(${G3_COLS},28px)`;
+  grid.innerHTML="";
+  for(let r=0;r<G3_ROWS;r++){
+    for(let c=0;c<G3_COLS;c++){
+      const cell=document.createElement("div");
+      const key=r+"-"+c;
+      cell.className="acell"+(g3filled.has(key)?" filled":"");
+      cell.onclick=()=>{ if(g3filled.has(key))g3filled.delete(key); else g3filled.add(key); g3drawGrid(); };
+      grid.appendChild(cell);
+    }
+  }
+}
+document.getElementById("g3-clear").onclick=()=>{g3filled=new Set();g3drawGrid();};
+document.getElementById("g3-check").onclick=()=>{
+  const need=g3r*g3c;
+  let ok=g3filled.size===need;
+  if(ok){
+    for(let r=0;r<g3r;r++)for(let c=0;c<g3c;c++) if(!g3filled.has(r+"-"+c)) ok=false;
+  }
+  if(ok){
+    g3built++;
+    document.getElementById("g3-score").textContent=g3built;
+    document.getElementById("g3-feedback").textContent=`✅ Correct! ${g3r} × ${g3c} = ${need}`;
+    setTimeout(()=>{ if(g3built<6) g3newTarget(); else document.getElementById("g3-feedback").textContent="🎉 All arrays built!"; },1200);
+  } else {
+    document.getElementById("g3-feedback").textContent="❌ Not quite — fill the top-left block to match "+g3r+" rows × "+g3c+" columns.";
+  }
+};
+g3newTarget();
+
+/* ---------- GAME 4: Boss Challenge (timed mixed) ---------- */
+let g4score=0, g4lives=3, g4timer=null, g4timeLeft=12, g4running=false;
+function g4stop(){ if(g4timer){clearInterval(g4timer); g4timer=null;} }
+function g4nextQ(){
+  if(!g4running) return;
+  if(g4lives<=0){ g4end("💥 Boss defeated you! Final score: "+g4score); return; }
+  if(g4score>=10){ g4end("👑 You beat the Boss! Final score: "+g4score); return; }
+  const factor=Math.random()<0.5?2:5;
+  const n=rand(0,10);
+  const answer=factor*n;
+  document.getElementById("g4-q").textContent=`${factor} × ${n} = ?`;
+  let opts=shuffle([answer,answer+factor,Math.max(0,answer-factor),answer+ (factor===2?4:10)]);
+  const cWrap=document.getElementById("g4-choices"); cWrap.innerHTML="";
+  opts.forEach(o=>{
+    const b=document.createElement("button");
+    b.textContent=o;
+    b.onclick=()=>g4answer(o===answer,factor,n,answer,b);
+    cWrap.appendChild(b);
+  });
+  document.getElementById("g4-feedback").textContent="";
+  g4timeLeft=12;
+  document.getElementById("g4-timerbar").style.width="100%";
+  g4stop();
+  g4timer=setInterval(()=>{
+    g4timeLeft-=0.2;
+    document.getElementById("g4-timerbar").style.width=Math.max(0,(g4timeLeft/12*100))+"%";
+    if(g4timeLeft<=0){ g4stop(); g4answer(false,factor,n,answer,null); }
+  },200);
+}
+function g4answer(correct,factor,n,answer,btn){
+  g4stop();
+  document.querySelectorAll("#g4-choices button").forEach(x=>{x.disabled=true; if(parseInt(x.textContent)===answer)x.classList.add("correct");});
+  if(correct){ g4score++; document.getElementById("g4-feedback").textContent="✅ Correct!"; }
+  else{ g4lives--; document.getElementById("g4-hearts").textContent="❤️".repeat(Math.max(g4lives,0))+"🖤".repeat(3-Math.max(g4lives,0)); document.getElementById("g4-feedback").textContent=`❌ ${factor} × ${n} = ${answer}`; if(btn)btn.classList.add("wrong"); }
+  document.getElementById("g4-score").textContent=g4score;
+  setTimeout(g4nextQ,900);
+}
+function g4end(msg){
+  g4running=false; g4stop();
+  document.getElementById("g4-q").textContent=msg;
+  document.getElementById("g4-choices").innerHTML="";
+  document.getElementById("g4-timerbar").style.width="0%";
+}
+document.getElementById("g4-start").onclick=()=>{
+  g4score=0; g4lives=3; g4running=true;
+  document.getElementById("g4-score").textContent=0;
+  document.getElementById("g4-hearts").textContent="❤️❤️❤️";
+  g4nextQ();
+};
+</script>
+</body>
+</html>

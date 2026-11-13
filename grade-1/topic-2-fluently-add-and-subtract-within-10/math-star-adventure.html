@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Math Star Adventure</title>
+<style>
+:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;min-height:100vh;font-family:"Baloo 2","Comic Sans MS","Chalkboard SE",system-ui,sans-serif;background:linear-gradient(#8fd3ff,#d9f4ff 55%,#b8f0a0 55%,#7ddc6a);color:#3b2a6b;text-align:center;overflow-x:hidden}
+.cloud{position:fixed;font-size:60px;opacity:.9;animation:drift 30s linear infinite;z-index:0}
+@keyframes drift{from{transform:translateX(-120px)}to{transform:translateX(110vw)}}
+#app{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:12px}
+.screen{display:none}.screen.on{display:block;animation:pop .4s}
+@keyframes pop{from{transform:scale(.8);opacity:0}to{transform:scale(1);opacity:1}}
+h1{font-size:2.4rem;margin:8px 0;color:#ff5a8a;text-shadow:3px 3px 0 #fff}
+.big{font-size:90px;animation:bounce 1.2s infinite}
+@keyframes bounce{50%{transform:translateY(-14px) rotate(6deg)}}
+button{font-family:inherit;cursor:pointer;border:none}
+.go{font-size:2rem;padding:14px 38px;border-radius:50px;background:#ff9f1c;color:#fff;box-shadow:0 8px 0 #d97a00;margin-top:14px}
+.go:active{transform:translateY(6px);box-shadow:0 2px 0 #d97a00}
+.top{display:flex;align-items:center;gap:8px;background:#fff;border-radius:20px;padding:8px 12px;box-shadow:0 4px 0 #0002}
+.bar{flex:1;height:22px;background:#eee;border-radius:12px;overflow:hidden}
+#fill{height:100%;width:0;background:linear-gradient(90deg,#ffd93d,#ff6b6b);transition:width .5s;border-radius:12px}
+.pill{font-weight:800;font-size:1.1rem}
+.card{background:#fff;border-radius:28px;margin:12px 0;padding:14px;box-shadow:0 8px 0 #0002}
+.qtxt{font-size:2.2rem;font-weight:800;color:#7b3fe4;display:flex;justify-content:center;align-items:center;gap:10px}
+.say{font-size:1.6rem;background:#e8dcff;border-radius:50%;width:48px;height:48px}
+.pics{display:flex;justify-content:center;align-items:center;gap:6px;flex-wrap:wrap;min-height:90px;font-size:2.4rem}
+.grp{display:flex;flex-wrap:wrap;justify-content:center;gap:2px;max-width:46%;padding:6px;border-radius:16px;background:#fff6d9}
+.grp span{display:inline-block;animation:in .4s backwards}
+@keyframes in{from{transform:scale(0) rotate(-90deg)}}
+.op{font-size:3rem;font-weight:900;color:#ff5a8a}
+.gone{position:relative;opacity:.35;filter:grayscale(1)}
+.gone::after{content:"✖";position:absolute;left:0;right:0;top:0;font-size:2.2rem;color:#e11;opacity:1}
+.mascot{display:flex;align-items:center;justify-content:center;gap:8px;font-size:1.25rem;font-weight:800;min-height:70px}
+.mascot .m{font-size:3.2rem}
+.bubble{background:#fff;border:3px solid #ffd93d;border-radius:20px;padding:6px 14px}
+.opts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.opt{font-size:3rem;font-weight:900;padding:14px 0;border-radius:24px;color:#fff;box-shadow:0 8px 0 #0003}
+.opt:nth-child(1){background:#4dabf7}.opt:nth-child(2){background:#51cf66}.opt:nth-child(3){background:#ff8787}
+.opt:active{transform:translateY(5px)}
+.opt:disabled{opacity:.45}
+.shake{animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-10px)}75%{transform:translateX(10px)}}
+.yay{animation:yay .6s}
+@keyframes yay{50%{transform:scale(1.3) rotate(8deg)}}
+.stars{font-size:2.4rem;letter-spacing:2px}
+.conf{position:fixed;top:-20px;font-size:28px;z-index:9;pointer-events:none;animation:fall 2.2s linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(540deg)}}
+.bgstar{font-size:1.6rem}
+</style>
+<!-- Shared template: colors, fonts, sounds, buttons, mascots. Keep this. -->
+<link rel="stylesheet" href="../../shared/theme.css">
+<script src="../../shared/theme.js" defer></script>
+</head><body>
+<div class="cloud" style="top:30px">☁️</div><div class="cloud" style="top:110px;animation-delay:-14s;font-size:44px">☁️</div>
+<div id="app">
+ <div id="s-start" class="screen on">
+  <div class="big">🦁</div>
+  <h1>Math Star<br>Adventure!</h1>
+  <div class="card"><div style="font-size:1.4rem;font-weight:800">Hi friend! 👋<br>Let's add ➕ and take away ➖<br>and win 20 ⭐ stars!</div></div>
+  <button class="go" onclick="start()">▶ Let's Play!</button>
+ </div>
+ <div id="s-game" class="screen">
+  <div class="top"><span class="pill" id="num">1/20</span><div class="bar"><div id="fill"></div></div><span class="pill">⭐ <span id="sc">0</span></span></div>
+  <div class="card">
+   <div class="qtxt"><span id="qt"></span><button class="say" onclick="speak()" aria-label="Listen">🔊</button></div>
+   <div class="pics" id="pics"></div>
+  </div>
+  <div class="mascot"><span class="m" id="m">🦁</span><span class="bubble" id="msg">You can do it!</span></div>
+  <div class="opts" id="opts"></div>
+ </div>
+ <div id="s-end" class="screen">
+  <div class="big">🏆</div>
+  <h1>You are a<br>SUPER STAR!</h1>
+  <div class="card"><div class="stars" id="fs"></div>
+  <div style="font-size:1.6rem;font-weight:800">You got <span id="fsc"></span> stars!</div>
+  <div id="endmsg" style="font-size:1.3rem;margin-top:6px"></div></div>
+  <button class="go" onclick="start()">🔄 Play Again</button>
+ </div>
+</div>
+<script>
+const TH=["🍎","🍌","⭐","🐟","🎈","🚗","🐥","🍪","🌸","⚽"];
+const GOOD=["Great job! 🎉","Wow! You are so smart! 🌟","Yes! Super! 🚀","Amazing! 👏","Fantastic! 🏅","You rock! 🎸","Hooray! 🥳","Perfect! 💯"];
+const TRY=["Oops! Try again! 💪","Almost! You can do it! 🌈","Count again! 👆","Don't give up! 💖"];
+const MAS=["🦁","🐼","🐰","🦊","🐸","🐵","🐯","🦄","🐶","🐱"];
+let Q=[],i=0,score=0,tries=0,cur,ac;
+const $=id=>document.getElementById(id);
+function R(n){return Math.floor(Math.random()*n)}
+function show(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("on"));$(id).classList.add("on")}
+function beep(f,d,t="sine"){try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();const o=ac.createOscillator(),g=ac.createGain();o.type=t;o.frequency.value=f;g.gain.value=.15;o.connect(g);g.connect(ac.destination);o.start();o.stop(ac.currentTime+d)}catch(e){}}
+function cheer(){[523,659,784,1047].forEach((f,k)=>setTimeout(()=>beep(f,.15),k*110))}
+function speak(){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(cur.say);u.rate=.85;u.pitch=1.2;speechSynthesis.speak(u)}catch(e){}}
+function confetti(n=30){const c=["🎉","⭐","🎈","✨","💖","🌈"];for(let k=0;k<n;k++){const e=document.createElement("div");e.className="conf";e.textContent=c[R(c.length)];e.style.left=R(100)+"vw";e.style.animationDelay=Math.random()*.6+"s";document.body.appendChild(e);setTimeout(()=>e.remove(),3200)}}
+function build(){
+ const a=[];
+ // 10 adding, 10 taking away, easy first then harder
+ for(let k=0;k<10;k++){const t=k<4?5:10;const s=1+R(t-1)+1;const x=1+R(s-1);a.push({t:"+",a:x,b:s-x})}
+ for(let k=0;k<10;k++){const t=k<4?5:10;const x=2+R(t-1);const y=1+R(x);a.push({t:"-",a:x,b:y})}
+ a.forEach(q=>{q.r=q.t=="+"?q.a+q.b:q.a-q.b});
+ // mix: alternate add / sub, sorted by size
+ const ad=a.slice(0,10),su=a.slice(10),o=[];
+ for(let k=0;k<10;k++){o.push(ad[k]);o.push(su[k])}
+ return o;
+}
+function start(){Q=build();i=0;score=0;$("sc").textContent=0;show("s-game");next()}
+function icons(n,e,gone=0){let h="";for(let k=0;k<n;k++)h+=`<span style="animation-delay:${k*.08}s" class="${k>=n-gone?'gone':''}">${e}</span>`;return h}
+function next(){
+ cur=Q[i];tries=0;const e=TH[i%TH.length];
+ $("num").textContent=(i+1)+"/20";$("fill").style.width=(i/20*100)+"%";
+ $("m").textContent=MAS[i%MAS.length];$("msg").textContent=i==0?"You can do it!":["Next one! 😊","Let's go! 🚀","Look closely! 👀"][R(3)];
+ if(cur.t=="+"){
+  $("qt").textContent=`${cur.a} + ${cur.b} = ?`;cur.say=`${cur.a} plus ${cur.b} equals?`;
+  $("pics").innerHTML=`<div class="grp">${icons(cur.a,e)}</div><span class="op">+</span><div class="grp">${icons(cur.b,e)}</div>`;
+ }else{
+  $("qt").textContent=`${cur.a} − ${cur.b} = ?`;cur.say=`${cur.a} take away ${cur.b} equals?`;
+  $("pics").innerHTML=`<div class="grp" style="max-width:90%">${icons(cur.a,e,cur.b)}</div><div style="width:100%;font-weight:800;font-size:1.1rem">Take away ${cur.b} ✖</div>`;
+ }
+ let o=new Set([cur.r]);while(o.size<3){let d=cur.r+(R(2)?1:-1)*(1+R(2));if(d<0||d>10)d=R(11);o.add(d)}
+ o=[...o].sort(()=>Math.random()-.5);
+ $("opts").innerHTML=o.map(n=>`<button class="opt" onclick="pick(${n},this)">${n}</button>`).join("");
+ setTimeout(speak,350);
+}
+function pick(n,b){
+ if(n===cur.r){
+  document.querySelectorAll(".opt").forEach(x=>x.disabled=true);
+  b.classList.add("yay");b.style.background="#2f9e44";
+  if(tries==0)score++;$("sc").textContent=score;
+  $("msg").textContent=GOOD[R(GOOD.length)];$("m").classList.add("yay");cheer();confetti(18);
+  setTimeout(()=>{i++;i<20?next():end()},1500);
+ }else{
+  tries++;b.disabled=true;b.classList.add("shake");beep(200,.3,"triangle");
+  $("msg").textContent=tries>1?"Look at the pictures and count! 👆":TRY[R(TRY.length)];
+ }
+}
+function end(){
+ $("fill").style.width="100%";show("s-end");
+ $("fs").textContent="⭐".repeat(Math.max(1,Math.round(score/4)));
+ $("fsc").textContent=score+" / 20";
+ $("endmsg").textContent=score>=18?"WOW! You are a math champion! 👑":score>=12?"Great work! Keep going! 🌟":"Good try! Let's play again and win more stars! 💪";
+ cheer();confetti(60);
+}
+</script></body></html>

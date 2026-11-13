@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Think Addition to Subtract – Grade 1 Lesson 2-7</title>
+<style>
+:root{--bg1:#ffe9f3;--bg2:#e0f4ff;--card:#fff;--ink:#2b2350;--pink:#ff5fa2;--blue:#3da9fc;--yel:#ffd23f;--grn:#3ccf91;--org:#ff9f43;--pur:#8e6cf0;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg1:#2a1b3d;--bg2:#12294a;--card:#2f2a55;--ink:#fff7e6}}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;font-family:"Comic Sans MS","Chalkboard SE","Trebuchet MS",sans-serif;color:var(--ink);background:linear-gradient(160deg,var(--bg1),var(--bg2));min-height:100vh;padding:10px}
+h1{text-align:center;margin:6px 0;font-size:1.6rem}
+.hero{text-align:center;font-size:2.2rem;animation:bob 2s infinite}
+@keyframes bob{50%{transform:translateY(-8px)}}
+nav{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:8px 0}
+nav button,.btn{font:inherit;font-weight:bold;border:0;border-radius:20px;padding:10px 14px;color:#fff;cursor:pointer;box-shadow:0 4px 0 rgba(0,0,0,.2)}
+nav button:nth-child(1){background:var(--pur)}nav button:nth-child(2){background:var(--org)}nav button:nth-child(3){background:var(--pink)}nav button:nth-child(4){background:var(--blue)}nav button:nth-child(5){background:var(--grn)}
+nav button.on{outline:4px solid var(--yel)}
+.card{max-width:760px;margin:10px auto;background:var(--card);border-radius:24px;padding:16px;box-shadow:0 6px 0 rgba(0,0,0,.12)}
+section{display:none}section.on{display:block}
+h2{margin:0 0 8px;color:var(--pink)}h3{margin:12px 0 4px;color:var(--pur)}
+table{border-collapse:collapse;width:100%}td,th{border:2px dashed var(--blue);padding:6px;text-align:left;vertical-align:top}
+.big{font-size:2rem;text-align:center;margin:8px 0;font-weight:bold}
+.char{font-size:4.5rem;text-align:center;line-height:1;transition:transform .2s}.char.jump{animation:jump .5s}.char.shake{animation:shake .4s}
+@keyframes jump{40%{transform:translateY(-30px) rotate(10deg) scale(1.2)}}
+@keyframes shake{25%{transform:translateX(-12px)}75%{transform:translateX(12px)}}
+.say{text-align:center;min-height:1.6em;font-weight:bold}
+.opts{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:10px 0}
+.opt{font:inherit;font-size:1.5rem;font-weight:bold;min-width:70px;padding:12px 16px;border-radius:18px;border:4px solid var(--yel);background:var(--card);color:var(--ink);cursor:pointer;box-shadow:0 4px 0 rgba(0,0,0,.15)}
+.opt:active{transform:translateY(3px)}.opt.bad{background:#ffb3b3;color:#222}.opt.good{background:var(--grn);color:#fff}
+.top{display:flex;justify-content:space-between;font-weight:bold}
+.bar{height:14px;background:rgba(0,0,0,.12);border-radius:9px;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--pink),var(--yel));width:0;transition:width .4s}
+.dots{text-align:center;font-size:1.7rem;letter-spacing:2px;word-break:break-all}
+.hint{background:var(--yel);color:#333;border-radius:14px;padding:8px;text-align:center;font-weight:bold;margin:6px 0}
+.btn{background:var(--pur)}.sm{padding:6px 10px;font-size:.8rem}
+.end{text-align:center;font-size:1.3rem}
+</style>
+<!-- Shared template: colors, fonts, sounds, buttons, mascots. Keep this. -->
+<link rel="stylesheet" href="../../shared/theme.css">
+<script src="../../shared/theme.js" defer></script>
+</head><body>
+<div class="hero">🐸🐙🦖🐵</div>
+<h1>Think Addition to Subtract!</h1>
+<div style="text-align:center">enVision Math • Grade 1 • Volume 1 • Topic 2 • Lesson 2-7 <button class="btn sm" id="snd">🔊 Sounds ON</button></div>
+<nav id="nav"><button data-t="plan">📋 Lesson Plan</button><button data-t="warm">🎈 Warm-Up</button><button data-t="g1">🐸 Game 1</button><button data-t="g2">🦖 Game 2</button><button data-t="g3">🐙 Game 3</button></nav>
+
+<section id="plan" class="on"><div class="card">
+<h2>📋 Full Lesson Plan (45 min)</h2>
+<p><b>Big idea:</b> We can use an <b>addition fact</b> we know to solve a <b>subtraction</b> problem. <b>9 − 4 = ?</b> Think: <b>4 + ? = 9</b>. 4 + 5 = 9, so 9 − 4 = <b>5</b>!</p>
+<h3>🎯 Learning Goals</h3>
+<ul><li>Use addition to solve subtraction within 10.</li><li>Find a missing addend (4 + ? = 9).</li><li>Explain: “Addition and subtraction are related.”</li></ul>
+<h3>🔤 Vocabulary</h3><p>add, subtract, missing number, related facts, total (whole), part</p>
+<h3>🧰 Materials</h3><p>Counters or cubes, ten frames, whiteboards and markers, this web page.</p>
+<h3>⏱️ Timeline</h3>
+<table><tr><th>Time</th><th>Activity</th></tr>
+<tr><td>5 min</td><td><b>Warm-Up game 🎈</b> – Balloon Pop: find the number that makes the total.</td></tr>
+<tr><td>10 min</td><td><b>Explore &amp; Teach</b> – Show 9 cubes. Hide 4 under a cup. Ask: “What do we need to add to 4 to get 9?” Reveal 5. Write 9 − 4 = 5 and 4 + 5 = 9 together.</td></tr>
+<tr><td>8 min</td><td><b>Game 1 🐸</b> – Think It Through (missing number → answer).</td></tr>
+<tr><td>8 min</td><td><b>Game 2 🦖</b> – Fact Detective (pick the helper addition fact).</td></tr>
+<tr><td>8 min</td><td><b>Game 3 🐙</b> – Octopus Feast (solve with a number pad).</td></tr>
+<tr><td>6 min</td><td><b>Share &amp; Exit Ticket</b> – “How can 7 − 3 be solved with addition?” Draw and tell a partner.</td></tr></table>
+<h3>🗣️ Teacher Talk</h3>
+<ul><li>“When I see <b>−</b>, I <b>think +</b>!”</li><li>Ask: “Which number is the whole? Which part do we know?”</li><li>Use a ten frame: fill to the whole, count the empty spots.</li></ul>
+<h3>🌟 Differentiation</h3><p>Support: use counters and totals to 6. Challenge: make up your own pair of facts (like 8 − 3 and 3 + 5).</p>
+<h3>✅ Check for Understanding</h3><p>Child can say the matching addition fact and gets the correct difference for 3 of 4 problems.</p>
+</div></section>
+
+<section id="warm"><div class="card"><h2>🎈 Warm-Up: Balloon Pop</h2><div id="G0"></div></div></section>
+<section id="g1"><div class="card"><h2>🐸 Game 1: Think It Through</h2><div id="G1"></div></div></section>
+<section id="g2"><div class="card"><h2>🦖 Game 2: Fact Detective</h2><div id="G2"></div></div></section>
+<section id="g3"><div class="card"><h2>🐙 Game 3: Octopus Feast</h2><div id="G3"></div></div></section>
+
+<script>
+const $=s=>document.querySelector(s),R=n=>Math.floor(Math.random()*n),sh=a=>a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(x=>x[1]);
+let on=true,AC;
+function tone(f1,f2,d,t='sine',v=.25,at=0){if(!on)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain(),s=AC.currentTime+at;o.type=t;o.frequency.setValueAtTime(f1,s);o.frequency.exponentialRampToValueAtTime(f2,s+d);g.gain.setValueAtTime(v,s);g.gain.exponentialRampToValueAtTime(.001,s+d);o.connect(g);g.connect(AC.destination);o.start(s);o.stop(s+d)}catch(e){}}
+const snd={boing:()=>{tone(150,700,.18,'sine',.3);tone(700,200,.25,'sine',.3,.18)},womp:()=>{tone(300,120,.3,'sawtooth',.2);tone(220,70,.45,'sawtooth',.2,.3)},honk:()=>{tone(220,200,.15,'square',.15);tone(260,240,.25,'square',.15,.18)},pop:()=>tone(900,150,.12,'triangle',.35),cheer:()=>[523,659,784,1047,1319].forEach((f,i)=>tone(f,f*1.01,.18,'triangle',.25,i*.1)),squeak:()=>{tone(1200,1800,.08,'square',.1);tone(1800,900,.12,'square',.1,.09)}};
+function say(t){if(!on||!window.speechSynthesis)return;try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.pitch=2;u.rate=1.1;speechSynthesis.speak(u)}catch(e){}}
+$('#snd').onclick=e=>{on=!on;e.target.textContent=on?'🔊 Sounds ON':'🔇 Sounds OFF';if(on)snd.boing()};
+document.querySelectorAll('#nav button').forEach(b=>b.onclick=()=>{document.querySelectorAll('section').forEach(s=>s.classList.remove('on'));$('#'+b.dataset.t).classList.add('on');document.querySelectorAll('#nav button').forEach(x=>x.classList.remove('on'));b.classList.add('on');snd.squeak()});
+const happy=['Boing! Yay!','Wowee! Super!','Splat-tastic!','You rock!','Bloop! Great job!'],oops=['Oopsie doodle!','Whoopsie! Try again!','Hee hee, almost!'];
+function dots(n,b){return '🍎'.repeat(n-b)+'❌'.repeat(b)}
+/* engine */
+function game(id,chars,qs,title){
+ const el=$('#'+id);let i=0,sc=0,miss=0;
+ function show(){
+  if(i>=qs.length){snd.cheer();say('Hooray! You are a math star!');el.innerHTML=`<div class="end"><div class="char jump">${chars[0]}🎉</div><p>${title}<br><b>⭐ ${sc} / ${qs.length}</b> on the first try!</p><button class="btn" id="${id}r">▶ Play again</button></div>`;$('#'+id+'r').onclick=()=>{i=0;sc=0;qs=qs.regen();show()};return}
+  const q=qs[i];miss=0;
+  el.innerHTML=`<div class="top"><span>Question ${i+1}/${qs.length}</span><span>⭐ ${sc}</span></div><div class="bar"><i style="width:${i/qs.length*100}%"></i></div>
+  <div class="char" id="${id}c">${chars[i%chars.length]}</div><div class="say" id="${id}s">Tap the right answer!</div>
+  <div class="big">${q.q}</div>${q.vis?`<div class="dots">${q.vis}</div>`:''}<div class="hint" id="${id}h" style="display:none">${q.hint||''}</div>
+  <div class="opts">${q.o.map(x=>`<button class="opt" data-v="${x}">${x}</button>`).join('')}</div>${q.hint?`<div style="text-align:center"><button class="btn sm" id="${id}hb">💡 Think addition!</button></div>`:''}`;
+  const hb=$('#'+id+'hb');if(hb)hb.onclick=()=>{$('#'+id+'h').style.display='block';snd.squeak()};
+  el.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{const c=$('#'+id+'c'),s=$('#'+id+'s');
+   if(b.dataset.v==String(q.a)){b.classList.add('good');if(!miss)sc++;const m=happy[R(5)];s.textContent=(q.win||'')+' '+m;c.classList.add('jump');[snd.boing,snd.honk,snd.pop][R(3)]();say(m);el.querySelectorAll('.opt').forEach(x=>x.onclick=null);setTimeout(()=>{i++;show()},1700)}
+   else{miss++;b.classList.add('bad');c.classList.remove('shake');void c.offsetWidth;c.classList.add('shake');snd.womp();s.textContent=oops[R(3)];if(miss>=2&&q.hint){$('#'+id+'h').style.display='block'}}})}
+ qs.regen=()=>gen[id]();return show}
+const opts3=(a,lo,hi)=>{let s=new Set([a]);while(s.size<3){let x=lo+R(hi-lo+1);s.add(x)}return sh([...s])};
+const gen={
+ G0:()=>{const r=sh([1,2,3,4,5,6,7,8,9]).slice(0,5).map(a=>({q:`${a} + ? = 10`,a:10-a,o:opts3(10-a,0,9),vis:'🎈'.repeat(a)+'❓'.repeat(10-a)}));r.regen=gen.G0;return r},
+ G1:()=>{const r=[];for(let k=0;k<8;k++){const a=5+R(6),b=1+R(a-1),c=a-b;r.push({q:`${a} − ${b} = ?<br>Think: ${b} + ? = ${a}`,a:c,o:opts3(c,0,a),vis:dots(a,b),hint:`Count up from ${b} to ${a}!`,win:`${b} + ${c} = ${a}, so ${a} − ${b} = ${c}!`})}r.regen=gen.G1;return r},
+ G2:()=>{const r=[];for(let k=0;k<6;k++){const a=5+R(6),b=1+R(a-1),c=a-b,good=`${b} + ${c} = ${a}`,w1=`${a} + ${b} = ${a+b}`,w2=`${b+1} + ${c} = ${a+1}`;r.push({q:`${a} − ${b} = ${c}<br><small>Which addition fact helps?</small>`,a:good,o:sh([good,w1,w2]),win:`${a} − ${b} = ${c}!`})}r.regen=gen.G2;return r},
+ G3:()=>{const r=[];for(let k=0;k<8;k++){const a=3+R(8),b=1+R(a-1),c=a-b;r.push({q:`${a} − ${b} = ?`,a:c,o:[0,1,2,3,4,5,6,7,8,9,10].filter(x=>x<=a),hint:`Think: ${b} + ? = ${a}`})}r.regen=gen.G3;return r}};
+const chars={G0:['🎈','🐵','🎈'],G1:['🐸','🐢','🦆','🐰'],G2:['🦖','🕵️','🦕'],G3:['🐙','🦑','🐠']};
+game('G0',chars.G0,gen.G0(),'Warm-up done!')();game('G1',chars.G1,gen.G1(),'Think It Through done!')();game('G2',chars.G2,gen.G2(),'Fact Detective done!')();game('G3',chars.G3,gen.G3(),'Octopus Feast done!')();
+document.querySelector('#nav button').classList.add('on');
+</script></body></html>

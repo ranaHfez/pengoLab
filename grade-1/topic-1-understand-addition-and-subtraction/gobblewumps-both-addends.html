@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gobblewump's Both-Addends Lesson</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FBF6EE;
+    --plum:#2E2242;
+    --plum-soft:#5A4C7A;
+    --leaf:#4FA97A;
+    --leaf-deep:#317956;
+    --tangerine:#FF9A4D;
+    --tangerine-deep:#E67B2E;
+    --berry:#E85D8A;
+    --berry-deep:#C43E6A;
+    --sky:#5FB4D9;
+    --paper:#FFFFFF;
+    --line:#E4D9C6;
+    --focus:#2E2242;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-padding-top: env(safe-area-inset-top, 0px);}
+  html,body{height:100%;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(circle at 8% 12%, #FFF3DE 0%, transparent 45%),
+      radial-gradient(circle at 92% 85%, #E9F6EF 0%, transparent 40%),
+      var(--cream);
+    color:var(--plum);
+    font-family:'Nunito', sans-serif;
+    min-height:100%;
+    display:flex;
+    flex-direction:column;
+  }
+  h1,h2,h3,.display{
+    font-family:'Baloo 2', sans-serif;
+    font-weight:700;
+    margin:0;
+    color:var(--plum);
+  }
+  button{font-family:inherit;}
+  button:focus-visible, .snack:focus-visible, .pill:focus-visible, .num-btn:focus-visible {
+    outline:3px solid var(--focus);
+    outline-offset:2px;
+  }
+
+  /* ---------- Top bar ---------- */
+  .topbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    padding:14px clamp(16px,3vw,36px);
+    padding-top: calc(14px + env(safe-area-inset-top, 0px));
+    background:var(--plum);
+    color:#fff;
+    position:sticky;
+    top:0;
+    z-index:50;
+  }
+  .topbar .brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-family:'Baloo 2';
+    font-size:1.15rem;
+    font-weight:700;
+  }
+  .topbar .brand .blob{
+    width:34px;height:34px;border-radius:50%;
+    background:var(--tangerine);
+    display:flex;align-items:center;justify-content:center;
+    font-size:1.2rem;
+  }
+  .progress-track{
+    flex:1;
+    max-width:420px;
+    display:flex;
+    gap:6px;
+  }
+  .progress-seg{
+    height:8px;
+    border-radius:5px;
+    flex:1;
+    background:rgba(255,255,255,.25);
+    overflow:hidden;
+  }
+  .progress-seg > i{
+    display:block;
+    height:100%;
+    width:0%;
+    background:var(--tangerine);
+    transition:width .35s ease;
+  }
+  .step-label{
+    font-size:.85rem;
+    color:rgba(255,255,255,.75);
+    white-space:nowrap;
+    font-weight:700;
+  }
+
+  /* ---------- Stage ---------- */
+  main{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:clamp(18px,4vw,40px) clamp(14px,4vw,32px) 110px;
+  }
+  .screen{
+    display:none;
+    width:100%;
+    max-width:920px;
+    animation:rise .4s ease;
+  }
+  .screen.active{display:block;}
+  @keyframes rise{
+    from{opacity:0; transform:translateY(14px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .screen{animation:none;}
+  }
+
+  .eyebrow{
+    font-weight:800;
+    color:var(--leaf-deep);
+    font-size:.95rem;
+    margin-bottom:6px;
+  }
+  .screen h2{
+    font-size:clamp(1.5rem, 4vw, 2.3rem);
+    line-height:1.15;
+    margin-bottom:10px;
+  }
+  .lede{
+    font-size:1.05rem;
+    color:var(--plum-soft);
+    max-width:62ch;
+    margin-bottom:26px;
+    font-weight:700;
+  }
+
+  .card{
+    background:var(--paper);
+    border:2px solid var(--line);
+    border-radius:26px;
+    padding:clamp(18px,3vw,30px);
+    box-shadow:0 10px 0 -6px rgba(46,34,66,.08);
+  }
+
+  /* ---------- Screen 1: Hook ---------- */
+  .hook-wrap{
+    display:grid;
+    grid-template-columns:1.1fr 1fr;
+    gap:26px;
+    align-items:center;
+  }
+  @media (max-width:700px){ .hook-wrap{grid-template-columns:1fr;} }
+
+  .monster-stage{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:14px;
+  }
+  .monster{
+    width:min(280px, 70vw);
+    cursor:pointer;
+    transition:transform .15s ease;
+    filter:drop-shadow(0 10px 0 rgba(0,0,0,.06));
+  }
+  .monster:hover{transform:translateY(-4px) rotate(-1deg);}
+  .monster:active{transform:translateY(2px) scale(.98);}
+  .hook-total{
+    font-family:'Baloo 2';
+    font-size:1.1rem;
+    background:var(--sky);
+    color:#fff;
+    padding:6px 16px;
+    border-radius:999px;
+    font-weight:700;
+  }
+  .hook-split{
+    font-family:'Baloo 2';
+    font-size:2rem;
+    color:var(--berry-deep);
+    min-height:2.6rem;
+  }
+  .tap-hint{
+    font-size:.9rem;
+    color:var(--plum-soft);
+    font-weight:700;
+  }
+  .steps-list{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+  .steps-list .item{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+  }
+  .steps-list .num{
+    flex:none;
+    width:30px;height:30px;
+    border-radius:50%;
+    background:var(--leaf);
+    color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Baloo 2';
+    font-weight:700;
+  }
+  .steps-list p{margin:0; color:var(--plum-soft); font-weight:700;}
+
+  /* ---------- Screen 2: Instruction ---------- */
+  .total-picker{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:22px;
+  }
+  .num-btn{
+    width:52px;height:52px;
+    border-radius:16px;
+    border:2px solid var(--line);
+    background:#fff;
+    font-family:'Baloo 2';
+    font-size:1.3rem;
+    font-weight:700;
+    color:var(--plum);
+    cursor:pointer;
+    transition:transform .12s ease, background .12s ease, color .12s ease;
+  }
+  .num-btn:hover{transform:translateY(-2px);}
+  .num-btn.active{
+    background:var(--plum);
+    color:#fff;
+    border-color:var(--plum);
+  }
+  .pairs-board{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    min-height:64px;
+    align-items:center;
+  }
+  .pair-chip{
+    background:var(--sky);
+    color:#fff;
+    font-family:'Baloo 2';
+    font-weight:700;
+    padding:10px 16px;
+    border-radius:14px;
+    font-size:1.05rem;
+    animation:pop .25s ease;
+  }
+  @keyframes pop{
+    from{transform:scale(.6); opacity:0;}
+    to{transform:scale(1); opacity:1;}
+  }
+  .reveal-btn{
+    margin-top:18px;
+    border:none;
+    background:var(--tangerine);
+    color:#fff;
+    font-family:'Baloo 2';
+    font-weight:700;
+    font-size:1rem;
+    padding:12px 22px;
+    border-radius:16px;
+    cursor:pointer;
+    box-shadow:0 5px 0 var(--tangerine-deep);
+  }
+  .reveal-btn:hover{filter:brightness(1.04);}
+  .reveal-btn:active{transform:translateY(3px); box-shadow:0 2px 0 var(--tangerine-deep);}
+  .insight{
+    margin-top:16px;
+    background:#F1EEFA;
+    border-left:5px solid var(--berry);
+    padding:14px 18px;
+    border-radius:12px;
+    font-weight:700;
+    color:var(--plum);
+    display:none;
+  }
+  .insight.show{display:block;}
+
+  /* ---------- Screen 3: Cup toss ---------- */
+  .toss-wrap{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:20px;
+  }
+  .cups-row{
+    display:flex;
+    gap:clamp(20px,6vw,70px);
+    align-items:flex-end;
+    justify-content:center;
+    flex-wrap:wrap;
+  }
+  .cup{
+    width:130px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:10px;
+  }
+  .cup-count{
+    font-family:'Baloo 2';
+    font-size:2.4rem;
+    color:var(--leaf-deep);
+    min-height:3rem;
+  }
+  .cup svg{width:110px;height:auto;}
+  .cup-dots{
+    display:flex;
+    flex-wrap:wrap;
+    gap:4px;
+    justify-content:center;
+    max-width:100px;
+    min-height:24px;
+  }
+  .dot{
+    width:12px;height:12px;border-radius:50%;
+    background:var(--tangerine);
+  }
+  .toss-btn{
+    border:none;
+    background:var(--leaf);
+    color:#fff;
+    font-family:'Baloo 2';
+    font-weight:700;
+    font-size:1.15rem;
+    padding:14px 30px;
+    border-radius:18px;
+    cursor:pointer;
+    box-shadow:0 6px 0 var(--leaf-deep);
+  }
+  .toss-btn:hover{filter:brightness(1.04);}
+  .toss-btn:active{transform:translateY(4px); box-shadow:0 2px 0 var(--leaf-deep);}
+  .equation-line{
+    font-family:'Baloo 2';
+    font-size:1.6rem;
+    color:var(--plum);
+    background:#fff;
+    border:2px solid var(--line);
+    padding:10px 24px;
+    border-radius:16px;
+    min-width:220px;
+    text-align:center;
+  }
+  .toss-history{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    justify-content:center;
+  }
+  .hist-chip{
+    background:#F1EEFA;
+    color:var(--plum-soft);
+    font-weight:800;
+    padding:6px 12px;
+    border-radius:10px;
+    font-size:.9rem;
+  }
+
+  /* ---------- Screen 4: Game ---------- */
+  .game-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:14px;
+    flex-wrap:wrap;
+    margin-bottom:18px;
+  }
+  .mystery-box{
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .mystery-num{
+    font-family:'Baloo 2';
+    font-size:2.6rem;
+    color:#fff;
+    background:var(--berry);
+    width:72px;height:72px;
+    border-radius:20px;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 6px 0 var(--berry-deep);
+  }
+  .new-number-btn{
+    border:none;
+    background:var(--plum);
+    color:#fff;
+    font-family:'Baloo 2';
+    font-weight:700;
+    padding:10px 18px;
+    border-radius:14px;
+    cursor:pointer;
+  }
+  .score-box{
+    font-family:'Baloo 2';
+    font-weight:700;
+    color:var(--leaf-deep);
+    background:#EAF7EF;
+    padding:10px 16px;
+    border-radius:14px;
+  }
+  .belly-arena{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+    margin-bottom:18px;
+  }
+  @media (max-width:640px){ .belly-arena{grid-template-columns:1fr;} }
+  .belly{
+    background:#F6F1FF;
+    border:3px dashed #CDBEEA;
+    border-radius:22px;
+    padding:16px;
+    min-height:150px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .belly-label{
+    font-family:'Baloo 2';
+    font-weight:700;
+    color:var(--plum-soft);
+    font-size:.95rem;
+  }
+  .belly-snacks{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    min-height:56px;
+  }
+  .belly-count{
+    font-family:'Baloo 2';
+    font-size:1.4rem;
+    color:var(--plum);
+  }
+  .snack-tray{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    justify-content:center;
+    padding:16px;
+    background:#fff;
+    border:2px solid var(--line);
+    border-radius:18px;
+    margin-bottom:14px;
+  }
+  .snack{
+    width:46px;height:46px;
+    border-radius:12px;
+    border:none;
+    background:var(--tangerine);
+    font-size:1.4rem;
+    cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 4px 0 var(--tangerine-deep);
+    transition:transform .1s ease;
+  }
+  .snack:hover{transform:translateY(-2px);}
+  .snack:active{transform:translateY(3px); box-shadow:0 1px 0 var(--tangerine-deep);}
+  .snack-mini{
+    width:34px;height:34px;
+    border-radius:9px;
+    background:#fff;
+    border:2px solid var(--tangerine);
+    font-size:1.1rem;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .game-controls{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-bottom:14px;
+  }
+  .pill{
+    border:none;
+    font-family:'Baloo 2';
+    font-weight:700;
+    padding:12px 22px;
+    border-radius:16px;
+    cursor:pointer;
+    font-size:1rem;
+  }
+  .pill.submit{
+    background:var(--leaf);
+    color:#fff;
+    box-shadow:0 5px 0 var(--leaf-deep);
+  }
+  .pill.reset{
+    background:#fff;
+    color:var(--plum);
+    border:2px solid var(--line);
+  }
+  .pill.submit:active{transform:translateY(3px); box-shadow:0 1px 0 var(--leaf-deep);}
+  .feedback{
+    text-align:center;
+    font-family:'Baloo 2';
+    font-size:1.3rem;
+    min-height:2.2rem;
+    color:var(--leaf-deep);
+  }
+  .feedback.burp{color:var(--berry-deep);}
+  .used-combos{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    justify-content:center;
+    margin-top:6px;
+  }
+  .used-chip{
+    background:#F1EEFA;
+    color:var(--plum-soft);
+    font-weight:800;
+    font-size:.82rem;
+    padding:5px 10px;
+    border-radius:9px;
+  }
+
+  /* ---------- Screen 5: Exit ticket ---------- */
+  .exit-wrap{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:20px;
+  }
+  .exit-circles{
+    display:flex;
+    gap:clamp(24px,6vw,60px);
+    align-items:center;
+    justify-content:center;
+    flex-wrap:wrap;
+  }
+  .exit-circle{
+    width:140px;height:140px;
+    border-radius:50%;
+    border:3px solid var(--plum);
+    background:#fff;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+  }
+  .exit-circle .val{
+    font-family:'Baloo 2';
+    font-size:2.4rem;
+    color:var(--plum);
+  }
+  .exit-btns{display:flex; gap:8px;}
+  .exit-btns button{
+    width:30px;height:30px;
+    border-radius:8px;
+    border:none;
+    background:var(--sky);
+    color:#fff;
+    font-weight:800;
+    cursor:pointer;
+  }
+  .exit-plus{font-family:'Baloo 2'; font-size:2rem; color:var(--plum-soft);}
+  .exit-eq{
+    font-family:'Baloo 2';
+    font-size:1.8rem;
+    color:var(--leaf-deep);
+    background:#EAF7EF;
+    padding:10px 28px;
+    border-radius:16px;
+  }
+  .exit-check{
+    font-weight:800;
+    color:var(--plum-soft);
+  }
+  .exit-check.good{color:var(--leaf-deep);}
+  .exit-check.bad{color:var(--berry-deep);}
+
+  /* ---------- Nav bar ---------- */
+  .navbar{
+    position:fixed;
+    bottom:0; left:0; right:0;
+    background:#fff;
+    border-top:2px solid var(--line);
+    padding:12px clamp(16px,3vw,36px);
+    padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+    z-index:50;
+  }
+  .nav-btn{
+    font-family:'Baloo 2';
+    font-weight:700;
+    font-size:1rem;
+    border:none;
+    padding:12px 22px;
+    border-radius:16px;
+    cursor:pointer;
+  }
+  .nav-btn.prev{
+    background:#fff;
+    color:var(--plum);
+    border:2px solid var(--line);
+  }
+  .nav-btn.next{
+    background:var(--plum);
+    color:#fff;
+  }
+  .nav-btn:disabled{
+    opacity:.35;
+    cursor:not-allowed;
+  }
+  .nav-center{
+    font-weight:800;
+    color:var(--plum-soft);
+    font-size:.9rem;
+    display:none;
+  }
+  @media (min-width:600px){ .nav-center{display:block;} }
+
+  .visually-hidden{
+    position:absolute; width:1px; height:1px;
+    padding:0; margin:-1px; overflow:hidden;
+    clip:rect(0,0,0,0); white-space:nowrap; border:0;
+  }
+</style>
+
+<!-- Shared template: colors, fonts, sounds, buttons, mascots. Keep this. -->
+<link rel="stylesheet" href="../../shared/theme.css">
+<script src="../../shared/theme.js" defer></script>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand"><span class="blob">👾</span> Gobblewump's Number Bellies</div>
+  <div class="progress-track" id="progressTrack"></div>
+  <div class="step-label" id="stepLabel">Step 1 of 5</div>
+</div>
+
+<main>
+
+  <!-- SCREEN 1: HOOK -->
+  <section class="screen active" data-screen="0">
+    <div class="eyebrow">Warm-Up</div>
+    <h2>Gobblewump forgot how he split his snacks!</h2>
+    <p class="lede">Gobblewump ate a pile of snacks using two paws, but he can't remember how many landed in each one — only the total. Tap him to see one way it could have happened.</p>
+    <div class="card hook-wrap">
+      <div class="monster-stage">
+        <div class="hook-total">Total snacks: 8</div>
+        <svg class="monster" id="monsterSvg" viewBox="0 0 200 190" role="button" tabindex="0" aria-label="Tap Gobblewump to split his snacks">
+          <ellipse cx="100" cy="175" rx="70" ry="10" fill="#000" opacity="0.06"/>
+          <path d="M40 110 Q30 60 70 35 Q100 15 130 35 Q170 60 160 110 Q165 150 100 160 Q35 150 40 110 Z" fill="#4FA97A"/>
+          <circle cx="70" cy="90" r="16" fill="#fff"/>
+          <circle cx="130" cy="90" r="16" fill="#fff"/>
+          <circle cx="73" cy="92" r="7" fill="#2E2242"/>
+          <circle cx="127" cy="92" r="7" fill="#2E2242"/>
+          <path d="M75 122 Q100 140 125 122" stroke="#2E2242" stroke-width="5" fill="none" stroke-linecap="round"/>
+          <path d="M50 55 L58 30 L68 50 Z" fill="#317956"/>
+          <path d="M150 55 L142 30 L132 50 Z" fill="#317956"/>
+          <ellipse cx="55" cy="140" rx="18" ry="14" fill="#317956"/>
+          <ellipse cx="145" cy="140" rx="18" ry="14" fill="#317956"/>
+        </svg>
+        <div class="hook-split" id="hookSplit" aria-live="polite">Tap Gobblewump!</div>
+        <div class="tap-hint">Tap again for another way to split 8</div>
+      </div>
+      <div class="steps-list">
+        <div class="item"><div class="num">1</div><p>Gobblewump has 8 snacks total, hidden in two paws.</p></div>
+        <div class="item"><div class="num">2</div><p>We don't know how many are in each paw — just the total.</p></div>
+        <div class="item"><div class="num">3</div><p>Today we'll find the missing parts when both addends are unknown!</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCREEN 2: INSTRUCTION -->
+  <section class="screen" data-screen="1">
+    <div class="eyebrow">Teach</div>
+    <h2>One total, many possible pairs</h2>
+    <p class="lede">Pick a total. Then reveal every pair of numbers that adds up to it — watch how the parts change but the whole stays the same.</p>
+    <div class="card">
+      <div class="total-picker" id="totalPicker" role="group" aria-label="Choose a total"></div>
+      <button class="reveal-btn" id="revealBtn">Show all the pairs</button>
+      <div class="pairs-board" id="pairsBoard"></div>
+      <div class="insight" id="insight">That's the big idea: the <strong>whole</strong> (total) stays fixed, but the <strong>parts</strong> can be split many different ways!</div>
+    </div>
+  </section>
+
+  <!-- SCREEN 3: GUIDED PRACTICE -->
+  <section class="screen" data-screen="2">
+    <div class="eyebrow">Guided Practice</div>
+    <h2>Cup Toss — 8 counters, two cups</h2>
+    <p class="lede">Press toss to drop 8 counters into two cups. Read the equation out loud together, then toss again to find a new pair.</p>
+    <div class="card toss-wrap">
+      <div class="cups-row">
+        <div class="cup">
+          <div class="cup-count" id="cupACount">0</div>
+          <svg viewBox="0 0 100 90"><path d="M15 10 L85 10 L72 80 Q50 90 28 80 Z" fill="#FFF" stroke="#5FB4D9" stroke-width="5"/></svg>
+          <div class="cup-dots" id="cupADots"></div>
+        </div>
+        <div class="cup">
+          <div class="cup-count" id="cupBCount">0</div>
+          <svg viewBox="0 0 100 90"><path d="M15 10 L85 10 L72 80 Q50 90 28 80 Z" fill="#FFF" stroke="#E85D8A" stroke-width="5"/></svg>
+          <div class="cup-dots" id="cupBDots"></div>
+        </div>
+      </div>
+      <button class="toss-btn" id="tossBtn">🎲 Toss the counters</button>
+      <div class="equation-line" id="tossEquation">? + ? = 8</div>
+      <div class="toss-history" id="tossHistory"></div>
+    </div>
+  </section>
+
+  <!-- SCREEN 4: GAME -->
+  <section class="screen" data-screen="3">
+    <div class="eyebrow">Play — Gobblewump's Belly Battle</div>
+    <h2>Feed the monster a new way each round!</h2>
+    <p class="lede">Tap snacks to add them to a belly. Fill both bellies so they add up to the mystery number — but never repeat a split you've already used, or Gobblewump burps!</p>
+    <div class="card">
+      <div class="game-top">
+        <div class="mystery-box">
+          <div class="mystery-num" id="mysteryNum">9</div>
+          <div>
+            <div style="font-weight:800; color:var(--plum-soft);">Mystery Number</div>
+            <button class="new-number-btn" id="newNumberBtn">New number</button>
+          </div>
+        </div>
+        <div class="score-box" id="scoreBox">Unique splits found: 0</div>
+      </div>
+
+      <div class="snack-tray" id="snackTray"></div>
+
+      <div class="belly-arena">
+        <div class="belly">
+          <div class="belly-label">Left belly</div>
+          <div class="belly-snacks" id="bellyA"></div>
+          <div class="belly-count" id="bellyACount">0</div>
+        </div>
+        <div class="belly">
+          <div class="belly-label">Right belly</div>
+          <div class="belly-snacks" id="bellyB"></div>
+          <div class="belly-count" id="bellyBCount">0</div>
+        </div>
+      </div>
+
+      <div class="game-controls">
+        <button class="pill submit" id="feedBtn">Feed Gobblewump!</button>
+        <button class="pill reset" id="clearBtn">Clear bellies</button>
+      </div>
+      <div class="feedback" id="gameFeedback" aria-live="polite"></div>
+      <div class="used-combos" id="usedCombos"></div>
+    </div>
+  </section>
+
+  <!-- SCREEN 5: EXIT TICKET -->
+  <section class="screen" data-screen="4">
+    <div class="eyebrow">Exit Ticket</div>
+    <h2>Show one way to split the number</h2>
+    <p class="lede">Use the arrows to split the total between the two circles, then check your equation.</p>
+    <div class="card exit-wrap">
+      <div class="hook-total" id="exitTotalLabel">Total: 7</div>
+      <div class="exit-circles">
+        <div class="exit-circle">
+          <div class="val" id="exitA">0</div>
+          <div class="exit-btns">
+            <button id="exitAminus" aria-label="Decrease left circle">−</button>
+            <button id="exitAplus" aria-label="Increase left circle">+</button>
+          </div>
+        </div>
+        <div class="exit-plus">+</div>
+        <div class="exit-circle">
+          <div class="val" id="exitB">0</div>
+          <div class="exit-btns">
+            <button id="exitBminus" aria-label="Decrease right circle">−</button>
+            <button id="exitBplus" aria-label="Increase right circle">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="exit-eq" id="exitEq">0 + 0 = 0</div>
+      <div class="exit-check" id="exitCheck">Adjust the circles so they add up to 7.</div>
+    </div>
+  </section>
+
+</main>
+
+<div class="navbar">
+  <button class="nav-btn prev" id="prevBtn">← Back</button>
+  <div class="nav-center" id="navCenter">Warm-Up</div>
+  <button class="nav-btn next" id="nextBtn">Next →</button>
+</div>
+
+<script>
+(function(){
+  var screens = Array.prototype.slice.call(document.querySelectorAll('.screen'));
+  var names = ['Warm-Up','Teach','Guided Practice','Belly Battle Game','Exit Ticket'];
+  var current = 0;
+
+  var progressTrack = document.getElementById('progressTrack');
+  screens.forEach(function(){
+    var seg = document.createElement('div');
+    seg.className = 'progress-seg';
+    seg.innerHTML = '<i></i>';
+    progressTrack.appendChild(seg);
+  });
+  var segs = progressTrack.querySelectorAll('.progress-seg > i');
+
+  function renderNav(){
+    screens.forEach(function(s,i){ s.classList.toggle('active', i===current); });
+    segs.forEach(function(bar,i){ bar.style.width = (i<=current ? '100%':'0%'); });
+    document.getElementById('stepLabel').textContent = 'Step ' + (current+1) + ' of ' + screens.length;
+    document.getElementById('navCenter').textContent = names[current];
+    document.getElementById('prevBtn').disabled = current===0;
+    var nextBtn = document.getElementById('nextBtn');
+    nextBtn.disabled = current===screens.length-1;
+    nextBtn.textContent = current===screens.length-1 ? 'End' : 'Next →';
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+  document.getElementById('prevBtn').addEventListener('click', function(){
+    if(current>0){ current--; renderNav(); }
+  });
+  document.getElementById('nextBtn').addEventListener('click', function(){
+    if(current<screens.length-1){ current++; renderNav(); }
+  });
+  renderNav();
+
+  /* ---------- Screen 1: Hook ---------- */
+  var hookSplit = document.getElementById('hookSplit');
+  var monsterSvg = document.getElementById('monsterSvg');
+  function randSplitOf(total){
+    var a = Math.floor(Math.random()*(total+1));
+    return [a, total-a];
+  }
+  function doHookTap(){
+    var pair = randSplitOf(8);
+    hookSplit.textContent = pair[0] + ' + ' + pair[1] + ' = 8';
+    monsterSvg.animate(
+      [{transform:'scale(1) rotate(0deg)'},{transform:'scale(1.08) rotate(-2deg)'},{transform:'scale(1) rotate(0deg)'}],
+      {duration:300, easing:'ease-out'}
+    );
+  }
+  monsterSvg.addEventListener('click', doHookTap);
+  monsterSvg.addEventListener('keydown', function(e){ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); doHookTap(); } });
+
+  /* ---------- Screen 2: Instruction ---------- */
+  var totalPicker = document.getElementById('totalPicker');
+  var chosenTotal = 6;
+  [5,6,7,8,9,10].forEach(function(n){
+    var b = document.createElement('button');
+    b.className = 'num-btn' + (n===chosenTotal ? ' active':'');
+    b.textContent = n;
+    b.setAttribute('aria-pressed', n===chosenTotal ? 'true':'false');
+    b.addEventListener('click', function(){
+      chosenTotal = n;
+      totalPicker.querySelectorAll('.num-btn').forEach(function(x){
+        x.classList.remove('active'); x.setAttribute('aria-pressed','false');
+      });
+      b.classList.add('active'); b.setAttribute('aria-pressed','true');
+      document.getElementById('pairsBoard').innerHTML = '';
+      document.getElementById('insight').classList.remove('show');
+    });
+    totalPicker.appendChild(b);
+  });
+  document.getElementById('revealBtn').addEventListener('click', function(){
+    var board = document.getElementById('pairsBoard');
+    board.innerHTML = '';
+    var i = 0;
+    function addNext(){
+      if(i > chosenTotal){
+        document.getElementById('insight').classList.add('show');
+        return;
+      }
+      var chip = document.createElement('div');
+      chip.className = 'pair-chip';
+      chip.textContent = i + ' + ' + (chosenTotal-i) + ' = ' + chosenTotal;
+      board.appendChild(chip);
+      i++;
+      setTimeout(addNext, 140);
+    }
+    addNext();
+  });
+
+  /* ---------- Screen 3: Cup toss ---------- */
+  var tossBtn = document.getElementById('tossBtn');
+  var tossHistory = document.getElementById('tossHistory');
+  function renderDots(el, count, color){
+    el.innerHTML = '';
+    for(var k=0;k<count;k++){
+      var d = document.createElement('div');
+      d.className = 'dot';
+      d.style.background = color;
+      el.appendChild(d);
+    }
+  }
+  tossBtn.addEventListener('click', function(){
+    var pair = randSplitOf(8);
+    document.getElementById('cupACount').textContent = pair[0];
+    document.getElementById('cupBCount').textContent = pair[1];
+    renderDots(document.getElementById('cupADots'), pair[0], '#5FB4D9');
+    renderDots(document.getElementById('cupBDots'), pair[1], '#E85D8A');
+    document.getElementById('tossEquation').textContent = pair[0] + ' + ' + pair[1] + ' = 8';
+    var chip = document.createElement('div');
+    chip.className = 'hist-chip';
+    chip.textContent = pair[0] + '+' + pair[1];
+    tossHistory.appendChild(chip);
+  });
+
+  /* ---------- Screen 4: Game ---------- */
+  var mysteryNumEl = document.getElementById('mysteryNum');
+  var mystery = 9;
+  var bellyACountEl = document.getElementById('bellyACount');
+  var bellyBCountEl = document.getElementById('bellyBCount');
+  var bellyAEl = document.getElementById('bellyA');
+  var bellyBEl = document.getElementById('bellyB');
+  var snackTray = document.getElementById('snackTray');
+  var usedCombosEl = document.getElementById('usedCombos');
+  var gameFeedback = document.getElementById('gameFeedback');
+  var scoreBox = document.getElementById('scoreBox');
+  var bellyA = 0, bellyB = 0, trayLeft = 0;
+  var usedCombos = [];
+  var uniqueFound = 0;
+  var snackEmojis = ['🌮','🍕','🧁','🍪','🍩','🍓'];
+
+  function pickMystery(){
+    var choices = [6,7,8,9,10,11];
+    mystery = choices[Math.floor(Math.random()*choices.length)];
+    mysteryNumEl.textContent = mystery;
+    usedCombos = [];
+    uniqueFound = 0;
+    usedCombosEl.innerHTML = '';
+    scoreBox.textContent = 'Unique splits found: 0';
+    gameFeedback.textContent = '';
+    gameFeedback.className = 'feedback';
+    resetBellies();
+  }
+  function resetBellies(){
+    bellyA = 0; bellyB = 0; trayLeft = mystery;
+    renderGame();
+  }
+  function renderGame(){
+    bellyACountEl.textContent = bellyA;
+    bellyBCountEl.textContent = bellyB;
+    bellyAEl.innerHTML = '';
+    for(var i=0;i<bellyA;i++){
+      var s = document.createElement('div');
+      s.className = 'snack-mini';
+      s.textContent = '🌮';
+      bellyAEl.appendChild(s);
+    }
+    bellyBEl.innerHTML = '';
+    for(var j=0;j<bellyB;j++){
+      var s2 = document.createElement('div');
+      s2.className = 'snack-mini';
+      s2.textContent = '🍕';
+      bellyBEl.appendChild(s2);
+    }
+    snackTray.innerHTML = '';
+    for(var k=0;k<trayLeft;k++){
+      (function(){
+        var btn = document.createElement('button');
+        btn.className = 'snack';
+        btn.textContent = snackEmojis[k % snackEmojis.length];
+        btn.setAttribute('aria-label', 'Add snack to a belly');
+        btn.addEventListener('click', function(){
+          openBellyChoice(btn);
+        });
+        snackTray.appendChild(btn);
+      })();
+    }
+  }
+  function openBellyChoice(btn){
+    // simple: clicking snack adds to belly with fewer items so far; shift+click style not needed for grade 1 — instead alternate via two zones below tray
+    // We'll instead let a quick prompt-free approach: left click = left belly, and provide a toggle row.
+  }
+  // Simpler + more kid-friendly: two big tap zones under tray for "send to left/right"
+  // Replace snack click behavior: clicking a snack sends it to whichever belly was last selected via belly click.
+  var targetBelly = 'A';
+  bellyAEl.parentElement.addEventListener('click', function(){ targetBelly='A'; highlightTarget(); });
+  bellyBEl.parentElement.addEventListener('click', function(){ targetBelly='B'; highlightTarget(); });
+  function highlightTarget(){
+    document.querySelectorAll('.belly').forEach(function(b,idx){
+      var isTarget = (idx===0 && targetBelly==='A') || (idx===1 && targetBelly==='B');
+      b.style.borderColor = isTarget ? 'var(--leaf)' : '#CDBEEA';
+      b.style.background = isTarget ? '#EAF7EF' : '#F6F1FF';
+    });
+  }
+  highlightTarget();
+
+  snackTray.addEventListener('click', function(e){
+    var btn = e.target.closest('.snack');
+    if(!btn) return;
+    if(trayLeft<=0) return;
+    if(targetBelly==='A'){ bellyA++; } else { bellyB++; }
+    trayLeft--;
+    renderGame();
+  });
+
+  document.getElementById('clearBtn').addEventListener('click', resetBellies);
+
+  document.getElementById('feedBtn').addEventListener('click', function(){
+    if(bellyA + bellyB !== mystery){
+      gameFeedback.textContent = 'Keep going — bellies need to add up to ' + mystery + '!';
+      gameFeedback.className = 'feedback burp';
+      return;
+    }
+    var key = bellyA + '+' + bellyB;
+    var keyAlt = bellyB + '+' + bellyA;
+    if(usedCombos.indexOf(key)>-1 || usedCombos.indexOf(keyAlt)>-1){
+      gameFeedback.textContent = 'BURP! 🤢 That split was already used — try another!';
+      gameFeedback.className = 'feedback burp';
+      return;
+    }
+    usedCombos.push(key);
+    uniqueFound++;
+    scoreBox.textContent = 'Unique splits found: ' + uniqueFound;
+    gameFeedback.textContent = 'Yum! ' + bellyA + ' + ' + bellyB + ' = ' + mystery + ' — Gobblewump is happy!';
+    gameFeedback.className = 'feedback';
+    var chip = document.createElement('div');
+    chip.className = 'used-chip';
+    chip.textContent = bellyA + ' + ' + bellyB;
+    usedCombosEl.appendChild(chip);
+    resetBellies();
+  });
+
+  document.getElementById('newNumberBtn').addEventListener('click', pickMystery);
+  pickMystery();
+
+  /* ---------- Screen 5: Exit ticket ---------- */
+  var exitTotal = 7;
+  var exitA = 0, exitB = exitTotal;
+  document.getElementById('exitTotalLabel').textContent = 'Total: ' + exitTotal;
+  function renderExit(){
+    document.getElementById('exitA').textContent = exitA;
+    document.getElementById('exitB').textContent = exitB;
+    document.getElementById('exitEq').textContent = exitA + ' + ' + exitB + ' = ' + (exitA+exitB);
+    var check = document.getElementById('exitCheck');
+    if(exitA+exitB === exitTotal){
+      check.textContent = 'That adds up to ' + exitTotal + ' — great job splitting the total!';
+      check.className = 'exit-check good';
+    } else {
+      check.textContent = 'Adjust the circles so they add up to ' + exitTotal + '.';
+      check.className = 'exit-check bad';
+    }
+  }
+  document.getElementById('exitAplus').addEventListener('click', function(){ if(exitA<exitTotal){ exitA++; exitB--; renderExit(); } });
+  document.getElementById('exitAminus').addEventListener('click', function(){ if(exitA>0){ exitA--; exitB++; renderExit(); } });
+  document.getElementById('exitBplus').addEventListener('click', function(){ if(exitB<exitTotal){ exitB++; exitA--; renderExit(); } });
+  document.getElementById('exitBminus').addEventListener('click', function(){ if(exitB>0){ exitB--; exitA++; renderExit(); } });
+  exitA = 3; exitB = 4;
+  renderExit();
+
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Times Table – Interactive</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+<!-- Shared template: Home button and shared pieces. Keep this. -->
+<link rel="stylesheet" href="../shared/theme.css">
+<script src="../shared/theme.js" defer></script>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#FFFDF7;font-family:'Fredoka','Poppins','Comic Sans MS',sans-serif;color:#343A40}
+  .wrap{max-width:780px;margin:0 auto;padding:20px 16px 28px;display:flex;flex-direction:column;gap:14px}
+  header{display:flex;align-items:center;justify-content:center;gap:14px}
+  h1{margin:0;font-size:clamp(34px,7vw,56px);color:#7048E8;line-height:1.05}
+  .stars{display:flex;gap:6px}
+  .hint{text-align:center;font-size:18px;font-weight:600;color:#495057;margin:0}
+
+  .modes{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+  .mode{font:inherit;font-size:18px;font-weight:700;border:3px solid #7048E8;background:#fff;color:#6741D9;border-radius:999px;padding:8px 18px;cursor:pointer;min-height:44px}
+  .mode[aria-pressed="true"]{background:#7048E8;color:#fff}
+
+  .grid{display:grid;grid-template-columns:repeat(11,1fr);gap:5px}
+  .c{aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;border-radius:11px;border:3px solid var(--bd);background:var(--bg);color:var(--tx);font:inherit;font-size:clamp(14px,3.2vw,26px);font-weight:700;cursor:pointer;padding:0;transition:transform .12s, opacity .15s}
+  .c:hover{transform:scale(1.07)}
+  .c:focus-visible{outline:4px solid #212529;outline-offset:2px}
+  .c.head{color:#fff;border:none;font-size:clamp(16px,3.6vw,30px)}
+  .c.corner{background:#FAB005;color:#fff;border:none;cursor:default}
+  .c.corner:hover{transform:none}
+  .c.sq{background:#fff;border-style:dashed}
+  .c.hidden{color:transparent}
+  .c.hidden::after{content:"?";color:var(--tx);opacity:.45;position:absolute}
+  .c{position:relative}
+  .grid.focus .c:not(.lit):not(.head):not(.corner){opacity:.28}
+  .grid.focus .c.head:not(.lit){opacity:.45}
+  .c.lit{opacity:1}
+  .c.target{background:#212529 !important;color:#FFD43B !important;border-color:#212529 !important;transform:scale(1.12);z-index:2}
+  .c.target::after{content:none}
+  .c.target.hidden{color:transparent !important}
+  .c.target.hidden::after{content:"?";color:#FFD43B;opacity:1}
+  .c.path{background:#FFD43B;color:#212529;border-color:#E67700}
+  .c.path.hidden{color:transparent}
+
+  .panel{background:#fff;border:3px solid #DEE2E6;border-radius:18px;padding:14px 16px;min-height:120px;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
+  .eq{font-size:clamp(28px,6vw,44px);font-weight:700;color:#343A40}
+  .eq .ans{display:inline-block;min-width:1.6em;background:#FFD43B;border-radius:10px;padding:0 10px;color:#212529}
+  .eq .ans.q{background:#F1F3F5;color:#868E96}
+  .dots{display:inline-grid;gap:6px;padding:8px}
+  .dot{width:clamp(12px,2.6vw,20px);height:clamp(12px,2.6vw,20px);border-radius:50%}
+  .list{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;font-size:20px;font-weight:600}
+  .list span{background:#F3F0FF;border-radius:10px;padding:4px 10px}
+  .empty{color:#6C6F73;font-weight:500;font-size:18px}
+  .reveal{font:inherit;font-size:18px;font-weight:700;border:none;background:#2F9E44;color:#fff;border-radius:12px;padding:8px 18px;cursor:pointer;min-height:44px}
+
+  .actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .btn{font:inherit;font-size:20px;font-weight:700;border:none;border-radius:14px;padding:12px 26px;cursor:pointer;color:#fff;min-height:48px}
+  .btn.clear{background:#E03131}
+  footer{display:flex;justify-content:flex-end;font-size:16px;font-weight:600;color:#6C6F73}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="stars" aria-hidden="true">
+      <svg width="30" height="30" viewBox="0 0 24 24"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.2l7.1-.6z" fill="#FAB005"/></svg>
+      <svg width="30" height="30" viewBox="0 0 24 24"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.2l7.1-.6z" fill="#FF6B6B"/></svg>
+    </div>
+    <h1>Times Table</h1>
+    <div class="stars" aria-hidden="true">
+      <svg width="30" height="30" viewBox="0 0 24 24"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.2l7.1-.6z" fill="#4DABF7"/></svg>
+      <svg width="30" height="30" viewBox="0 0 24 24"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.2l7.1-.6z" fill="#51CF66"/></svg>
+    </div>
+  </header>
+
+  <div class="modes" role="group" aria-label="Mode">
+    <button class="mode" id="showMode" aria-pressed="true">Show answers</button>
+    <button class="mode" id="hideMode" aria-pressed="false">Hide answers (practice)</button>
+  </div>
+  <p class="hint" id="hint">Tap a box to see the fact, or tap a coloured number to see its whole table.</p>
+
+  <div class="grid" id="grid"></div>
+
+  <div class="panel" id="panel" aria-live="polite"><span class="empty">Your multiplication fact will show here.</span></div>
+
+  <div class="actions">
+    <button class="btn clear" id="clearBtn">Clear</button>
+  </div>
+  <footer>T.Rana Elsisi</footer>
+</div>
+
+<script>
+(function(){
+  var rows=[["#FFE3E3","#E03131","#C92A2A"],["#FFE8CC","#E8590C","#D9480F"],["#FFF3BF","#E67700","#E67700"],["#EBFBEE","#2F9E44","#2B8A3E"],["#E3FAFC","#0C8599","#0B7285"],["#E7F5FF","#1971C2","#1864AB"],["#EDF2FF","#4263EB","#3B5BDB"],["#F3F0FF","#7048E8","#6741D9"],["#F8F0FC","#AE3EC9","#9C36B5"],["#FFF0F6","#D6336C","#C2255C"]];
+  var grid=document.getElementById('grid'), panel=document.getElementById('panel'), hint=document.getElementById('hint');
+  var showBtn=document.getElementById('showMode'), hideBtn=document.getElementById('hideMode');
+  var cell={}, rowHead={}, colHead={}, hideMode=false, revealed={};
+
+  function mk(cls,text){var b=document.createElement('button');b.className='c '+cls;b.textContent=text;grid.appendChild(b);return b;}
+  var corner=document.createElement('div'); corner.className='c corner'; corner.textContent='×'; corner.setAttribute('aria-hidden','true'); grid.appendChild(corner);
+  for(var j=1;j<=10;j++){ var h=mk('head',j); h.style.background='#343A40'; h.setAttribute('aria-label','Column '+j); (function(j){h.onclick=function(){showTable(j,'col');};})(j); colHead[j]=h; }
+  for(var i=1;i<=10;i++){
+    var c=rows[i-1], rh=mk('head',i); rh.style.background=c[1]; rh.setAttribute('aria-label',i+' times table'); (function(i){rh.onclick=function(){showTable(i,'row');};})(i); rowHead[i]=rh;
+    for(var j=1;j<=10;j++){
+      var b=mk(i===j?'sq':'',i*j);
+      b.style.setProperty('--bg',c[0]);b.style.setProperty('--bd',c[1]);b.style.setProperty('--tx',c[2]);
+      b.setAttribute('aria-label',i+' times '+j);
+      (function(i,j){b.onclick=function(){showFact(i,j);};})(i,j);
+      cell[i+'x'+j]=b;
+    }
+  }
+
+  function resetMarks(){
+    grid.classList.remove('focus');
+    grid.querySelectorAll('.c').forEach(function(e){e.classList.remove('lit','target','path');});
+  }
+  function applyHidden(){
+    for(var k in cell){ cell[k].classList.toggle('hidden', hideMode && !revealed[k]); }
+  }
+
+  function showFact(i,j){
+    resetMarks(); grid.classList.add('focus');
+    rowHead[i].classList.add('lit'); colHead[j].classList.add('lit');
+    for(var x=1;x<j;x++) cell[i+'x'+x].classList.add('lit','path');
+    for(var y=1;y<i;y++) cell[y+'x'+j].classList.add('lit','path');
+    var t=cell[i+'x'+j]; t.classList.add('lit','target');
+    var key=i+'x'+j, hidden=hideMode && !revealed[key];
+    var color=rows[i-1][1];
+    var dots='<div class="dots" style="grid-template-columns:repeat('+j+',auto)" aria-label="'+i+' rows of '+j+'">';
+    for(var n=0;n<i*j;n++) dots+='<div class="dot" style="background:'+color+'"></div>';
+    dots+='</div>';
+    panel.innerHTML='<div class="eq">'+i+' × '+j+' = <span class="ans'+(hidden?' q':'')+'">'+(hidden?'?':i*j)+'</span></div>'
+      +'<div class="empty">'+i+' row'+(i>1?'s':'')+' of '+j+'</div>'+dots
+      +(hidden?'<button class="reveal" id="revealBtn">Check answer</button>':'');
+    if(hidden){
+      t.classList.add('hidden');
+      document.getElementById('revealBtn').onclick=function(){ revealed[key]=true; applyHidden(); showFact(i,j); };
+      hint.textContent='Count the dots or skip count, then check your answer!';
+    } else {
+      t.classList.remove('hidden');
+      hint.textContent='Row '+i+' meets column '+j+'. Switch the order: '+j+' × '+i+' is the same!';
+    }
+  }
+
+  function showTable(n,dir){
+    resetMarks(); grid.classList.add('focus');
+    var items=[];
+    if(dir==='row'){ rowHead[n].classList.add('lit'); for(var j=1;j<=10;j++){cell[n+'x'+j].classList.add('lit','path'); items.push([n,j]);} }
+    else { colHead[n].classList.add('lit'); for(var i=1;i<=10;i++){cell[i+'x'+n].classList.add('lit','path'); items.push([i,n]);} }
+    var html='<div class="eq" style="font-size:clamp(24px,5vw,34px)">The '+n+' times table</div><div class="list">';
+    items.forEach(function(p){ var k=p[0]+'x'+p[1], hid=hideMode&&!revealed[k]; html+='<span>'+p[0]+' × '+p[1]+' = '+(hid?'?':p[0]*p[1])+'</span>'; });
+    panel.innerHTML=html+'</div>';
+    hint.textContent= hideMode ? 'Say the answers out loud, then tap a box to check.' : 'Skip count by '+n+'!';
+  }
+
+  function clearAll(){
+    resetMarks(); revealed={}; applyHidden();
+    panel.innerHTML='<span class="empty">Your multiplication fact will show here.</span>';
+    hint.textContent='Tap a box to see the fact, or tap a coloured number to see its whole table.';
+  }
+  function setMode(h){
+    hideMode=h; showBtn.setAttribute('aria-pressed',!h); hideBtn.setAttribute('aria-pressed',h); clearAll();
+  }
+  showBtn.onclick=function(){setMode(false);}; hideBtn.onclick=function(){setMode(true);};
+  document.getElementById('clearBtn').onclick=clearAll;
+})();
+</script>
+</body>
+</html>

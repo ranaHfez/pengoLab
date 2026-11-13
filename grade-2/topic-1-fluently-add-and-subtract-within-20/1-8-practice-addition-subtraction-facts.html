@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Grade 2 · Topic 1 · Lesson 8 – Practice Addition and Subtraction Facts</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fff8e7;--ink:#2b2a4c;--card:#fff;--c1:#ff6b6b;--c2:#ffa62b;--c3:#2ec4b6;--c4:#4d96ff;--c5:#9b5de5;--c6:#f15bb5;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1f1d3a;--ink:#fff6dd;--card:#2e2b55}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.5 Fredoka,"Comic Sans MS",system-ui,sans-serif}
+header{text-align:center;padding:28px 16px 12px;background:linear-gradient(135deg,var(--c4),var(--c5) 50%,var(--c6));color:#fff;border-radius:0 0 40px 40px}
+h1{margin:0;font-size:clamp(26px,5vw,44px)}header p{margin:6px 0 0}
+.stars{display:inline-block;background:#fff;color:#2b2a4c;border-radius:20px;padding:4px 16px;margin-top:10px;font-weight:700}
+nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:16px}
+nav button{font:inherit;font-weight:600;border:0;border-radius:20px;padding:8px 14px;color:#fff;cursor:pointer;box-shadow:0 4px 0 rgba(0,0,0,.25)}
+nav button.on{outline:4px solid var(--ink)}
+main{max-width:900px;margin:0 auto;padding:0 14px 40px}
+.card{background:var(--card);border-radius:24px;padding:18px 22px;margin:14px 0;border:4px solid var(--c);box-shadow:0 6px 0 var(--c)}
+.card h2{margin:0 0 8px;color:var(--c)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+table{width:100%;border-collapse:collapse}td,th{padding:6px 8px;border-bottom:2px dashed #bbb;text-align:left;vertical-align:top}
+.pill{display:inline-block;border-radius:14px;padding:2px 12px;color:#fff;font-weight:600;font-size:15px}
+.big{font-size:clamp(34px,8vw,56px);font-weight:700;text-align:center;margin:10px 0}
+.opts{display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
+.opt{font:inherit;font-size:30px;font-weight:700;min-width:84px;min-height:84px;border:0;border-radius:50%;color:#fff;cursor:pointer;box-shadow:inset -6px -8px 0 rgba(0,0,0,.18),0 5px 0 rgba(0,0,0,.2);transition:transform .15s}
+.opt:hover{transform:translateY(-6px)}.opt.eq,.opt.tf{border-radius:20px;font-size:24px;padding:10px 16px}
+.opt.bad{animation:shake .4s;opacity:.4}.opt.good{transform:scale(1.2)}
+@keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.msg{text-align:center;min-height:32px;font-weight:600}
+.bar{height:14px;background:#ddd;border-radius:10px;overflow:hidden;margin:8px 0}.bar i{display:block;height:100%;background:var(--c);width:0;transition:width .4s}
+.mem{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.mc{aspect-ratio:1;font:inherit;font-size:clamp(16px,4vw,26px);font-weight:700;border:0;border-radius:16px;background:var(--c4);color:#fff;cursor:pointer}
+.mc.up{background:#fff;color:var(--ink);border:4px solid var(--c4)}.mc.done{background:var(--c3);color:#fff;border:0}
+.go{font:inherit;font-weight:700;border:0;border-radius:20px;padding:10px 22px;color:#fff;background:var(--c);cursor:pointer;box-shadow:0 4px 0 rgba(0,0,0,.25)}
+:focus-visible{outline:4px solid var(--ink);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.sec{display:none}.sec.on{display:block}
+</style>
+<!-- Shared template: colors, fonts, sounds, buttons, mascots. Keep this. -->
+<link rel="stylesheet" href="../../shared/theme.css">
+<script src="../../shared/theme.js" defer></script>
+</head><body>
+<header><h1>🧮 Fact Fun Day!</h1><p>enVision Math · Grade 2 · Topic 1 · Lesson 8<br><b>Practice Addition and Subtraction Facts</b></p><span class="stars">⭐ Stars: <span id="st">0</span></span></header>
+<nav id="nav"></nav>
+<main>
+<section class="sec on" id="s-plan">
+<div class="grid">
+<div class="card" style="--c:var(--c1)"><h2>🎯 Learning goals</h2><p>Students will:</p><ul><li>Add and subtract within 20 fluently.</li><li>Use strategies: doubles, make 10, count on, think addition.</li><li>Explain how addition and subtraction are related.</li></ul></div>
+<div class="card" style="--c:var(--c3)"><h2>🧰 Materials</h2><ul><li>Two-color counters, ten-frames</li><li>Number lines 0–20</li><li>Whiteboards &amp; markers</li><li>This page on a screen or tablets</li></ul></div>
+<div class="card" style="--c:var(--c5)"><h2>📖 Vocabulary</h2><p><b>Fact family</b> · <b>sum</b> · <b>difference</b> · <b>addend</b> · <b>related facts</b> · <b>doubles</b></p></div>
+</div>
+<div class="card" style="--c:var(--c4)"><h2>⏱️ 45-minute plan</h2>
+<table>
+<tr><td><span class="pill" style="background:var(--c2)">5 min</span></td><td><b>Warm-up:</b> Balloon Pop (tab 1). Quick mental math to wake up brains.</td></tr>
+<tr><td><span class="pill" style="background:var(--c1)">10 min</span></td><td><b>Explore:</b> Show 8 + 6 on a ten-frame. Ask: “How can we get 14 quickly?” Students share strategies with partners.</td></tr>
+<tr><td><span class="pill" style="background:var(--c3)">10 min</span></td><td><b>Teach:</b> Model the 4 strategies below, then fact families: 6 + 8 = 14, 8 + 6 = 14, 14 − 6 = 8, 14 − 8 = 6.</td></tr>
+<tr><td><span class="pill" style="background:var(--c5)">15 min</span></td><td><b>Game stations:</b> Rotate pairs through games 1–5. Students record 3 facts they found tricky.</td></tr>
+<tr><td><span class="pill" style="background:var(--c6)">5 min</span></td><td><b>Exit ticket:</b> Write a fact family for 7, 9, 16 and tell which strategy you used.</td></tr></table></div>
+<div class="grid">
+<div class="card" style="--c:var(--c2)"><h2>💡 Strategies</h2>
+<p>👯 <b>Doubles:</b> 7 + 7 = 14, so 7 + 8 = 15.</p><p>🔟 <b>Make 10:</b> 9 + 6 → 9 + 1 + 5 = 15.</p><p>👆 <b>Count on:</b> 5 + 3 → say 5, then 6, 7, 8.</p><p>🔁 <b>Think addition:</b> 15 − 9 = ? Think 9 + ? = 15.</p></div>
+<div class="card" style="--c:var(--c1)"><h2>🗣️ Questions to ask</h2><ul><li>Which strategy is fastest for 9 + 5? Why?</li><li>How does 6 + 7 = 13 help you solve 13 − 7?</li><li>Can you build a fact family with 5, 8, 13?</li></ul></div>
+<div class="card" style="--c:var(--c3)"><h2>🌈 Differentiation</h2><p><b>Support:</b> ten-frames and counters, facts within 10.<br><b>On level:</b> games as written.<br><b>Challenge:</b> create your own missing-number puzzles for a partner.</p></div>
+</div></section>
+
+<section class="sec" id="s-game"><div class="card" id="gc" style="--c:var(--c1)">
+<h2 id="gt"></h2><p id="gd"></p>
+<div class="bar"><i id="pb"></i></div>
+<div id="stage"></div><div class="msg" id="msg"></div>
+<div style="text-align:center"><button class="go" id="again">Play again</button></div></div></section>
+</main>
+<script>
+const $=id=>document.getElementById(id),R=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const sh=a=>a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(p=>p[1]);
+const COL=['#ff6b6b','#ffa62b','#2ec4b6','#4d96ff','#9b5de5','#f15bb5'];
+let stars=0,cur=null,round=0,locked=false,mem=null;
+const N=8;
+function opts3(ans,n){const s=new Set([ans]);while(s.size<n){const v=ans+R(-3,3);if(v>=0&&v<=20)s.add(v)}return sh([...s])}
+const G=[
+{n:'🎈 Warm-up: Balloon Pop',c:1,d:'Pop the balloon with the correct sum!',k:'bal',gen(){const a=R(1,10),b=R(1,20-a>10?10:20-a);return{q:`${a} + ${b} = ?`,o:opts3(a+b,4),a:a+b}}},
+{n:'🚀 Game 1: Subtraction Rocket',c:2,d:'Fuel the rocket with the right difference!',k:'num',gen(){const c=R(10,18),a=R(2,9);return{q:`${c} − ${a} = ?`,o:opts3(c-a,3),a:c-a}}},
+{n:'🔧 Game 2: Missing Number Machine',c:3,d:'Find the number hiding behind the ?',k:'num',gen(){if(Math.random()<.5){const a=R(3,9),b=R(3,9);return{q:`${a} + ? = ${a+b}`,o:opts3(b,3),a:b}}const c=R(11,18),a=R(3,9);return{q:`${c} − ? = ${c-a}`,o:opts3(a,3),a:a}}},
+{n:'🧠 Game 3: Memory Match',c:4,d:'Flip two cards. Match each fact to its answer!',k:'mem'},
+{n:'🕵️ Game 4: True or False Detective',c:5,d:'Is the number sentence correct? Decide!',k:'tf',gen(){const a=R(2,12),b=R(2,18-a<2?2:18-a),t=Math.random()<.5,x=t?a+b:a+b+(Math.random()<.5?-1:1)*R(1,2);const sub=Math.random()<.4&&a+b<=20;return sub?{q:`${a+b} − ${a} = ${t?b:x-a}`,o:['True','False'],a:t?'True':'False'}:{q:`${a} + ${b} = ${x}`,o:['True','False'],a:t?'True':'False'}}},
+{n:'🏠 Game 5: Fact Family House',c:6,d:'Which fact belongs in this fact family house?',k:'eq',gen(){const a=R(3,9),b=R(3,9),c=a+b,fam=[`${a} + ${b} = ${c}`,`${b} + ${a} = ${c}`,`${c} − ${a} = ${b}`,`${c} − ${b} = ${a}`],bad=[`${a} + ${b} = ${c+1}`,`${c} − ${a} = ${b+1}`,`${a} − ${b} = ${c}`,`${c} + ${a} = ${b}`];const ans=sh(fam)[0];return{q:`🏠 ${a} · ${b} · ${c}`,o:sh([ans,...sh(bad).slice(0,2)]),a:ans}}}
+];
+const nav=$('nav');
+[['📋 Lesson plan',COL[3]],...G.map((g,i)=>[g.n.split(':')[0].replace('Game ','G'),COL[i]])].forEach(([t,c],i)=>{const b=document.createElement('button');b.textContent=t;b.style.background=c;b.onclick=()=>show(i);nav.appendChild(b)});
+function show(i){[...nav.children].forEach((b,j)=>b.classList.toggle('on',i===j));$('s-plan').classList.toggle('on',i===0);$('s-game').classList.toggle('on',i>0);if(i>0){cur=i-1;start()}}
+function start(){const g=G[cur];round=0;locked=false;$('gt').textContent=g.n;$('gd').textContent=g.d;$('gc').style.setProperty('--c',COL[cur]);$('msg').textContent='';g.k==='mem'?memStart():next()}
+$('again').onclick=start;
+function award(){stars++;$('st').textContent=stars}
+function next(){const g=G[cur];$('pb').style.width=round/N*100+'%';if(round>=N){$('stage').innerHTML='<div class="big">🎉 Great job!</div>';$('msg').textContent='You finished '+N+' questions! ⭐';return}
+const q=g.gen();locked=false;$('msg').textContent='';
+$('stage').innerHTML=`<div class="big">${q.q}</div><div class="opts"></div>`;
+const box=$('stage').lastChild;
+q.o.forEach((v,i)=>{const b=document.createElement('button');b.className='opt '+(g.k==='eq'?'eq':g.k==='tf'?'tf':'');b.textContent=v;b.style.background=g.k==='tf'?(v==='True'?COL[2]:COL[0]):COL[(i+cur)%6];b.onclick=()=>{if(locked)return;if(v===q.a){locked=true;b.classList.add('good');award();$('msg').textContent=['Awesome! 🌟','You got it! 👏','Super! 🚀'][R(0,2)];round++;setTimeout(next,900)}else{b.classList.add('bad');$('msg').textContent='Try again — you can do it! 💪'}};box.appendChild(b)})}
+function memStart(){const pairs=[];const used=new Set();while(pairs.length<6){const a=R(2,9),b=R(2,9);if(a+b<=18&&!used.has(a+'+'+b)&&!used.has('s'+(a+b))){used.add(a+'+'+b);used.add('s'+(a+b));pairs.push([`${a}+${b}`,a+b])}}
+let cards=[];pairs.forEach((p,i)=>{cards.push({t:p[0],id:i});cards.push({t:String(p[1]),id:i})});cards=sh(cards);
+mem={open:[],left:6};$('pb').style.width='0';$('msg').textContent='';
+$('stage').innerHTML='<div class="mem"></div>';const box=$('stage').firstChild;
+cards.forEach(c=>{const b=document.createElement('button');b.className='mc';b.textContent='?';b.onclick=()=>{if(locked||b.classList.contains('up')||b.classList.contains('done'))return;b.classList.add('up');b.textContent=c.t;mem.open.push([b,c]);if(mem.open.length===2){locked=true;const[[b1,c1],[b2,c2]]=mem.open;setTimeout(()=>{if(c1.id===c2.id&&b1!==b2){b1.className=b2.className='mc done';award();mem.left--;$('pb').style.width=(6-mem.left)/6*100+'%';$('msg').textContent=mem.left?'Match! 🎯':'🎉 All matched! Great memory!'}else{[b1,b2].forEach(x=>{x.className='mc';x.textContent='?'})}mem.open=[];locked=false},800)}};box.appendChild(b)})}
+</script></body></html>

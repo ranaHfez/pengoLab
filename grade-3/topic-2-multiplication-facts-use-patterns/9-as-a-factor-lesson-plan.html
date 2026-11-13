@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>9 as a Factor – Grade 3 Lesson Plan</title>
+<style>
+:root{--bg:#fff6e0;--card:#fff;--ink:#2b2350;--muted:#6b6490;--p:#7c3aed;--o:#ff8a1f;--g:#16a34a;--b:#0ea5e9;--r:#ef4444;--y:#facc15;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1c1934;--card:#2a2648;--ink:#f4f0ff;--muted:#b6aedb}}
+:root[data-theme="dark"]{--bg:#1c1934;--card:#2a2648;--ink:#f4f0ff;--muted:#b6aedb}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Trebuchet MS","Segoe UI",system-ui,sans-serif;line-height:1.5}
+header{background:linear-gradient(120deg,#7c3aed,#ec4899,#ff8a1f);color:#fff;padding:22px 16px;text-align:center}
+header h1{margin:0;font-size:clamp(1.5rem,5vw,2.4rem)}
+header p{margin:4px 0 0;opacity:.95}
+.stars{display:inline-block;margin-top:10px;background:#0003;padding:4px 14px;border-radius:99px;font-weight:bold}
+nav{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;padding:12px;position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);z-index:5}
+nav button{border:0;border-radius:99px;padding:10px 16px;font:inherit;font-weight:bold;color:#fff;cursor:pointer;opacity:.75}
+nav button.on{opacity:1;transform:scale(1.07);box-shadow:0 3px 10px #0004}
+main{max-width:860px;margin:0 auto;padding:8px 14px 40px}
+section{background:var(--card);border-radius:22px;padding:20px;box-shadow:0 6px 20px #0002;border-top:8px solid var(--c)}
+h2{margin-top:0;color:var(--c)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.box{border-radius:16px;padding:12px 14px;background:color-mix(in srgb,var(--c) 12%,var(--card))}
+.box h3{margin:0 0 6px;font-size:1.05rem}
+ul,ol{margin:.3rem 0;padding-left:1.2rem}
+.big{font-size:2.6rem;font-weight:bold;text-align:center;margin:8px 0;color:var(--c)}
+.step{font-size:1.2rem;text-align:center;margin:6px 0}
+.q{text-align:center}
+.opts{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:12px 0}
+.opts button,.act{font:inherit;font-size:1.3rem;font-weight:bold;border:0;border-radius:14px;padding:10px 20px;background:var(--c);color:#fff;cursor:pointer;min-width:64px}
+.opts button:active,.act:active{transform:scale(.94)}
+.opts button.bad{background:var(--r);animation:sh .3s}
+.opts button.good{background:var(--g)}
+@keyframes sh{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+input[type=number]{font:inherit;font-size:1.4rem;width:90px;text-align:center;border:3px solid var(--c);border-radius:12px;background:var(--card);color:var(--ink)}
+.fb{min-height:1.8em;font-weight:bold;font-size:1.1rem}
+.seq{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;font-size:1.6rem;font-weight:bold}
+.seq span{background:color-mix(in srgb,var(--c) 18%,var(--card));border-radius:12px;padding:6px 12px;min-width:56px}
+.seq .blank{background:var(--y);color:#333}
+.hands{display:flex;gap:4px;justify-content:center;margin:12px 0}
+.hands button{width:min(8.2vw,54px);height:min(16vw,100px);border:0;border-radius:99px 99px 12px 12px;background:#ffcf9e;font:inherit;font-weight:bold;font-size:1.1rem;color:#5a3300;cursor:pointer}
+.hands button.fold{background:var(--r);color:#fff;height:min(6vw,40px);align-self:flex-end}
+.hands .gap{width:14px}
+.mem{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.card{aspect-ratio:1.2;border:0;border-radius:14px;font:inherit;font-weight:bold;font-size:clamp(1rem,4vw,1.5rem);background:var(--c);color:#fff;cursor:pointer}
+.card.up{background:var(--y);color:#333}
+.card.done{background:var(--g);color:#fff}
+.tip{background:#facc1533;border-left:6px solid var(--y);padding:8px 12px;border-radius:8px;margin-top:10px}
+</style>
+<!-- Shared template: colors, fonts, sounds, buttons, mascots. Keep this. -->
+<link rel="stylesheet" href="../../shared/theme.css">
+<script src="../../shared/theme.js" defer></script>
+</head>
+<body>
+<header>
+<h1>✨ 9 as a Factor ✨</h1>
+<p>enVision Math · Grade 3 · Topic 2 · Lesson 9</p>
+<div class="stars">⭐ Stars: <span id="stars">0</span></div>
+</header>
+<nav id="nav"></nav>
+<main>
+
+<section id="plan" style="--c:#7c3aed">
+<h2>📋 Lesson Plan</h2>
+<div class="grid">
+<div class="box"><h3>🎯 Objective</h3>Students use patterns and strategies (10 × n − n, the finger trick, digit sums) to find and explain products with 9 as a factor.</div>
+<div class="box"><h3>📚 Standards</h3>3.OA.C.7 fluently multiply within 100.<br>3.OA.D.9 identify arithmetic patterns, including in the multiplication table.</div>
+<div class="box"><h3>🔤 Vocabulary</h3>factor · product · pattern · digit · multiple · skip count</div>
+<div class="box"><h3>🧰 Materials</h3>Multiplication chart, counters, whiteboards, tablets or a projector for the games below.</div>
+</div>
+<h3>⏱️ Suggested timeline (about 60 min)</h3>
+<ol>
+<li><b>Warm-up (5 min):</b> 🚀 Skip-Count Rocket – count by 9s.</li>
+<li><b>Explore (10 min):</b> Circle the 9s row on a multiplication chart. What patterns do you see? Share with a partner.</li>
+<li><b>Teach (10 min):</b> Model the strategies below with think-alouds.</li>
+<li><b>Games 1–4 (25 min):</b> Rotate stations or play whole class on the board.</li>
+<li><b>Close (5 min):</b> Exit ticket + sharing.</li>
+</ol>
+<h3>💡 Strategies to model</h3>
+<div class="grid">
+<div class="box"><h3>1. Ten minus one group</h3>9 × 6 is one group less than 10 × 6. So 60 − 6 = 54.</div>
+<div class="box"><h3>2. Finger trick</h3>Hold up 10 fingers. Fold down finger n. Fingers on the left are the tens, on the right the ones.</div>
+<div class="box"><h3>3. Digit pattern</h3>The tens digit is 1 less than n, and the two digits always add to 9. (5 + 4 = 9)</div>
+</div>
+<div class="tip">🗣️ <b>Talk moves:</b> "Why does 10 × n − n work?" · "What do you notice about the digits?" · "Convince your partner."</div>
+<h3>🎟️ Exit ticket</h3>
+<ol><li>Find 9 × 7 using 10 × 7 − 7. Show your work.</li><li>The product 9 × 4 is 36. What is 3 + 6? Why does this happen?</li><li>Write one 9s fact you can now solve fast, and how.</li></ol>
+<h3>🌈 Differentiation</h3>
+<ul><li><b>Support:</b> multiplication chart, counters, start with 9 × 2 through 9 × 5.</li><li><b>Extend:</b> explain why 9 × n = 10 × n − n, or find 9 × 12 with the same idea.</li></ul>
+</section>
+
+<section id="warm" style="--c:#0ea5e9" hidden>
+<h2>🚀 Warm-Up: Skip-Count Rocket</h2>
+<p>Count by 9s! Pick the number that fills the yellow blank. 6 rounds.</p>
+<div class="q" id="wq"></div>
+</section>
+
+<section id="g1" style="--c:#ff8a1f" hidden>
+<h2>🎯 Game 1: Ten Minus One</h2>
+<p>Use 10 × n, then take away n to find 9 × n. Get 6 right!</p>
+<div class="q" id="g1q"></div>
+</section>
+
+<section id="g2" style="--c:#16a34a" hidden>
+<h2>🖐️ Game 2: Finger Trick Challenge</h2>
+<p>To find 9 × n, fold down finger number n. Tap the right finger!</p>
+<div class="q" id="g2q"></div>
+</section>
+
+<section id="g3" style="--c:#ec4899" hidden>
+<h2>🕵️ Game 3: Digit Detective</h2>
+<p>The digits of every 9s product add up to 9. Find the missing digit!</p>
+<div class="q" id="g3q"></div>
+</section>
+
+<section id="g4" style="--c:#7c3aed" hidden>
+<h2>🃏 Game 4: Memory Match</h2>
+<p>Flip two cards. Match each 9s fact with its product.</p>
+<div class="q"><div class="fb" id="g4f"></div><div class="mem" id="g4q"></div><br><button class="act" onclick="g4()">New board</button></div>
+</section>
+</main>
+
+<script>
+const $=s=>document.querySelector(s);
+const rnd=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const shuf=a=>a.sort(()=>Math.random()-.5);
+let stars=0;
+const star=(n=1)=>{stars+=n;$('#stars').textContent=stars};
+const tabs=[['plan','📋 Plan','#7c3aed'],['warm','🚀 Warm-Up','#0ea5e9'],['g1','🎯 Game 1','#ff8a1f'],['g2','🖐️ Game 2','#16a34a'],['g3','🕵️ Game 3','#ec4899'],['g4','🃏 Game 4','#7c3aed']];
+$('#nav').innerHTML=tabs.map(t=>`<button data-t="${t[0]}" style="background:${t[2]}" onclick="tab('${t[0]}')">${t[1]}</button>`).join('');
+function tab(id){document.querySelectorAll('section').forEach(s=>s.hidden=s.id!==id);document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.t===id));scrollTo(0,0)}
+tab('plan');
+const done=(el,ok,total,fn)=>{el.innerHTML=`<div class="big">🎉 Great job!</div><div class="step">You got ${ok} of ${total}. ${ok>=total-1?'You are a 9s master! 🏆':'Keep practicing – you are getting it! 💪'}</div><button class="act" onclick="${fn}">Play again</button>`;};
+function choices(c){const d=shuf([c+1,c-1,c+10,c-9,c+9].filter(x=>x>0&&x!==c)).slice(0,3);return shuf([c,...d])}
+
+// Warm-up
+let w;
+function warm(){w={r:0,ok:0,tried:false};wn()}
+function wn(){
+ if(w.r>=6){done($('#wq'),w.ok,6,'warm()');return}
+ const k=rnd(1,6),b=rnd(0,4),seq=[0,1,2,3,4].map(i=>9*(k+i)),c=seq[b];w.tried=false;
+ $('#wq').innerHTML=`<div class="seq">${seq.map((v,i)=>`<span class="${i==b?'blank':''}">${i==b?'?':v}</span>`).join('')}</div><div class="opts">${choices(c).map(v=>`<button onclick="wa(this,${v},${c})">${v}</button>`).join('')}</div><div class="fb" id="wf">Round ${w.r+1} of 6</div>`}
+function wa(btn,v,c){
+ if(v==c){btn.classList.add('good');if(!w.tried)w.ok++;star();w.r++;$('#wf').textContent='✅ Yes! +1 star';setTimeout(wn,900)}
+ else{btn.classList.add('bad');w.tried=true;$('#wf').textContent='Not quite. Add 9 to the number before the blank!'}}
+warm();
+
+// Game 1
+let a;
+function g1(){a={r:0,ok:0,n:0,tried:false};g1n()}
+function g1n(){
+ if(a.r>=6){done($('#g1q'),a.ok,6,'g1()');return}
+ a.n=rnd(2,10);a.tried=false;const n=a.n;
+ $('#g1q').innerHTML=`<div class="big">9 × ${n} = ?</div><div class="step">Step 1: 10 × ${n} = <b>${10*n}</b></div><div class="step">Step 2: ${10*n} − ${n} = <input id="g1i" type="number" inputmode="numeric"></div><br><button class="act" onclick="g1c()">Check ✔</button><div class="fb" id="g1f">Round ${a.r+1} of 6</div>`}
+function g1c(){
+ const v=+$('#g1i').value,n=a.n,c=9*n,f=$('#g1f');
+ if(v==c){if(!a.tried)a.ok++;star();a.r++;f.textContent=`✅ Yes! 9 × ${n} = ${c}. +1 star`;setTimeout(g1n,1200)}
+ else{a.tried=true;f.textContent=`Try again. Take away ${n} from ${10*n}.`}}
+g1();
+
+// Game 2
+let b;
+function g2(){b={r:0,ok:0,n:0,tried:false,lock:false};g2n()}
+function g2n(){
+ if(b.r>=6){done($('#g2q'),b.ok,6,'g2()');return}
+ b.n=rnd(2,10);b.tried=false;b.lock=false;
+ const fs=[1,2,3,4,5,6,7,8,9,10].map(i=>`<button id="f${i}" onclick="g2c(${i})">${i}</button>${i==5?'<span class="gap"></span>':''}`).join('');
+ $('#g2q').innerHTML=`<div class="big">9 × ${b.n}</div><div class="hands">${fs}</div><div class="fb" id="g2f">Fold finger ${b.n}! (Round ${b.r+1} of 6)</div>`}
+function g2c(i){
+ if(b.lock)return;const n=b.n,f=$('#g2f');
+ if(i==n){b.lock=true;$('#f'+i).classList.add('fold');if(!b.tried)b.ok++;star();b.r++;
+  f.innerHTML=`✅ ${n-1} finger${n-1==1?'':'s'} left = <b>${n-1}</b> tens, ${10-n} right = <b>${10-n}</b> ones.<br>So 9 × ${n} = <b>${9*n}</b>! +1 star`;setTimeout(g2n,2600)}
+ else{b.tried=true;f.textContent=`That is finger ${i}. Find finger number ${n}!`}}
+g2();
+
+// Game 3
+let d;
+function g3(){d={r:0,ok:0,tried:false,p:0,h:0};g3n()}
+function g3n(){
+ if(d.r>=6){done($('#g3q'),d.ok,6,'g3()');return}
+ const n=rnd(2,10),p=9*n,s=String(p);d.h=rnd(0,1);d.p=+s[d.h];d.tried=false;
+ const shown=s.split('').map((x,i)=>i==d.h?'?':x).join('');
+ $('#g3q').innerHTML=`<div class="step">9 × ${n} = <span class="big" style="display:inline;background:var(--y);color:#333;border-radius:12px;padding:0 14px">${shown}</span></div><div class="step">Clue: the two digits add up to 9.</div><div class="opts">${[0,1,2,3,4,5,6,7,8,9].map(v=>`<button onclick="g3c(this,${v},${n})">${v}</button>`).join('')}</div><div class="fb" id="g3f">Round ${d.r+1} of 6</div>`}
+function g3c(btn,v,n){
+ const f=$('#g3f');
+ if(v==d.p){btn.classList.add('good');if(!d.tried)d.ok++;star();d.r++;f.textContent=`✅ 9 × ${n} = ${9*n}, and ${String(9*n)[0]} + ${String(9*n)[1]} = 9! +1 star`;setTimeout(g3n,1500)}
+ else{btn.classList.add('bad');d.tried=true;f.textContent='Not quite. What number plus the other digit makes 9?'}}
+g3();
+
+// Game 4
+let m;
+function g4(){
+ m={open:[],matched:0,lock:false};
+ const ns=shuf([2,3,4,5,6,7,8,9,10]).slice(0,6);
+ const cards=shuf(ns.flatMap(n=>[{n,t:`9 × ${n}`},{n,t:String(9*n)}]));
+ $('#g4f').textContent='Find all 6 pairs!';
+ $('#g4q').innerHTML=cards.map((c,i)=>`<button class="card" data-n="${c.n}" data-t="${c.t}" onclick="g4f(this)">❓</button>`).join('')}
+function g4f(el){
+ if(m.lock||el.classList.contains('up')||el.classList.contains('done'))return;
+ el.classList.add('up');el.textContent=el.dataset.t;m.open.push(el);
+ if(m.open.length==2){
+  const [x,y]=m.open;m.lock=true;
+  if(x.dataset.n==y.dataset.n){setTimeout(()=>{x.className=y.className='card done';m.open=[];m.lock=false;m.matched++;star();
+   if(m.matched==6)$('#g4f').textContent='🎉 All matched! Bonus star!',star()},500)}
+  else setTimeout(()=>{[x,y].forEach(e=>{e.className='card';e.textContent='❓'});m.open=[];m.lock=false},900)}}
+g4();
+</script>
+</body></html>

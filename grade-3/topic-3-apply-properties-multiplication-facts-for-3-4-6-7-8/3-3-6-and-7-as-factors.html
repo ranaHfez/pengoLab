@@ -1,0 +1,141 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Grade 3 · L3-3 Apply Properties: 6 and 7 as Factors</title>
+<style>
+:root{color-scheme:dark;--bg:#0b1030;--card:#17205a;--c:#22d3ee;--o:#fb923c;--l:#a3e635;--p:#f472b6;--y:#facc15;--t:#f8fafc;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}body{margin:0;font-family:"Trebuchet MS","Segoe UI",Arial,sans-serif;background:radial-gradient(circle at 20% 10%,#2a1b6e,#0b1030 60%) fixed;color:var(--t);min-height:100vh}
+body:before{content:"";position:fixed;inset:0;background-image:radial-gradient(2px 2px at 20px 30px,#fff,transparent),radial-gradient(2px 2px at 90px 120px,#fde68a,transparent),radial-gradient(1.5px 1.5px at 160px 70px,#a5f3fc,transparent);background-size:200px 160px;opacity:.5;pointer-events:none;animation:tw 4s infinite alternate}
+@keyframes tw{to{opacity:.2}}
+header{text-align:center;padding:18px 12px 6px;position:relative}
+h1{margin:0;font-size:clamp(1.4rem,4.5vw,2.6rem);background:linear-gradient(90deg,var(--c),var(--l),var(--y),var(--o));-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{opacity:.85}.rocket{font-size:2.6rem;display:inline-block;animation:fly 2.5s ease-in-out infinite}@keyframes fly{50%{transform:translateY(-10px) rotate(8deg)}}
+nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:10px;position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:#0b1030cc;backdrop-filter:blur(6px)}
+nav button,.btn{border:0;border-radius:14px;padding:10px 14px;font:inherit;font-weight:800;color:#111;cursor:pointer;box-shadow:0 5px 0 #0006;transition:.15s}
+nav button:hover,.btn:hover,.opt:hover{transform:translateY(-3px) scale(1.04)}nav button:active,.btn:active{transform:translateY(3px);box-shadow:0 1px 0 #0006}
+nav button.on{outline:4px solid #fff}
+main{max-width:1000px;margin:0 auto;padding:12px}
+.sec{display:none;animation:pop .35s}.sec.on{display:block}@keyframes pop{from{transform:scale(.96);opacity:0}}
+.card{background:var(--card);border:3px solid #ffffff22;border-radius:20px;padding:16px;margin-bottom:14px;box-shadow:0 8px 24px #0006}
+.card h2,.card h3{margin-top:0}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.tag{display:inline-block;padding:3px 10px;border-radius:99px;font-weight:800;color:#111;font-size:.85rem}
+ul{padding-left:20px;line-height:1.6}.big{font-size:1.5rem;font-weight:800}
+.timeline div{display:flex;gap:10px;align-items:center;padding:8px;border-radius:12px;margin:6px 0;background:#ffffff12}.timeline b{min-width:70px}
+#dg{display:grid;gap:8px;max-width:420px;margin:12px auto}.dot{aspect-ratio:1;border-radius:50%;animation:pop .4s}.dot.a{background:var(--c);box-shadow:0 0 12px var(--c)}.dot.b{background:var(--o);box-shadow:0 0 12px var(--o)}
+.eq{text-align:center;font-size:clamp(1rem,3.4vw,1.5rem);font-weight:800;background:#0006;border-radius:14px;padding:10px;margin:8px 0}
+input[type=range]{width:100%}
+.hud{display:flex;justify-content:space-between;font-weight:800;font-size:1.1rem}
+.track{position:relative;height:46px;margin:8px 0;border-bottom:4px dashed #fff5}.ship{position:absolute;bottom:2px;font-size:2rem;transition:left .6s}.flag{position:absolute;right:0;bottom:2px;font-size:2rem}
+.q{font-size:clamp(1.3rem,4.5vw,2.2rem);font-weight:800;text-align:center;margin:14px 0;min-height:60px}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.opt{border:0;border-radius:16px;padding:16px 8px;font:inherit;font-size:1.25rem;font-weight:800;color:#111;cursor:pointer;box-shadow:0 5px 0 #0006;transition:.15s}
+.opt:nth-child(1){background:var(--c)}.opt:nth-child(2){background:var(--l)}.opt:nth-child(3){background:var(--y)}.opt:nth-child(4){background:var(--p)}
+.opt.good{outline:5px solid #fff;animation:jump .5s}.opt.bad{opacity:.35}@keyframes jump{50%{transform:scale(1.12)}}
+.fb{min-height:44px;text-align:center;font-weight:700;margin-top:10px;font-size:1.05rem}
+.end{text-align:center}.end .big{font-size:2.4rem}
+.mem{display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:10px}
+.mc{aspect-ratio:1.2;perspective:600px;cursor:pointer;border:0;background:none;padding:0;font:inherit}
+.mc i{display:flex;align-items:center;justify-content:center;width:100%;height:100%;border-radius:14px;font-style:normal;font-weight:800;font-size:1.3rem;transition:.4s;background:linear-gradient(135deg,var(--o),var(--p));color:#111;transform:rotateY(0)}
+.mc.f i,.mc.m i{background:var(--l);transform:rotateY(0)}.mc:not(.f):not(.m) i{font-size:0}.mc:not(.f):not(.m) i:before{content:"🚀";font-size:1.8rem}.mc.m i{background:var(--y);animation:jump .5s}
+.tools{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:8px}
+.sw{width:34px;height:34px;border-radius:50%;border:3px solid #fff;cursor:pointer;padding:0}.sw.on{outline:4px solid var(--y)}
+#wrap{border-radius:16px;overflow:hidden;background:#fff;touch-action:none;border:4px solid var(--c)}
+#wrap.grid{background-image:linear-gradient(#bae6fd 1px,transparent 1px),linear-gradient(90deg,#bae6fd 1px,transparent 1px);background-size:30px 30px}
+#wrap.dots{background-image:radial-gradient(#94a3b8 3px,transparent 4px);background-size:30px 30px}
+#wrap.dark{background:#0f172a}canvas{display:block;width:100%;touch-action:none;cursor:crosshair}
+.conf{position:fixed;font-size:1.8rem;pointer-events:none;z-index:50;animation:up 1.2s forwards}@keyframes up{to{transform:translateY(-220px) rotate(240deg);opacity:0}}
+</style>
+<!-- Shared template: colors, fonts, sounds, buttons, mascots. Keep this. -->
+<link rel="stylesheet" href="../../shared/theme.css">
+<script src="../../shared/theme.js" defer></script>
+</head><body>
+<header><div class="rocket">🚀</div><h1>Mission 6 &amp; 7: Space Math Academy</h1><div class="sub">enVision Math Grade 3 · Volume 1 · Topic 3 · L3-3 · Apply Properties: 6 and 7 as Factors</div></header>
+<nav id="nav"></nav>
+<main>
+<section class="sec on" id="plan">
+<div class="card"><h2>🎯 Mission Goals</h2><ul><li>Use the <b>Distributive Property</b> to break apart 6 and 7 into facts I already know.</li><li>Find 6 × n as <b>(5 × n) + (1 × n)</b> and 7 × n as <b>(5 × n) + (2 × n)</b>.</li><li>Explain my strategy and solve word problems with 6s and 7s.</li></ul></div>
+<div class="grid">
+<div class="card"><h3>📚 Vocabulary</h3><ul><li><b>Factor</b>: a number you multiply.</li><li><b>Product</b>: the answer to multiplication.</li><li><b>Distributive Property</b>: break a factor into parts, multiply each, then add.</li><li><b>Array</b>: objects in equal rows and columns.</li></ul></div>
+<div class="card"><h3>🧰 Materials</h3><ul><li>Counters or grid paper, two colors</li><li>Mini whiteboards or this page's whiteboard</li><li>Projector for the games</li><li>Exit ticket paper</li></ul></div>
+<div class="card"><h3>💡 Teacher Tips</h3><ul><li>Say it out loud: "6 is 5 and 1 more."</li><li>Alternative: 6 × n = double 3 × n.</li><li>Ask: "Which facts do you already know?" (5s, 1s, 2s)</li><li>Let students come up and draw the split on the whiteboard.</li></ul></div></div>
+<div class="card"><h2>⏱️ Flight Plan (45 min)</h2><div class="timeline">
+<div><b>5 min</b>🔥 Warm-Up Launch: fast facts of 1s, 2s, 5s, 10s (Warm-Up tab).</div>
+<div><b>10 min</b>🔭 Explore: build a 6 × 4 array with two colors. What do you see? Discuss.</div>
+<div><b>10 min</b>🧠 Teach: use the Array Lab and Whiteboard to model 6 × 8 and 7 × 6.</div>
+<div><b>15 min</b>🎮 Practice: students pick Games 1 to 4 (pairs or teams).</div>
+<div><b>5 min</b>🎟️ Exit Ticket: solve 6 × 9 and 7 × 7 using a split. Write one sentence on how.</div></div></div>
+<div class="card"><h3>🗣️ Key Questions</h3><ul><li>How can 5 × 8 help you find 6 × 8?</li><li>Why does 7 split into 5 + 2?</li><li>Can you find 6 × 7 a different way? (Try 3 × 7 doubled.)</li></ul></div>
+</section>
+
+<section class="sec" id="lab">
+<div class="card"><h2>🔬 Array Lab: See the Split</h2>
+<div class="tools"><button class="btn" style="background:var(--c)" onclick="df=6;demo()">Factor 6</button><button class="btn" style="background:var(--o)" onclick="df=7;demo()">Factor 7</button></div>
+<label>Rows (n): <b id="nv">4</b></label><input type="range" id="nr" min="1" max="10" value="4">
+<div id="dg"></div><div class="eq" id="eq"></div>
+<p style="text-align:center">🔵 = the 5 facts I know &nbsp; 🟠 = the extra part</p></div>
+</section>
+
+<section class="sec" id="wb">
+<div class="card"><h2>🖍️ Whiteboard</h2>
+<div class="tools" id="cols"></div>
+<div class="tools">
+<span>Size</span><input type="range" id="sz" min="2" max="30" value="6" style="width:110px">
+<button class="btn" style="background:var(--y)" id="pen">✏️ Pen</button>
+<button class="btn" style="background:var(--p)" id="era">🧽 Eraser</button>
+<button class="btn" style="background:var(--l)" id="und">↩️ Undo</button>
+<button class="btn" style="background:var(--o)" id="clr">🗑️ Clear</button></div>
+<div class="tools"><span>Board</span>
+<button class="btn" style="background:#fff" data-bg="">⬜ Plain</button><button class="btn" style="background:#bae6fd" data-bg="grid">▦ Grid</button><button class="btn" style="background:#cbd5e1" data-bg="dots">⚬ Dots</button><button class="btn" style="background:#64748b;color:#fff" data-bg="dark">⬛ Dark</button>
+<span>Stamp</span><button class="btn" style="background:var(--c)" id="s6">🔵 6×4 array</button><button class="btn" style="background:var(--o)" id="s7">🟠 7×4 array</button><button class="btn" style="background:var(--l)" id="s0">Stop stamp</button></div>
+<div id="wrap"><canvas id="cv" width="1000" height="460"></canvas></div></div>
+</section>
+
+<section class="sec" id="g0"><div class="card"><h2>🔥 Warm-Up Launch</h2><div id="q0"></div></div></section>
+<section class="sec" id="g1"><div class="card"><h2>🚀 Game 1: Rocket Splitter</h2><div id="q1"></div></div></section>
+<section class="sec" id="g2"><div class="card"><h2>🪐 Game 2: Fix the Planet (Missing Piece)</h2><div id="q2"></div></div></section>
+<section class="sec" id="g3"><div class="card"><h2>🛸 Game 3: Times Table Galaxy (24 Questions)</h2><div id="q3"></div></div></section>
+<section class="sec" id="g4"><div class="card"><h2>🏎️ Game 4: Turbo Race (3 lives)</h2><div id="q4"></div></div></section>
+</main>
+<script>
+const $=i=>document.getElementById(i),rnd=(a,b)=>a+Math.floor(Math.random()*(b-a+1)),sh=a=>a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(x=>x[1]);
+let ac,mute=false;
+function tone(f,t,d,ty){if(mute)return;try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();const o=ac.createOscillator(),g=ac.createGain();o.type=ty||'triangle';o.frequency.value=f;g.gain.setValueAtTime(.15,ac.currentTime+t);g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+t+d);o.connect(g);g.connect(ac.destination);o.start(ac.currentTime+t);o.stop(ac.currentTime+t+d)}catch(e){}}
+const ok=()=>[523,659,784,1047].forEach((f,i)=>tone(f,i*.09,.2)),bad=()=>{tone(220,0,.25,'sawtooth');tone(165,.15,.3,'sawtooth')},win=()=>[523,659,784,659,784,1047,1319].forEach((f,i)=>tone(f,i*.12,.25));
+function burst(n){const e=['⭐','🚀','🎉','✨','🏆','💥'];for(let i=0;i<(n||14);i++){const s=document.createElement('span');s.className='conf';s.textContent=e[i%6];s.style.left=rnd(5,90)+'vw';s.style.top=rnd(45,85)+'vh';document.body.appendChild(s);setTimeout(()=>s.remove(),1300)}}
+// nav
+const tabs=[['plan','📋 Plan','#22d3ee'],['lab','🔬 Array Lab','#a3e635'],['wb','🖍️ Whiteboard','#facc15'],['g0','🔥 Warm-Up','#fb923c'],['g1','🚀 Game 1','#f472b6'],['g2','🪐 Game 2','#22d3ee'],['g3','🛸 Game 3','#a3e635'],['g4','🏎️ Game 4','#facc15']];
+tabs.forEach(([id,l,c])=>{const b=document.createElement('button');b.textContent=l;b.style.background=c;b.dataset.t=id;b.onclick=()=>{document.querySelectorAll('.sec').forEach(s=>s.classList.toggle('on',s.id==id));document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('on',x==b));tone(660,0,.12);window.scrollTo({top:0,behavior:'smooth'})};$('nav').appendChild(b)});
+const m=document.createElement('button');m.textContent='🔊';m.style.background='#fff';m.onclick=()=>{mute=!mute;m.textContent=mute?'🔇':'🔊'};$('nav').appendChild(m);
+$('nav').firstChild.classList.add('on');
+// lab
+let df=6;const nr=$('nr');function demo(){const n=+nr.value;$('nv').textContent=n;const g=$('dg');g.style.gridTemplateColumns=`repeat(${df},1fr)`;g.innerHTML='';for(let r=0;r<n;r++)for(let c=0;c<df;c++)g.insertAdjacentHTML('beforeend',`<span class="dot ${c<5?'a':'b'}"></span>`);const k=df-5;$('eq').innerHTML=`${df} × ${n} = (5 × ${n}) + (${k} × ${n}) = ${5*n} + ${k*n} = <span style="color:var(--y)">${df*n}</span>`;tone(400+n*40,0,.1)}nr.oninput=demo;demo();
+// quiz engine
+function opts(a){const s=new Set([a]);while(s.size<4){const v=a+rnd(-6,6);if(v>0&&v!=a)s.add(v)}return sh([...s])}
+function quiz(id,gen,total,lives,icon,intro){const el=$(id);let i=0,s=0,l=lives,cur,lock;
+ el.innerHTML=`<div class="end"><p>${intro}</p><button class="btn big" style="background:var(--l)" id="${id}s">▶ Start!</button></div>`;$(id+'s').onclick=nx;
+ function nx(){if(i>=total||l<=0)return fin();i++;cur=gen(i);lock=false;el.innerHTML=`<div class="hud"><span>Question ${i}/${total}</span><span>⭐ ${s}</span><span>${lives>9?'':'❤️'.repeat(l)+'🖤'.repeat(lives-l)}</span></div><div class="track"><div class="ship" style="left:${(i-1)/total*88}%">${icon}</div><span class="flag">🏁</span></div><div class="q">${cur.q}</div><div class="opts">${cur.o.map((o,k)=>`<button class="opt" data-k="${k}">${o}</button>`).join('')}</div><div class="fb"></div>`;el.querySelectorAll('.opt').forEach(b=>b.onclick=()=>pk(b))}
+ function pk(b){if(lock)return;lock=true;const good=cur.o[b.dataset.k]==cur.a,f=el.querySelector('.fb');if(good){s++;ok();burst(10);f.innerHTML='🌟 Awesome! '+cur.h}else{l--;bad();el.querySelectorAll('.opt').forEach(x=>{if(cur.o[x.dataset.k]==cur.a)x.classList.add('good');else x.classList.add('bad')});f.innerHTML='💪 Almost! '+cur.h}el.querySelector('.ship').style.left=(i/total*88)+'%';setTimeout(nx,good?1200:2400)}
+ function fin(){const st=s>=total*.9?3:s>=total*.6?2:1;win();burst(30);el.innerHTML=`<div class="end"><div class="big">${'⭐'.repeat(st)}${'☆'.repeat(3-st)}</div><div class="big">Score: ${s} / ${total}</div><p>${st==3?'Legendary Commander! 🏆':st==2?'Great flying, Captain! 🚀':'Keep training, cadet! 💪'}</p><button class="btn big" style="background:var(--y)" id="${id}r">🔁 Play again</button></div>`;$(id+'r').onclick=()=>quiz(id,gen,total,lives,icon,intro)}}
+const E=(f,n)=>`${f} × ${n}`;
+const g0=()=>{const f=[1,2,5,10][rnd(0,3)],n=rnd(2,10),a=f*n;return{q:`${E(f,n)} = ?`,o:opts(a),a,h:`${E(f,n)} = ${a}`}};
+const g1=()=>{const f=rnd(6,7),n=rnd(3,9),k=f-5;if(Math.random()<.5){const a=`(5 × ${n}) + (${k} × ${n})`,w=sh([`(5 × ${n}) + (${k==1?2:1} × ${n})`,`(4 × ${n}) + (${k} × ${n})`,`(5 + ${k}) + ${n}`]);return{q:`Split it! ${E(f,n)} = ?`,o:sh([a,...w]),a,h:`${f} = 5 + ${k}, so ${E(f,n)} = ${a}`}}const a=f*n;return{q:`(5 × ${n}) + (${k} × ${n}) = ?<br><small>That is ${E(f,n)}</small>`,o:opts(a),a,h:`${5*n} + ${k*n} = ${a}`}};
+const g2=()=>{const f=rnd(6,7),n=rnd(3,9),k=f-5,t=rnd(0,2);if(t==0){const a=k*n;return{q:`${E(f,n)} = ${5*n} + ?`,o:opts(a),a,h:`${E(f,n)} = ${f*n}, and ${f*n} − ${5*n} = ${a}`}}if(t==1){const a=k;return{q:`${E(f,n)} = (5 × ${n}) + (? × ${n})`,o:sh([1,2,3,4]),a,h:`${f} is 5 and ${k} more`}}const a=f*n;return{q:`${E(f,n)} = ${5*n} + ${k*n} = ?`,o:opts(a),a,h:`${5*n} + ${k*n} = ${a}`}};
+const g4=()=>{const f=rnd(6,7),n=rnd(2,10),a=f*n;return{q:`${E(f,n)} = ?`,o:opts(a),a,h:`${E(5,n)} + ${E(f-5,n)} = ${5*n} + ${(f-5)*n} = ${a}`}};
+const Z=[['🌋 Zone 1 · Sixes Start','Skip count by 6: 6, 12, 18, 24, 30, 36.'],['🪐 Zone 2 · Sixes Power','Sixes are always even! 6 × 6 = 36 and 6 × 7 = 42.'],['🌠 Zone 3 · Sevens Start','Skip count by 7: 7, 14, 21, 28, 35, 42.'],['👾 Zone 4 · Sevens Boss','Trick: 5, 6, 7, 8 means 56 = 7 × 8. And 7 × 7 = 49.']];
+const g3=i=>{const z=Math.floor((i-1)/6),f=z<2?6:7,n=z<2?i:i-12,a=f*n,t=n%3,pre=`<small>${Z[z][0]}</small><br>`;let q=`${E(f,n)} = ?`,ans=a,o=opts(a);if(t==0){q=`? × ${f} = ${a}`;ans=n;o=opts(n).filter(v=>v>0)}else if(t==1&&n>=3){q=Array.from({length:n-1},(_,k)=>f*(k+1)).join(', ')+', ?<br><small>Keep skip counting by '+f+'!</small>'}return{q:pre+q,o:o.length<4?sh([...new Set([...o,ans+1,ans+2,ans+3])]).slice(0,4).concat([]).includes(ans)?sh([...new Set([...o,ans+1,ans+2,ans+3])]).slice(0,4):sh([ans,...[...new Set([...o,ans+1,ans+2,ans+3])].filter(v=>v!=ans).slice(0,3)]):o,a:ans,h:`${Z[z][1]} Split: ${E(f,n)} = (5 × ${n}) + (${f-5} × ${n}) = ${5*n} + ${(f-5)*n} = ${a}`}};
+quiz('q0',g0,10,5,'🔥','Blast off with quick facts of 1s, 2s, 5s and 10s. These are the facts that help us with 6s and 7s!');
+quiz('q1',g1,8,3,'🚀','Break apart 6 and 7 like a rocket splits its stages. Pick the right split!');
+quiz('q2',g2,8,3,'🪐','The planet equation has a missing piece. Find it to fix the planet!');
+quiz('q3',g3,24,99,'🛸','24 questions in 4 zones: Sixes Start, Sixes Power, Sevens Start and Sevens Boss. Use skip counting and the 5 + extra split. Collect all the stars!');
+quiz('q4',g4,10,3,'🏎️','Race! Answer 6s and 7s facts fast. Use your splits. Only 3 lives!');
+// whiteboard
+const cv=$('cv'),cx=cv.getContext('2d');let col='#2563eb',er=false,dr=false,stamp=0,hist=[],lx,ly;
+['#111827','#2563eb','#dc2626','#16a34a','#f59e0b','#db2777','#7c3aed','#06b6d4','#ffffff'].forEach((c,i)=>{const b=document.createElement('button');b.className='sw'+(i==1?' on':'');b.style.background=c;b.onclick=()=>{col=c;er=false;document.querySelectorAll('.sw').forEach(x=>x.classList.toggle('on',x==b));tone(600,0,.08)};$('cols').appendChild(b)});
+const P=e=>{const r=cv.getBoundingClientRect();return[(e.clientX-r.left)*cv.width/r.width,(e.clientY-r.top)*cv.height/r.height]};
+const snap=()=>{hist.push(cx.getImageData(0,0,cv.width,cv.height));if(hist.length>25)hist.shift()};
+cx.lineCap=cx.lineJoin='round';
+cv.onpointerdown=e=>{e.preventDefault();snap();[lx,ly]=P(e);if(stamp){const f=stamp;for(let r=0;r<4;r++)for(let c=0;c<f;c++){cx.globalCompositeOperation='source-over';cx.fillStyle=c<5?'#2563eb':'#f97316';cx.beginPath();cx.arc(lx+c*34,ly+r*34,12,0,7);cx.fill()}ok();return}dr=true;cv.setPointerCapture(e.pointerId);dot()};
+function dot(){cx.globalCompositeOperation=er?'destination-out':'source-over';cx.fillStyle=col;cx.beginPath();cx.arc(lx,ly,$('sz').value*(er?2:1)/2,0,7);cx.fill()}
+cv.onpointermove=e=>{if(!dr)return;const[x,y]=P(e);cx.globalCompositeOperation=er?'destination-out':'source-over';cx.strokeStyle=col;cx.lineWidth=$('sz').value*(er?2:1);cx.beginPath();cx.moveTo(lx,ly);cx.lineTo(x,y);cx.stroke();lx=x;ly=y};
+cv.onpointerup=cv.onpointercancel=()=>dr=false;
+$('pen').onclick=()=>{er=false;stamp=0};$('era').onclick=()=>{er=true;stamp=0};$('s6').onclick=()=>stamp=6;$('s7').onclick=()=>stamp=7;$('s0').onclick=()=>stamp=0;
+$('und').onclick=()=>{const h=hist.pop();if(h)cx.putImageData(h,0,0)};$('clr').onclick=()=>{snap();cx.clearRect(0,0,cv.width,cv.height);tone(300,0,.2)};
+document.querySelectorAll('[data-bg]').forEach(b=>b.onclick=()=>{$('wrap').className=b.dataset.bg;tone(500,0,.1)});
+</script></body></html>

@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Even and Odd Numbers – enVision Math Grade 2, Lesson 2-1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top, 0px);
+  padding-bottom:env(safe-area-inset-bottom, 0px);
+  --ink:#1c2354; --ink2:#454d86; --bg:#f1f7ff; --card:#ffffff; --line:#d3def7; --empty:#e6eefc;
+  --even:#2f80ff; --odd:#ff8a1f; --grape:#6a49f5; --mint:#0f9f82; --sun:#ffc933; --pink:#ff4d6d;
+  --b0:#fff0b8; --b1:#ffe0d0; --b2:#d3f5ea; --b3:#dbe8ff;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ink:#eef2ff; --ink2:#c3caf0; --bg:#10163a; --card:#1b2352; --line:#34408a; --empty:#262f6b;
+    --b0:#393216; --b1:#3e2a21; --b2:#143a37; --b3:#17285a;
+  }
+}
+:root[data-theme="dark"]{
+  --ink:#eef2ff; --ink2:#c3caf0; --bg:#10163a; --card:#1b2352; --line:#34408a; --empty:#262f6b;
+  --b0:#393216; --b1:#3e2a21; --b2:#143a37; --b3:#17285a;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth; scroll-padding-top:calc(env(safe-area-inset-top, 0px) + 76px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:500 18px/1.55 Nunito, system-ui, -apple-system, "Segoe UI", sans-serif}
+h1,h2,h3{font-family:Fredoka, "Trebuchet MS", system-ui, sans-serif;line-height:1.1;margin:0;font-weight:700}
+p{margin:0 0 .8em}
+.wrap{max-width:980px;margin:0 auto;padding:0 20px}
+:focus-visible{outline:4px solid var(--grape);outline-offset:3px}
+
+.top{position:sticky;top:env(safe-area-inset-top, 0px);z-index:20;background:var(--card);border-bottom:3px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:12px;padding-top:10px;padding-bottom:10px}
+.brand{font:700 1.3rem Fredoka, system-ui, sans-serif;white-space:nowrap}
+.nav{display:flex;gap:8px;overflow-x:auto;flex:1;scrollbar-width:none;padding:2px}
+.nav::-webkit-scrollbar{display:none}
+.nav a{white-space:nowrap;text-decoration:none;color:#1c2354;font:700 .95rem Nunito, system-ui, sans-serif;padding:7px 14px;border-radius:999px}
+.nav a.n-plan{background:#c9c0ff}.nav a.n-w{background:#ffd95e}.nav a.n-g1{background:#ffb08a}.nav a.n-g2{background:#68dcc2}.nav a.n-g3{background:#8fb8ff}
+.tools{display:flex;align-items:center;gap:8px}
+.starbox{font:700 1.1rem Fredoka, system-ui, sans-serif;background:var(--b0);padding:4px 12px;border-radius:999px;white-space:nowrap}
+.mute{border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;font-size:1.1rem;width:40px;height:40px;cursor:pointer}
+
+.hero{padding:44px 0 28px}
+.hero .wrap{display:grid;grid-template-columns:1.1fr 1fr;gap:32px;align-items:center}
+.hero h1{font-size:clamp(3rem,11vw,6rem);font-weight:700;letter-spacing:-.01em}
+.hero h1 .ev{color:var(--even)}
+.hero h1 .od{color:var(--odd)}
+.hero .sub{font-size:1.25rem;color:var(--ink2);max-width:34ch;margin-top:10px}
+.hero .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.tag{background:var(--card);border:2px solid var(--line);border-radius:999px;padding:4px 14px;font-weight:700;font-size:.95rem}
+.heroviz{display:grid;gap:14px}
+.hpanel{background:var(--card);border:3px solid var(--line);border-radius:24px;padding:16px 18px}
+.hpanel h3{font-size:1.5rem;margin-bottom:6px}
+.hpanel.e{border-color:var(--even)}.hpanel.o{border-color:var(--odd)}
+.hpanel.e h3{color:var(--even)}.hpanel.o h3{color:var(--odd)}
+.hpanel p{margin:6px 0 0;font-size:1rem}
+@media (prefers-reduced-motion: no-preference){
+  .heroviz .pp{animation:popin .45s cubic-bezier(.3,1.6,.5,1) both;animation-delay:calc(var(--i) * 140ms + 300ms)}
+}
+@keyframes popin{from{transform:scale(0)}to{transform:scale(1)}}
+
+.pairviz{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.pp{display:inline-flex;gap:2px;background:rgba(47,128,255,.16);border:2px solid var(--even);border-radius:999px;padding:2px 10px;font-size:1.6rem;line-height:1.3}
+.pp.left{background:rgba(255,138,31,.2);border:2px dashed var(--odd)}
+.emo{font-size:1.8rem;line-height:1.1}
+.bigeq{font:700 2rem Fredoka, system-ui, sans-serif;margin:6px 0}
+.hl{color:var(--odd);text-decoration:underline;text-decoration-thickness:4px;text-underline-offset:6px}
+
+.sec-title{font-size:clamp(2rem,6vw,3rem);margin-bottom:6px}
+.sec-lead{color:var(--ink2);max-width:60ch}
+.plan{padding:36px 0 56px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin:24px 0 36px}
+.fact{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:16px 18px}
+.fact h3{font-size:1.25rem;margin-bottom:4px;color:var(--grape)}
+.fact p,.fact ul{margin:0;font-size:1rem}
+.fact ul{padding-left:1.1em}
+.steps{list-style:none;margin:0;padding:0;counter-reset:s}
+.steps>li{counter-increment:s;display:grid;grid-template-columns:52px 1fr;gap:14px;padding-bottom:26px;position:relative}
+.steps>li::before{content:counter(s);width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font:700 1.4rem Fredoka, system-ui, sans-serif;color:#1c2354;background:var(--sun)}
+.steps>li:nth-child(2)::before{background:#ffb08a}
+.steps>li:nth-child(3)::before{background:#68dcc2}
+.steps>li:nth-child(4)::before{background:#8fb8ff}
+.steps>li:nth-child(5)::before{background:#c9c0ff}
+.steps>li:nth-child(6)::before{background:#ffb26b}
+.steps>li:nth-child(7)::before{background:#b7e35a}
+.steps>li:not(:last-child)::after{content:"";position:absolute;left:22px;top:50px;bottom:4px;width:3px;background:var(--line);border-radius:2px}
+.steps h3{font-size:1.5rem}
+.time{display:inline-block;font:700 .9rem Nunito, system-ui, sans-serif;background:var(--empty);padding:2px 12px;border-radius:999px;margin-left:8px;vertical-align:middle}
+.steps .body{min-width:0}
+.steps ul{margin:.3em 0 .8em;padding-left:1.2em}
+details{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:10px 16px;margin:.5em 0}
+summary{cursor:pointer;font-weight:800}
+details[open] summary{margin-bottom:6px}
+.say{border-left:5px solid var(--grape);padding:4px 0 4px 14px;margin:.5em 0;font-style:italic}
+
+.notes{background:var(--card);border:3px solid var(--line);border-radius:24px;padding:14px;margin:14px 0}
+.notes h4{margin:0 0 10px;font:700 1.25rem Fredoka, system-ui, sans-serif}
+.ntools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px}
+.ntools .grp{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:4px 8px;border:2px solid var(--line);border-radius:14px}
+.nb{min-width:44px;height:44px;border-radius:12px;border:3px solid var(--line);background:var(--card);color:var(--ink);font:700 1.05rem Fredoka, system-ui, sans-serif;cursor:pointer;padding:0 8px}
+.nb[aria-pressed="true"]{background:var(--grape);border-color:var(--grape);color:#fff}
+.sw{width:36px;height:36px;border-radius:50%;border:3px solid var(--line);cursor:pointer;padding:0}
+.sw[aria-pressed="true"]{box-shadow:0 0 0 3px var(--card),0 0 0 6px var(--ink)}
+.nsize{width:90px}
+.ncanvas{display:block;width:100%;aspect-ratio:2/1;background:#fff;border:3px solid var(--line);border-radius:16px;touch-action:none;cursor:crosshair}
+.explorer{background:var(--card);border:3px solid var(--line);border-radius:24px;padding:18px;margin:12px 0}
+.pickrow{display:grid;grid-template-columns:repeat(10,1fr);gap:6px;margin-bottom:14px}
+.pick{aspect-ratio:1;min-width:0;border-radius:12px;border:3px solid var(--line);background:var(--card);color:var(--ink);font:700 1.1rem Fredoka, system-ui, sans-serif;cursor:pointer;padding:0}
+.pick[aria-pressed="true"]{background:var(--grape);border-color:var(--grape);color:#fff}
+.pick.seen-ev{background:var(--even);border-color:var(--even);color:#fff}
+.pick.seen-od{background:var(--odd);border-color:var(--odd);color:#fff}
+.pick.seen-ev[aria-pressed="true"],.pick.seen-od[aria-pressed="true"]{box-shadow:0 0 0 3px var(--card),0 0 0 6px var(--ink);transform:scale(1.06)}
+.exbody{display:grid;grid-template-columns:1.2fr 1fr;gap:20px;align-items:center}
+.exbody .bigeq.ev{color:var(--even)}.exbody .bigeq.od{color:var(--odd)}
+.chart{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0}
+.chip{background:var(--b0);border-radius:12px;padding:4px 12px;font:700 1rem Nunito, system-ui, sans-serif}
+.chip.e{background:rgba(47,128,255,.2)}.chip.o{background:rgba(255,138,31,.25)}
+@media (max-width:640px){.exbody{grid-template-columns:1fr}.hero .wrap{grid-template-columns:1fr}}
+
+.diff{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin-top:20px}
+.diff .fact:nth-child(1) h3{color:var(--mint)}
+.diff .fact:nth-child(3) h3{color:var(--pink)}
+
+.band{padding:56px 0}
+.band.w{background:var(--b0)}.band.g1{background:var(--b1)}.band.g2{background:var(--b2)}.band.g3{background:var(--b3)}
+.band .meta{margin:10px 0 22px;display:grid;gap:4px;max-width:70ch}
+.band .meta p{margin:0}
+.stage{background:var(--card);border:4px solid var(--ink);border-radius:30px;padding:24px;min-height:360px}
+.stage.intro{display:grid;place-items:center;text-align:center;gap:6px}
+.stage .big{font-size:4rem;line-height:1}
+.btn{font:600 1.2rem Fredoka, system-ui, sans-serif;border:0;border-radius:999px;padding:10px 30px;background:var(--grape);color:#fff;cursor:pointer;box-shadow:0 5px 0 rgba(0,0,0,.25);transition:transform .08s}
+.btn:active{transform:translateY(3px);box-shadow:0 2px 0 rgba(0,0,0,.25)}
+.btn.alt{background:var(--mint)}
+.btn.ghost{background:var(--empty);color:var(--ink);box-shadow:0 5px 0 var(--line)}
+.qhead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+.qprog{display:flex;gap:6px;flex-wrap:wrap}
+.pip{width:14px;height:14px;border-radius:50%;background:var(--empty);border:2px solid var(--line)}
+.pip.done{background:var(--mint);border-color:var(--mint)}
+.pip.now{background:var(--sun);border-color:var(--ink)}
+.qcount{font-weight:800}
+.qprompt{font:600 1.45rem/1.3 Fredoka, system-ui, sans-serif;margin-bottom:10px}
+.qvisual{text-align:center;margin:8px 0 14px}
+.dotgroup{display:inline-flex;flex-wrap:wrap;gap:2px;max-width:340px;justify-content:center;background:var(--empty);padding:8px 12px;border-radius:16px}
+.numshow{font:700 3.2rem Fredoka, system-ui, sans-serif;line-height:1}
+.choices{display:grid;gap:14px;margin:14px 0}
+.choices.cards{grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}
+.choices.eq{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.choice{font:700 1.9rem Fredoka, system-ui, sans-serif;color:#1c2354;border:3px solid #1c2354;border-radius:20px;padding:12px 10px;cursor:pointer;box-shadow:0 5px 0 rgba(0,0,0,.25);min-height:64px}
+.choices.eq .choice{font-size:1.5rem}
+.choice.ch0{background:#ffb08a}.choice.ch1{background:#ffd95e}.choice.ch2{background:#68dcc2}.choice.ch3{background:#8fb8ff}
+.choices.eo .choice.ch0{background:#8fc0ff}.choices.eo .choice.ch1{background:#ffb36b}
+.choice:disabled{cursor:default}
+.choice.wrong{background:#cfcfe0 !important;opacity:.6;animation:shake .35s}
+.choice.right{outline:5px solid var(--mint);outline-offset:2px}
+@media (prefers-reduced-motion: no-preference){}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.feedback{min-height:3.4em;font-weight:700;font-size:1.1rem}
+.feedback strong{color:var(--mint)}
+.nextrow{display:flex;justify-content:center;gap:12px;margin-top:6px;flex-wrap:wrap}
+.final{text-align:center;padding:20px 0}
+.final .big{font-size:4rem}
+.final .score{font:700 2.4rem Fredoka, system-ui, sans-serif}
+
+/* pencil match */
+.pencils{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:14px 0}
+.pencil{width:64px;height:64px;border-radius:18px;border:3px solid var(--line);background:var(--empty);font-size:2rem;cursor:pointer;padding:0}
+.pencil.sel{outline:5px solid var(--grape);outline-offset:2px}
+.pencil.p0{background:#8fc0ff;border-color:#2f80ff}.pencil.p1{background:#68dcc2;border-color:#0f9f82}.pencil.p2{background:#ffd95e;border-color:#d9a400}
+.pencil.p3{background:#ff9db3;border-color:#ff4d6d}.pencil.p4{background:#c9c0ff;border-color:#6a49f5}.pencil.p5{background:#b7e35a;border-color:#6aa100}
+.pencil.left{border:3px dashed var(--odd);background:rgba(255,138,31,.2)}
+.pencil:disabled{cursor:default}
+.tally{text-align:center;font:600 1.3rem Fredoka, system-ui, sans-serif}
+
+.nav a.n-g4{background:#ff9db3}
+.band.g4{background:#ffdfe8}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .band.g4{background:#3d1f2e}}
+:root[data-theme="dark"] .band.g4{background:#3d1f2e}
+.dtbox{background:var(--card);border:4px solid var(--ink);border-radius:30px;padding:20px;margin-bottom:22px}
+.dtbox h3{font-size:1.4rem;margin-bottom:4px}
+.dthead,.dtgrid{display:grid;grid-template-columns:repeat(10,1fr);gap:6px}
+.dthead{margin-bottom:6px;text-align:center;font:700 1rem Fredoka, system-ui, sans-serif}
+.dthead span{border-radius:10px;padding:2px 0;color:#1c2354}
+.dthead .ev,.dt.ev{background:#8fc0ff}
+.dthead .od,.dt.od{background:#ffb36b}
+.dt{aspect-ratio:1;min-width:0;padding:0;border:3px solid transparent;border-radius:12px;font:700 1.05rem Fredoka, system-ui, sans-serif;color:#1c2354;cursor:pointer}
+.dt.col{border-color:#1c2354}
+.dt[aria-pressed="true"]{outline:4px solid var(--grape);outline-offset:1px}
+.dtmsg{min-height:3em;font-weight:700;margin-top:12px;font-size:1.15rem}
+.digits{display:inline-flex;gap:8px;align-items:center}
+.dg{width:64px;height:84px;border-radius:16px;display:grid;place-items:center;font:700 3rem Fredoka, system-ui, sans-serif;background:var(--empty);color:var(--ink)}
+.dg.dim{opacity:.35}
+.dg.cover{background:repeating-linear-gradient(45deg,var(--line),var(--line) 8px,var(--empty) 8px,var(--empty) 16px);color:var(--ink2)}
+.dg.last{background:var(--sun);color:#1c2354;border:4px solid var(--odd)}
+.rulebox{font-weight:700;font-size:.95rem;margin-top:8px}
+@media (max-width:520px){.dt{font-size:.8rem;border-width:2px;border-radius:8px}.dg{width:52px;height:72px;font-size:2.4rem}}
+.confetti{position:fixed;top:-40px;z-index:99;pointer-events:none;animation:fall 3s linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(360deg)}}
+footer{padding:28px 0 40px;text-align:center;color:var(--ink2);font-size:.95rem}
+@media (max-width:520px){.brand{display:none}.stage{padding:16px}.steps>li{grid-template-columns:42px 1fr;gap:10px}.steps>li::before{width:38px;height:38px;font-size:1.2rem}.steps>li:not(:last-child)::after{left:18px;top:42px}.pencil{width:52px;height:52px;font-size:1.6rem}.pick{font-size:.95rem}}
+</style>
+
+<!-- Shared template: colors, fonts, sounds, buttons, mascots. Keep this. -->
+<link rel="stylesheet" href="../../shared/theme.css">
+<script src="../../shared/theme.js" defer></script>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <span class="brand">Even or Odd ✏️</span>
+    <nav class="nav" aria-label="Page sections">
+      <a class="n-plan" href="#plan">Lesson plan</a>
+      <a class="n-w" href="#warmup">Warm-up</a>
+      <a class="n-g1" href="#game1">Game 1</a>
+      <a class="n-g2" href="#game2">Game 2</a>
+      <a class="n-g3" href="#game3">Game 3</a>
+      <a class="n-g4" href="#game4">Game 4</a>
+    </nav>
+    <div class="tools">
+      <span class="starbox">⭐ <span id="starCount">0</span></span>
+      <button class="mute" id="muteBtn" aria-pressed="false" aria-label="Sound on" title="Sound on or off">🔊</button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <h1><span class="ev">Even</span> and <span class="od">Odd</span></h1>
+      <p class="sub">Make pairs. If nothing is left over, the number is even. If one is left over, it is odd.</p>
+      <div class="tags">
+        <span class="tag">enVision Math · Grade 2</span>
+        <span class="tag">Topic 2: Work With Equal Groups</span>
+        <span class="tag">Lesson 2-1</span>
+      </div>
+    </div>
+    <div class="heroviz">
+      <div class="hpanel e"><h3>6 is even</h3><div id="heroEven"></div><p>3 pairs, none left over. 3 + 3 = 6</p></div>
+      <div class="hpanel o"><h3>7 is odd</h3><div id="heroOdd"></div><p>3 pairs and 1 left over.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="plan" id="plan">
+  <div class="wrap">
+    <h2 class="sec-title">Lesson plan</h2>
+    <p class="sec-lead">Follow the student book’s Solve &amp; Share, Visual Learning, Guided Practice, Independent Practice and Problem Solving pages alongside this plan. Page numbers and exact problems can differ by edition.</p>
+
+    <div class="facts">
+      <div class="fact"><h3>Learning goal</h3><p>Students decide whether a group of up to 20 objects is even or odd by making pairs. They write an even number as the sum of two equal addends.</p></div>
+      <div class="fact"><h3>Big question</h3><p>How can I tell if a number is even or odd?</p></div>
+      <div class="fact"><h3>Vocabulary</h3><p><b>even</b>, <b>odd</b>, <b>pair</b>, <b>equal groups</b>, <b>addend</b>, <b>ones digit</b></p></div>
+      <div class="fact"><h3>Materials</h3><ul><li>Two-color counters or linking cubes</li><li>Ten-frames</li><li>Number cards 1 to 20</li><li>Whiteboards and markers</li><li>Student book, tablets or a projector</li></ul></div>
+      <div class="fact"><h3>Standards and practices</h3><p>CCSS 2.OA.C.3 (odd and even numbers, equal addends). Math practices: MP3 explain your thinking, MP7 look for structure.</p></div>
+      <div class="fact"><h3>Time</h3><p>About 50 minutes. Games can move to math centers or a second session.</p></div>
+    </div>
+
+    <ol class="steps">
+      <li>
+        <div class="body">
+          <h3>Warm-up game <span class="time">5 min</span></h3>
+          <p>Play <a href="#warmup">Pencil Match</a> on the board. Students pair up pencils, then say if the number is even or odd.</p>
+          <details>
+            <summary>Teacher script</summary>
+            <p class="say">“Pencils come in pairs. Tap two pencils to make a pair. Keep going. Is any pencil left over?”</p>
+            <p>After each round ask: “How many pairs? How many left over? Is the number even or odd?”</p>
+          </details>
+        </div>
+      </li>
+      <li>
+        <div class="body">
+          <h3>Solve &amp; Share <span class="time">7 min</span></h3>
+          <p>Use the book’s opening problem. If you want a backup story:</p>
+          <p class="say">“Sam has 9 crayons. He wants to put them in pairs. Can he make pairs with no crayon left over?”</p>
+          <ul>
+            <li>Students use counters or drawings to try it.</li>
+            <li>Pairs share what happened and how they know.</li>
+            <li>Repeat with 8 crayons and compare the two results.</li>
+          </ul>
+          <div class="notes" id="notesBox">
+            <h4>📝 Notes board</h4>
+            <div class="ntools" role="toolbar" aria-label="Drawing tools">
+              <div class="grp" role="group" aria-label="Tools">
+                <button type="button" class="nb" data-tool="pen" aria-pressed="true" aria-label="Pen">✏️ Pen</button>
+                <button type="button" class="nb" data-tool="eraser" aria-pressed="false" aria-label="Eraser">🧽 Eraser</button>
+              </div>
+              <div class="grp" role="group" aria-label="Shapes">
+                <button type="button" class="nb" data-tool="line" aria-pressed="false" aria-label="Line">╱</button>
+                <button type="button" class="nb" data-tool="rect" aria-pressed="false" aria-label="Rectangle">▭</button>
+                <button type="button" class="nb" data-tool="circle" aria-pressed="false" aria-label="Circle">◯</button>
+                <button type="button" class="nb" data-tool="tri" aria-pressed="false" aria-label="Triangle">△</button>
+              </div>
+              <div class="grp" role="group" aria-label="Colors" id="nColors"></div>
+              <div class="grp"><label for="nSize" style="font-weight:700">Size</label><input class="nsize" id="nSize" type="range" min="2" max="24" value="5"></div>
+              <div class="grp">
+                <button type="button" class="nb" id="nUndo" aria-label="Undo">↩️ Undo</button>
+                <button type="button" class="nb" id="nClear" aria-label="Clear board">🗑️ Clear</button>
+              </div>
+            </div>
+            <canvas class="ncanvas" id="nCanvas" width="1000" height="500" aria-label="Notes board. Draw or write here."></canvas>
+          </div>
+
+        </div>
+      </li>
+      <li>
+        <div class="body">
+          <h3>Visual Learning: even and odd <span class="time">10 min</span></h3>
+          <ul>
+            <li>An <b>even</b> number makes pairs with none left over. It can be shown as two equal groups.</li>
+            <li>An <b>odd</b> number makes pairs with one left over.</li>
+            <li>An even number is a sum of two equal addends, like 5 + 5 = 10. An odd number cannot be.</li>
+            <li>Look at the ones digit. Even numbers end in 0, 2, 4, 6 or 8. Odd numbers end in 1, 3, 5, 7 or 9.</li>
+            <li>Counting by 2s from 2 lands on even numbers.</li>
+          </ul>
+          <p><b>Try the Even and Odd Explorer.</b> Tap any number from 1 to 20.</p>
+          <div class="explorer">
+            <div class="pickrow" id="exPick" role="group" aria-label="Pick a number from 1 to 20"></div>
+            <div style="margin:-4px 0 14px"><button class="btn alt" id="exClear" type="button">🧹 Clear colors</button></div>
+            <div class="exbody">
+              <div id="exViz"></div>
+              <div>
+                <div class="bigeq" id="exTitle" aria-live="polite"></div>
+                <p id="exLine1" style="font-weight:700"></p>
+                <p id="exLine2"></p>
+                <button class="btn alt" id="exSpeak" type="button">🔊 Say it</button>
+              </div>
+            </div>
+          </div>
+          <div class="chart" aria-label="Ones digits">
+            <span class="chip e">Even ones digits: 0, 2, 4, 6, 8</span><span class="chip o">Odd ones digits: 1, 3, 5, 7, 9</span>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="body">
+          <h3>Guided Practice and Convince Me <span class="time">8 min</span></h3>
+          <ul>
+            <li>Students do the Guided Practice items with a partner. They use counters to make pairs and check each answer.</li>
+            <li>Convince Me prompts you can use: “Is 13 even or odd? Draw pairs to show how you know.” and “Write 14 as two equal addends.”</li>
+          </ul>
+          <details>
+            <summary>What to listen for</summary>
+            <p>Strong answers mention pairs and a leftover, or give an equation like 7 + 7 = 14. Some students may also point to the ones digit.</p>
+          </details>
+        </div>
+      </li>
+      <li>
+        <div class="body">
+          <h3>Game centers <span class="time">12 min</span></h3>
+          <p>Rotate small groups through the four games, about 3 minutes each. Game 4 also works well as a whole-class mini-lesson on the board.</p>
+          <ul>
+            <li><a href="#game1">Rocket Sort</a>: decide if a number of objects is even or odd.</li>
+            <li><a href="#game2">Equal Groups Builder</a>: write even numbers as two equal addends and spot numbers that cannot.</li>
+            <li><a href="#game3">Number Detective</a>: use the ones digit, find odd and even numbers, and skip count by 2s.</li>
+            <li><a href="#game4">Last Digit Trick</a>: see that only the ones digit decides if a number is even or odd, even for big two-digit numbers (31 to 99).</li>
+          </ul>
+        </div>
+      </li>
+      <li>
+        <div class="body">
+          <h3>Independent Practice and Problem Solving <span class="time">5 min</span></h3>
+          <p>Students complete the book’s Independent Practice and Problem Solving items. Circulate and ask: “How do you know?”</p>
+          <p>Higher-order prompt: “Maya says 15 is even because 15 = 7 + 8. Is she right?” (No. 7 and 8 are not equal addends, and 15 leaves one left over.)</p>
+        </div>
+      </li>
+      <li>
+        <div class="body">
+          <h3>Exit ticket <span class="time">3 min</span></h3>
+          <ul>
+            <li>Is 11 even or odd? Draw pairs to show.</li>
+            <li>Write 12 as the sum of two equal addends.</li>
+            <li>Circle the even numbers: 5, 8, 14, 17.</li>
+          </ul>
+          <details>
+            <summary>Answer key</summary>
+            <p>1) Odd: 5 pairs and 1 left over. 2) 6 + 6 = 12. 3) 8 and 14.</p>
+          </details>
+        </div>
+      </li>
+    </ol>
+
+    <h2 style="font-size:2rem;margin-top:20px">Support every learner</h2>
+    <div class="diff">
+      <div class="fact"><h3>Needs support</h3><ul><li>Use real counters and numbers up to 10.</li><li>Draw a circle around each pair.</li><li>Say “pairs, then leftover” every time.</li></ul></div>
+      <div class="fact"><h3>On level</h3><ul><li>Work with numbers up to 20.</li><li>Write an equation for every even number.</li></ul></div>
+      <div class="fact"><h3>Ready for more</h3><ul><li>Use the ones digit for numbers up to 100.</li><li>Explore: add two even numbers. Is the sum even or odd? What about two odd numbers?</li></ul></div>
+    </div>
+
+    <div class="diff">
+      <div class="fact"><h3>I can statements</h3><ul><li>I can make pairs to tell if a number is even or odd.</li><li>I can write an even number as two equal addends.</li><li>I can use the ones digit to check.</li></ul></div>
+      <div class="fact"><h3>Quick check</h3><p>Watch for students who think any addition sentence makes a number even. Remind them the two addends must be equal.</p></div>
+      <div class="fact"><h3>Home connection</h3><p>Ask your child to count the pencils or toy cars at home and say if the total is even or odd.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="band w" id="warmup">
+  <div class="wrap">
+    <h2 class="sec-title">Warm-up game: Pencil Match ✏️</h2>
+    <div class="meta">
+      <p><b>Skills:</b> making pairs, finding a leftover, connecting pairs to even and odd.</p>
+      <p><b>How to use:</b> whole class on the board, or pairs on tablets. 5 rounds.</p>
+    </div>
+    <div class="stage intro" id="pencilStage"></div>
+  </div>
+</section>
+
+<section class="band g1" id="game1">
+  <div class="wrap">
+    <h2 class="sec-title">Game 1: Rocket Sort 🚀</h2>
+    <div class="meta">
+      <p><b>Skills:</b> deciding if a group of up to 20 objects is even or odd.</p>
+      <p><b>How to use:</b> 10 questions. After each answer the objects are shown in pairs so students can check.</p>
+    </div>
+    <div class="stage intro" id="game1Stage"></div>
+  </div>
+</section>
+
+<section class="band g2" id="game2">
+  <div class="wrap">
+    <h2 class="sec-title">Game 2: Equal Groups Builder 🧱</h2>
+    <div class="meta">
+      <p><b>Skills:</b> writing an even number as the sum of two equal addends; knowing an odd number cannot be split into two equal groups.</p>
+      <p><b>How to use:</b> 8 questions. Students can try again after a wrong answer, but only first tries earn stars.</p>
+    </div>
+    <div class="stage intro" id="game2Stage"></div>
+  </div>
+</section>
+
+<section class="band g3" id="game3">
+  <div class="wrap">
+    <h2 class="sec-title">Game 3: Number Detective 🔎</h2>
+    <div class="meta">
+      <p><b>Skills:</b> using the ones digit, finding odd and even numbers, skip counting by 2s, adding 1 to change odd and even.</p>
+      <p><b>How to use:</b> 8 mixed questions. Students can try again after a wrong answer, but only first tries earn stars.</p>
+    </div>
+    <div class="stage intro" id="game3Stage"></div>
+  </div>
+</section>
+
+<section class="band g4" id="game4">
+  <div class="wrap">
+    <h2 class="sec-title">Game 4: Last Digit Trick 🔦</h2>
+    <div class="meta">
+      <p><b>Skills:</b> an even or odd number is decided by its ones digit only. The tens and hundreds digits do not matter. This game uses two-digit numbers from 31 to 99.</p>
+      <p><b>How to use:</b> first explore the Digit Table together, then play 10 questions. Students can try again after a wrong answer, but only first tries earn stars.</p>
+    </div>
+    <div class="dtbox">
+      <h3>Digit Table: look at the last digit</h3>
+      <p>Tap any number. Look at its ones digit, the last digit. Each column has the same ones digit and the same color.</p>
+      <div class="dthead" aria-hidden="true"><span class="ev">0</span><span class="od">1</span><span class="ev">2</span><span class="od">3</span><span class="ev">4</span><span class="od">5</span><span class="ev">6</span><span class="od">7</span><span class="ev">8</span><span class="od">9</span></div>
+      <div class="dtgrid" id="dtGrid" role="group" aria-label="Numbers from 0 to 39"></div>
+      <div class="dtmsg" id="dtMsg" role="status" aria-live="polite">Tap a number to try the trick.</div>
+      <div class="chart"><span class="chip e">Ones digit 0, 2, 4, 6, 8: the number is even</span><span class="chip o">Ones digit 1, 3, 5, 7, 9: the number is odd</span></div>
+    </div>
+    <div class="stage intro" id="game4Stage"></div>
+  </div>
+</section>
+
+<footer><div class="wrap">enVision Math Grade 2 · Topic 2 · Lesson 2-1 Even and Odd Numbers</div></footer>
+
+<script>
+(function(){
+  var starTotal = 0, muted = false;
+  function $(s, r){ return (r || document).querySelector(s); }
+  function shuffle(a){ a = a.slice(); for (var i = a.length - 1; i > 0; i--){ var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  function rnd(a, b){ return a + Math.floor(Math.random() * (b - a + 1)); }
+  function addStars(n){ starTotal += n; $('#starCount').textContent = starTotal; }
+
+  function beep(kind){
+    if (muted) return;
+    try {
+      var AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
+      beep.ctx = beep.ctx || new AC();
+      var c = beep.ctx, t = c.currentTime;
+      var seq = kind === 'good' ? [660, 880] : kind === 'bad' ? [220] : [523, 659, 784, 1047];
+      seq.forEach(function(f){
+        var o = c.createOscillator(), g = c.createGain();
+        o.type = 'sine'; o.frequency.value = f;
+        g.gain.setValueAtTime(0.12, t); g.gain.exponentialRampToValueAtTime(0.001, t + 0.18);
+        o.connect(g); g.connect(c.destination); o.start(t); o.stop(t + 0.18); t += 0.12;
+      });
+    } catch (e) {}
+  }
+  function speak(text){
+    if (muted) return;
+    try { var u = new SpeechSynthesisUtterance(text); u.lang = 'en-US'; u.rate = 0.85; speechSynthesis.cancel(); speechSynthesis.speak(u); } catch (e) {}
+  }
+  function confetti(){
+    try { if (matchMedia('(prefers-reduced-motion: reduce)').matches) return; } catch (e) {}
+    var em = ['⭐', '🎉', '✏️', '✨', '🚀'];
+    for (var i = 0; i < 24; i++){
+      var s = document.createElement('span');
+      s.className = 'confetti'; s.textContent = em[i % em.length];
+      s.style.left = (Math.random() * 100) + 'vw';
+      s.style.animationDelay = (Math.random() * 0.6) + 's';
+      s.style.fontSize = (18 + Math.random() * 18) + 'px';
+      document.body.appendChild(s);
+      (function(el){ setTimeout(function(){ el.remove(); }, 3800); })(s);
+    }
+  }
+  var muteBtn = $('#muteBtn');
+  muteBtn.addEventListener('click', function(){
+    muted = !muted;
+    muteBtn.textContent = muted ? '🔇' : '🔊';
+    muteBtn.setAttribute('aria-pressed', String(muted));
+    muteBtn.setAttribute('aria-label', muted ? 'Sound off' : 'Sound on');
+  });
+
+  var EMOJI = ['✏️', '🍎', '🐟', '🚗', '⭐', '🐞', '🍪', '🎈', '🐸', '🍌'];
+  function pickEmoji(){ return EMOJI[rnd(0, EMOJI.length - 1)]; }
+  function cluster(n, e){ var s = ''; for (var i = 0; i < n; i++) s += '<span class="emo">' + e + '</span>'; return '<span class="dotgroup" role="img" aria-label="' + n + ' objects">' + s + '</span>'; }
+  function pairViz(n, e, animate){
+    var h = '<div class="pairviz" role="img" aria-label="' + n + ' objects in ' + Math.floor(n / 2) + ' pairs' + (n % 2 ? ' with 1 left over' : ' with none left over') + '">';
+    var i, p = Math.floor(n / 2);
+    for (i = 0; i < p; i++) h += '<span class="pp"' + (animate ? ' style="--i:' + i + '"' : '') + '>' + e + e + '</span>';
+    if (n % 2) h += '<span class="pp left"' + (animate ? ' style="--i:' + p + '"' : '') + '>' + e + '</span>';
+    return h + '</div>';
+  }
+
+  $('#heroEven').innerHTML = pairViz(6, '✏️', true);
+  $('#heroOdd').innerHTML = pairViz(7, '✏️', true);
+
+  /* explorer */
+  var exPick = $('#exPick'), exCur = 7;
+  for (var k = 1; k <= 20; k++){
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'pick'; b.textContent = k; b.dataset.n = k;
+    b.setAttribute('aria-pressed', 'false'); b.setAttribute('aria-label', 'Number ' + k);
+    b.addEventListener('click', function(){ var n = +this.dataset.n; this.classList.add(n % 2 === 0 ? 'seen-ev' : 'seen-od'); exShow(n); });
+    exPick.appendChild(b);
+  }
+  function exShow(n){
+    exCur = n;
+    exPick.querySelectorAll('.pick').forEach(function(p){ p.setAttribute('aria-pressed', String(+p.dataset.n === n)); });
+    var even = n % 2 === 0, h = Math.floor(n / 2);
+    $('#exViz').innerHTML = pairViz(n, '✏️');
+    var t = $('#exTitle'); t.textContent = n + ' is ' + (even ? 'even' : 'odd'); t.className = 'bigeq ' + (even ? 'ev' : 'od');
+    $('#exLine1').textContent = h + (h === 1 ? ' pair' : ' pairs') + ', ' + (even ? 'none left over.' : '1 left over.');
+    $('#exLine2').textContent = even ? 'Two equal groups: ' + h + ' + ' + h + ' = ' + n + '.' : 'You cannot make two equal groups. The ones digit is ' + (n % 10) + '.';
+    if (even) $('#exLine2').textContent += ' The ones digit is ' + (n % 10) + '.';
+  }
+  $('#exSpeak').addEventListener('click', function(){
+    var even = exCur % 2 === 0, h = Math.floor(exCur / 2);
+    speak(exCur + ' is ' + (even ? 'even' : 'odd') + '. ' + h + ' pairs, ' + (even ? 'none left over.' : 'one left over.'));
+  });
+  $('#exClear').addEventListener('click', function(){
+    exPick.querySelectorAll('.pick').forEach(function(p){ p.classList.remove('seen-ev', 'seen-od'); });
+  });
+  exShow(7);
+  /* notes board */
+  (function(){
+    var cv = $('#nCanvas'), ctx = cv.getContext('2d');
+    var tool = 'pen', color = '#1c2354', strokes = [], cur = null;
+    var COLORS = ['#1c2354', '#e5334b', '#ff8a1f', '#f2b705', '#0f9f82', '#2f80ff', '#6a49f5', '#8a5a2b'];
+    var cbox = $('#nColors');
+    COLORS.forEach(function(c, i){
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'sw'; b.style.background = c; b.dataset.c = c;
+      b.setAttribute('aria-label', 'Color ' + (i + 1)); b.setAttribute('aria-pressed', String(c === color));
+      b.addEventListener('click', function(){
+        color = c;
+        if (tool === 'eraser') setTool('pen');
+        cbox.querySelectorAll('.sw').forEach(function(x){ x.setAttribute('aria-pressed', String(x === b)); });
+      });
+      cbox.appendChild(b);
+    });
+    function setTool(t){
+      tool = t;
+      document.querySelectorAll('#notesBox [data-tool]').forEach(function(x){ x.setAttribute('aria-pressed', String(x.dataset.tool === t)); });
+    }
+    document.querySelectorAll('#notesBox [data-tool]').forEach(function(x){ x.addEventListener('click', function(){ setTool(x.dataset.tool); }); });
+    function drawShape(s){
+      ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+      ctx.strokeStyle = s.tool === 'eraser' ? '#ffffff' : s.color;
+      ctx.lineWidth = s.tool === 'eraser' ? s.size * 3 : s.size;
+      var a = s.pts[0], b = s.pts[s.pts.length - 1];
+      ctx.beginPath();
+      if (s.tool === 'pen' || s.tool === 'eraser'){
+        ctx.moveTo(a.x, a.y);
+        if (s.pts.length === 1) ctx.lineTo(a.x + 0.01, a.y);
+        for (var i = 1; i < s.pts.length; i++) ctx.lineTo(s.pts[i].x, s.pts[i].y);
+      } else if (s.tool === 'line'){
+        ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y);
+      } else if (s.tool === 'rect'){
+        ctx.rect(Math.min(a.x, b.x), Math.min(a.y, b.y), Math.abs(b.x - a.x), Math.abs(b.y - a.y));
+      } else if (s.tool === 'circle'){
+        ctx.ellipse((a.x + b.x) / 2, (a.y + b.y) / 2, Math.abs(b.x - a.x) / 2, Math.abs(b.y - a.y) / 2, 0, 0, Math.PI * 2);
+      } else if (s.tool === 'tri'){
+        ctx.moveTo((a.x + b.x) / 2, a.y); ctx.lineTo(b.x, b.y); ctx.lineTo(a.x, b.y); ctx.closePath();
+      }
+      ctx.stroke();
+    }
+    function redraw(){
+      ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, cv.width, cv.height);
+      strokes.forEach(drawShape);
+      if (cur) drawShape(cur);
+    }
+    function pos(e){
+      var r = cv.getBoundingClientRect();
+      return { x: (e.clientX - r.left) * cv.width / r.width, y: (e.clientY - r.top) * cv.height / r.height };
+    }
+    cv.addEventListener('pointerdown', function(e){
+      e.preventDefault();
+      try { cv.setPointerCapture(e.pointerId); } catch (err) {}
+      cur = { tool: tool, color: color, size: +$('#nSize').value, pts: [pos(e)] };
+      redraw();
+    });
+    cv.addEventListener('pointermove', function(e){
+      if (!cur) return;
+      e.preventDefault();
+      var p = pos(e);
+      if (cur.tool === 'pen' || cur.tool === 'eraser') cur.pts.push(p);
+      else cur.pts = [cur.pts[0], p];
+      redraw();
+    });
+    function end(){
+      if (!cur) return;
+      strokes.push(cur); cur = null; redraw();
+    }
+    cv.addEventListener('pointerup', end);
+    cv.addEventListener('pointercancel', end);
+    $('#nUndo').addEventListener('click', function(){ strokes.pop(); redraw(); });
+    $('#nClear').addEventListener('click', function(){ strokes = []; cur = null; redraw(); });
+    redraw();
+  })();
+
+  function finish(root, got, total, again){
+    var ratio = got / total;
+    var emoji = ratio >= 0.9 ? '🏆' : ratio >= 0.6 ? '🌟' : '💪';
+    var msg = ratio >= 0.9 ? 'Super even and odd expert!' : ratio >= 0.6 ? 'Great job! You can spot even and odd.' : 'Nice try! Play again to practice.';
+    root.className = 'stage';
+    root.innerHTML = '<div class="final"><div class="big">' + emoji + '</div><div class="score">' + got + ' out of ' + total + ' on the first try</div><p>' + msg + '</p><button class="btn" type="button" id="againBtn">Play again</button></div>';
+    $('#againBtn', root).addEventListener('click', again);
+    beep('win'); if (ratio >= 0.6) confetti();
+  }
+
+  function runQuiz(root, cfg){
+    var Q = cfg.make(), i = 0, got = 0, tries = 0;
+    root.className = 'stage';
+    function render(){
+      var q = Q[i]; tries = 0;
+      var pips = Q.map(function(_, n){ return '<span class="pip ' + (n < i ? 'done' : n === i ? 'now' : '') + '"></span>'; }).join('');
+      var ch = q.choices.map(function(c, n){ return '<button type="button" class="choice ch' + (n % 4) + '" data-k="' + n + '">' + c + '</button>'; }).join('');
+      root.innerHTML = '<div class="qhead"><div class="qprog" aria-hidden="true">' + pips + '</div><span class="qcount">' + (i + 1) + ' / ' + Q.length + '</span></div>' +
+        '<p class="qprompt">' + q.prompt + '</p><div class="qvisual">' + (q.visual || '') + '</div>' +
+        '<div class="choices ' + (q.mode || cfg.mode) + '" role="group" aria-label="Answers">' + ch + '</div>' +
+        '<div class="feedback" role="status" aria-live="polite"></div><div class="nextrow"></div>';
+      root.querySelectorAll('.choice').forEach(function(btn){ btn.addEventListener('click', function(){ pick(btn); }); });
+    }
+    function lockAll(){ root.querySelectorAll('.choice').forEach(function(x){ x.disabled = true; }); }
+    function showNext(){
+      var last = i === Q.length - 1;
+      var nb = document.createElement('button');
+      nb.type = 'button'; nb.className = 'btn'; nb.textContent = last ? 'See my stars' : 'Next question';
+      nb.addEventListener('click', function(){ if (last) finish(root, got, Q.length, function(){ runQuiz(root, cfg); }); else { i++; render(); } });
+      $('.nextrow', root).appendChild(nb); nb.focus();
+    }
+    function after(q){ return q.after ? '<div style="margin-top:10px">' + q.after + '</div>' : ''; }
+    function pick(btn){
+      var q = Q[i], k = +btn.dataset.k, fb = $('.feedback', root);
+      if (k === q.correct){
+        lockAll(); btn.classList.add('right');
+        if (tries === 0){ got++; addStars(1); }
+        beep('good');
+        fb.innerHTML = '<strong>' + (tries === 0 ? 'Great!' : 'You got it!') + '</strong> ' + q.explain + after(q);
+        showNext();
+      } else {
+        tries++; btn.classList.add('wrong'); btn.disabled = true; beep('bad');
+        if (cfg.retry){
+          fb.textContent = 'Not yet. ' + q.hint + ' Try again!';
+        } else {
+          lockAll();
+          root.querySelectorAll('.choice')[q.correct].classList.add('right');
+          fb.innerHTML = '<strong style="color:var(--pink)">Not quite.</strong> ' + q.explain + after(q);
+          showNext();
+        }
+      }
+    }
+    render();
+  }
+
+  function numChoices(correct, pool){
+    var opts = pool.filter(function(x, idx){ return x > 0 && x !== correct && pool.indexOf(x) === idx; });
+    var three = shuffle([correct].concat(shuffle(opts).slice(0, 2)));
+    return { choices: three, correct: three.indexOf(correct) };
+  }
+  function explainEO(n){
+    var h = Math.floor(n / 2);
+    return n % 2 === 0 ? n + ' makes ' + h + ' pairs with none left over, so it is even.' : n + ' makes ' + h + ' pairs with 1 left over, so it is odd.';
+  }
+
+  /* Game 1: Rocket Sort */
+  function makeG1(){
+    var ev = shuffle([2, 4, 6, 8, 10, 12, 14, 16, 18, 20]).slice(0, 5);
+    var od = shuffle([1, 3, 5, 7, 9, 11, 13, 15, 17, 19]).slice(0, 5);
+    return shuffle(ev.concat(od)).map(function(n){
+      var e = pickEmoji();
+      return {
+        prompt: 'Is ' + n + ' even or odd?',
+        visual: cluster(n, e) + '<div class="numshow">' + n + '</div>',
+        choices: ['Even', 'Odd'], correct: n % 2 === 0 ? 0 : 1, mode: 'cards eo',
+        explain: explainEO(n), after: pairViz(n, e)
+      };
+    });
+  }
+
+  /* Game 2: Equal Groups Builder */
+  function makeG2(){
+    var qs = [];
+    shuffle([6, 8, 10, 12, 14, 16, 18, 20]).slice(0, 3).forEach(function(N){
+      var h = N / 2;
+      var wrongs = shuffle([
+        h + ' + ' + (h + 1) + ' = ' + (N + 1),
+        (h - 1) + ' + ' + (h + 1) + ' = ' + N,
+        (h + 1) + ' + ' + (h + 1) + ' = ' + (N + 2)
+      ]).slice(0, 2);
+      var right = h + ' + ' + h + ' = ' + N;
+      var opts = shuffle([right].concat(wrongs));
+      qs.push({
+        prompt: 'Which equation shows ' + N + ' as two equal groups?',
+        visual: pairViz(N, pickEmoji()),
+        choices: opts, correct: opts.indexOf(right),
+        hint: 'Both numbers being added must be the same, and the sum must be ' + N + '.',
+        explain: h + ' + ' + h + ' = ' + N + '. Two equal groups of ' + h + '.'
+      });
+    });
+    shuffle([2, 3, 4, 5, 6, 7, 8]).slice(0, 2).forEach(function(h){
+      var right = h + ' + ' + h;
+      var wrongs = shuffle([h + ' + ' + (h + 1), (h + 2) + ' + ' + h, (h - 1) + ' + ' + (h + 1)]).slice(0, 2);
+      var opts = shuffle([right].concat(wrongs));
+      qs.push({
+        prompt: 'Which one has two equal addends?',
+        visual: '',
+        choices: opts, correct: opts.indexOf(right),
+        hint: 'Look for the same number twice.',
+        explain: h + ' + ' + h + ' has the same number twice, so ' + (2 * h) + ' is even.'
+      });
+    });
+    shuffle([3, 4, 5, 6, 7, 8, 9]).slice(0, 2).forEach(function(h){
+      var N = 2 * h, c = numChoices(h, [h - 1, h + 1, h + 2, h - 2]);
+      qs.push({
+        prompt: 'The same number is added twice to make ' + N + '. What is the number?',
+        visual: '<div class="bigeq">? + ? = ' + N + '</div>',
+        choices: c.choices, correct: c.correct,
+        hint: 'Try a number. Does it make ' + N + ' when you add it to itself?',
+        explain: h + ' + ' + h + ' = ' + N + '.'
+      });
+    });
+    var odd = [7, 9, 11, 13, 15][rnd(0, 4)];
+    qs.push({
+      prompt: 'Can ' + odd + ' be shown as two equal groups?',
+      visual: pairViz(odd, pickEmoji()),
+      choices: ['Yes', 'No'], correct: 1,
+      hint: 'Make pairs. Is anything left over?',
+      explain: odd + ' has 1 left over, so no two equal addends make ' + odd + '.'
+    });
+    return shuffle(qs);
+  }
+
+  /* Game 3: Number Detective */
+  function makeG3(){
+    var qs = [];
+    shuffle([23, 36, 47, 58, 62, 71, 84, 95, 19, 14, 27, 40]).slice(0, 2).forEach(function(n){
+      var tens = Math.floor(n / 10), ones = n % 10;
+      qs.push({
+        prompt: 'Look at the ones digit. Is ' + n + ' even or odd?',
+        visual: '<div class="numshow">' + (tens || '') + '<span class="hl">' + ones + '</span></div>',
+        choices: ['Even', 'Odd'], correct: ones % 2 === 0 ? 0 : 1, mode: 'cards eo',
+        hint: 'Even numbers end in 0, 2, 4, 6 or 8.',
+        explain: 'The ones digit is ' + ones + ', so ' + n + ' is ' + (ones % 2 === 0 ? 'even' : 'odd') + '.'
+      });
+    });
+    function triple(wantOdd){
+      var oddPool = shuffle([1, 3, 5, 7, 9, 11, 13, 15, 17, 19]), evenPool = shuffle([2, 4, 6, 8, 10, 12, 14, 16, 18, 20]);
+      var right = wantOdd ? oddPool[0] : evenPool[0];
+      var wrong = (wantOdd ? evenPool : oddPool).slice(0, 2);
+      var opts = shuffle([right].concat(wrong));
+      return { right: right, opts: opts };
+    }
+    [true, true, false].forEach(function(wantOdd){
+      var t = triple(wantOdd);
+      qs.push({
+        prompt: 'Which number is ' + (wantOdd ? 'odd' : 'even') + '?',
+        visual: '',
+        choices: t.opts, correct: t.opts.indexOf(t.right),
+        hint: wantOdd ? 'An odd number has 1 left over when you make pairs.' : 'An even number makes pairs with none left over.',
+        explain: t.right + ' ' + (wantOdd ? 'makes pairs with 1 left over, so it is odd.' : 'makes pairs with none left over, so it is even.'),
+        after: pairViz(t.right, pickEmoji())
+      });
+    });
+    [rnd(1, 5) * 2, rnd(0, 4) * 2 + 1].forEach(function(a){
+      var ans = a + 6, c = numChoices(ans, [ans - 1, ans + 1, ans + 2, ans - 2]);
+      qs.push({
+        prompt: 'Count by 2s. What number comes next?',
+        visual: '<div class="numshow">' + a + ', ' + (a + 2) + ', ' + (a + 4) + ', ?</div>',
+        choices: c.choices, correct: c.correct,
+        hint: 'Add 2 each time.',
+        explain: 'Add 2 each time. The next number is ' + ans + '. All of these numbers are ' + (a % 2 === 0 ? 'even' : 'odd') + '.'
+      });
+    });
+    var m = [5, 7, 9, 11, 13][rnd(0, 4)], e = pickEmoji();
+    qs.push({
+      prompt: 'Leo has ' + m + ' marbles. A friend gives him 1 more. Is the total even or odd?',
+      visual: cluster(m + 1, '🔵'),
+      choices: ['Even', 'Odd'], correct: 0, mode: 'cards eo',
+      hint: 'Add 1 and then make pairs.',
+      explain: m + ' + 1 = ' + (m + 1) + '. ' + explainEO(m + 1),
+      after: pairViz(m + 1, '🔵')
+    });
+    return shuffle(qs);
+  }
+
+  /* Warm-up: Pencil Match */
+  function runPencils(root){
+    var evens = shuffle([4, 6, 8, 10, 12]).slice(0, 2), odds = shuffle([5, 7, 9, 11, 13]).slice(0, 2);
+    var rounds = shuffle(evens.concat(odds, [rnd(3, 12)])), r = 0, got = 0, tries = 0;
+    var items, sel, pairs;
+    root.className = 'stage';
+    function render(){
+      var n = rounds[r]; items = []; sel = -1; pairs = 0; tries = 0;
+      for (var i = 0; i < n; i++) items.push(-1);
+      var pips = rounds.map(function(_, k){ return '<span class="pip ' + (k < r ? 'done' : k === r ? 'now' : '') + '"></span>'; }).join('');
+      root.innerHTML = '<div class="qhead"><div class="qprog" aria-hidden="true">' + pips + '</div><span class="qcount">' + (r + 1) + ' / ' + rounds.length + '</span></div>' +
+        '<p class="qprompt">There are <b>' + n + '</b> pencils. Tap two pencils to make a pair. Keep going!</p>' +
+        '<div class="pencils" id="pencils"></div><div class="tally" id="tally"></div>' +
+        '<div class="choices cards eo" id="ans" style="display:none" role="group" aria-label="Even or odd"><button type="button" class="choice ch0" data-v="0">Even</button><button type="button" class="choice ch1" data-v="1">Odd</button></div>' +
+        '<div class="feedback" id="sFb" role="status" aria-live="polite" style="text-align:center"></div><div class="nextrow" id="sNext"><button type="button" class="btn ghost" id="sReset">Start over</button></div>';
+      drawPencils();
+      $('#sReset', root).addEventListener('click', function(){ render(); });
+      root.querySelectorAll('#ans .choice').forEach(function(b){ b.addEventListener('click', function(){ answer(+b.dataset.v, b); }); });
+    }
+    function drawPencils(){
+      var n = rounds[r], box = $('#pencils', root), left = n - pairs * 2;
+      box.innerHTML = '';
+      items.forEach(function(p, i){
+        var b = document.createElement('button');
+        b.type = 'button'; b.textContent = '✏️';
+        var cls = 'pencil';
+        if (p >= 0) cls += ' p' + (p % 6);
+        else if (left <= 1) cls += ' left';
+        if (i === sel) cls += ' sel';
+        b.className = cls;
+        b.setAttribute('aria-label', p >= 0 ? 'Pencil ' + (i + 1) + ', in pair ' + (p + 1) : 'Pencil ' + (i + 1) + (i === sel ? ', selected' : ''));
+        if (p >= 0 || left <= 1) b.disabled = true;
+        b.addEventListener('click', function(){ tap(i); });
+        box.appendChild(b);
+      });
+      $('#tally', root).textContent = 'Pairs: ' + pairs + '   Left over: ' + left;
+      $('#ans', root).style.display = left <= 1 ? 'grid' : 'none';
+    }
+    function tap(i){
+      if (sel === -1){ sel = i; }
+      else if (sel === i){ sel = -1; }
+      else { items[sel] = pairs; items[i] = pairs; pairs++; sel = -1; beep('good'); }
+      drawPencils();
+    }
+    function answer(v, btn){
+      var n = rounds[r], fb = $('#sFb', root), isEven = n % 2 === 0;
+      if ((v === 0) === isEven){
+        root.querySelectorAll('#ans .choice').forEach(function(x){ x.disabled = true; });
+        btn.classList.add('right'); beep('good');
+        if (tries === 0){ got++; addStars(1); }
+        fb.innerHTML = '<strong>' + (tries === 0 ? 'Great!' : 'You got it!') + '</strong> ' + explainEO(n);
+        var last = r === rounds.length - 1;
+        var nb = document.createElement('button');
+        nb.type = 'button'; nb.className = 'btn'; nb.textContent = last ? 'See my stars' : 'Next round';
+        nb.addEventListener('click', function(){ if (last) finish(root, got, rounds.length, function(){ runPencils(root); }); else { r++; render(); } });
+        $('#sReset', root).remove();
+        $('#sNext', root).appendChild(nb); nb.focus();
+      } else {
+        tries++; btn.classList.add('wrong'); btn.disabled = true; beep('bad');
+        fb.textContent = 'Not yet. Is a pencil left over? No pencil left over means even. One pencil left over means odd.';
+      }
+    }
+    render();
+  }
+
+  function intro(rootId, big, title, text, start){
+    var root = $(rootId);
+    root.className = 'stage intro';
+    root.innerHTML = '<div class="big" aria-hidden="true">' + big + '</div><h3 style="font-size:2rem">' + title + '</h3><p style="max-width:44ch">' + text + '</p><button type="button" class="btn">Start</button>';
+    $('.btn', root).addEventListener('click', function(){ start(root); });
+  }
+  intro('#pencilStage', '✏️', 'Pencil Match', 'Pencils come in pairs. Pair them up, then tell if the number of pencils is even or odd.', runPencils);
+  intro('#game1Stage', '🚀', 'Rocket Sort', 'Look at the objects and the number. Send each one to Even or Odd.', function(r){ runQuiz(r, { make: makeG1, mode: 'cards eo', retry: false }); });
+  intro('#game2Stage', '🧱', 'Equal Groups Builder', 'Find the equation with two equal groups. Remember: even numbers can be split into two equal addends.', function(r){ runQuiz(r, { make: makeG2, mode: 'cards eq', retry: true }); });
+  intro('#game3Stage', '🔎', 'Number Detective', 'Use the ones digit, pairs and counting by 2s to crack each case.', function(r){ runQuiz(r, { make: makeG3, mode: 'cards', retry: true }); });
+
+  /* Game 4: Last Digit Trick */
+  (function(){
+    var host = $('#dtGrid'), h = '';
+    for (var n = 0; n < 40; n++) h += '<button type="button" class="dt ' + (n % 2 ? 'od' : 'ev') + '" data-n="' + n + '" aria-pressed="false">' + n + '</button>';
+    host.innerHTML = h;
+    host.querySelectorAll('.dt').forEach(function(b){
+      b.addEventListener('click', function(){
+        var n = +b.dataset.n, o = n % 10, odd = o % 2 === 1;
+        host.querySelectorAll('.dt').forEach(function(x){
+          x.setAttribute('aria-pressed', String(x === b));
+          x.classList.toggle('col', +x.dataset.n % 10 === o);
+        });
+        $('#dtMsg').innerHTML = '<b>' + n + '</b>: the ones digit is <b class="hl">' + o + '</b>. ' + o + ' is ' + (odd ? 'odd' : 'even') + ', so ' + n + ' is ' + (odd ? 'odd' : 'even') + '.';
+        speak(n + ': the ones digit is ' + o + '. So ' + n + ' is ' + (odd ? 'odd' : 'even') + '.');
+      });
+    });
+  })();
+  function digitsHTML(n, mode){
+    var s = String(n), h = '<div class="digits" role="img" aria-label="' + (mode === 'hide' ? 'Hidden digits, then the ones digit ' + s[s.length - 1] : 'The number ' + n + ', ones digit ' + s[s.length - 1]) + '">';
+    for (var i = 0; i < s.length; i++){
+      if (i === s.length - 1) h += '<span class="dg last">' + s[i] + '</span>';
+      else h += mode === 'hide' ? '<span class="dg cover">?</span>' : '<span class="dg dim">' + s[i] + '</span>';
+    }
+    return h + '</div>';
+  }
+  function digOf(par, nonzero){
+    var pool = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].filter(function(d){ return d % 2 === par && (!nonzero || d > 0); });
+    return pool[rnd(0, pool.length - 1)];
+  }
+  function makeG4(){
+    var nums = [];
+    for (var i = 0; i < 10; i++){
+      var par = i < 5 ? 0 : 1, ones = digOf(par, false);
+      var tens = (i % 2 === 0) ? [3, 4, 5, 6, 7, 8, 9].filter(function(t){ return t % 2 === 1 - par; })[rnd(0, 2)] || rnd(3, 9) : rnd(3, 9);
+      var n = tens * 10 + ones;
+      while (nums.indexOf(n) !== -1) { tens = rnd(3, 9); n = tens * 10 + ones; }
+      nums.push(n);
+    }
+    return shuffle(nums).map(function(n, idx){
+      var ones = n % 10, odd = ones % 2 === 1, word = odd ? 'odd' : 'even';
+      var mode = idx < 4 ? 'spot' : 'hide';
+      return {
+        prompt: mode === 'spot' ? 'Look at the ones digit. Is ' + n + ' even or odd?' : 'The other digits are hidden. Only the ones digit shows. Is the number even or odd?',
+        visual: digitsHTML(n, mode === 'spot' ? 'spot' : 'hide') + '<div class="rulebox">Even ends in 0, 2, 4, 6, 8. Odd ends in 1, 3, 5, 7, 9.</div>',
+        choices: ['Even', 'Odd'], correct: odd ? 1 : 0, mode: 'cards eo',
+        hint: 'Only look at the last digit, the ones digit.',
+        explain: (mode === 'hide' ? 'The number was ' + n + '. ' : '') + 'The ones digit is ' + ones + '. ' + ones + ' is ' + word + ', so ' + n + ' is ' + word + '. The other digits do not matter!'
+      };
+    });
+  }
+  intro('#game4Stage', '🔦', 'Last Digit Trick', 'You only need to look at the last digit, the ones digit. Is it even or odd? Then the whole number is the same.', function(r){ runQuiz(r, { make: makeG4, mode: 'cards eo', retry: true }); });
+})();
+</script>
+</body>
+</html>

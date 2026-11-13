@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Make 10 to Add — Grade 2 Lesson</title>
+<style>
+  :root{
+    --bg:#fbf7ef; --card:#ffffff; --ink:#2b2b33; --sub:#6b6b76;
+    --blue:#2f6fed; --blue-lt:#e8f0ff; --green:#1a9e6b; --green-lt:#e4f8ee;
+    --amber:#e2971e; --amber-lt:#fff3e0; --purple:#7b4fd1; --purple-lt:#f1eaff;
+    --frame:#333; --border:#e5e0d4; --shadow:0 4px 14px rgba(0,0,0,0.06);
+    padding-top: env(safe-area-inset-top,0px); padding-bottom: env(safe-area-inset-bottom,0px);
+    box-sizing:border-box;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#1c1b22; --card:#26252e; --ink:#f1efe9; --sub:#a9a7b3;
+      --blue-lt:#1e2a4a; --green-lt:#0f2c22; --amber-lt:#3a2a0f; --purple-lt:#2a2040;
+      --border:#3a3944;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#1c1b22; --card:#26252e; --ink:#f1efe9; --sub:#a9a7b3;
+    --blue-lt:#1e2a4a; --green-lt:#0f2c22; --amber-lt:#3a2a0f; --purple-lt:#2a2040;
+    --border:#3a3944;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-padding-top:env(safe-area-inset-top,0px);}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:'Segoe UI', system-ui, -apple-system, sans-serif;
+    line-height:1.5;
+  }
+  .wrap{max-width:920px; margin:0 auto; padding:28px 20px 80px;}
+  header.top{
+    text-align:center; padding:26px 20px 22px; margin-bottom:22px;
+    background:linear-gradient(135deg,var(--blue) 0%, var(--purple) 100%);
+    border-radius:18px; color:#fff; box-shadow:var(--shadow);
+  }
+  header.top h1{margin:0 0 6px; font-size:1.9rem;}
+  header.top p{margin:0; opacity:0.92; font-size:1rem;}
+  .meta-row{
+    display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:14px;
+  }
+  .pill{
+    background:rgba(255,255,255,0.18); padding:6px 14px; border-radius:999px;
+    font-size:0.85rem; font-weight:600; backdrop-filter:blur(2px);
+  }
+  nav.toc{
+    display:flex; flex-wrap:wrap; gap:8px; margin-bottom:26px; justify-content:center;
+  }
+  nav.toc a{
+    text-decoration:none; color:var(--blue); background:var(--blue-lt);
+    padding:7px 13px; border-radius:10px; font-size:0.85rem; font-weight:600;
+  }
+  :root[data-theme="dark"] nav.toc a, @media (prefers-color-scheme:dark){nav.toc a{color:#9db8f5;}}
+  section.card{
+    background:var(--card); border:1px solid var(--border); border-radius:16px;
+    padding:22px 24px; margin-bottom:20px; box-shadow:var(--shadow);
+  }
+  section.card h2{
+    margin-top:0; font-size:1.25rem; display:flex; align-items:center; gap:10px;
+  }
+  .badge{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:30px; height:30px; border-radius:9px; font-size:1rem; flex:0 0 auto;
+  }
+  .b-blue{background:var(--blue-lt); color:var(--blue);}
+  .b-green{background:var(--green-lt); color:var(--green);}
+  .b-amber{background:var(--amber-lt); color:var(--amber);}
+  .b-purple{background:var(--purple-lt); color:var(--purple);}
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  @media (max-width:640px){.grid2{grid-template-columns:1fr;}}
+  .box{background:var(--bg); border:1px solid var(--border); border-radius:12px; padding:14px 16px;}
+  .box h3{margin:0 0 8px; font-size:0.95rem; color:var(--sub); text-transform:uppercase; letter-spacing:.03em;}
+  ul, ol{margin:8px 0; padding-left:22px;}
+  li{margin-bottom:6px;}
+  .time{
+    display:inline-block; background:var(--amber-lt); color:var(--amber);
+    font-weight:700; font-size:0.78rem; padding:3px 10px; border-radius:999px; margin-left:auto;
+  }
+  .step-head{display:flex; align-items:center; gap:10px; width:100%;}
+  .script{
+    background:var(--blue-lt); border-left:4px solid var(--blue); padding:10px 14px;
+    border-radius:8px; margin:10px 0; font-style:italic;
+  }
+  /* --- Interactive ten-frame tool --- */
+  .tool{
+    border:2px dashed var(--border); border-radius:14px; padding:18px; text-align:center;
+    background:var(--bg);
+  }
+  .tool h3{margin-top:0; color:var(--purple);}
+  .problem-select{margin-bottom:16px; display:flex; gap:8px; justify-content:center; flex-wrap:wrap;}
+  .problem-select button{
+    background:var(--card); border:2px solid var(--border); color:var(--ink);
+    padding:8px 14px; border-radius:10px; font-weight:700; cursor:pointer; font-size:0.95rem;
+  }
+  .problem-select button.active{border-color:var(--purple); background:var(--purple-lt); color:var(--purple);}
+  .frames-area{
+    display:flex; gap:28px; justify-content:center; align-items:flex-end; flex-wrap:wrap; margin:14px 0;
+  }
+  .frame-block{text-align:center;}
+  .frame-label{font-size:0.85rem; color:var(--sub); margin-bottom:6px; font-weight:600;}
+  .tenframe{
+    display:grid; grid-template-columns:repeat(5,40px); grid-template-rows:repeat(2,40px);
+    gap:4px; background:var(--frame); padding:4px; border-radius:8px;
+  }
+  .cell{
+    background:#fff; border-radius:4px; display:flex; align-items:center; justify-content:center;
+  }
+  .loose-area{
+    display:flex; flex-wrap:wrap; gap:6px; width:190px; min-height:90px;
+    background:#fff; border:2px solid var(--frame); border-radius:8px; padding:8px; align-content:flex-start;
+  }
+  .counter{
+    width:32px; height:32px; border-radius:50%; background:var(--amber);
+    box-shadow:0 2px 4px rgba(0,0,0,0.25); cursor:pointer; transition:transform .12s;
+    display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:.8rem;
+  }
+  .counter:hover{transform:scale(1.08);}
+  .counter.in-frame{background:var(--green);}
+  .counter.moved-in{background:var(--amber);}
+  .equation-display{
+    font-size:1.5rem; font-weight:800; margin:16px 0 8px; letter-spacing:.02em;
+  }
+  .equation-display span{padding:0 4px;}
+  .eq-arrow{color:var(--sub); font-weight:400;}
+  .hint-text{color:var(--sub); font-size:0.9rem; min-height:22px; margin-bottom:8px;}
+  .reset-btn{
+    margin-top:10px; background:var(--blue); color:#fff; border:none; padding:9px 18px;
+    border-radius:10px; font-weight:700; cursor:pointer; font-size:0.9rem;
+  }
+  .success-msg{
+    display:none; background:var(--green-lt); color:var(--green); font-weight:700;
+    padding:10px; border-radius:10px; margin-top:12px;
+  }
+  .success-msg.show{display:block;}
+  .match-grid{
+    display:grid; grid-template-columns:repeat(5,60px); gap:10px; justify-content:center; margin:16px 0;
+  }
+  @media (max-width:480px){ .match-grid{grid-template-columns:repeat(5,48px);} }
+  .num-tile{
+    width:60px; height:60px; border-radius:12px; background:var(--amber);
+    display:flex; align-items:center; justify-content:center; color:#fff;
+    font-size:1.4rem; font-weight:800; cursor:pointer; box-shadow:0 2px 4px rgba(0,0,0,0.2);
+    transition:transform .12s, background .2s;
+    user-select:none;
+  }
+  @media (max-width:480px){ .num-tile{width:48px; height:48px; font-size:1.1rem;} }
+  .num-tile:hover{transform:scale(1.06);}
+  .num-tile.selected{background:var(--blue); outline:3px solid var(--purple);}
+  .num-tile.matched{background:var(--green); cursor:default; opacity:0.55;}
+  .num-tile.wrong{background:#d64545;}
+  footer{text-align:center; color:var(--sub); font-size:0.85rem; margin-top:30px;}
+  table{width:100%; border-collapse:collapse; margin-top:8px;}
+  th,td{text-align:left; padding:8px 10px; border-bottom:1px solid var(--border); font-size:0.92rem;}
+  th{color:var(--sub); font-weight:700; text-transform:uppercase; font-size:0.75rem;}
+</style>
+
+<!-- Shared template: colors, fonts, sounds, buttons, mascots. Keep this. -->
+<link rel="stylesheet" href="../../shared/theme.css">
+<script src="../../shared/theme.js" defer></script>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <h1>🔟 Make 10 to Add</h1>
+    <p>Grade 2 · enVision Math · Addition Strategy Lesson</p>
+    <div class="meta-row">
+      <span class="pill">⏱ 45–50 min</span>
+      <span class="pill">📐 CCSS 2.OA.B.2</span>
+      <span class="pill">👥 Whole Group → Partners → Independent</span>
+    </div>
+  </header>
+
+  <nav class="toc">
+    <a href="#objectives">Objectives</a>
+    <a href="#materials">Materials</a>
+    <a href="#warmup">Warm-Up</a>
+    <a href="#ido">I Do</a>
+    <a href="#wedo">We Do</a>
+    <a href="#tool">Interactive Practice</a>
+    <a href="#tool2">Ten Partners Game</a>
+    <a href="#youdo">You Do</a>
+    <a href="#assess">Exit Ticket</a>
+    <a href="#diff">Differentiation</a>
+  </nav>
+
+  <section class="card" id="objectives">
+    <h2><span class="badge b-blue">🎯</span> Learning Objectives</h2>
+    <ul>
+      <li>Students will use the <strong>make-10 strategy</strong> to add two numbers when one addend is 8 or 9 (e.g., 8 + 5, 9 + 6).</li>
+      <li>Students will explain, using a ten-frame, how "breaking apart" the smaller number helps make a ten.</li>
+      <li>Students will fluently write the equation that shows the strategy (e.g., 8 + 5 = 8 + 2 + 3 = 10 + 3 = 13).</li>
+    </ul>
+    <div class="box" style="margin-top:10px;">
+      <h3>Success Criteria</h3>
+      <p style="margin:0;">"I can fill a ten-frame to make 10, then add what's left over to solve an addition problem within 20."</p>
+    </div>
+  </section>
+
+  <section class="card" id="materials">
+    <h2><span class="badge b-amber">🧰</span> Materials</h2>
+    <div class="grid2">
+      <div class="box">
+        <h3>Teacher</h3>
+        <ul>
+          <li>Large magnetic ten-frame + counters</li>
+          <li>enVision Math Topic (Make 10 to Add) student edition</li>
+          <li>Anchor chart paper &amp; markers</li>
+          <li>This interactive lesson (projected)</li>
+        </ul>
+      </div>
+      <div class="box">
+        <h3>Students</h3>
+        <ul>
+          <li>Individual ten-frame mats (1 per student/pair)</li>
+          <li>20 two-color counters per student</li>
+          <li>Whiteboard + marker</li>
+          <li>enVision workbook page for the lesson</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="card" id="warmup">
+    <h2><span class="badge b-green">🔥</span> Warm-Up <span class="time">5 min</span></h2>
+    <p><strong>Quick Ten-Frame Flash:</strong> Show a ten-frame filled with 8 dots for 3 seconds, hide it, and ask: "How many? How do you know it's 8 and not 10?" Repeat with 7 and 9.</p>
+    <div class="script">"Turn and tell your partner: how many more dots would we need to make a full ten-frame of 10?"</div>
+    <p>Chart 2–3 responses. This previews the "how many more to make 10" thinking students need for today's strategy.</p>
+  </section>
+
+  <section class="card" id="ido">
+    <h2><span class="badge b-blue">👩‍🏫</span> I Do — Direct Instruction <span class="time">10 min</span></h2>
+    <ol>
+      <li>Write <strong>8 + 5 = ?</strong> on the board. Ask: "Is there a friendly number nearby that would make this easier?" Guide students to notice 10 is a friendly number.</li>
+      <li>Model on the large ten-frame: place 8 counters in the frame (2 empty spots left).</li>
+      <li>Say: <em>"I have 8 in my frame. I need 2 more to make 10. My other number is 5 — I can break 5 into 2 and 3."</em></li>
+      <li>Move 2 counters from the "5" group into the frame to make 10. 3 counters remain outside.</li>
+      <li>Write the equation chain step-by-step: <strong>8 + 5 = 8 + 2 + 3 = 10 + 3 = 13</strong></li>
+      <li>Underline: "10 + 3 is easy — it's just 13!"</li>
+    </ol>
+    <div class="box">
+      <h3>Anchor Chart Steps (post for the lesson)</h3>
+      <ol style="margin:0;">
+        <li>Find the number close to 10 (usually 8 or 9).</li>
+        <li>Ask: "How many more to make 10?"</li>
+        <li>Break apart the other number to give that many.</li>
+        <li>Add 10 + the leftover.</li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="card" id="wedo">
+    <h2><span class="badge b-amber">🤝</span> We Do — Guided Practice <span class="time">10 min</span></h2>
+    <p>Pass out ten-frame mats and counters. Work through together, pausing for think-pair-share at each step:</p>
+    <table>
+      <tr><th>Problem</th><th>Fill to 10 with</th><th>Leftover</th><th>Answer</th></tr>
+      <tr><td>9 + 4</td><td>1 (from the 4)</td><td>3</td><td>13</td></tr>
+      <tr><td>8 + 6</td><td>2 (from the 6)</td><td>4</td><td>14</td></tr>
+      <tr><td>9 + 7</td><td>1 (from the 7)</td><td>6</td><td>16</td></tr>
+    </table>
+    <p style="margin-top:10px;">Circulate and check that students physically move counters into the frame before writing the equation chain on whiteboards.</p>
+  </section>
+
+  <section class="card" id="tool">
+    <h2><span class="badge b-purple">🖱️</span> Interactive Practice — Fill the Ten-Frame</h2>
+    <p>Project this for the class or let partners take turns at the board. Pick a problem, then <strong>click the amber counters</strong> to move them into the ten-frame until it's full — watch the equation update live.</p>
+
+    <div class="tool">
+      <h3>Choose a problem:</h3>
+      <div class="problem-select" id="problemSelect">
+        <button data-a="8" data-b="5" class="active">8 + 5</button>
+        <button data-a="9" data-b="4">9 + 4</button>
+        <button data-a="8" data-b="7">8 + 7</button>
+        <button data-a="9" data-b="6">9 + 6</button>
+        <button data-a="8" data-b="3">8 + 3</button>
+      </div>
+
+      <div class="frames-area">
+        <div class="frame-block">
+          <div class="frame-label" id="frameLabel">Ten-Frame</div>
+          <div class="tenframe" id="tenFrame"></div>
+        </div>
+        <div class="frame-block">
+          <div class="frame-label" id="looseLabel">Click to move into frame →</div>
+          <div class="loose-area" id="looseArea"></div>
+        </div>
+      </div>
+
+      <div class="hint-text" id="hintText">Click the amber circles to fill the ten-frame to 10.</div>
+      <div class="equation-display" id="eqDisplay"></div>
+      <button class="reset-btn" id="resetBtn">🔄 Reset Problem</button>
+      <div class="success-msg" id="successMsg"></div>
+    </div>
+  </section>
+
+  <section class="card" id="tool2">
+    <h2><span class="badge b-purple">🎯</span> Interactive Practice — Ten Partners Match-Up</h2>
+    <p>Before make-10 works, kids need to know their <strong>partners of ten</strong> instantly. Click two numbers below that add up to 10 — matched pairs turn green. Find all 5 pairs!</p>
+
+    <div class="tool">
+      <h3>Click two numbers that make 10</h3>
+      <div class="match-grid" id="matchGrid"></div>
+      <div class="hint-text" id="matchHint">Pairs found: <span id="matchCount">0</span> / 5</div>
+      <button class="reset-btn" id="matchResetBtn">🔄 Shuffle &amp; Restart</button>
+      <div class="success-msg" id="matchSuccessMsg">🎉 All ten partners found! You know your friends of ten!</div>
+    </div>
+  </section>
+
+  <section class="card" id="youdo">
+    <h2><span class="badge b-green">✏️</span> You Do — Independent Practice <span class="time">10–12 min</span></h2>
+    <p>Students complete the enVision workbook practice page independently, using their own ten-frame mat and counters to show work for at least 3 problems before writing equations.</p>
+    <div class="box">
+      <h3>Practice Set</h3>
+      <p>8 + 4 &nbsp;&nbsp; 9 + 3 &nbsp;&nbsp; 8 + 9 &nbsp;&nbsp; 9 + 8 &nbsp;&nbsp; 8 + 6 &nbsp;&nbsp; 9 + 5</p>
+    </div>
+    <p><strong>Early finishers:</strong> Challenge card — solve 9 + 9 and 8 + 8 using make-10, then write a real-world story problem for one equation.</p>
+  </section>
+
+  <section class="card" id="assess">
+    <h2><span class="badge b-blue">📝</span> Exit Ticket / Formative Check <span class="time">5 min</span></h2>
+    <p>On an index card, students solve <strong>9 + 6</strong> by drawing a ten-frame and writing the equation chain (9 + 6 = 9 + 1 + 5 = 10 + 5 = 15).</p>
+    <div class="box">
+      <h3>Quick Check-in Signals</h3>
+      <ul style="margin:0;">
+        <li><strong>👍 Got it:</strong> Correctly fills the frame and chains the equation.</li>
+        <li><strong>👌 Getting there:</strong> Fills the frame correctly but struggles to write the equation chain.</li>
+        <li><strong>👎 Reteach:</strong> Needs small group to revisit filling the ten-frame concretely.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="card" id="diff">
+    <h2><span class="badge b-purple">🌈</span> Differentiation</h2>
+    <div class="grid2">
+      <div class="box">
+        <h3>Support</h3>
+        <ul>
+          <li>Use pre-filled ten-frames (dots already drawn) so students only add the leftover counters.</li>
+          <li>Keep numbers within 8/9 + small numbers (2–5) before moving to larger leftovers.</li>
+          <li>Pair with a peer helper; use physical counters over pictures.</li>
+        </ul>
+      </div>
+      <div class="box">
+        <h3>Extension</h3>
+        <ul>
+          <li>Introduce making 10 with two-digit addends (e.g., 18 + 5).</li>
+          <li>Have students explain make-10 for subtraction (think-addition).</li>
+          <li>Challenge: find all addition facts equal to 13 using the make-10 strategy.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer>Grade 2 · enVision Math · Make 10 to Add — Lesson Plan</footer>
+</div>
+
+<script>
+(function(){
+  var problems = [
+    {a:8,b:5},{a:9,b:4},{a:8,b:7},{a:9,b:6},{a:8,b:3}
+  ];
+  var current = {a:8,b:5};
+  var inFrame = 0; // counters moved into frame
+  var totalLoose = 0;
+
+  var tenFrame = document.getElementById('tenFrame');
+  var looseArea = document.getElementById('looseArea');
+  var eqDisplay = document.getElementById('eqDisplay');
+  var hintText = document.getElementById('hintText');
+  var successMsg = document.getElementById('successMsg');
+  var frameLabel = document.getElementById('frameLabel');
+  var looseLabel = document.getElementById('looseLabel');
+
+  function buildFrame(){
+    tenFrame.innerHTML = '';
+    for(var i=0;i<10;i++){
+      var cell = document.createElement('div');
+      cell.className = 'cell';
+      cell.dataset.idx = i;
+      tenFrame.appendChild(cell);
+    }
+  }
+
+  function renderFrame(){
+    var cells = tenFrame.querySelectorAll('.cell');
+    cells.forEach(function(cell, i){
+      cell.innerHTML = '';
+      if(i < current.a + inFrame){
+        var c = document.createElement('div');
+        c.className = (i < current.a) ? 'counter in-frame' : 'counter moved-in';
+        c.style.width='30px'; c.style.height='30px'; c.style.cursor='default';
+        cell.appendChild(c);
+      }
+    });
+  }
+
+  function renderLoose(){
+    looseArea.innerHTML = '';
+    totalLoose = current.b - inFrame;
+    for(var i=0;i<totalLoose;i++){
+      var c = document.createElement('div');
+      c.className = 'counter';
+      c.textContent = '';
+      c.addEventListener('click', moveCounter);
+      looseArea.appendChild(c);
+    }
+  }
+
+  function moveCounter(){
+    var spaceLeft = 10 - current.a;
+    if(inFrame < spaceLeft){
+      inFrame++;
+      renderFrame();
+      renderLoose();
+      updateEquation();
+    }
+  }
+
+  function updateEquation(){
+    var spaceLeft = 10 - current.a;
+    var leftover = current.b - inFrame;
+    var sum = current.a + current.b;
+
+    if(inFrame === 0){
+      eqDisplay.innerHTML = current.a + ' + ' + current.b + ' = ?';
+      hintText.textContent = 'How many more do we need to fill the frame to 10? Click ' + spaceLeft + ' counter' + (spaceLeft>1?'s':'') + '.';
+      successMsg.classList.remove('show');
+    } else if(inFrame < spaceLeft){
+      eqDisplay.innerHTML = current.a + ' + ' + inFrame + ' <span class="eq-arrow">so far...</span>';
+      hintText.textContent = (spaceLeft - inFrame) + ' more counter' + ((spaceLeft-inFrame)>1?'s':'') + ' needed to make 10.';
+    } else {
+      eqDisplay.innerHTML = current.a + ' + ' + current.b + ' = 10 + ' + leftover + ' = <strong>' + sum + '</strong>';
+      hintText.textContent = 'The frame is full! 10 + ' + leftover + ' is easy to add.';
+      successMsg.textContent = '🎉 Ten-frame full! ' + current.a + ' + ' + current.b + ' = ' + sum + '. Great use of make-10!';
+      successMsg.classList.add('show');
+    }
+    frameLabel.textContent = current.a + ' in frame' + (inFrame>0 ? ' + ' + inFrame + ' moved' : '');
+    looseLabel.textContent = totalLoose > 0 ? 'Click to move into frame →' : 'All moved!';
+  }
+
+  function loadProblem(a,b){
+    current = {a:a,b:b};
+    inFrame = 0;
+    buildFrame();
+    renderFrame();
+    renderLoose();
+    updateEquation();
+  }
+
+  document.getElementById('problemSelect').addEventListener('click', function(e){
+    var btn = e.target.closest('button');
+    if(!btn) return;
+    document.querySelectorAll('#problemSelect button').forEach(function(b){b.classList.remove('active');});
+    btn.classList.add('active');
+    loadProblem(parseInt(btn.dataset.a), parseInt(btn.dataset.b));
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', function(){
+    loadProblem(current.a, current.b);
+  });
+
+  loadProblem(current.a, current.b);
+})();
+
+// --- Ten Partners Match-Up game ---
+(function(){
+  var grid = document.getElementById('matchGrid');
+  var matchCountEl = document.getElementById('matchCount');
+  var successMsg = document.getElementById('matchSuccessMsg');
+  var resetBtn = document.getElementById('matchResetBtn');
+  var pairs = [[1,9],[2,8],[3,7],[4,6],[5,5]];
+  var tiles = [];
+  var selected = null;
+  var matchedCount = 0;
+
+  function shuffle(arr){
+    for(var i=arr.length-1;i>0;i--){
+      var j = Math.floor(Math.random()*(i+1));
+      var t=arr[i]; arr[i]=arr[j]; arr[j]=t;
+    }
+    return arr;
+  }
+
+  function buildTiles(){
+    tiles = [];
+    pairs.forEach(function(p, pi){
+      tiles.push({value:p[0], pairId:pi, matched:false});
+      tiles.push({value:p[1], pairId:pi, matched:false});
+    });
+    shuffle(tiles);
+  }
+
+  function render(){
+    grid.innerHTML = '';
+    tiles.forEach(function(t, idx){
+      var el = document.createElement('div');
+      el.className = 'num-tile' + (t.matched ? ' matched' : '');
+      el.textContent = t.value;
+      el.dataset.idx = idx;
+      if(!t.matched){
+        el.addEventListener('click', function(){ handleClick(idx); });
+      }
+      grid.appendChild(el);
+    });
+  }
+
+  function handleClick(idx){
+    var tile = tiles[idx];
+    if(tile.matched) return;
+
+    if(selected === null){
+      selected = idx;
+      render();
+      grid.children[idx].classList.add('selected');
+      return;
+    }
+    if(selected === idx){
+      selected = null;
+      render();
+      return;
+    }
+    var first = tiles[selected];
+    var second = tiles[idx];
+
+    if(first.value + second.value === 10){
+      first.matched = true;
+      second.matched = true;
+      matchedCount++;
+      matchCountEl.textContent = matchedCount;
+      selected = null;
+      render();
+      if(matchedCount === pairs.length){
+        successMsg.classList.add('show');
+      }
+    } else {
+      grid.children[selected].classList.add('selected');
+      grid.children[idx].classList.add('wrong');
+      var selIdx = selected;
+      setTimeout(function(){
+        grid.children[selIdx] && grid.children[selIdx].classList.remove('selected');
+        grid.children[idx] && grid.children[idx].classList.remove('wrong');
+      }, 500);
+      selected = null;
+    }
+  }
+
+  function startGame(){
+    matchedCount = 0;
+    matchCountEl.textContent = 0;
+    selected = null;
+    successMsg.classList.remove('show');
+    buildTiles();
+    render();
+  }
+
+  resetBtn.addEventListener('click', startGame);
+  startGame();
+})();
+</script>
+</body>
+</html>

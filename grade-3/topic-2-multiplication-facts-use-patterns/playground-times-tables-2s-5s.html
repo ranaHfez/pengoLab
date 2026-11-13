@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Playground Times Tables: 2s and 5s</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#dfe3e6;--ink:#20303c;--chalk:#20303c;--a:#c2410c;--b:#0b6bcb;--c:#a21caf;--ok:#15803d;--bad:#b91c1c;--card:#ecf0f2}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#2b3440;--ink:#f5f2e8;--chalk:#f5f2e8;--a:#ffd23f;--b:#6cc6ff;--c:#ff7a9c;--ok:#7be0a0;--bad:#ff8a8a;--card:#333e4b}}
+:root[data-theme="dark"]{--bg:#2b3440;--ink:#f5f2e8;--chalk:#f5f2e8;--a:#ffd23f;--b:#6cc6ff;--c:#ff7a9c;--ok:#7be0a0;--bad:#ff8a8a;--card:#333e4b}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Fredoka",system-ui,sans-serif;font-size:18px;line-height:1.4}
+main{max-width:680px;margin:0 auto;padding:20px 16px 48px}
+h1{font-size:2rem;margin:0 0 4px;font-weight:600}
+p{margin:0 0 12px}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:12px 0}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;background:transparent;border:3px solid var(--chalk);border-radius:255px 15px 225px 15px/15px 225px 15px 255px;padding:6px 16px;min-height:44px}
+button:hover{background:var(--card)}
+button[aria-pressed="true"],button[aria-selected="true"]{background:var(--a);color:#20303c;border-color:var(--a)}
+:focus-visible{outline:3px solid var(--b);outline-offset:2px}
+.tabs button{flex:1}
+.sq{border:3px solid var(--chalk);border-radius:255px 15px 225px 15px/15px 225px 15px 255px;min-height:64px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;position:relative;background:transparent}
+.grid{display:grid;gap:8px}
+.bingo{grid-template-columns:repeat(3,1fr)}
+.bingo button.sq{width:100%}
+.bingo .hit{background:var(--b);color:#20303c;border-color:var(--b)}
+.win{outline:4px solid var(--a)}
+.q{font-size:2.4rem;font-weight:600;margin:8px 0;color:var(--a)}
+input[type=number]{width:120px;padding:8px 12px;border:3px solid var(--chalk);border-radius:15px;background:var(--card);font-size:1.4rem}
+.msg{min-height:1.6em;font-weight:600}
+.ok{color:var(--ok)}.bad{color:var(--bad)}
+.track{position:relative;height:36px;border-bottom:3px dashed var(--chalk);margin:14px 0 22px}
+.track b{position:absolute;bottom:-3px;transition:left .4s;font-size:1.5rem;transform:translateX(-50%)}
+.track i{position:absolute;right:0;bottom:6px;font-style:normal}
+.die{display:inline-flex;width:56px;height:56px;border:3px solid var(--chalk);border-radius:12px;align-items:center;justify-content:center;font-size:1.8rem;font-weight:600}
+.shake{animation:sh .3s}
+@keyframes sh{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+@media (prefers-reduced-motion:reduce){.shake{animation:none}.track b{transition:none}}
+[hidden]{display:none!important}
+</style>
+
+<!-- Shared template: colors, fonts, sounds, buttons, mascots. Keep this. -->
+<link rel="stylesheet" href="../../shared/theme.css">
+<script src="../../shared/theme.js" defer></script>
+</head>
+<body>
+<main>
+<h1>Playground Times Tables</h1>
+<p>Pick a table, then pick a game.</p>
+
+<div class="row" role="group" aria-label="Table">
+  <button data-t="2" aria-pressed="true">2s</button>
+  <button data-t="5" aria-pressed="false">5s</button>
+  <button data-t="0" aria-pressed="false">Both</button>
+</div>
+
+<div class="row tabs" role="tablist">
+  <button role="tab" data-g="bingo" aria-selected="true">Bingo</button>
+  <button role="tab" data-g="dice" aria-selected="false">Dice race</button>
+</div>
+
+<section id="bingo">
+  <p>Solve the question, then tap the answer on your card. Get three in a row to win.</p>
+  <div class="q" id="bQ"></div>
+  <div class="grid bingo" id="bGrid"></div>
+  <div class="row"><button id="bSkip">Not on my card</button><button id="bNew">New card</button></div>
+  <div class="msg" id="bMsg" aria-live="polite"></div>
+</section>
+
+<section id="dice" hidden>
+  <p>Two players share this screen. Roll, multiply the die by the table, and answer. A right answer moves you forward by the die number. First to 30 wins.</p>
+  <div class="track" id="t0"><i>Finish</i><b>🐸</b></div>
+  <div class="track" id="t1"><i>Finish</i><b>🐢</b></div>
+  <div class="row"><strong id="who"></strong><span class="die" id="die">?</span><button id="roll">Roll</button></div>
+  <div class="q" id="dQ"></div>
+  <div class="row" id="dAns" hidden>
+    <label for="dIn" style="position:absolute;left:-9999px">Your answer</label>
+    <input id="dIn" type="number" inputmode="numeric" autocomplete="off">
+    <button id="dGo">Answer</button>
+  </div>
+  <div class="msg" id="dMsg" aria-live="polite"></div>
+  <button id="dNew">New race</button>
+</section>
+</main>
+
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const rnd=n=>Math.floor(Math.random()*n);
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=rnd(i+1);[a[i],a[j]]=[a[j],a[i]]}return a};
+let T=2;
+const tbl=()=>T||[2,5][rnd(2)];
+function msg(el,t,c){el.textContent=t;el.className='msg '+(c||'')}
+function bump(el){el.classList.remove('shake');void el.offsetWidth;el.classList.add('shake')}
+
+/* controls */
+$$('[data-t]').forEach(b=>b.onclick=()=>{T=+b.dataset.t;$$('[data-t]').forEach(x=>x.setAttribute('aria-pressed',x===b));bNew();dNew()});
+$$('[data-g]').forEach(b=>b.onclick=()=>{$$('[data-g]').forEach(x=>{x.setAttribute('aria-selected',x===b);$('#'+x.dataset.g).hidden=x!==b})});
+
+/* Bingo */
+let B;
+function bNew(){
+  const pool=[...new Set([2,5].filter(x=>!T||x===T).flatMap(t=>Array.from({length:12},(_,i)=>t*(i+1))))];
+  const card=shuffle(pool).slice(0,9);
+  const qs=shuffle([2,5].filter(x=>!T||x===T).flatMap(t=>Array.from({length:12},(_,i)=>[t,i+1])));
+  B={card,marked:new Set(),qs,i:0,over:false};
+  bDraw();msg($('#bMsg'),'');
+}
+const lines=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+function bDraw(){
+  const q=B.qs[B.i];
+  $('#bQ').textContent=B.over?'Bingo!':`${q[0]} × ${q[1]} = ?`;
+  $('#bGrid').innerHTML=B.card.map((n,i)=>`<button class="sq${B.marked.has(i)?' hit':''}" data-i="${i}" aria-label="${n}${B.marked.has(i)?' covered':''}">${n}</button>`).join('');
+  $$('#bGrid button').forEach(b=>b.onclick=()=>bPick(+b.dataset.i,b));
+  const w=lines.find(l=>l.every(i=>B.marked.has(i)));
+  if(w){B.over=true;$('#bQ').textContent='Bingo!';w.forEach(i=>$$('#bGrid button')[i].classList.add('win'))}
+}
+function next(){B.i=(B.i+1)%B.qs.length}
+function bPick(i,el){
+  if(B.over||B.marked.has(i))return;
+  const q=B.qs[B.i],ans=q[0]*q[1];
+  if(B.card[i]===ans){B.marked.add(i);next();bDraw();
+    msg($('#bMsg'),B.over?'Three in a row. You win!':'Covered!','ok')}
+  else{bump(el);msg($('#bMsg'),`${B.card[i]} is not the answer. Try ${q[0]} × ${q[1]} again.`,'bad')}
+}
+$('#bSkip').onclick=()=>{
+  if(B.over)return;const q=B.qs[B.i],ans=q[0]*q[1];
+  if(B.card.includes(ans)&&!B.marked.has(B.card.indexOf(ans))){msg($('#bMsg'),'Look again. The answer is on your card.','bad')}
+  else{next();bDraw();msg($('#bMsg'),'Next question.','')}
+};
+$('#bNew').onclick=bNew;
+
+/* Dice race */
+let D;
+const GOAL=30;
+function dNew(){
+  D={pos:[0,0],turn:0,die:0,t:0,over:false};
+  dDraw();$('#dQ').textContent='';$('#die').textContent='?';$('#dAns').hidden=true;$('#roll').disabled=false;msg($('#dMsg'),'');
+}
+function dDraw(){
+  [0,1].forEach(p=>$('#t'+p+' b').style.left=(3+D.pos[p]/GOAL*90)+'%');
+  $('#who').textContent=D.over?'Race over':`Player ${D.turn+1} ${D.turn?'🐢':'🐸'}`;
+}
+$('#roll').onclick=()=>{
+  if(D.over)return;
+  D.die=1+rnd(6);D.t=tbl();
+  $('#die').textContent=D.die;
+  $('#dQ').textContent=`${D.die} × ${D.t} = ?`;
+  $('#dAns').hidden=false;$('#roll').disabled=true;$('#dIn').value='';$('#dIn').focus();msg($('#dMsg'),'');
+};
+function dGo(){
+  if(D.over||$('#dIn').value==='')return;
+  const v=+$('#dIn').value,p=D.turn;
+  if(v===D.die*D.t){
+    D.pos[p]=Math.min(GOAL,D.pos[p]+D.die);
+    if(D.pos[p]>=GOAL){D.over=true;dDraw();msg($('#dMsg'),`Player ${p+1} wins the race!`,'ok');$('#dAns').hidden=true;return}
+    msg($('#dMsg'),`Correct! Move ${D.die}.`,'ok');
+  }else{msg($('#dMsg'),`Not quite. ${D.die} × ${D.t} = ${D.die*D.t}. Stay put.`,'bad')}
+  D.turn=1-p;dDraw();$('#dAns').hidden=true;$('#roll').disabled=false;
+}
+$('#dGo').onclick=dGo;$('#dIn').onkeydown=e=>{if(e.key==='Enter')dGo()};$('#dNew').onclick=dNew;
+
+bNew();dNew();
+</script>
+</body>
+</html>

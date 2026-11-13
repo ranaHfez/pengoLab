@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Two Step-by-Step Games · Add Tens and Ones on an Open Number Line</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--ac:#ff7a00}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Trebuchet MS","Segoe UI",system-ui,sans-serif;background:#fff7e0;color:#2b2b4a;min-height:100vh;transition:background .5s}
+body.g{background:var(--bgg)}
+.wrap{max-width:720px;margin:auto;padding:10px}
+h1{text-align:center;font-size:1.35rem;margin:6px 0}
+nav{display:flex;gap:8px;justify-content:center;margin:8px 0;flex-wrap:wrap}
+button{font:inherit;cursor:pointer}
+.btn,nav button{border:0;border-radius:99px;padding:10px 16px;font-weight:800;background:var(--ac);color:#fff;box-shadow:0 4px 0 #0003}
+nav button.off{background:#fff;color:#2b2b4a}
+.cards{display:grid;gap:12px;margin-top:14px}
+.card{border-radius:22px;padding:18px;text-align:center;color:#fff;font-weight:800;box-shadow:0 5px 0 #0003;cursor:pointer}
+.card big{display:block;font-size:3rem}
+.stage{position:relative;overflow:hidden;border-radius:24px;padding:14px;border:4px solid var(--ac);box-shadow:0 6px 0 #0003;text-align:center}
+.deco{position:absolute;inset:0;display:flex;flex-wrap:wrap;justify-content:space-around;align-content:space-around;font-size:1.8rem;opacity:.2;pointer-events:none;animation:fl 6s ease-in-out infinite alternate}
+@keyframes fl{to{transform:translateY(-12px)}}
+.stage>*:not(.deco){position:relative}
+.top{display:flex;align-items:center;gap:10px}
+.ch{font-size:3.2rem;animation:bob 1.3s ease-in-out infinite}.ch.happy{animation:jmp .5s 2}.ch.sad{animation:shk .4s 2}
+@keyframes bob{50%{transform:translateY(-7px) rotate(-6deg)}}@keyframes jmp{50%{transform:translateY(-28px) scale(1.3)}}@keyframes shk{25%{transform:translateX(-9px)}75%{transform:translateX(9px)}}
+.say{flex:1;background:#fff;color:#2b2b4a;border:3px solid var(--ac);border-radius:16px;padding:8px 12px;font-weight:700;text-align:left}
+.bar{height:12px;background:#0002;border-radius:9px;margin:8px 0}.bar i{display:block;height:100%;background:var(--ac);border-radius:9px;transition:width .4s}
+.qa{position:relative;height:235px;background:#fffa;border-radius:16px;overflow:hidden}
+.q{font-size:1.8rem;font-weight:900;padding-top:6px}
+.nl{width:100%}
+.dr{stroke-dasharray:1;stroke-dashoffset:1;animation:dr .5s forwards}@keyframes dr{to{stroke-dashoffset:0}}
+.cc{animation:bob 1s infinite}
+canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+canvas.on{pointer-events:auto;touch-action:none;cursor:crosshair}
+.pen{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin:8px 0}
+.pen button{border:2px solid var(--ac);background:#fff;border-radius:12px;padding:5px 9px;font-size:1.05rem}
+.pen button.sel{outline:3px solid #222}
+.stp{display:flex;gap:6px;justify-content:center;margin:8px 0;flex-wrap:wrap}
+.stp span{padding:4px 12px;border-radius:99px;background:#0001;font-weight:800;font-size:.9rem}.stp .on{background:var(--ac);color:#fff}.stp .dn{background:#1faa59;color:#fff}
+.chips{font-weight:800;margin:4px 0;font-size:1.05rem}
+.btns{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:8px 0}
+.btns button{border:0;border-radius:16px;padding:14px 18px;font-size:1.25rem;font-weight:900;background:var(--ac);color:#fff;box-shadow:0 5px 0 #0004}
+.btns button:disabled{opacity:.35}.btns button.gr{background:#666}.btns button.ok{background:#1faa59}
+.btns button:active{transform:translateY(4px);box-shadow:0 1px 0 #0004}
+.circ{display:flex;gap:6px;justify-content:center;flex-wrap:wrap}
+.circ button{width:46px;height:46px;border-radius:50%;border:3px solid var(--ac);background:#fff;font-size:1.15rem;font-weight:900;color:#2b2b4a}.circ button.d{background:var(--ac);color:#fff}
+.kp{display:grid;grid-template-columns:repeat(3,64px);gap:6px;justify-content:center;margin:6px auto}
+.kp button{padding:10px;border:0;border-radius:12px;background:var(--ac);color:#fff;font-size:1.2rem;font-weight:900}
+.disp{font-size:1.8rem;font-weight:900;min-height:44px;border:3px dashed var(--ac);border-radius:12px;max-width:200px;margin:6px auto;background:#fff;color:#2b2b4a}
+.end{padding:12px}.end .big{font-size:4rem}
+#mute{position:fixed;right:10px;bottom:calc(10px + env(safe-area-inset-bottom,0px));z-index:9;width:46px;height:46px;border-radius:50%;padding:0}
+</style>
+<!-- Shared template: colors, fonts, sounds, buttons, mascots. Keep this. -->
+<link rel="stylesheet" href="../../shared/theme.css">
+<script src="../../shared/theme.js" defer></script>
+</head><body>
+<div class="wrap">
+<h1>🧮 Add Tens and Ones on an Open Number Line</h1>
+<nav><button id="n0" class="off">🏠 Home</button><button id="n1" class="off">🐰 Game 1</button><button id="n2" class="off">🐬 Game 2</button></nav>
+<div id="home"><div class="cards">
+<div class="card" style="background:linear-gradient(135deg,#43b05c,#1c9bd8)" onclick="begin(1)"><big>🐰</big>Game 1: Bunny Hops<br><small>Tap +10 for the tens, then +1 for the ones, and watch every jump appear on the number line</small></div>
+<div class="card" style="background:linear-gradient(135deg,#0a4b8f,#00b4d8)" onclick="begin(2)"><big>🐬</big>Game 2: Smart Dolphin<br><small>Choose the tens jumps, count the ones one by one, then type the answer</small></div>
+<div class="card" style="background:#2b2b4a;font-weight:600">✏️ Every question has a Whiteboard button: draw and explain with colorful pens!</div></div></div>
+<div id="game" hidden></div>
+</div>
+<button class="btn" id="mute" aria-label="Sound">🔊</button>
+<script>
+const $=s=>document.querySelector(s),sh=a=>a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(p=>p[1]);
+let AC,muted=false;
+function tone(f,f2,d,t='sine',v=.15,at=0){if(muted)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain(),s=AC.currentTime+at;o.type=t;o.frequency.setValueAtTime(f,s);o.frequency.exponentialRampToValueAtTime(f2,s+d);g.gain.setValueAtTime(v,s);g.gain.exponentialRampToValueAtTime(.001,s+d);o.connect(g);g.connect(AC.destination);o.start(s);o.stop(s+d)}catch(e){}}
+const snd={hop:k=>tone(300+k*45,600+k*45,.18),ok:()=>[523,659,784,1047].forEach((f,i)=>tone(f,f*1.02,.15,'triangle',.15,i*.09)),no:()=>{tone(300,150,.3,'sawtooth',.1);tone(250,110,.3,'sawtooth',.1,.25)},win:()=>[523,659,784,659,784,1047,1319].forEach((f,i)=>tone(f,f,.18,'square',.09,i*.12)),pop:()=>tone(900,300,.1,'square',.07)};
+$('#mute').onclick=e=>{muted=!muted;e.target.textContent=muted?'🔇':'🔊'};
+const T={1:{ch:'🐰',bg:'linear-gradient(160deg,#c9f7a5,#7fd6ff)',card:'#f4fff0',ac:'#2f9e44',tx:'#1f4d2b',deco:'🥕🌼🦋🌷🥕🐝🌻🍀',pr:['Hop hop hooray! Correct!','Super bunny! 🥕','Amazing hopping!']},
+2:{ch:'🐬',bg:'linear-gradient(160deg,#0a4b8f,#00b4d8)',card:'#e6f9ff',ac:'#0077b6',tx:'#023e5a',deco:'🐠🫧🐙🫧🐚🐟🦀🫧',pr:['Splash! You got it!','Dolphin genius! 🐬','Awesome swimming! Correct!']}};
+let K,Q,qi,sc,S,PS={on:false,c:'#e63946',er:false,bg:false};
+$('#n0').onclick=()=>home();$('#n1').onclick=()=>begin(1);$('#n2').onclick=()=>begin(2);
+function home(){snd.pop();$('#home').hidden=false;$('#game').hidden=true;document.body.classList.remove('g');document.documentElement.style.setProperty('--ac','#ff7a00')}
+function begin(k){snd.pop();K=k;const t=T[k];
+ const A=sh([...Array(40)].map((_,i)=>i+11).filter(x=>x%10)),B=sh([...Array(39)].map((_,i)=>i+11).filter(x=>x%10));
+ Q=[];for(let i=0;i<15;i++){let a=A[i],b=B[i];if(a==b)b=B[30+i%5];Q.push({a,b,t:Math.floor(b/10),o:b%10,s:a+b})}
+ qi=0;sc=0;$('#home').hidden=true;$('#game').hidden=false;
+ document.body.classList.add('g');document.body.style.setProperty('--bgg',t.bg);document.documentElement.style.setProperty('--ac',t.ac);showQ()}
+const deco=t=>`<div class="deco">${[...t.deco].map(c=>`<span>${c}</span>`).join('')}</div>`;
+function showQ(){const t=T[K],q=Q[qi];S={jl:[],ts:0,os:0,ph:'t',m:0,n:0,inp:'',lock:false,rev:false};PS.on=false;
+ $('#game').innerHTML=`<div class="stage" style="background:${t.card};color:${t.tx}">${deco(t)}
+ <div class="top"><div class="ch" id="ch">${t.ch}</div><div class="say" id="say">Step 1: Let’s jump the tens first! 💪</div></div>
+ <div class="bar"><i style="width:${qi/15*100}%"></i></div>
+ <b>Question ${qi+1} of 15 · ⭐ ${sc}</b>
+ <div class="qa" id="qa"><div class="q">${q.a} + ${q.b} = ?</div><div id="nl"></div><canvas id="cv"></canvas></div>
+ <div class="pen" id="pen"></div>
+ <div class="chips">${q.b} = ${q.t*10} + ${q.o} &nbsp;(${q.t} ten${q.t>1?'s':''} and ${q.o} one${q.o>1?'s':''})</div>
+ <div id="ctl"></div></div>`;
+ const cv=$('#cv'),qa=$('#qa');cv.width=qa.clientWidth;cv.height=qa.clientHeight;const x=cv.getContext('2d');let dn=false;
+ const pos=e=>{const b=cv.getBoundingClientRect();return[(e.clientX-b.left)*cv.width/b.width,(e.clientY-b.top)*cv.height/b.height]};
+ cv.onpointerdown=e=>{dn=true;cv.setPointerCapture(e.pointerId);const[p,q2]=pos(e);x.beginPath();x.moveTo(p,q2);x.lineCap=x.lineJoin='round';x.lineWidth=PS.er?26:4;x.globalCompositeOperation=PS.er?'destination-out':'source-over';x.strokeStyle=PS.c;x.lineTo(p+.1,q2+.1);x.stroke()};
+ cv.onpointermove=e=>{if(!dn)return;const[p,q2]=pos(e);x.lineTo(p,q2);x.stroke()};cv.onpointerup=cv.onpointercancel=()=>dn=false;
+ pen();draw();ctrl()}
+function pen(){const cs=['#e63946','#1d4ed8','#16a34a','#222'];
+ $('#pen').innerHTML=`<button onclick="P('t')" class="${PS.on?'sel':''}">✏️ Whiteboard ${PS.on?'(on)':''}</button>`+(PS.on?cs.map(c=>`<button style="background:${c}" class="${!PS.er&&PS.c==c?'sel':''}" onclick="P('c','${c}')">&nbsp;&nbsp;</button>`).join('')+`<button class="${PS.er?'sel':''}" onclick="P('e')">🧽 Eraser</button><button onclick="P('b')">⬜ Background</button><button onclick="P('x')">🗑️ Clear</button><button onclick="P('t')">✖️ Close</button>`:'');
+ $('#cv').className=PS.on?'on':'';$('#cv').style.background=PS.bg?'rgba(255,255,255,.8)':'transparent'}
+function P(c,v){snd.pop();if(c=='t')PS.on=!PS.on;if(c=='c'){PS.c=v;PS.er=false}if(c=='e')PS.er=!PS.er;if(c=='b')PS.bg=!PS.bg;if(c=='x'){const cv=$('#cv');cv.getContext('2d').clearRect(0,0,cv.width,cv.height)}pen()}
+function draw(){const q=Q[qi],t=T[K];let x=30,v=q.a,ar='',tk='';
+ const pt=(x,v,big,last)=>`<line x1="${x}" y1="93" x2="${x}" y2="117" stroke="currentColor" stroke-width="3"/><text x="${x}" y="143" text-anchor="middle" font-size="${big?21:15}" font-weight="800" fill="${last&&S.rev?'#d62828':'currentColor'}">${last&&!S.rev?'?':v}</text>`;
+ const n=S.jl.length;tk=pt(x,v,1,0);
+ S.jl.forEach((j,i)=>{const w=j=='t'?70:24,h=j=='t'?48:16,x2=x+w;v+=j=='t'?10:1;
+  ar+=`<path pathLength="1" ${i==n-1?'class="dr"':''} d="M${x} 93 Q${x+w/2} ${93-h*2} ${x2} 93" fill="none" stroke="${t.ac}" stroke-width="${j=='t'?4:3}"/>`+(j=='t'?`<text x="${x+w/2}" y="${93-h-4}" text-anchor="middle" font-size="20" font-weight="800" fill="${t.ac}">+10</text>`:'');
+  x=x2;tk+=pt(x,v,j=='t',i==n-1&&S.ts==q.t&&S.os==q.o&&S.ph!='t'&&S.ph!='o')});
+ $('#nl').innerHTML=`<svg class="nl" viewBox="0 0 560 150"><line x1="10" y1="105" x2="550" y2="105" stroke="currentColor" stroke-width="4"/>${ar}${tk}<text class="cc" x="${x}" y="84" font-size="30" text-anchor="middle">${t.ch}</text></svg>`}
+function say(m,c){$('#say').textContent=m;$('#ch').className='ch '+(c||'')}
+function bad(m){S.m++;snd.no();say(m,'sad')}
+function add(j){S.jl.push(j);j=='t'?S.ts++:S.os++;snd.hop(S.jl.length);draw();ctrl()}
+function opts(s){let o=new Set([s]);for(const d of sh([10,-10,1,-1,20]))if(o.size<4&&s+d>0)o.add(s+d);return sh([...o])}
+function win(){S.ph='done';S.rev=true;if(!S.m)sc++;snd.ok();say(sh(T[K].pr)[0],'happy');draw();ctrl()}
+function A(c,v){if(S.lock)return;const q=Q[qi];
+ if(c=='t10'){if(S.ph!='t')return;if(S.ts>=q.t)return bad(`That’s enough! ${q.b} has only ${q.t} ten${q.t>1?'s':''} ✋`);add('t');if(S.ts==q.t){S.ph='o';say('Great job! Now add the ones, one by one ☝️','happy');ctrl()}}
+ if(c=='o1'){if(S.ph!='o')return;if(S.os>=q.o)return bad(`That’s enough! Only ${q.o} one${q.o>1?'s':''} ✋`);add('o');if(S.os==q.o){S.ph='ans';say('All jumps done! Where did we land? 🤔');draw();ctrl()}}
+ if(c=='un'){if(!S.jl.length||S.ph=='done')return;const j=S.jl.pop();j=='t'?S.ts--:S.os--;S.ph=S.ts<q.t?'t':'o';say('We went back one step. Keep going! 🔙');draw();ctrl()}
+ if(c=='pick'){v==q.s?win():bad('Try again! Look at the last point 🔍')}
+ if(c=='n'){S.n=Math.max(0,Math.min(9,S.n+v));ctrl()}
+ if(c=='jump'){if(S.n!=q.t)return bad(`Count the tens in ${q.b} again 🔟`);S.lock=true;for(let i=0;i<q.t;i++)setTimeout(()=>add('t'),i*650);setTimeout(()=>{S.ph='o';S.lock=false;say('Perfect! Now count the ones, one by one ☝️','happy');ctrl()},q.t*650+150)}
+ if(c=='c'){v==S.os+1?add('o'):bad(`One by one! Tap ${S.os+1}`)}
+ if(c=='fin'){S.os==q.o?(S.ph='ans',say('Where did we land? Type the answer! ✍️'),draw(),ctrl()):bad(`We need ${q.o} one${q.o>1?'s':''}. You counted ${S.os}`)}
+ if(c=='k'){if(S.inp.length<3)S.inp+=v;ctrl()}if(c=='kb'){S.inp=S.inp.slice(0,-1);ctrl()}
+ if(c=='ke'){if(+S.inp==q.s)win();else{bad('Not that one! Try again 🔍');S.inp='';ctrl()}}}
+function ctrl(){const q=Q[qi],ix={t:0,o:1,ans:2,done:3}[S.ph],c=$('#ctl');
+ let h=`<div class="stp">${['① Tens','② Ones','③ Answer'].map((s,j)=>`<span class="${j==ix?'on':j<ix?'dn':''}">${s}</span>`).join('')}</div>`;
+ if(S.ph=='done')h+=`<div class="btns"><button onclick="nx()" class="ok">${qi==14?'See my score 🏆':'Next question ➡️'}</button></div>`;
+ else if(K==1){h+=`<div class="btns"><button onclick="A('t10')" ${S.ph!='t'?'disabled':''}>+10 🔟</button><button onclick="A('o1')" ${S.ph!='o'?'disabled':''}>+1 ☝️</button><button class="gr" onclick="A('un')">↩️ Undo</button></div>`;
+  if(S.ph=='ans')h+=`<div class="btns">${opts(q.s).map(o=>`<button onclick="A('pick',${o})">${o}</button>`).join('')}</div>`}
+ else{if(S.ph=='t')h+=`<div>How many tens jumps (+10) should we make?</div><div class="btns"><button onclick="A('n',-1)">−</button><button style="background:#fff;color:#023e5a;min-width:64px">${S.n}</button><button onclick="A('n',1)">+</button></div><div class="btns"><button class="ok" onclick="A('jump')">Jump the tens 🐬</button></div>`;
+  if(S.ph=='o')h+=`<div>Tap the circles in order to hop one by one:</div><div class="circ">${[1,2,3,4,5,6,7,8,9].map(k=>`<button class="${k<=S.os?'d':''}" onclick="A('c',${k})">${k}</button>`).join('')}</div><div class="btns"><button class="ok" onclick="A('fin')">Done with ones ✅</button><button class="gr" onclick="A('un')">↩️ Undo</button></div>`;
+  if(S.ph=='ans')h+=`<div class="disp">${S.inp||'&nbsp;'}</div><div class="kp">${[1,2,3,4,5,6,7,8,9].map(k=>`<button onclick="A('k',${k})">${k}</button>`).join('')}<button onclick="A('kb')">⌫</button><button onclick="A('k',0)">0</button><button style="background:#1faa59" onclick="A('ke')">✔</button></div>`}
+ c.innerHTML=h}
+function nx(){snd.pop();qi++;qi<15?showQ():fin()}
+function fin(){const t=T[K],p=sc/15,st=p>.85?3:p>.6?2:1;snd.win();
+ $('#game').innerHTML=`<div class="stage" style="background:${t.card};color:${t.tx}">${deco(t)}<div class="end"><div class="big ch">${t.ch}</div><h2>${'⭐'.repeat(st)}${'☆'.repeat(3-st)}</h2><h2>${sc} / 15 correct on the first try</h2><p>${st==3?'Number line champion!':st==2?'Great work! Try again for 3 stars.':'Good start! Play again and get even better.'}</p><div class="btns"><button onclick="begin(${K})">🔁 Play again</button><button class="gr" onclick="begin(${K==1?2:1})">${K==1?'🐬 Game 2':'🐰 Game 1'}</button></div></div></div>`}
+</script></body></html>

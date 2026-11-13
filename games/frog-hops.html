@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Frog Hops - Subtraction on a Number Line</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pond-sky-1:#bfe9ff; --pond-sky-2:#e8fff2;
+  --lily-green:#4fae6a; --lily-green-dark:#357a49;
+  --pad:#ffffff; --pad-border:#cfe9d8;
+  --frog:#57c26a;
+  --ink:#1c3d33; --ink-soft:#3f6b5c;
+  --sun:#ffcb3d; --sun-dark:#e0a812;
+  --coral:#ff7d63; --coral-dark:#e05f46;
+  --card:#ffffffcc;
+  --ring:#ffcb3d;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  box-sizing:border-box;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --pond-sky-1:#0e2a3a; --pond-sky-2:#123a2e;
+    --pad:#123626; --pad-border:#1f5c3e;
+    --ink:#eafff0; --ink-soft:#bfe3cf;
+    --card:#0f2b22cc;
+  }
+}
+:root[data-theme="dark"]{
+  --pond-sky-1:#0e2a3a; --pond-sky-2:#123a2e;
+  --pad:#123626; --pad-border:#1f5c3e;
+  --ink:#eafff0; --ink-soft:#bfe3cf;
+  --card:#0f2b22cc;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px);height:100%;}
+*{box-sizing:border-box;}
+body{
+  margin:0; height:100%; min-height:100vh;
+  font-family:'Cairo',system-ui,sans-serif;
+  color:var(--ink);
+  background:
+    radial-gradient(120% 60% at 50% 0%, var(--pond-sky-2) 0%, var(--pond-sky-1) 60%, #8fd0e6 100%);
+  display:flex; flex-direction:column; align-items:center;
+  padding:18px 14px calc(18px + env(safe-area-inset-bottom,0px));
+  overflow-x:hidden;
+}
+h1{
+  font-family:'Baloo 2',sans-serif; font-weight:800;
+  font-size:clamp(22px,5vw,32px); margin:4px 0 2px; color:var(--ink);
+  text-align:center;
+}
+.sub{color:var(--ink-soft); font-size:14px; margin:0 0 12px; text-align:center;}
+
+.topbar{
+  width:100%; max-width:640px; display:flex; justify-content:space-between;
+  align-items:center; gap:10px; margin-bottom:10px;
+}
+.badge{
+  background:var(--card); backdrop-filter:blur(4px);
+  border:2px solid var(--pad-border); border-radius:14px;
+  padding:6px 12px; font-weight:700; font-size:14px; color:var(--ink);
+  display:flex; align-items:center; gap:6px; white-space:nowrap;
+}
+
+.modes{
+  display:flex; gap:8px; background:var(--card); border:2px solid var(--pad-border);
+  border-radius:16px; padding:5px; margin-bottom:14px;
+}
+.mode-btn{
+  border:none; background:transparent; padding:8px 16px; border-radius:12px;
+  font-family:'Cairo',sans-serif; font-weight:700; font-size:14px; color:var(--ink-soft);
+  cursor:pointer; transition:background .2s,color .2s;
+}
+.mode-btn.active{ background:var(--lily-green); color:#fff; }
+
+.card{
+  width:100%; max-width:640px; background:var(--card); backdrop-filter:blur(4px);
+  border:2px solid var(--pad-border); border-radius:22px; padding:18px 16px;
+  display:flex; flex-direction:column; align-items:center; gap:16px;
+}
+
+.equation{
+  font-family:'Baloo 2',sans-serif; font-weight:700; font-size:clamp(24px,6vw,34px);
+  color:var(--ink); display:flex; gap:10px; align-items:center;
+}
+.equation .q{ color:var(--coral-dark); }
+
+.instruction{ font-size:14px; color:var(--ink-soft); text-align:center; min-height:18px; font-weight:600;}
+
+.pondwrap{ width:100%; overflow-x:auto; padding:20px 6px 10px; -webkit-overflow-scrolling:touch;}
+.pond{
+  direction:ltr; display:flex; gap:14px; position:relative; width:max-content; margin:0 auto;
+  padding:0 4px;
+}
+.pad{
+  position:relative; width:40px; height:40px; border-radius:50%;
+  background:var(--pad); border:2px solid var(--pad-border);
+  display:flex; align-items:center; justify-content:center;
+  font-weight:700; font-size:14px; color:var(--ink-soft);
+  flex:0 0 auto; transition:box-shadow .2s, transform .2s;
+}
+.pad.start{ border-color:var(--lily-green); color:var(--lily-green-dark); }
+.pad.dest{ border-color:var(--coral); color:var(--coral-dark); }
+.pad.dest::after{ content:"🏁"; position:absolute; top:-22px; font-size:16px; }
+.pad.current-glow{ box-shadow:0 0 0 5px rgba(255,203,61,.55); }
+
+.frog{
+  position:absolute; top:-34px; font-size:28px; transform:translateX(-50%);
+  transition:left .32s cubic-bezier(.5,1.6,.4,1);
+  filter:drop-shadow(0 3px 3px rgba(0,0,0,.25));
+}
+
+.hops{
+  font-family:'Baloo 2',sans-serif; font-weight:700; font-size:15px; color:var(--ink);
+  background:#ffffffaa; border:2px dashed var(--pad-border); border-radius:12px; padding:4px 14px;
+}
+
+.controls{ display:flex; align-items:center; gap:20px; }
+.arrow-btn{
+  width:64px; height:64px; border-radius:50%; border:none; cursor:pointer;
+  background:var(--sun); color:#4a3300; font-size:26px; font-weight:800;
+  box-shadow:0 4px 0 var(--sun-dark); transition:transform .08s, box-shadow .08s;
+  display:flex; align-items:center; justify-content:center;
+}
+.arrow-btn:active{ transform:translateY(3px); box-shadow:0 1px 0 var(--sun-dark); }
+.arrow-btn:disabled{ opacity:.35; cursor:default; box-shadow:0 4px 0 var(--sun-dark); }
+
+.skip-btn{
+  border:none; background:none; color:var(--ink-soft); font-weight:700; font-size:13px;
+  text-decoration:underline; cursor:pointer; margin-top:-4px;
+}
+
+.feedback{
+  min-height:30px; font-family:'Baloo 2',sans-serif; font-weight:700; font-size:17px;
+  color:var(--lily-green-dark); text-align:center; display:flex; align-items:center; gap:6px;
+}
+.feedback.pop{ animation:pop .35s ease; }
+@keyframes pop{ 0%{transform:scale(.7);opacity:0;} 60%{transform:scale(1.08);} 100%{transform:scale(1);opacity:1;} }
+
+.confetti{ position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:5;}
+.confetti span{
+  position:absolute; top:-20px; font-size:20px; animation:fall linear forwards;
+}
+@keyframes fall{ to{ transform:translateY(105vh) rotate(300deg); opacity:.2; } }
+
+@media (max-width:420px){
+  .arrow-btn{ width:56px; height:56px; font-size:22px; }
+  .card{ padding:14px 10px; }
+}
+</style>
+
+<!-- Shared template: colors, fonts, sounds, buttons, mascots. Keep this. -->
+<link rel="stylesheet" href="../shared/theme.css">
+<script src="../shared/theme.js" defer></script>
+</head>
+<body>
+
+<h1>🐸 Frog Hops</h1>
+<p class="sub">Subtract by hopping along the number line: count back or count on</p>
+
+<div class="topbar">
+  <div class="badge">⭐ Score: <span id="score">0</span></div>
+  <div class="badge">🏆 Best: <span id="best">0</span></div>
+  <div class="badge">📈 Level: <span id="level">1</span></div>
+</div>
+
+<div class="modes">
+  <button class="mode-btn active" id="modeBack" onclick="setMode('back')">⬅️ Count Back</button>
+  <button class="mode-btn" id="modeOn" onclick="setMode('on')">➡️ Count On</button>
+</div>
+
+<div class="card">
+  <div class="equation"><span id="eqA">12</span> − <span id="eqB">5</span> = <span class="q">?</span></div>
+  <div class="instruction" id="instr">Press the arrow to hop back one step at a time</div>
+
+  <div class="pondwrap"><div class="pond" id="pond"></div></div>
+
+  <div class="hops">🐾 Hops taken: <span id="hopcount">0</span></div>
+
+  <div class="controls">
+    <button class="arrow-btn" id="btnBack" onclick="hop(-1)">◀</button>
+    <button class="arrow-btn" id="btnFwd" onclick="hop(1)">▶</button>
+  </div>
+
+  <div class="feedback" id="feedback"></div>
+  <button class="skip-btn" onclick="newProblem()">New Problem 🔄</button>
+</div>
+
+<script>
+const MAXN = 20;
+let mode = 'back';
+let score = 0, level = 1, correctInLevel = 0;
+let a=0,b=0,target=0,requiredHops=0,frogPos=0,hopsTaken=0,solved=false,startPad=0;
+
+let best = 0;
+try{ best = parseInt(localStorage.getItem('frogGameBest')||'0',10)||0; }catch(e){}
+document.getElementById('best').textContent = best;
+
+function buildPond(){
+  const pond = document.getElementById('pond');
+  pond.innerHTML = '';
+  for(let i=0;i<=MAXN;i++){
+    const pad = document.createElement('div');
+    pad.className='pad'; pad.id='pad'+i;
+    pad.textContent=i;
+    pond.appendChild(pad);
+  }
+  const frog = document.createElement('div');
+  frog.className='frog'; frog.id='frog'; frog.textContent='🐸';
+  pond.appendChild(frog);
+}
+buildPond();
+
+function rand(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+
+function levelCap(){ return level===1?10: level===2?15:20; }
+
+function newProblem(){
+  solved = false;
+  document.getElementById('feedback').textContent='';
+  document.querySelectorAll('.pad').forEach(p=>p.classList.remove('start','dest','current-glow'));
+
+  const cap = levelCap();
+  if(mode==='back'){
+    a = rand(6, cap);
+    b = rand(1, Math.min(9, a));
+    target = a-b;
+    frogPos = a; startPad = a; requiredHops = b;
+    document.getElementById('instr').textContent = 'Hop back '+b+' time(s) to find the answer';
+    document.getElementById('btnBack').disabled=false;
+    document.getElementById('btnFwd').disabled=true;
+  } else {
+    const diff = rand(1, Math.min(9,cap-3));
+    b = rand(0, cap-diff);
+    a = b+diff;
+    target = a; frogPos = b; startPad = b; requiredHops = diff;
+    document.getElementById('instr').textContent = 'Hop forward until you reach '+a;
+    document.getElementById('btnFwd').disabled=false;
+    document.getElementById('btnBack').disabled=true;
+  }
+  hopsTaken = 0;
+  document.getElementById('hopcount').textContent='0';
+  document.getElementById('eqA').textContent=a;
+  document.getElementById('eqB').textContent=b;
+
+  document.getElementById('pad'+startPad).classList.add('start');
+  if(mode==='on') document.getElementById('pad'+target).classList.add('dest');
+
+  placeFrog(frogPos, true);
+}
+
+function placeFrog(pos, instant){
+  const pad = document.getElementById('pad'+pos);
+  const frog = document.getElementById('frog');
+  const left = pad.offsetLeft + pad.offsetWidth/2;
+  if(instant){ frog.style.transition='none'; }
+  frog.style.left = left+'px';
+  if(instant){ requestAnimationFrame(()=>{ frog.style.transition=''; }); }
+  document.querySelectorAll('.pad').forEach(p=>p.classList.remove('current-glow'));
+  pad.classList.add('current-glow');
+}
+
+function hop(dir){
+  if(solved) return;
+  const next = frogPos+dir;
+  if(next<0 || next>MAXN) return;
+  frogPos = next;
+  hopsTaken++;
+  document.getElementById('hopcount').textContent = hopsTaken;
+  placeFrog(frogPos,false);
+
+  const done = (mode==='back') ? (hopsTaken>=requiredHops) : (frogPos>=target);
+  if(done){
+    document.getElementById('btnBack').disabled=true;
+    document.getElementById('btnFwd').disabled=true;
+    setTimeout(success, 250);
+  }
+}
+
+const praises = ['Great job! 🎉','Awesome! 🌟','Excellent! 👏','Amazing! 🐸','Well done! 🎊'];
+
+function success(){
+  solved = true;
+  const ans = mode==='back' ? target : requiredHops;
+  const fb = document.getElementById('feedback');
+  fb.textContent = praises[rand(0,praises.length-1)] + '  '+a+' − '+b+' = '+ans;
+  fb.classList.remove('pop'); void fb.offsetWidth; fb.classList.add('pop');
+  confettiBurst();
+
+  score += 10;
+  document.getElementById('score').textContent = score;
+  if(score>best){ best=score; document.getElementById('best').textContent=best;
+    try{ localStorage.setItem('frogGameBest', String(best)); }catch(e){} }
+
+  correctInLevel++;
+  if(correctInLevel>=5 && level<3){ level++; correctInLevel=0; document.getElementById('level').textContent=level; }
+
+  setTimeout(newProblem, 1500);
+}
+
+function confettiBurst(){
+  const wrap = document.createElement('div');
+  wrap.className='confetti';
+  const emojis=['🍃','⭐','🌸','✨','🐸'];
+  for(let i=0;i<16;i++){
+    const s = document.createElement('span');
+    s.textContent = emojis[rand(0,emojis.length-1)];
+    s.style.left = rand(2,98)+'%';
+    s.style.animationDuration = (1+Math.random()*1.2)+'s';
+    s.style.fontSize = (14+Math.random()*14)+'px';
+    wrap.appendChild(s);
+  }
+  document.body.appendChild(wrap);
+  setTimeout(()=>wrap.remove(), 2400);
+}
+
+function setMode(m){
+  mode = m;
+  document.getElementById('modeBack').classList.toggle('active', m==='back');
+  document.getElementById('modeOn').classList.toggle('active', m==='on');
+  newProblem();
+}
+
+window.addEventListener('resize', ()=>placeFrog(frogPos,true));
+newProblem();
+</script>
+</body>
+</html>

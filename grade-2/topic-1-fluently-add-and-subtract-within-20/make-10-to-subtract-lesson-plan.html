@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Make 10 to Subtract – Grade 2 Lesson Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eaf4ff;--card:#fff;--ink:#16243b;--mute:#4d5d78;--teal:#12a594;--coral:#ff6b57;--sun:#ffc533;--line:#c9d9ee;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1a2c;--card:#182741;--ink:#eef4ff;--mute:#a9b8d3;--line:#2d4166}}
+:root[data-theme="dark"]{--bg:#0f1a2c;--card:#182741;--ink:#eef4ff;--mute:#a9b8d3;--line:#2d4166}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 18px/1.5 Nunito,system-ui,sans-serif}
+h1,h2,h3{font-family:Fredoka,system-ui,sans-serif;margin:0 0 .4em;line-height:1.15}
+header{padding:20px 16px 10px;max-width:920px;margin:auto;display:flex;justify-content:space-between;gap:12px;align-items:flex-end;flex-wrap:wrap}
+header h1{font-size:clamp(26px,5vw,40px)}
+header p{margin:0;color:var(--mute)}
+#starbox{background:var(--sun);color:#16243b;font:700 20px Fredoka,sans-serif;padding:6px 16px;border-radius:99px}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:2px solid var(--line)}
+nav div{max-width:920px;margin:auto;display:flex;gap:6px;padding:8px 16px;overflow-x:auto}
+nav button{flex:none;font:700 16px Fredoka,sans-serif;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:8px 14px;cursor:pointer}
+nav button[aria-selected=true]{background:var(--teal);border-color:var(--teal);color:#fff}
+main{max-width:920px;margin:auto;padding:16px}
+section{display:none}section.on{display:block}
+.card{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:18px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+table{width:100%;border-collapse:collapse}td,th{padding:8px;border-bottom:1px solid var(--line);text-align:left}
+.btn{font:700 18px Fredoka,sans-serif;border:0;border-radius:14px;padding:10px 18px;background:var(--coral);color:#fff;cursor:pointer}
+.btn.alt{background:var(--teal)}
+button:focus-visible,input:focus-visible{outline:4px solid var(--sun);outline-offset:2px}
+.q{font:700 clamp(30px,8vw,52px) Fredoka,sans-serif;text-align:center;margin:8px 0}
+.msg{min-height:1.6em;text-align:center;font-weight:700}
+.ok{color:var(--teal)}.no{color:var(--coral)}
+.choices{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:10px 0}
+.choices button{min-width:64px;font:700 26px Fredoka,sans-serif;padding:10px 16px;border-radius:14px;border:3px solid var(--teal);background:var(--card);color:var(--ink);cursor:pointer}
+.frames{display:flex;flex-wrap:wrap;gap:18px;justify-content:center;margin:10px 0}
+.frame{display:grid;grid-template-columns:repeat(5,44px);gap:4px;padding:6px;border:3px solid var(--ink);border-radius:8px}
+.cell{width:44px;height:44px;border:2px dashed var(--line);border-radius:6px;display:grid;place-items:center;background:transparent;padding:0;cursor:pointer}
+.dot{width:32px;height:32px;border-radius:50%;background:var(--coral);display:block}
+.frame.b .dot{background:var(--teal)}
+.cell.x .dot{opacity:.25;position:relative}
+.cell.x::after{content:"✕";position:absolute;font:700 26px sans-serif;color:var(--ink)}
+.cell{position:relative}
+.chips{display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap;margin:8px 0}
+.chip{font:700 30px Fredoka,sans-serif;min-width:64px;text-align:center;padding:8px 14px;border-radius:14px;border:3px solid var(--line)}
+.chip.lit{background:var(--sun);color:#16243b;border-color:var(--sun)}
+.hop{color:var(--mute);font-weight:700}
+.sky{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin:10px 0}
+.balloon{width:92px;height:112px;border-radius:50% 50% 48% 48%;border:0;font:700 34px Fredoka,sans-serif;color:#16243b;cursor:pointer;transition:transform .2s}
+.balloon:nth-child(4n+1){background:#ff8f80}.balloon:nth-child(4n+2){background:#ffd35c}.balloon:nth-child(4n+3){background:#66d9c8}.balloon:nth-child(4n){background:#9ec5ff}
+.balloon.pop{transform:scale(0);opacity:0}
+.fix{font:700 clamp(22px,5vw,34px) Fredoka,sans-serif;text-align:center;line-height:2.2}
+.fix input{width:64px;font:700 28px Fredoka,sans-serif;text-align:center;border:3px solid var(--teal);border-radius:10px;background:var(--card);color:var(--ink);padding:2px}
+.bar{height:12px;background:var(--line);border-radius:9px;overflow:hidden;margin:6px 0 12px}
+.bar i{display:block;height:100%;width:0;background:var(--teal);transition:width .3s}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<!-- Shared template: colors, fonts, sounds, buttons, mascots. Keep this. -->
+<link rel="stylesheet" href="../../shared/theme.css">
+<script src="../../shared/theme.js" defer></script>
+</head>
+<body>
+<header>
+  <div><h1>Make 10 to Subtract</h1><p>enVision Math · Grade 2 · Topic 1 · Lesson 7 · about 50 minutes</p></div>
+  <div id="starbox" aria-live="polite">⭐ <span id="stars">0</span></div>
+</header>
+<nav><div role="tablist" id="tabs"></div></nav>
+<main>
+
+<section id="plan">
+  <div class="card">
+    <h2>Learning goal</h2>
+    <p>Students subtract from a teen number by first taking away to reach 10, then taking away the rest. Example: 14 − 8 → 14 − 4 = 10, then 10 − 4 = 6.</p>
+    <div class="grid">
+      <div><h3>Vocabulary</h3><p>make 10, ten frame, subtract, difference, break apart</p></div>
+      <div><h3>Materials</h3><p>ten frames, two-color counters, number line 0–20, whiteboards, this page on a screen</p></div>
+      <div><h3>Prior skills</h3><p>Partners of 10, subtracting within 10</p></div>
+    </div>
+  </div>
+  <div class="card">
+    <h2>Lesson flow</h2>
+    <table>
+      <tr><td><b>5 min</b></td><td>Warm-up: Ten Partners</td></tr>
+      <tr><td><b>10 min</b></td><td>Explore: pairs solve 15 − 9 with counters and share how they did it</td></tr>
+      <tr><td><b>10 min</b></td><td>Teach: model the strategy (demo below)</td></tr>
+      <tr><td><b>20 min</b></td><td>Games 1–4 in stations or as a whole class</td></tr>
+      <tr><td><b>5 min</b></td><td>Exit ticket</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h2>Teach: try 14 − 8</h2>
+    <div class="frames" id="demoFrames"></div>
+    <p class="msg" id="demoMsg" style="min-height:3em"></p>
+    <div style="text-align:center"><button class="btn" id="demoNext">Next step</button> <button class="btn alt" id="demoReset">Start over</button></div>
+    <p>Ask: <i>Why is 10 a helpful stopping point?</i> Have students say each step aloud: “14 minus 4 is 10. 10 minus 4 is 6.”</p>
+  </div>
+  <div class="grid">
+    <div class="card"><h3>Common mistakes</h3><p>Taking away the full number from the ones only (14 − 8 → 4 − 8). Forgetting to subtract the “rest.” Counting the ten-frame dot that was already crossed out.</p></div>
+    <div class="card"><h3>Support and stretch</h3><p>Support: keep ten frames and counters, use problems where the ones digit is 1 less than the number subtracted. Stretch: ask students to write their own make-10 subtraction story.</p></div>
+    <div class="card">
+      <h3>Exit ticket</h3>
+      <p>13 − 9 · 16 − 8 · 12 − 7</p>
+      <button class="btn alt" id="showAns">Show answers</button>
+      <p id="ans" class="msg ok"></p>
+    </div>
+  </div>
+</section>
+
+<section id="warm">
+  <div class="card">
+    <h2>Warm-up: Ten Partners</h2>
+    <p>Tap the number that makes 10. Get 8 right to finish. (Teacher: say the partner facts out loud together.)</p>
+    <div class="bar"><i id="wBar"></i></div>
+    <div class="q" id="wQ"></div>
+    <div class="choices" id="wC"></div>
+    <div class="msg" id="wM" aria-live="polite"></div>
+    <div style="text-align:center"><button class="btn alt" id="wR">Play again</button></div>
+  </div>
+</section>
+
+<section id="g1">
+  <div class="card">
+    <h2>Game 1: Ten-Frame Takeaway</h2>
+    <p>Cross out the extra ones first to make 10. Then keep crossing out until you have taken away the whole amount.</p>
+    <div class="q" id="g1Q"></div>
+    <div class="frames" id="g1F"></div>
+    <div class="msg" id="g1M" aria-live="polite"></div>
+    <div class="choices" id="g1C"></div>
+    <div style="text-align:center"><button class="btn alt" id="g1N">New problem</button></div>
+  </div>
+</section>
+
+<section id="g2">
+  <div class="card">
+    <h2>Game 2: Hop to 10</h2>
+    <p>Hop back to 10, then hop the rest of the way. Answer each step.</p>
+    <div class="q" id="g2Q"></div>
+    <div class="chips" id="g2Chips"></div>
+    <p class="msg" id="g2Ask" style="font-size:22px"></p>
+    <div class="choices" id="g2C"></div>
+    <div class="msg" id="g2M" aria-live="polite"></div>
+    <div style="text-align:center"><button class="btn alt" id="g2N">New problem</button></div>
+  </div>
+</section>
+
+<section id="g3">
+  <div class="card">
+    <h2>Game 3: Balloon Pop</h2>
+    <p>Solve the problem, then pop the balloon with the answer. Pop 6 to win. Tip: make 10 first!</p>
+    <div class="bar"><i id="g3Bar"></i></div>
+    <div class="q" id="g3Q"></div>
+    <div class="sky" id="g3S"></div>
+    <div class="msg" id="g3M" aria-live="polite"></div>
+    <div style="text-align:center"><button class="btn alt" id="g3R">Play again</button></div>
+  </div>
+</section>
+
+<section id="g4">
+  <div class="card">
+    <h2>Game 4: Fix the Steps</h2>
+    <p>Fill in the missing numbers. Solve 5 to win.</p>
+    <div class="bar"><i id="g4Bar"></i></div>
+    <div class="fix" id="g4Fix"></div>
+    <div class="msg" id="g4M" aria-live="polite"></div>
+    <div style="text-align:center"><button class="btn" id="g4Check">Check</button> <button class="btn alt" id="g4R">Restart</button></div>
+  </div>
+</section>
+
+</main>
+<script>
+const $=s=>document.querySelector(s);
+const rand=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=rand(0,i);[a[i],a[j]]=[a[j],a[i]]}return a};
+let stars=0;const star=(n=1)=>{stars+=n;$('#stars').textContent=stars};
+function msg(el,ok,t){el.className='msg '+(ok?'ok':'no');el.textContent=t}
+function prob(){let a,b;do{a=rand(11,18);b=rand(3,9)}while(!(b>a-10)||a-b<1);return{a,b,t:a-10,r:b-(a-10),ans:a-b}}
+function opts(ans,n=3){const s=new Set([ans]);while(s.size<n){const v=ans+rand(-3,3);if(v>0&&v<19)s.add(v)}return shuffle([...s])}
+function choices(el,list,cb){el.innerHTML='';list.forEach(v=>{const b=document.createElement('button');b.textContent=v;b.onclick=()=>cb(v,b);el.appendChild(b)})}
+
+/* tabs */
+const tabs=[['plan','Lesson plan'],['warm','Warm-up'],['g1','Game 1'],['g2','Game 2'],['g3','Game 3'],['g4','Game 4']];
+tabs.forEach(([id,l],i)=>{const b=document.createElement('button');b.textContent=l;b.setAttribute('role','tab');b.dataset.t=id;b.onclick=()=>show(id);$('#tabs').appendChild(b)});
+function show(id){document.querySelectorAll('section').forEach(s=>s.classList.toggle('on',s.id===id));document.querySelectorAll('#tabs button').forEach(b=>b.setAttribute('aria-selected',b.dataset.t===id));scrollTo(0,0)}
+
+/* ten frames */
+function frames(el,a,crossed,onClick){el.innerHTML='';[[0,Math.min(10,a),''],[10,a,'b']].forEach(([s,e,c])=>{if(e<=s)return;const f=document.createElement('div');f.className='frame '+c;for(let i=s;i<s+10;i++){const b=document.createElement('button');b.className='cell'+(crossed.has(i)?' x':'');b.setAttribute('aria-label','counter '+(i+1));if(i<e){b.innerHTML='<span class="dot"></span>';if(onClick)b.onclick=()=>onClick(i)}else{b.disabled=true;b.style.cursor='default'}f.appendChild(b)}el.appendChild(f)})}
+
+/* teach demo */
+let ds=0;const dcross=new Set();
+const dtext=['We start with 14 counters: a full ten frame and 4 extra.','Take away the 4 extras. 14 − 4 = 10. Now we are at 10!','We need to take away 8 in all. We took 4, so 4 more to go.','Take away 4 from the ten. 10 − 4 = 6. So 14 − 8 = 6.'];
+function demo(){frames($('#demoFrames'),14,dcross);$('#demoMsg').textContent=dtext[ds];$('#demoNext').disabled=ds===3}
+$('#demoNext').onclick=()=>{ds++;if(ds===1)[10,11,12,13].forEach(i=>dcross.add(i));if(ds===3)[6,7,8,9].forEach(i=>dcross.add(i));demo()};
+$('#demoReset').onclick=()=>{ds=0;dcross.clear();demo()};
+$('#showAns').onclick=()=>{$('#ans').textContent='13 − 9 = 4 · 16 − 8 = 8 · 12 − 7 = 5'};
+
+/* warm-up */
+let w={r:0,n:0};
+function wNext(){w.n=rand(1,9);$('#wQ').textContent=w.n+' + ? = 10'}
+function wStart(){w.r=0;$('#wBar').style.width='0';$('#wM').textContent='';choices($('#wC'),[1,2,3,4,5,6,7,8,9],(v)=>{if(w.r>=8)return;if(v===10-w.n){w.r++;star();$('#wBar').style.width=w.r/8*100+'%';if(w.r>=8){msg($('#wM'),true,'Warm-up complete! You know your ten partners.');$('#wQ').textContent='🎉';return}msg($('#wM'),true,w.n+' + '+v+' = 10. Yes!');wNext()}else msg($('#wM'),false,'Not quite. Count up from '+w.n+' to 10.')});wNext()}
+$('#wR').onclick=wStart;
+
+/* game 1 */
+let p1,c1;
+function g1(){p1=prob();c1=new Set();$('#g1C').innerHTML='';$('#g1Q').textContent=p1.a+' − '+p1.b;msg($('#g1M'),true,'Cross out the '+p1.t+' extra ones first.');draw1()}
+function draw1(){frames($('#g1F'),p1.a,c1,i=>{if(c1.has(i))return;const extrasDone=[...c1].filter(x=>x>=10).length===p1.t;if(i<10&&!extrasDone){msg($('#g1M'),false,'Clear the extra ones first to make 10.');return}if(c1.size>=p1.b)return;c1.add(i);draw1();const done=[...c1].filter(x=>x>=10).length===p1.t;if(c1.size===p1.b){msg($('#g1M'),true,'You took away '+p1.b+'. How many are left?');choices($('#g1C'),opts(p1.ans),(v,b)=>{if(v===p1.ans){star(2);msg($('#g1M'),true,p1.a+' − '+p1.b+' = '+p1.ans+'. Great work!');$('#g1C').innerHTML=''}else{b.disabled=true;msg($('#g1M'),false,'Count the counters that are not crossed out.')}})}else if(done&&c1.size===p1.t)msg($('#g1M'),true,'You made 10! Now take away '+p1.r+' more from the ten.')})}
+$('#g1N').onclick=g1;
+
+/* game 2 */
+let p2,s2;
+function g2(){p2=prob();s2=0;$('#g2Q').textContent=p2.a+' − '+p2.b;$('#g2M').textContent='';chips2()}
+function chips2(){const c=$('#g2Chips');c.innerHTML='';const seq=[[p2.a,1],['',0],[10,s2>=1],['',0],[s2>=2?p2.ans:'?',s2>=2]];
+ c.innerHTML='<span class="chip lit">'+p2.a+'</span><span class="hop">'+(s2>=1?'− '+p2.t+' →':'→')+'</span><span class="chip'+(s2>=1?' lit':'')+'">'+(s2>=1?10:'10')+'</span><span class="hop">'+(s2>=2?'− '+p2.r+' →':'→')+'</span><span class="chip'+(s2>=3?' lit':'')+'">'+(s2>=3?p2.ans:'?')+'</span>';
+ const qs=['How many do we subtract to get from '+p2.a+' to 10?','We need to subtract '+p2.b+' in all. How many more after '+p2.t+'?','10 − '+p2.r+' = ?'];const as=[p2.t,p2.r,p2.ans];
+ if(s2>2){$('#g2Ask').textContent='';$('#g2C').innerHTML='';msg($('#g2M'),true,p2.a+' − '+p2.b+' = '+p2.ans+'. You hopped to 10!');return}
+ $('#g2Ask').textContent=qs[s2];choices($('#g2C'),opts(as[s2]),(v,b)=>{if(v===as[s2]){star();s2++;$('#g2M').textContent='';chips2()}else{b.disabled=true;msg($('#g2M'),false,'Try again.')}})}
+$('#g2N').onclick=g2;
+
+/* game 3 */
+let g3={r:0,p:null};
+function g3n(){g3.p=prob();$('#g3Q').textContent=g3.p.a+' − '+g3.p.b+' = ?';const o=opts(g3.p.ans,4);const s=$('#g3S');s.innerHTML='';o.forEach(v=>{const b=document.createElement('button');b.className='balloon';b.textContent=v;b.setAttribute('aria-label','balloon '+v);b.onclick=()=>{if(v===g3.p.ans){b.classList.add('pop');star();g3.r++;$('#g3Bar').style.width=g3.r/6*100+'%';if(g3.r>=6){$('#g3Q').textContent='🎈 6 pops!';s.innerHTML='';msg($('#g3M'),true,'You win! Bonus stars added.');star(3)}else{msg($('#g3M'),true,'Pop! Next one.');setTimeout(g3n,500)}}else{msg($('#g3M'),false,'Try again. First subtract '+g3.p.t+' to get to 10.')}};s.appendChild(b)})}
+function g3s(){g3.r=0;$('#g3Bar').style.width='0';$('#g3M').textContent='';g3n()}
+$('#g3R').onclick=g3s;
+
+/* game 4 */
+let g4={r:0,p:null};
+function g4n(){g4.p=prob();const p=g4.p;$('#g4Fix').innerHTML=p.a+' − '+p.b+' = '+p.a+' − <input id="i1" inputmode="numeric" aria-label="first subtract"> = 10<br>10 − <input id="i2" inputmode="numeric" aria-label="second subtract"> = <input id="i3" inputmode="numeric" aria-label="answer">';$('#g4M').textContent='';$('#i1').focus()}
+$('#g4Check').onclick=()=>{const p=g4.p;const v=[+$('#i1').value,+$('#i2').value,+$('#i3').value];if(v[0]===p.t&&v[1]===p.r&&v[2]===p.ans){g4.r++;star(2);$('#g4Bar').style.width=g4.r/5*100+'%';if(g4.r>=5){msg($('#g4M'),true,'All 5 fixed! You are a make-10 expert.');$('#g4Fix').innerHTML='🏆'}else{msg($('#g4M'),true,'Correct!');setTimeout(g4n,700)}}else msg($('#g4M'),false,v[0]!==p.t?'Check the first box: how many to get from '+p.a+' down to 10?':'Check the second step: '+p.b+' − '+p.t+' more to subtract, then 10 minus that.')};
+function g4s(){g4.r=0;$('#g4Bar').style.width='0';g4n()}
+$('#g4R').onclick=g4s;
+
+demo();wStart();g1();g2();g3s();g4s();show('plan');
+</script>
+</body>
+</html>

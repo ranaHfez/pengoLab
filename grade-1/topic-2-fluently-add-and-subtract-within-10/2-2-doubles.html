@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Doubles – enVision Math Grade 1, Lesson 2-2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top, 0px);
+  padding-bottom:env(safe-area-inset-bottom, 0px);
+  --ink:#241f5c; --ink2:#4a4585; --bg:#f2f5ff; --card:#ffffff; --line:#d5dbfa; --empty:#e8ecff;
+  --c1:#ff4d6d; --c2:#2f80ff; --grape:#6a49f5; --mint:#14a487; --sky:#2a9fd6; --sun:#ffc933;
+  --b0:#fff1bd; --b1:#ffdce5; --b2:#d1f5ea; --b3:#d9effa;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ink:#f1f0ff; --ink2:#c6c3f0; --bg:#15133a; --card:#221f54; --line:#3b3782; --empty:#2d2a68;
+    --b0:#3a3218; --b1:#3d2138; --b2:#143c3c; --b3:#152f4a;
+  }
+}
+:root[data-theme="dark"]{
+  --ink:#f1f0ff; --ink2:#c6c3f0; --bg:#15133a; --card:#221f54; --line:#3b3782; --empty:#2d2a68;
+  --b0:#3a3218; --b1:#3d2138; --b2:#143c3c; --b3:#152f4a;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth; scroll-padding-top:calc(env(safe-area-inset-top, 0px) + 76px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:500 18px/1.55 Nunito, system-ui, -apple-system, "Segoe UI", sans-serif}
+h1,h2,h3{font-family:"Baloo 2", "Trebuchet MS", system-ui, sans-serif;line-height:1.1;margin:0}
+p{margin:0 0 .8em}
+.wrap{max-width:980px;margin:0 auto;padding:0 20px}
+:focus-visible{outline:4px solid var(--grape);outline-offset:3px}
+
+/* top bar */
+.top{position:sticky;top:env(safe-area-inset-top, 0px);z-index:20;background:var(--card);border-bottom:3px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:12px;padding-top:10px;padding-bottom:10px}
+.brand{font:800 1.3rem "Baloo 2", system-ui, sans-serif;white-space:nowrap;color:var(--ink)}
+.nav{display:flex;gap:8px;overflow-x:auto;flex:1;scrollbar-width:none;padding:2px}
+.nav::-webkit-scrollbar{display:none}
+.nav a{white-space:nowrap;text-decoration:none;color:#241f5c;font:700 .95rem Nunito, system-ui, sans-serif;padding:7px 14px;border-radius:999px}
+.nav a.n-plan{background:#c9c0ff}.nav a.n-w{background:#ffd95e}.nav a.n-g1{background:#ff9db3}.nav a.n-g2{background:#68dcc2}.nav a.n-g3{background:#86d2f5}
+.tools{display:flex;align-items:center;gap:8px}
+.starbox{font:800 1.1rem "Baloo 2", system-ui, sans-serif;background:var(--b0);padding:4px 12px;border-radius:999px;white-space:nowrap}
+.mute{border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;font-size:1.1rem;width:40px;height:40px;cursor:pointer}
+
+/* hero */
+.hero{padding:44px 0 28px}
+.hero .wrap{display:grid;grid-template-columns:1.2fr 1fr;gap:32px;align-items:center}
+.hero h1{font-size:clamp(3.4rem,13vw,7rem);font-weight:800;letter-spacing:-.01em}
+.hero .sub{font-size:1.25rem;color:var(--ink2);max-width:34ch}
+.hero .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.tag{background:var(--card);border:2px solid var(--line);border-radius:999px;padding:4px 14px;font-weight:700;font-size:.95rem}
+.heroviz{background:var(--card);border:3px solid var(--line);border-radius:28px;padding:22px;text-align:center}
+.heroviz .tenframe{margin:0 auto 10px}
+.heroviz .bigeq{font-size:2.4rem}
+
+/* ten-frame */
+.tenframe{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;padding:8px;background:var(--empty);border-radius:16px;width:min(100%,270px)}
+.cell{aspect-ratio:1;border-radius:10px;background:var(--card);border:2px solid var(--line);position:relative}
+.cell.c1::after,.cell.c2::after{content:"";position:absolute;inset:14%;border-radius:50%}
+.cell.c1::after{background:var(--c1)}
+.cell.c2::after{background:var(--c2)}
+.legend{display:flex;justify-content:center;gap:16px;font-weight:700;font-size:.9rem;margin-top:6px}
+.legend i{display:inline-block;width:14px;height:14px;border-radius:50%;margin-right:6px;vertical-align:-2px}
+.bigeq{font:800 2rem "Baloo 2", system-ui, sans-serif;margin:6px 0}
+@media (prefers-reduced-motion: no-preference){
+  .heroviz .cell.c1::after,.heroviz .cell.c2::after{animation:popin .45s cubic-bezier(.3,1.6,.5,1) both;animation-delay:calc(var(--i) * 110ms + 300ms)}
+}
+@keyframes popin{from{transform:scale(0)}to{transform:scale(1)}}
+
+/* sections */
+.sec-title{font-size:clamp(2rem,6vw,3rem);margin-bottom:6px}
+.sec-lead{color:var(--ink2);max-width:60ch}
+.plan{padding:36px 0 56px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin:24px 0 36px}
+.fact{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:16px 18px}
+.fact h3{font-size:1.25rem;margin-bottom:4px;color:var(--grape)}
+.fact p,.fact ul{margin:0;font-size:1rem}
+.fact ul{padding-left:1.1em}
+.steps{list-style:none;margin:0;padding:0;counter-reset:s}
+.steps>li{counter-increment:s;display:grid;grid-template-columns:52px 1fr;gap:14px;padding-bottom:26px;position:relative}
+.steps>li::before{content:counter(s);width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font:800 1.4rem "Baloo 2", system-ui, sans-serif;color:#241f5c;background:var(--sun)}
+.steps>li:nth-child(2)::before{background:#ff9db3}
+.steps>li:nth-child(3)::before{background:#68dcc2}
+.steps>li:nth-child(4)::before{background:#86d2f5}
+.steps>li:nth-child(5)::before{background:#c9c0ff}
+.steps>li:nth-child(6)::before{background:#ffb26b}
+.steps>li:nth-child(7)::before{background:#b7e35a}
+.steps>li:not(:last-child)::after{content:"";position:absolute;left:22px;top:50px;bottom:4px;width:3px;background:var(--line);border-radius:2px}
+.steps h3{font-size:1.5rem}
+.time{display:inline-block;font:700 .9rem Nunito, system-ui, sans-serif;background:var(--empty);padding:2px 12px;border-radius:999px;margin-left:8px;vertical-align:middle}
+.steps .body{min-width:0}
+.steps ul{margin:.3em 0 .8em;padding-left:1.2em}
+.steps li li{margin:.15em 0}
+details{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:10px 16px;margin:.5em 0}
+summary{cursor:pointer;font-weight:800}
+details[open] summary{margin-bottom:6px}
+.say{border-left:5px solid var(--grape);padding:4px 0 4px 14px;margin:.5em 0;font-style:italic}
+
+/* explorer */
+.explorer{background:var(--card);border:3px solid var(--line);border-radius:24px;padding:20px;margin:12px 0;display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center}
+.pickrow{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.pick{width:52px;height:52px;border-radius:50%;border:3px solid var(--line);background:var(--card);color:var(--ink);font:800 1.5rem "Baloo 2", system-ui, sans-serif;cursor:pointer}
+.pick[aria-pressed="true"]{background:var(--grape);border-color:var(--grape);color:#fff}
+.chart{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0}
+.chip{background:var(--b0);border-radius:12px;padding:4px 12px;font:700 1rem Nunito, system-ui, sans-serif;color:var(--ink)}
+@media (max-width:640px){.explorer{grid-template-columns:1fr}.hero .wrap{grid-template-columns:1fr}}
+
+/* differentiation */
+.diff{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin-top:20px}
+.diff .fact:nth-child(1) h3{color:var(--mint)}
+.diff .fact:nth-child(3) h3{color:var(--c1)}
+
+/* game bands */
+.band{padding:56px 0}
+.band.w{background:var(--b0)}.band.g1{background:var(--b1)}.band.g2{background:var(--b2)}.band.g3{background:var(--b3)}
+.band .meta{margin:10px 0 22px;display:grid;gap:4px;max-width:70ch}
+.band .meta p{margin:0}
+.stage{background:var(--card);border:4px solid var(--ink);border-radius:30px;padding:24px;min-height:360px}
+.stage.intro{display:grid;place-items:center;text-align:center;gap:6px}
+.stage .big{font-size:4rem;line-height:1}
+.btn{font:700 1.2rem "Baloo 2", system-ui, sans-serif;border:0;border-radius:999px;padding:10px 30px;background:var(--grape);color:#fff;cursor:pointer;box-shadow:0 5px 0 rgba(0,0,0,.25);transition:transform .08s}
+.btn:active{transform:translateY(3px);box-shadow:0 2px 0 rgba(0,0,0,.25)}
+.btn.alt{background:var(--mint)}
+.qhead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+.qprog{display:flex;gap:6px;flex-wrap:wrap}
+.pip{width:14px;height:14px;border-radius:50%;background:var(--empty);border:2px solid var(--line)}
+.pip.done{background:var(--mint);border-color:var(--mint)}
+.pip.now{background:var(--sun);border-color:var(--ink)}
+.qcount{font-weight:800}
+.qprompt{font:700 1.45rem/1.3 "Baloo 2", system-ui, sans-serif;margin-bottom:10px}
+.qvisual{text-align:center;margin:8px 0 14px}
+.pairs{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;font-size:2rem}
+.dotgroup{display:inline-flex;flex-wrap:wrap;gap:2px;max-width:200px;justify-content:center;background:var(--empty);padding:8px 12px;border-radius:16px}
+.plus{font:800 2rem "Baloo 2", system-ui, sans-serif}
+.emo{font-size:1.9rem;line-height:1.1}
+.qvisual .tenframe{margin:0 auto}
+.choices{display:grid;gap:14px;margin:14px 0}
+.choices.cards{grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}
+.choice{font:800 1.9rem "Baloo 2", system-ui, sans-serif;color:#241f5c;border:3px solid #241f5c;border-radius:20px;padding:12px 10px;cursor:pointer;box-shadow:0 5px 0 rgba(0,0,0,.25);min-height:64px}
+.choice.ch0{background:#ff9db3}.choice.ch1{background:#ffd95e}.choice.ch2{background:#68dcc2}.choice.ch3{background:#86d2f5}
+.choice:disabled{cursor:default}
+.choice.wrong{background:#cfcfe0;opacity:.6;animation:shake .35s}
+.choice.right{outline:5px solid var(--mint);outline-offset:2px}
+.choices.balloon{display:flex;flex-wrap:wrap;justify-content:center;gap:28px;padding:10px 0 24px}
+.choices.balloon .choice{width:112px;height:132px;border-radius:50% 50% 50% 50% / 58% 58% 42% 42%;position:relative;box-shadow:inset -8px -10px 0 rgba(0,0,0,.12);font-size:2.4rem}
+.choices.balloon .choice::after{content:"";position:absolute;left:50%;top:100%;width:2px;height:26px;background:var(--ink);opacity:.5}
+@media (prefers-reduced-motion: no-preference){
+  .choices.balloon .choice:not(:disabled){animation:bob 2.6s ease-in-out infinite}
+  .choices.balloon .choice:nth-child(2){animation-delay:-.8s}
+  .choices.balloon .choice:nth-child(3){animation-delay:-1.6s}
+  .choice.right.balloonpop{animation:pop .4s forwards}
+}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+@keyframes pop{50%{transform:scale(1.35)}100%{transform:scale(1.6);opacity:0}}
+.feedback{min-height:3.4em;font-weight:700;font-size:1.1rem}
+.feedback strong{color:var(--mint)}
+.nextrow{display:flex;justify-content:center;margin-top:6px}
+.final{text-align:center;padding:20px 0}
+.final .big{font-size:4rem}
+.final .score{font:800 2.4rem "Baloo 2", system-ui, sans-serif}
+
+/* ladybug */
+.bugwrap{display:flex;justify-content:center}
+.bug{width:min(100%,360px);height:auto}
+.wing{fill:#ff5d73;stroke:#241f5c;stroke-width:5}
+.spot{fill:#241f5c}
+.slot{fill:rgba(255,255,255,.4);stroke:#fff;stroke-width:3;stroke-dasharray:5 4;cursor:pointer}
+.slot.on{fill:#241f5c;stroke:#241f5c;stroke-dasharray:none}
+.slot:focus-visible{outline:none;stroke:#ffc933;stroke-width:5}
+
+.confetti{position:fixed;top:-40px;z-index:99;pointer-events:none;animation:fall 3s linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(360deg)}}
+footer{padding:28px 0 40px;text-align:center;color:var(--ink2);font-size:.95rem}
+@media (max-width:520px){.brand{display:none}.stage{padding:16px}.steps>li{grid-template-columns:42px 1fr;gap:10px}.steps>li::before{width:38px;height:38px;font-size:1.2rem}.steps>li:not(:last-child)::after{left:18px;top:42px}}
+</style>
+
+<!-- Shared template: colors, fonts, sounds, buttons, mascots. Keep this. -->
+<link rel="stylesheet" href="../../shared/theme.css">
+<script src="../../shared/theme.js" defer></script>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <span class="brand">Doubles 🐞</span>
+    <nav class="nav" aria-label="Page sections">
+      <a class="n-plan" href="#plan">Lesson plan</a>
+      <a class="n-w" href="#warmup">Warm-up</a>
+      <a class="n-g1" href="#game1">Game 1</a>
+      <a class="n-g2" href="#game2">Game 2</a>
+      <a class="n-g3" href="#game3">Game 3</a>
+    </nav>
+    <div class="tools">
+      <span class="starbox" aria-live="polite">⭐ <span id="starCount">0</span></span>
+      <button class="mute" id="muteBtn" aria-pressed="false" aria-label="Sound on" title="Sound on or off">🔊</button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <h1>Doubles</h1>
+      <p class="sub">A double adds the same number two times. Today we find doubles, build them, and add them.</p>
+      <div class="tags">
+        <span class="tag">enVision Math · Grade 1</span>
+        <span class="tag">Topic 2: Fluently add and subtract within 10</span>
+        <span class="tag">Lesson 2-2</span>
+      </div>
+    </div>
+    <div class="heroviz">
+      <div id="heroFrame"></div>
+      <div class="legend"><span><i style="background:var(--c1)"></i>top row</span><span><i style="background:var(--c2)"></i>bottom row</span></div>
+      <div class="bigeq">3 + 3 = 6</div>
+      <p style="margin:0">Both rows match. That is a double!</p>
+    </div>
+  </div>
+</section>
+
+<section class="plan" id="plan">
+  <div class="wrap">
+    <h2 class="sec-title">Lesson plan</h2>
+    <p class="sec-lead">Follow the student book’s Solve &amp; Share, Visual Learning, Guided Practice, Independent Practice and Problem Solving pages alongside this plan. Page numbers and exact problems can differ by edition.</p>
+
+    <div class="facts">
+      <div class="fact"><h3>Learning goal</h3><p>Students add doubles from 1 + 1 to 5 + 5 using objects, drawings, ten-frames and equations. They explain that a double has two equal addends.</p></div>
+      <div class="fact"><h3>Big question</h3><p>How can doubles help me add?</p></div>
+      <div class="fact"><h3>Vocabulary</h3><p><b>double</b>, <b>add</b>, <b>equal</b>, <b>same</b>, <b>sum</b>, <b>equation</b></p></div>
+      <div class="fact"><h3>Materials</h3><ul><li>Two-color counters, ten-frames</li><li>Linking cubes, dominoes or dice</li><li>Whiteboards and markers</li><li>Student book, tablets or a projector</li></ul></div>
+      <div class="fact"><h3>Standards and practices</h3><p>CCSS 1.OA.C.6 (add within 10 fluently). Math practices: MP4 model with math, MP7 look for structure.</p></div>
+      <div class="fact"><h3>Time</h3><p>About 50 minutes. Games can move to math centers or a second session.</p></div>
+    </div>
+
+    <ol class="steps">
+      <li>
+        <div class="body">
+          <h3>Warm-up game <span class="time">5 min</span></h3>
+          <p>Play <a href="#warmup">Ladybug Mirror</a> on the board. Students tap spots on the right wing to match the left wing.</p>
+          <details>
+            <summary>Teacher script</summary>
+            <p class="say">“This ladybug is a mirror. Both wings must match. How many spots on the left? Make the right wing the same.”</p>
+            <p>After each round ask: “How many on the left? How many on the right? How many in all?” Listen for the words <i>the same</i>.</p>
+          </details>
+        </div>
+      </li>
+      <li>
+        <div class="body">
+          <h3>Solve &amp; Share <span class="time">7 min</span></h3>
+          <p>Use the book’s opening problem. If you want a backup story:</p>
+          <p class="say">“Mia has 3 apples in each hand. How many apples does she have in all?”</p>
+          <ul>
+            <li>Students solve with counters, cubes or a drawing.</li>
+            <li>Pairs share how they solved it.</li>
+            <li>Ask: “How are the two groups alike?” Guide them to say both groups are the same size.</li>
+          </ul>
+        </div>
+      </li>
+      <li>
+        <div class="body">
+          <h3>Visual Learning: what is a double? <span class="time">10 min</span></h3>
+          <ul>
+            <li>A <b>double</b> adds two groups that are the same size.</li>
+            <li>On a ten-frame, a double has the same number in the top row and the bottom row.</li>
+            <li>Say each fact aloud: “Double 3 is 6.”</li>
+            <li>Find doubles in real life: two eyes, two hands, two shoes, two bike wheels.</li>
+          </ul>
+          <p><b>Try the Doubles Explorer.</b> Tap a number and watch the ten-frame mirror it.</p>
+          <div class="explorer">
+            <div>
+              <div class="pickrow" role="group" aria-label="Pick a number from 1 to 5" id="exPick"></div>
+              <div id="exFrame"></div>
+            </div>
+            <div>
+              <div class="bigeq" id="exEq" aria-live="polite"></div>
+              <p id="exSay" style="font-weight:700"></p>
+              <button class="btn alt" id="exSpeak" type="button">🔊 Say it</button>
+            </div>
+          </div>
+          <div class="chart" aria-label="Doubles facts to 10">
+            <span class="chip">1 + 1 = 2</span><span class="chip">2 + 2 = 4</span><span class="chip">3 + 3 = 6</span><span class="chip">4 + 4 = 8</span><span class="chip">5 + 5 = 10</span>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="body">
+          <h3>Guided Practice and Convince Me <span class="time">8 min</span></h3>
+          <ul>
+            <li>Students do the Guided Practice items with a partner, using counters to check each answer.</li>
+            <li>Convince Me prompts you can use: “Is 4 + 4 a double? How do you know?” and “Is 3 + 4 a double? Draw to show why or why not.”</li>
+          </ul>
+          <details>
+            <summary>What to listen for</summary>
+            <p>Strong answers say the two numbers are the same, or point to matching rows on a ten-frame. For 3 + 4, students may notice there is one extra counter.</p>
+          </details>
+        </div>
+      </li>
+      <li>
+        <div class="body">
+          <h3>Game centers <span class="time">12 min</span></h3>
+          <p>Rotate small groups through the three games, about 4 minutes each.</p>
+          <ul>
+            <li><a href="#game1">Balloon Pop</a>: add doubles from 1 + 1 to 5 + 5 with pictures.</li>
+            <li><a href="#game2">Double or Not?</a>: tell doubles from other facts using ten-frames.</li>
+            <li><a href="#game3">Double Stories</a>: solve word problems, match pictures to equations, and find the missing double.</li>
+          </ul>
+        </div>
+      </li>
+      <li>
+        <div class="body">
+          <h3>Independent Practice and Problem Solving <span class="time">5 min</span></h3>
+          <p>Students complete the book’s Independent Practice and Problem Solving items. Circulate and ask students to read each fact aloud: “Double __ is __.”</p>
+          <p>Extension prompt: “Draw a picture for 5 + 5. How many in all?”</p>
+        </div>
+      </li>
+      <li>
+        <div class="body">
+          <h3>Exit ticket <span class="time">3 min</span></h3>
+          <ul>
+            <li>What is 4 + 4?</li>
+            <li>Draw two equal groups of 3. Write the equation.</li>
+            <li>Is 2 + 3 a double? Tell why.</li>
+          </ul>
+          <details>
+            <summary>Answer key</summary>
+            <p>1) 8. 2) Two groups of 3 dots, 3 + 3 = 6. 3) No, because 2 and 3 are different numbers.</p>
+          </details>
+        </div>
+      </li>
+    </ol>
+
+    <h2 style="font-size:2rem;margin-top:20px">Support every learner</h2>
+    <div class="diff">
+      <div class="fact"><h3>Needs support</h3><ul><li>Use real counters and one ten-frame.</li><li>Start with doubles 1 to 3.</li><li>Say “Double 2 is 4” together before writing.</li></ul></div>
+      <div class="fact"><h3>On level</h3><ul><li>Work all doubles from 1 + 1 to 5 + 5.</li><li>Explain each answer with a picture or ten-frame.</li></ul></div>
+      <div class="fact"><h3>Ready for more</h3><ul><li>Write a double story for a partner.</li><li>Preview: 3 + 4 is one more than 3 + 3. What is 3 + 4?</li></ul></div>
+    </div>
+
+    <div class="diff">
+      <div class="fact"><h3>I can statements</h3><ul><li>I can say what a double is.</li><li>I can show a double with counters or a ten-frame.</li><li>I can add doubles to 10.</li></ul></div>
+      <div class="fact"><h3>Quick check</h3><p>Watch for students who add the numbers correctly but cannot say why a fact is a double. Revisit the ten-frame rows with them.</p></div>
+      <div class="fact"><h3>Home connection</h3><p>Ask your child to find things that come in doubles at home, like two eyes or two socks, and say “Double 2 is 4.”</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="band w" id="warmup">
+  <div class="wrap">
+    <h2 class="sec-title">Warm-up game: Ladybug Mirror 🐞</h2>
+    <div class="meta">
+      <p><b>Skills:</b> the two addends in a double are the same; building a double with objects; reading the equation.</p>
+      <p><b>How to use:</b> whole class on the board, or pairs on tablets. 5 rounds.</p>
+    </div>
+    <div class="stage intro" id="mirrorStage"></div>
+  </div>
+</section>
+
+<section class="band g1" id="game1">
+  <div class="wrap">
+    <h2 class="sec-title">Game 1: Balloon Pop 🎈</h2>
+    <div class="meta">
+      <p><b>Skills:</b> adding doubles from 1 + 1 to 5 + 5 using pictures.</p>
+      <p><b>How to use:</b> 10 questions. Students pop the balloon with the right sum and earn a star for each first-try answer.</p>
+    </div>
+    <div class="stage intro" id="game1Stage"></div>
+  </div>
+</section>
+
+<section class="band g2" id="game2">
+  <div class="wrap">
+    <h2 class="sec-title">Game 2: Double or Not? 🔍</h2>
+    <div class="meta">
+      <p><b>Skills:</b> recognizing doubles, matching ten-frame rows, explaining why 3 + 4 is not a double.</p>
+      <p><b>How to use:</b> 10 cards, five doubles and five other facts, in a new order every time.</p>
+    </div>
+    <div class="stage intro" id="game2Stage"></div>
+  </div>
+</section>
+
+<section class="band g3" id="game3">
+  <div class="wrap">
+    <h2 class="sec-title">Game 3: Double Stories 📖</h2>
+    <div class="meta">
+      <p><b>Skills:</b> double word problems, matching a picture to its equation, finding the missing double from the total.</p>
+      <p><b>How to use:</b> 8 mixed questions. Students can try again after a wrong answer, but only first tries earn stars.</p>
+    </div>
+    <div class="stage intro" id="game3Stage"></div>
+  </div>
+</section>
+
+<footer><div class="wrap">enVision Math Grade 1 · Topic 2 · Lesson 2-2 Doubles</div></footer>
+
+<script>
+(function(){
+  var starTotal = 0, muted = false;
+  function $(s, r){ return (r || document).querySelector(s); }
+  function shuffle(a){ a = a.slice(); for (var i = a.length - 1; i > 0; i--){ var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  function rnd(a, b){ return a + Math.floor(Math.random() * (b - a + 1)); }
+  function addStars(n){ starTotal += n; $('#starCount').textContent = starTotal; }
+
+  function beep(kind){
+    if (muted) return;
+    try {
+      var AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
+      beep.ctx = beep.ctx || new AC();
+      var c = beep.ctx, t = c.currentTime;
+      var seq = kind === 'good' ? [660, 880] : kind === 'bad' ? [220] : [523, 659, 784, 1047];
+      seq.forEach(function(f){
+        var o = c.createOscillator(), g = c.createGain();
+        o.type = 'sine'; o.frequency.value = f;
+        g.gain.setValueAtTime(0.12, t); g.gain.exponentialRampToValueAtTime(0.001, t + 0.18);
+        o.connect(g); g.connect(c.destination); o.start(t); o.stop(t + 0.18); t += 0.12;
+      });
+    } catch (e) {}
+  }
+  function speak(text){
+    if (muted) return;
+    try { var u = new SpeechSynthesisUtterance(text); u.lang = 'en-US'; u.rate = 0.85; speechSynthesis.cancel(); speechSynthesis.speak(u); } catch (e) {}
+  }
+  function confetti(){
+    try { if (matchMedia('(prefers-reduced-motion: reduce)').matches) return; } catch (e) {}
+    var em = ['⭐', '🎉', '🐞', '✨', '🎈'];
+    for (var i = 0; i < 24; i++){
+      var s = document.createElement('span');
+      s.className = 'confetti'; s.textContent = em[i % em.length];
+      s.style.left = (Math.random() * 100) + 'vw';
+      s.style.animationDelay = (Math.random() * 0.6) + 's';
+      s.style.fontSize = (18 + Math.random() * 18) + 'px';
+      document.body.appendChild(s);
+      (function(el){ setTimeout(function(){ el.remove(); }, 3800); })(s);
+    }
+  }
+
+  var muteBtn = $('#muteBtn');
+  muteBtn.addEventListener('click', function(){
+    muted = !muted;
+    muteBtn.textContent = muted ? '🔇' : '🔊';
+    muteBtn.setAttribute('aria-pressed', String(muted));
+    muteBtn.setAttribute('aria-label', muted ? 'Sound off' : 'Sound on');
+  });
+
+  /* visual helpers: top row = first addend (red), bottom row = second addend (blue) */
+  function tenFrame(a, b, animate){
+    var h = '<div class="tenframe" role="img" aria-label="Ten-frame: ' + a + ' red counters in the top row and ' + b + ' blue counters in the bottom row">';
+    for (var i = 0; i < 10; i++){
+      var row = Math.floor(i / 5), col = i % 5, cls = '';
+      if (row === 0 && col < a) cls = ' c1';
+      if (row === 1 && col < b) cls = ' c2';
+      h += '<b class="cell' + cls + '"' + (animate ? ' style="--i:' + i + '"' : '') + '></b>';
+    }
+    return h + '</div>';
+  }
+  var EMOJI = ['🍎', '🐟', '🚗', '⭐', '🐞', '🍪', '🎈', '🐸'];
+  function emojiGroup(n, e){ var s = ''; for (var i = 0; i < n; i++) s += '<span class="emo">' + e + '</span>'; return '<span class="dotgroup" aria-hidden="true">' + s + '</span>'; }
+  function pairsVisual(n, e){ return '<div class="pairs" role="img" aria-label="' + n + ' and ' + n + ' ' + e + '">' + emojiGroup(n, e) + '<span class="plus">+</span>' + emojiGroup(n, e) + '</div>'; }
+
+  /* hero + explorer */
+  $('#heroFrame').innerHTML = tenFrame(3, 3, true);
+
+  var exPick = $('#exPick'), exCur = 3;
+  for (var k = 1; k <= 5; k++){
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'pick'; b.textContent = k; b.dataset.n = k;
+    b.setAttribute('aria-pressed', 'false'); b.setAttribute('aria-label', 'Number ' + k);
+    b.addEventListener('click', function(){ exShow(+this.dataset.n); });
+    exPick.appendChild(b);
+  }
+  function exShow(n){
+    exCur = n;
+    exPick.querySelectorAll('.pick').forEach(function(p){ p.setAttribute('aria-pressed', String(+p.dataset.n === n)); });
+    $('#exFrame').innerHTML = tenFrame(n, n);
+    $('#exEq').textContent = n + ' + ' + n + ' = ' + (2 * n);
+    $('#exSay').textContent = 'Double ' + n + ' is ' + (2 * n) + '.';
+  }
+  $('#exSpeak').addEventListener('click', function(){
+    speak(exCur + ' plus ' + exCur + ' equals ' + (2 * exCur) + '. Double ' + exCur + ' is ' + (2 * exCur) + '.');
+  });
+  exShow(3);
+
+  /* shared finish screen */
+  function finish(root, got, total, again){
+    var ratio = got / total;
+    var emoji = ratio >= 0.9 ? '🏆' : ratio >= 0.6 ? '🌟' : '💪';
+    var msg = ratio >= 0.9 ? 'Super doubles star!' : ratio >= 0.6 ? 'Great job! Doubles are getting easy.' : 'Nice try! Play again to practice doubles.';
+    root.className = 'stage';
+    root.innerHTML = '<div class="final"><div class="big">' + emoji + '</div><div class="score">' + got + ' out of ' + total + ' on the first try</div><p>' + msg + '</p><button class="btn" type="button" id="againBtn">Play again</button></div>';
+    $('#againBtn', root).addEventListener('click', again);
+    beep('win'); if (ratio >= 0.6) confetti();
+  }
+
+  /* generic multiple-choice engine */
+  function runQuiz(root, cfg){
+    var Q = cfg.make(), i = 0, got = 0, tries = 0;
+    root.className = 'stage';
+    function render(){
+      var q = Q[i]; tries = 0;
+      var pips = Q.map(function(_, n){ return '<span class="pip ' + (n < i ? 'done' : n === i ? 'now' : '') + '"></span>'; }).join('');
+      var ch = q.choices.map(function(c, n){ return '<button type="button" class="choice ch' + (n % 4) + '" data-k="' + n + '">' + c + '</button>'; }).join('');
+      root.innerHTML = '<div class="qhead"><div class="qprog" aria-hidden="true">' + pips + '</div><span class="qcount">' + (i + 1) + ' / ' + Q.length + '</span></div>' +
+        '<p class="qprompt">' + q.prompt + '</p><div class="qvisual">' + (q.visual || '') + '</div>' +
+        '<div class="choices ' + cfg.mode + '" role="group" aria-label="Answers">' + ch + '</div>' +
+        '<div class="feedback" role="status" aria-live="polite"></div><div class="nextrow"></div>';
+      root.querySelectorAll('.choice').forEach(function(btn){ btn.addEventListener('click', function(){ pick(btn); }); });
+    }
+    function lockAll(){ root.querySelectorAll('.choice').forEach(function(x){ x.disabled = true; }); }
+    function showNext(){
+      var last = i === Q.length - 1;
+      var nb = document.createElement('button');
+      nb.type = 'button'; nb.className = 'btn'; nb.textContent = last ? 'See my stars' : 'Next question';
+      nb.addEventListener('click', function(){ if (last) finish(root, got, Q.length, function(){ runQuiz(root, cfg); }); else { i++; render(); } });
+      $('.nextrow', root).appendChild(nb); nb.focus();
+    }
+    function pick(btn){
+      var q = Q[i], k = +btn.dataset.k, fb = $('.feedback', root);
+      if (k === q.correct){
+        lockAll(); btn.classList.add('right'); if (cfg.mode === 'balloon') btn.classList.add('balloonpop');
+        if (tries === 0){ got++; addStars(1); }
+        beep('good');
+        fb.innerHTML = '<strong>' + (tries === 0 ? 'Great!' : 'You got it!') + '</strong> ' + q.explain;
+        showNext();
+      } else {
+        tries++; btn.classList.add('wrong'); btn.disabled = true; beep('bad');
+        if (cfg.retry){
+          fb.textContent = 'Not yet. ' + q.hint + ' Try again!';
+        } else {
+          lockAll();
+          root.querySelectorAll('.choice')[q.correct].classList.add('right');
+          fb.innerHTML = '<strong style="color:var(--c1)">Not quite.</strong> ' + q.explain;
+          showNext();
+        }
+      }
+    }
+    render();
+  }
+
+  function numChoices(correct, pool){
+    var opts = pool.filter(function(x, idx){ return x > 0 && x !== correct && pool.indexOf(x) === idx; });
+    var three = shuffle([correct].concat(shuffle(opts).slice(0, 2)));
+    return { choices: three, correct: three.indexOf(correct) };
+  }
+
+  /* Game 1: Balloon Pop */
+  function makeG1(){
+    return shuffle([1, 2, 3, 4, 5, 1, 2, 3, 4, 5]).map(function(n){
+      var e = EMOJI[rnd(0, EMOJI.length - 1)], s = 2 * n;
+      var c = numChoices(s, [s - 2, s - 1, s + 1, s + 2, n]);
+      return {
+        prompt: 'Pop the balloon with the sum.',
+        visual: pairsVisual(n, e) + '<div class="bigeq">' + n + ' + ' + n + ' = ?</div>',
+        choices: c.choices, correct: c.correct,
+        hint: 'Count the first group, then count the same number again.',
+        explain: n + ' + ' + n + ' = ' + s + '. Double ' + n + ' is ' + s + '!'
+      };
+    });
+  }
+
+  /* Game 2: Double or Not? */
+  function makeG2(){
+    var d = shuffle([1, 2, 3, 4, 5]).map(function(n){ return [n, n]; });
+    var other = shuffle([[1, 2], [2, 3], [3, 4], [4, 5], [2, 4], [1, 5], [3, 5], [1, 3], [2, 5], [1, 4]]).slice(0, 5).map(function(p){ return Math.random() < 0.5 ? p : [p[1], p[0]]; });
+    return shuffle(d.concat(other)).map(function(p){
+      var a = p[0], b = p[1], isD = a === b;
+      return {
+        prompt: 'Is this a double?',
+        visual: tenFrame(a, b) + '<div class="bigeq">' + a + ' + ' + b + ' = ' + (a + b) + '</div>',
+        choices: ['Double', 'Not a double'], correct: isD ? 0 : 1,
+        explain: isD ? 'Both rows have ' + a + '. Double ' + a + ' is ' + (2 * a) + '.' : a + ' and ' + b + ' are different, so it is not a double.'
+      };
+    });
+  }
+
+  /* Game 3: Double Stories */
+  function makeG3(){
+    var T = [
+      { name: 'Mia', e: '🍎', pl: 'apples', a: 'on the red plate', b: 'on the green plate' },
+      { name: 'Leo', e: '🚗', pl: 'cars', a: 'on the shelf', b: 'in the box' },
+      { name: 'Zara', e: '🐟', pl: 'fish', a: 'in the pond', b: 'in the bowl' },
+      { name: 'Omar', e: '🍪', pl: 'cookies', a: 'in the jar', b: 'on the plate' },
+      { name: 'Nora', e: '🎈', pl: 'balloons', a: 'in her left hand', b: 'in her right hand' }
+    ];
+    var qs = [];
+    shuffle(T).slice(0, 4).forEach(function(t){
+      var n = rnd(2, 5), s = 2 * n, c = numChoices(s, [s - 2, s - 1, s + 1, s + 2, n]);
+      qs.push({
+        prompt: t.name + ' has ' + n + ' ' + t.pl + ' ' + t.a + ' and ' + n + ' ' + t.pl + ' ' + t.b + '. How many ' + t.pl + ' in all?',
+        visual: pairsVisual(n, t.e),
+        choices: c.choices, correct: c.correct,
+        hint: 'Both groups are the same size. Add the double.',
+        explain: n + ' + ' + n + ' = ' + s + '.'
+      });
+    });
+    shuffle([4, 6, 8, 10]).slice(0, 2).forEach(function(s){
+      var n = s / 2, e = EMOJI[rnd(0, EMOJI.length - 1)], c = numChoices(n, [n - 1, n + 1, n + 2, n - 2]);
+      var row = ''; for (var i = 0; i < s; i++) row += '<span class="emo">' + e + '</span>';
+      qs.push({
+        prompt: 'Two equal groups make ' + s + '. How many are in each group?',
+        visual: '<span class="dotgroup" aria-label="' + s + ' items">' + row + '</span><div class="bigeq">? + ? = ' + s + '</div>',
+        choices: c.choices, correct: c.correct,
+        hint: 'Pick a number and double it. Does it make ' + s + '?',
+        explain: n + ' + ' + n + ' = ' + s + ', so each group has ' + n + '.'
+      });
+    });
+    shuffle([2, 3, 4]).slice(0, 2).forEach(function(n){
+      var opts = shuffle([n + ' + ' + n, n + ' + ' + (n + 1), (n + 1) + ' + ' + (n + 1)]);
+      qs.push({
+        prompt: 'Which equation matches the picture?',
+        visual: tenFrame(n, n),
+        choices: opts, correct: opts.indexOf(n + ' + ' + n),
+        hint: 'Count the red counters, then the blue counters.',
+        explain: 'Each row has ' + n + ', so ' + n + ' + ' + n + ' = ' + (2 * n) + '.'
+      });
+    });
+    return shuffle(qs);
+  }
+
+  /* Warm-up: Ladybug Mirror */
+  var L = [[105, 75], [75, 120], [120, 125], [95, 170], [120, 200]];
+  function runMirror(root){
+    var rounds = shuffle([1, 2, 3, 4, 5]), r = 0, got = 0, tries = 0, filled, solved;
+    root.className = 'stage';
+    function render(){
+      var n = rounds[r]; filled = {}; solved = false; tries = 0;
+      var pips = rounds.map(function(_, k){ return '<span class="pip ' + (k < r ? 'done' : k === r ? 'now' : '') + '"></span>'; }).join('');
+      var left = L.slice(0, n).map(function(p){ return '<circle class="spot" cx="' + p[0] + '" cy="' + p[1] + '" r="15"/>'; }).join('');
+      var right = L.map(function(p, k){ return '<circle class="slot" data-k="' + k + '" cx="' + (300 - p[0]) + '" cy="' + p[1] + '" r="16" tabindex="0" role="button" aria-pressed="false" aria-label="Right wing spot ' + (k + 1) + '"/>'; }).join('');
+      root.innerHTML = '<div class="qhead"><div class="qprog" aria-hidden="true">' + pips + '</div><span class="qcount">' + (r + 1) + ' / ' + rounds.length + '</span></div>' +
+        '<p class="qprompt">The left wing has <b>' + n + '</b> spot' + (n > 1 ? 's' : '') + '. Tap the right wing to make the <b>same</b> number of spots.</p>' +
+        '<div class="bugwrap"><svg class="bug" viewBox="0 0 300 250" role="group" aria-label="Ladybug with ' + n + ' spots on the left wing">' +
+        '<path class="wing" d="M150 30 A100 100 0 0 0 150 230 Z"/><path class="wing" d="M150 30 A100 100 0 0 1 150 230 Z"/>' +
+        '<line x1="150" y1="30" x2="150" y2="230" stroke="#241f5c" stroke-width="5"/>' +
+        '<circle cx="150" cy="26" r="24" fill="#241f5c"/><circle cx="141" cy="22" r="5" fill="#fff"/><circle cx="159" cy="22" r="5" fill="#fff"/>' +
+        '<path d="M138 6 Q128 -4 120 2 M162 6 Q172 -4 180 2" stroke="#241f5c" stroke-width="4" fill="none" stroke-linecap="round"/>' +
+        left + right + '</svg></div>' +
+        '<div class="bigeq" id="mEq" style="text-align:center">' + n + ' + 0 = ' + n + '</div>' +
+        '<div class="feedback" id="mFb" role="status" aria-live="polite" style="text-align:center"></div>' +
+        '<div class="nextrow"><button class="btn" type="button" id="mCheck">I matched it!</button></div>';
+      root.querySelectorAll('.slot').forEach(function(s){
+        function toggle(){
+          if (solved) return;
+          var k = s.dataset.k;
+          if (filled[k]){ delete filled[k]; s.classList.remove('on'); s.setAttribute('aria-pressed', 'false'); }
+          else { filled[k] = 1; s.classList.add('on'); s.setAttribute('aria-pressed', 'true'); }
+          var c = Object.keys(filled).length;
+          $('#mEq', root).textContent = n + ' + ' + c + ' = ' + (n + c);
+        }
+        s.addEventListener('click', toggle);
+        s.addEventListener('keydown', function(ev){ if (ev.key === 'Enter' || ev.key === ' '){ ev.preventDefault(); toggle(); } });
+      });
+      $('#mCheck', root).addEventListener('click', check);
+    }
+    function check(){
+      var n = rounds[r], c = Object.keys(filled).length, fb = $('#mFb', root), btn = $('#mCheck', root);
+      if (solved) return;
+      if (c === n){
+        solved = true; beep('good');
+        if (tries === 0){ got++; addStars(1); }
+        fb.innerHTML = '<strong>Mirror match!</strong> ' + n + ' + ' + n + ' = ' + (2 * n) + '. Double ' + n + ' is ' + (2 * n) + '!';
+        var last = r === rounds.length - 1;
+        btn.textContent = last ? 'See my stars' : 'Next round';
+        btn.onclick = function(){ if (last) finish(root, got, rounds.length, function(){ runMirror(root); }); else { r++; render(); } };
+        btn.focus();
+      } else {
+        tries++; beep('bad');
+        fb.textContent = c < n ? 'Not yet. Add more spots. The left wing has ' + n + '.' : 'Too many spots. Tap a spot to take it away.';
+      }
+    }
+    render();
+  }
+
+  /* intro screens */
+  function intro(rootId, big, title, text, start){
+    var root = $(rootId);
+    root.className = 'stage intro';
+    root.innerHTML = '<div class="big" aria-hidden="true">' + big + '</div><h3 style="font-size:2rem">' + title + '</h3><p style="max-width:44ch">' + text + '</p><button type="button" class="btn">Start</button>';
+    $('.btn', root).addEventListener('click', function(){ start(root); });
+  }
+  intro('#mirrorStage', '🐞', 'Ladybug Mirror', 'Both wings must match. Count the spots on the left wing, then tap the right wing to make the same number.', runMirror);
+  intro('#game1Stage', '🎈', 'Balloon Pop', 'Look at the two equal groups. Pop the balloon that shows how many in all.', function(r){ runQuiz(r, { make: makeG1, mode: 'balloon', retry: true }); });
+  intro('#game2Stage', '🔍', 'Double or Not?', 'Look at the ten-frame and the numbers. Are both rows the same? Choose Double or Not a double.', function(r){ runQuiz(r, { make: makeG2, mode: 'cards', retry: false }); });
+  intro('#game3Stage', '📖', 'Double Stories', 'Read each story, look at the picture, and find the answer.', function(r){ runQuiz(r, { make: makeG3, mode: 'cards', retry: true }); });
+})();
+</script>
+</body>
+</html>

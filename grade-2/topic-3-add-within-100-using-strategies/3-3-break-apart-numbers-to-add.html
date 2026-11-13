@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lesson 3-3: Break Apart Numbers to Add</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#fff7d6;--card:#ffffff;--ink:#2b2150;--accent:#ff6b35;--soft:#ffe3a3;--good:#1fa85a;--bad:#e03e3e}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1d1a33;--card:#2a2650;--ink:#f4f1ff;--soft:#3d3777}}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Comic Sans MS","Trebuchet MS",system-ui,sans-serif;background:var(--bg);color:var(--ink);transition:background .3s}
+body.g1{--bg:#d6f1ff;--accent:#0b84d8;--soft:#a8dcff}
+body.g2{--bg:#efdcff;--accent:#8a3ffc;--soft:#d7b6ff}
+@media (prefers-color-scheme:dark){body.g1{--bg:#10283a}body.g2{--bg:#241446}}
+.wrap{max-width:760px;margin:0 auto;padding:12px}
+h1{font-size:1.3rem;text-align:center;margin:6px 0}
+.tabs{display:flex;gap:6px;margin:8px 0}
+.tabs button{flex:1;padding:10px 4px;border:3px solid var(--accent);background:var(--card);color:var(--ink);border-radius:14px;font:inherit;font-weight:700;cursor:pointer}
+.tabs button.on{background:var(--accent);color:#fff}
+.card{position:relative;background:var(--card);border:4px solid var(--accent);border-radius:22px;padding:16px;min-height:360px}
+.bar{height:12px;background:var(--soft);border-radius:8px;overflow:hidden;margin:6px 0}
+.bar i{display:block;height:100%;background:var(--accent);transition:width .3s}
+.top{display:flex;justify-content:space-between;font-weight:700}
+.big{font-size:2.6rem;text-align:center;margin:8px 0;font-weight:800}
+.mascot{font-size:2.2rem}
+.say{background:var(--soft);border-radius:16px;padding:10px 12px;margin:8px 0;font-size:1.05rem}
+.opts{display:grid;grid-template-columns:1fr;gap:10px;margin:10px 0}
+.opts button,.btn{padding:14px;font:inherit;font-size:1.25rem;font-weight:800;border:3px solid var(--accent);background:var(--card);color:var(--ink);border-radius:16px;cursor:pointer}
+.opts button:active,.btn:active{transform:scale(.96)}
+.btn{background:var(--accent);color:#fff}
+.ok{background:var(--good)!important;color:#fff!important;border-color:var(--good)!important}
+.no{animation:sh .4s;background:var(--bad)!important;color:#fff!important}
+.big{animation:pop .4s}
+.circ{display:inline-block;border:4px solid #e03e3e;border-radius:999px;padding:0 16px}
+.circ2{display:inline-flex;align-items:flex-end;gap:8px;border:4px dashed #e03e3e;border-radius:28px;padding:8px 12px}
+.arr{font-size:2.2rem;align-self:center}
+@keyframes pop{0%{transform:scale(.7);opacity:.3}100%{transform:scale(1);opacity:1}}
+@keyframes sh{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.work{margin-top:8px;font-size:1.1rem}
+.work div{background:var(--soft);border-radius:12px;padding:6px 10px;margin:4px 0}
+.blocks{display:flex;justify-content:center;align-items:flex-end;flex-wrap:wrap;gap:12px;font-size:1.4rem;margin:6px 0}
+.grp{display:inline-flex;align-items:flex-end;gap:4px}
+.tw{display:block;width:16px;height:80px;border-radius:4px;border:2px solid #0a5a99;background:repeating-linear-gradient(to bottom,#3aa0f0 0 7px,#0a5a99 7px 8px)}
+.ones{display:grid;grid-template-columns:repeat(5,16px);gap:2px;margin-left:4px}
+.on{display:block;width:16px;height:16px;border-radius:3px;border:2px solid #c4620a;background:#ffb020}
+.tools{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:8px 0}
+.tools button{padding:8px 10px;border-radius:12px;border:2px solid var(--accent);background:var(--card);color:var(--ink);font:inherit;font-weight:700;cursor:pointer}
+.tools button.on{background:var(--accent);color:#fff}
+.dot{width:26px;height:26px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 2px var(--ink);padding:0!important}
+canvas{position:absolute;left:0;top:0;width:100%;height:100%;z-index:5;pointer-events:none;border-radius:18px}
+canvas.draw{pointer-events:auto;touch-action:none;cursor:crosshair}
+.end{text-align:center}
+.end .stars{font-size:2.4rem}
+.intro{font-size:1rem}
+.eqrow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;font-size:1.6rem;font-weight:800;margin:10px 0}
+.slot{min-width:76px;height:58px;border:3px dashed var(--accent);border-radius:14px;display:inline-flex;align-items:center;justify-content:center;font-size:1.1rem;color:var(--accent);background:var(--soft)}
+.slot.full{border-style:solid;background:var(--good);color:#fff;font-size:1.6rem;border-color:var(--good)}
+.tray{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:12px 0}
+.tile{min-width:68px;height:58px;padding:0 10px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:800;background:var(--accent);color:#fff;border-radius:14px;cursor:grab;touch-action:none;user-select:none;box-shadow:0 4px 0 rgba(0,0,0,.25)}
+.tile.used{visibility:hidden}
+.fly{position:fixed;z-index:50;pointer-events:none;transform:scale(1.15) rotate(-4deg)}
+</style>
+<!-- Shared template: colors, fonts, sounds, buttons, mascots. Keep this. -->
+<link rel="stylesheet" href="../../shared/theme.css">
+<script src="../../shared/theme.js" defer></script>
+</head>
+<body>
+<div class="wrap">
+<h1>🧩 Lesson 3-3: Break Apart Numbers to Add</h1>
+<div class="tabs" id="tabs"></div>
+<div class="tools" id="tools"></div>
+<div class="card" id="card"><canvas id="cv"></canvas><div id="inner"></div></div>
+</div>
+<script>
+const G={
+ warm:{name:"☀️ Warm-up",title:"Warm-up: Break Apart Party",mode:"one",
+  intro:"Let's learn the trick! We break apart the second number into tens and ones, then add them one at a time.",
+  qs:[[24,13],[31,15],[42,16],[35,12],[53,21]]},
+ g1:{name:"🌊 Game 1",title:"Game 1: Ocean Adventure",mode:"one",
+  intro:"Break apart the second number. Add the tens, then add the ones. Watch for 10s!",
+  qs:[[27,15],[38,24],[46,17],[55,28],[19,34],[36,25],[48,23],[29,43],[57,16],[64,19]]},
+ g2:{name:"🚀 Game 2",title:"Game 2: Drag & Drop Space Mission",mode:"drag",
+  intro:"Drag the number cards into the right boxes! Break apart the second number, add the tens, then add the ones.",
+  qs:[[32,14],[45,23],[26,38],[17,45],[54,29],[38,27],[63,18],[41,36],[28,55],[46,37]]}
+};
+const praise=["Great job!","You got it!","Super smart!","Awesome!","Yes! Keep going!"];
+const mascots=["🐙","🦄","🐼","🦖","🐸"];
+let gk="warm",i=0,s=0,score=0,work=[],steps=[],ac;
+function beep(f,d=.15){try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=f;o.connect(g);g.connect(ac.destination);g.gain.value=.15;o.start();o.stop(ac.currentTime+d)}catch(e){}}
+const good=()=>{beep(660);setTimeout(()=>beep(880),120)},bad=()=>beep(200,.25);
+function opts3(ans,alts){const set=[ans];alts.forEach(a=>{if(a>=0&&!set.includes(a))set.push(a)});let k=1;while(set.length<3){if(!set.includes(ans+k))set.push(ans+k);k++}return set.slice(0,3).sort(()=>Math.random()-.5)}
+function build(a,b,mode){
+ const bt=b-b%10,bo=b%10,at=a-a%10,ao=a%10;
+ if(mode=="drag"){const m=a+bt,S=(s,l)=>({s,l}),u=x=>[...new Set(x)].sort(()=>Math.random()-.5);return[
+  {p:`Step 1: Break apart ${b}. Drag the tens and the ones into the boxes.`,parts:[`${b} =`,S(bt,"tens"),"+",S(bo,"ones")],tiles:u([bt,bo,bt+10,bo<9?bo+1:bo-1]),w:`${b} = ${bt} + ${bo}`},
+  {p:`Step 2: Add the tens first. Drag the answer into the box.`,parts:[`${a} + ${bt} =`,S(m)],tiles:u([m,m+10,m-10]),w:`${a} + ${bt} = ${m}`},
+  {p:`Step 3: Now add the ones. Drag the answer into the box.`,parts:[`${m} + ${bo} =`,S(a+b)],tiles:u([a+b,a+b+10,a+b-1]),w:`${m} + ${bo} = ${a+b}`}]}
+ const m=a+bt;if(mode=="one"){return[
+  {p:`Step 1: Break apart ${b} into tens and ones.`,o:opts3(`${bt} + ${bo}`,[`${bt+10} + ${bo}`,`${bt} + ${bo>0?bo+1:2}`].map(String)),a:`${bt} + ${bo}`,w:`${b} = ${bt} + ${bo}`},
+  {p:`Step 2: Add the tens. ${a} + ${bt} = ?`,o:opts3(m,[m+10,m-10]),a:m,w:`${a} + ${bt} = ${m}`},
+  {p:`Step 3: Now add the ones. ${m} + ${bo} = ?`,o:opts3(a+b,[a+b+10,a+b-1]),a:a+b,w:`${m} + ${bo} = ${a+b}`}]}
+ const ts=at+bt,os=ao+bo;return[
+  {p:`Step 1: Break apart BOTH numbers into tens and ones.`,o:opts3(`${a}=${at}+${ao} and ${b}=${bt}+${bo}`,[`${a}=${at+10}+${ao} and ${b}=${bt}+${bo}`,`${a}=${at}+${ao} and ${b}=${bt}+${bo+1}`]),a:`${a}=${at}+${ao} and ${b}=${bt}+${bo}`,w:`${at} + ${ao} and ${bt} + ${bo}`},
+  {p:`Step 2: Add the tens. ${at} + ${bt} = ?`,o:opts3(ts,[ts+10,ts-10]),a:ts,w:`Tens: ${at} + ${bt} = ${ts}`},
+  {p:`Step 3: Add the ones. ${ao} + ${bo} = ?`,o:opts3(os,[os+1,os-1,os+10]),a:os,w:`Ones: ${ao} + ${bo} = ${os}`},
+  {p:`Step 4: Put the tens and ones together. ${ts} + ${os} = ?`,o:opts3(a+b,[a+b+10,a+b-10]),a:a+b,w:`${ts} + ${os} = ${a+b}`}]}
+function qhead(a,b,s){const bt=b-b%10,bo=b%10,m=a+bt;
+ if(s==0)return `<div class="big">${a} + <span class="circ">${b}</span> = ?</div><div class="blocks">${blocks(a)} <b>+</b> <span class="circ2">${blocks(b)}<span class="arr">✂️</span></span></div>`;
+ if(s==1)return `<div class="big"><span class="circ">${a} + ${bt}</span> + ${bo} = ?</div><div class="blocks"><span class="circ2">${blocks(a)}<span class="arr">⬅️</span>${blocks(bt)}</span> <b>+</b> ${blocks(bo)}</div>`;
+ return `<div class="big">${m} + ${bo} = ?</div><div class="blocks">${blocks(m)} <b>+</b> ${blocks(bo)}</div>`}
+function blocks(n){return `<span class="grp">${'<i class="tw"></i>'.repeat(Math.floor(n/10))}<span class="ones">${'<i class="on"></i>'.repeat(n%10)}</span></span>`}
+function tabs(){const t=document.getElementById("tabs");t.innerHTML="";for(const k in G){const b=document.createElement("button");b.textContent=G[k].name;b.className=k==gk?"on":"";b.onclick=()=>start(k);t.appendChild(b)}}
+function start(k){gk=k;i=0;score=0;document.body.className=k=="warm"?"":k;tabs();q()}
+function q(){
+ const g=G[gk],[a,b]=g.qs[i];s=0;work=[];steps=build(a,b,g.mode);clearCv();render()}
+function render(){if(G[gk].mode=="drag")return renderDrag();
+ const g=G[gk],[a,b]=g.qs[i],st=steps[s],n=g.qs.length;
+ const intro=i==0&&s==0?`<div class="say intro">👋 ${g.intro}</div>`:"";
+ inner.innerHTML=`<div class="top"><span>${g.title}</span><span>⭐ ${score}</span></div>
+ <div class="bar"><i style="width:${i/n*100}%"></i></div><div>Question ${i+1} of ${n}</div>
+ ${qhead(a,b,s)}
+ ${intro}
+ <div class="say"><span class="mascot">${mascots[(i+s)%5]}</span> ${st.p}</div>
+ <div class="opts">${st.o.map((o,k)=>`<button data-k="${k}">${o}</button>`).join("")}</div>
+ <div class="work">${work.map(w=>`<div>✅ ${w}</div>`).join("")}</div>`;
+ inner.querySelectorAll(".opts button").forEach(bt=>bt.onclick=()=>pick(bt,st));
+ sizeCv()}
+function pick(bt,st){
+ if(String(bt.textContent)==String(st.a)){bt.classList.add("ok");good();work.push(st.w);s++;
+  setTimeout(()=>{if(s<steps.length)render();else done()},650)}
+ else{bt.classList.add("no");bad();setTimeout(()=>bt.classList.remove("no"),450);
+  const h=inner.querySelector(".say");h.innerHTML+=" <br>🤔 Try again! You can do it!"}}
+function done(){
+ const g=G[gk],[a,b]=g.qs[i];score++;
+ inner.innerHTML=`<div class="end"><div class="stars">🎉⭐🎉</div><div class="big">${a} + ${b} = ${a+b}</div>
+ <div class="say">${praise[i%5]} You solved it step by step!</div>
+ <div class="work">${work.map(w=>`<div>✅ ${w}</div>`).join("")}</div><br>
+ <button class="btn" id="nx">${i+1<g.qs.length?"Next question ➡️":"Finish 🏁"}</button></div>`;
+ beep(880,.3);document.getElementById("nx").onclick=()=>{i++;if(i<g.qs.length)q();else fin()};sizeCv()}
+function fin(){
+ const g=G[gk],n=g.qs.length;clearCv();
+ inner.innerHTML=`<div class="end"><div class="stars">🏆</div><div class="big">${score} / ${n} ⭐</div>
+ <div class="say">Amazing work, mathematician! You know how to break apart numbers to add.</div>
+ <button class="btn" id="again">Play again 🔁</button></div>`;
+ document.getElementById("again").onclick=()=>start(gk)}
+function renderDrag(){
+ const g=G[gk],[a,b]=g.qs[i],st=steps[s],n=g.qs.length;
+ const intro=i==0&&s==0?`<div class="say intro">👋 ${g.intro}</div>`:"";
+ let si=0;
+ const eq=st.parts.map(p=>typeof p=="string"?`<span>${p}</span>`:`<span class="slot" data-a="${p.s}">${p.l||"?"}</span>`).join(" ");
+ inner.innerHTML=`<div class="top"><span>${g.title}</span><span>⭐ ${score}</span></div>
+ <div class="bar"><i style="width:${i/n*100}%"></i></div><div>Question ${i+1} of ${n}</div>
+ ${qhead(a,b,s)}${intro}
+ <div class="say"><span class="mascot">${mascots[(i+s)%5]}</span> ${st.p}</div>
+ <div class="eqrow">${eq}</div>
+ <div class="tray">${st.tiles.map(t=>`<div class="tile" data-v="${t}">${t}</div>`).join("")}</div>
+ <div class="work">${work.map(w=>`<div>✅ ${w}</div>`).join("")}</div>`;
+ inner.querySelectorAll(".tile").forEach(t=>t.addEventListener("pointerdown",e=>drag(e,t,st)));
+ sizeCv()}
+function drag(e,t,st){
+ if(t.classList.contains("used"))return;
+ e.preventDefault();
+ const f=t.cloneNode(true);f.classList.add("fly");document.body.appendChild(f);
+ const mv=(x,y)=>{f.style.left=(x-32)+"px";f.style.top=(y-28)+"px"};mv(e.clientX,e.clientY);t.style.opacity=.3;
+ const move=ev=>mv(ev.clientX,ev.clientY);
+ const up=ev=>{removeEventListener("pointermove",move);removeEventListener("pointerup",up);f.remove();t.style.opacity=1;
+  const el=document.elementFromPoint(ev.clientX,ev.clientY),sl=el&&el.closest(".slot:not(.full)");
+  if(!sl)return;
+  if(sl.dataset.a==t.dataset.v){sl.textContent=t.dataset.v;sl.classList.add("full");t.classList.add("used");good();
+   if(!inner.querySelector(".slot:not(.full)")){work.push(st.w);s++;setTimeout(()=>{if(s<steps.length)render();else done()},650)}}
+  else{sl.classList.add("no");bad();setTimeout(()=>sl.classList.remove("no"),450);inner.querySelector(".say").innerHTML+=" <br>🤔 Not that box! Try again!"}};
+ addEventListener("pointermove",move);addEventListener("pointerup",up)}
+/* drawing */
+const cv=document.getElementById("cv"),cx=cv.getContext("2d"),inner=document.getElementById("inner"),card=document.getElementById("card");
+let pen=false,col="#e03e3e",erase=false,down=false;
+function sizeCv(){const d=devicePixelRatio||1,r=card.getBoundingClientRect();if(cv.width!=Math.round(r.width*d)||cv.height!=Math.round(r.height*d)){cv.width=r.width*d;cv.height=r.height*d;cx.scale(d,d)}}
+function clearCv(){cx.save();cx.setTransform(1,0,0,1,0,0);cx.clearRect(0,0,cv.width,cv.height);cx.restore()}
+function pos(e){const r=cv.getBoundingClientRect();return[e.clientX-r.left,e.clientY-r.top]}
+cv.addEventListener("pointerdown",e=>{down=true;cv.setPointerCapture(e.pointerId);const[x,y]=pos(e);cx.beginPath();cx.moveTo(x,y)});
+cv.addEventListener("pointermove",e=>{if(!down)return;const[x,y]=pos(e);cx.lineCap="round";cx.lineJoin="round";
+ if(erase){cx.globalCompositeOperation="destination-out";cx.lineWidth=28}else{cx.globalCompositeOperation="source-over";cx.strokeStyle=col;cx.lineWidth=4}
+ cx.lineTo(x,y);cx.stroke()});
+["pointerup","pointercancel"].forEach(ev=>cv.addEventListener(ev,()=>down=false));
+function tools(){const t=document.getElementById("tools");
+ t.innerHTML=`<button id="bp" class="${pen&&!erase?"on":""}">✏️ Write</button><button id="be" class="${pen&&erase?"on":""}">🧽 Erase</button>
+ ${["#e03e3e","#0b84d8","#1fa85a","#8a3ffc","#222222"].map(c=>`<button class="dot" data-c="${c}" style="background:${c}"></button>`).join("")}
+ <button id="bc">🗑️ Clear</button><button id="bo" class="${pen?"":"on"}">👆 Answer mode</button>`;
+ const setM=(p,e)=>{pen=p;erase=e;cv.classList.toggle("draw",p);tools()};
+ bp.onclick=()=>setM(true,false);be.onclick=()=>setM(true,true);bo.onclick=()=>setM(false,false);bc.onclick=clearCv;
+ t.querySelectorAll(".dot").forEach(d=>d.onclick=()=>{col=d.dataset.c;setM(true,false)})}
+addEventListener("resize",sizeCv);
+tools();start("warm");
+</script>
+</body></html>

@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Compare Situations — Grade 1 Interactive Lesson</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --chalk-green:#2C4A3B; --chalk-green-2:#3B6152;
+  --paper:#FFFBF3; --paper-2:#FFF3DD;
+  --coral:#EF6F6C; --coral-dark:#C94E4B;
+  --sky:#4FA8D8; --sky-dark:#2F7FAE;
+  --gold:#F2C14E; --gold-dark:#C99626;
+  --ink:#20342A; --ink-soft:#5B6F63;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#1E2A23; --paper-2:#243830; --ink:#F3EFE3; --ink-soft:#C7D3CB;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#1E2A23; --paper-2:#243830; --ink:#F3EFE3; --ink-soft:#C7D3CB;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px);}
+*{box-sizing:border-box;}
+body{
+  margin:0; background:var(--chalk-green); color:var(--ink);
+  font-family:'Nunito',sans-serif; min-height:100%;
+}
+h1,h2,h3,.display{font-family:'Fredoka',sans-serif;}
+header{
+  padding:2.2rem 1.2rem 2.6rem; text-align:center; color:var(--paper);
+  background:linear-gradient(180deg,var(--chalk-green),var(--chalk-green-2));
+}
+header h1{font-size:clamp(1.6rem,5vw,2.4rem); margin:0 0 .4rem; font-weight:700;}
+header p{margin:0; opacity:.85; font-size:1rem; max-width:520px; margin-inline:auto;}
+main{
+  max-width:760px; margin:-1.6rem auto 0; padding:0 1rem 3rem;
+  display:flex; flex-direction:column; gap:1.4rem;
+}
+.card{
+  background:var(--paper); border-radius:20px; padding:1.4rem 1.3rem 1.6rem;
+  box-shadow:0 10px 24px rgba(0,0,0,.18);
+}
+.card h2{margin:0 0 .2rem; font-size:1.3rem; color:var(--ink); display:flex; align-items:center; gap:.5rem;}
+.tag{
+  display:inline-block; font-family:'Nunito',sans-serif; font-weight:800; font-size:.72rem;
+  letter-spacing:.02em; color:var(--chalk-green); background:var(--gold);
+  padding:.2rem .6rem; border-radius:999px; margin-bottom:.6rem;
+}
+.card p.instructions{color:var(--ink-soft); margin:.2rem 0 1rem; line-height:1.5;}
+
+/* Compare bars */
+.compare-row{display:flex; flex-direction:column; gap:.9rem; margin-bottom:1rem;}
+.bar-block{background:var(--paper-2); border-radius:14px; padding:.8rem .9rem;}
+.bar-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:.5rem;}
+.bar-head b{font-family:'Fredoka',sans-serif; font-size:1.05rem;}
+.count-pill{font-weight:800; background:var(--ink); color:var(--paper); border-radius:999px; padding:.1rem .6rem; font-size:.85rem;}
+.dots{display:flex; flex-wrap:wrap; gap:.35rem; min-height:2.4rem;}
+.dot{width:1.9rem; height:1.9rem; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.1rem;}
+.dot.red{background:var(--coral);} .dot.green{background:#6FBF83;}
+.btnrow{display:flex; gap:.5rem; margin-top:.6rem;}
+button{
+  font-family:'Nunito',sans-serif; font-weight:800; border:none; border-radius:12px;
+  padding:.6rem 1rem; cursor:pointer; font-size:.95rem; transition:transform .12s ease;
+}
+button:active{transform:scale(.95);}
+button:focus-visible{outline:3px solid var(--sky); outline-offset:2px;}
+.btn-add{background:var(--sky); color:#fff;}
+.btn-add:hover{background:var(--sky-dark);}
+.btn-remove{background:#E7E1D3; color:var(--ink);}
+.btn-reset{background:transparent; color:var(--ink-soft); text-decoration:underline; padding:.4rem;}
+.result{
+  margin-top:.9rem; background:var(--gold); color:var(--chalk-green); border-radius:14px;
+  padding:.8rem 1rem; font-weight:800; font-size:1rem; text-align:center;
+}
+
+/* Card game */
+.towers{display:flex; justify-content:space-around; gap:1rem; margin:1rem 0;}
+.tower-side{flex:1; background:var(--paper-2); border-radius:14px; padding:.9rem; text-align:center;}
+.tower-side b{font-family:'Fredoka',sans-serif;}
+.tower{display:flex; flex-direction:column-reverse; align-items:center; gap:.2rem; min-height:6.2rem; margin-top:.5rem;}
+.block{width:2.2rem; height:1.1rem; border-radius:5px;}
+.blockA{background:var(--coral);} .blockB{background:var(--sky);}
+.tower-side.win{outline:3px solid var(--gold);}
+.score{text-align:center; font-weight:800; color:var(--ink-soft); margin-top:.4rem;}
+.guess-row{display:flex; gap:.6rem; justify-content:center; margin-top:.8rem;}
+.btn-guess{background:var(--paper); border:2px solid var(--ink); color:var(--ink);}
+.btn-guess.correct{background:#6FBF83; color:#fff; border-color:#6FBF83;}
+.btn-guess.wrong{background:var(--coral); color:#fff; border-color:var(--coral);}
+.feedback{text-align:center; font-weight:800; min-height:1.4rem; margin-top:.6rem;}
+
+/* Quiz */
+.q{margin-bottom:1.1rem;}
+.q p{font-weight:800; margin:0 0 .5rem;}
+.opts{display:flex; flex-wrap:wrap; gap:.5rem;}
+.opt{background:var(--paper-2); border:2px solid transparent; color:var(--ink);}
+.opt.correct{background:#6FBF83; color:#fff; border-color:#6FBF83;}
+.opt.wrong{background:var(--coral); color:#fff; border-color:var(--coral);}
+.quiz-score{text-align:center; font-family:'Fredoka',sans-serif; font-size:1.1rem; margin-top:.4rem;}
+
+footer{text-align:center; color:var(--paper); opacity:.65; font-size:.8rem; padding-bottom:1.5rem;}
+
+/* Monster Snack Battle */
+.monster-row{display:flex; gap:1rem; flex-wrap:wrap; justify-content:space-between; margin-bottom:1rem;}
+.monster-card{flex:1; min-width:140px; background:var(--paper-2); border-radius:14px; padding:1rem; text-align:center;}
+.monster-card b{font-family:'Fredoka',sans-serif; font-size:1.05rem;}
+.monster-face{font-size:2.8rem; line-height:1; margin:.3rem 0;}
+.snack-row{display:flex; flex-wrap:wrap; gap:.15rem; justify-content:center; min-height:2rem; font-size:1.3rem; margin-bottom:.5rem;}
+.count-pill.small{display:inline-block; margin-bottom:.4rem;}
+
+/* Silly Story */
+.story-box{background:var(--paper-2); border-radius:14px; padding:1.1rem; text-align:center; font-weight:800; min-height:3.4rem; display:flex; align-items:center; justify-content:center;}
+.story-answer{text-align:center; font-weight:800; color:var(--coral-dark); margin-top:.7rem; min-height:1.4rem;}
+</style>
+
+<!-- Shared template: colors, fonts, sounds, buttons, mascots. Keep this. -->
+<link rel="stylesheet" href="../../shared/theme.css">
+<script src="../../shared/theme.js" defer></script>
+</head>
+<body>
+
+<header>
+  <h1>🍎 Compare Situations</h1>
+  <p>Grade 1 · Topic 1, Lesson 5 — Play the games to compare groups using <b>more</b>, <b>fewer</b>, and <b>the same as</b>.</p>
+</header>
+
+<main>
+
+  <!-- WARM-UP: Build & Compare -->
+  <section class="card">
+    <span class="tag">WARM-UP GAME</span>
+    <h2>🧺 Build &amp; Compare</h2>
+    <p class="instructions">Tap the buttons to add apples to Jackson's and Emma's baskets. Watch the comparison update as you build each group!</p>
+
+    <div class="compare-row">
+      <div class="bar-block">
+        <div class="bar-head"><b>🟥 Jackson</b><span class="count-pill" id="countA">0</span></div>
+        <div class="dots" id="dotsA"></div>
+        <div class="btnrow">
+          <button class="btn-add" onclick="changeFruit('A',1)">+ Add apple</button>
+          <button class="btn-remove" onclick="changeFruit('A',-1)">− Remove</button>
+        </div>
+      </div>
+      <div class="bar-block">
+        <div class="bar-head"><b>🟩 Emma</b><span class="count-pill" id="countB">0</span></div>
+        <div class="dots" id="dotsB"></div>
+        <div class="btnrow">
+          <button class="btn-add" onclick="changeFruit('B',1)">+ Add apple</button>
+          <button class="btn-remove" onclick="changeFruit('B',-1)">− Remove</button>
+        </div>
+      </div>
+    </div>
+    <div class="result" id="compareResult">Add some apples to compare!</div>
+    <button class="btn-reset" onclick="resetFruit()">Reset baskets</button>
+  </section>
+
+  <!-- PRACTICE GAME 1: Who Has More -->
+  <section class="card">
+    <span class="tag">PRACTICE GAME</span>
+    <h2>🎲 Who Has More?</h2>
+    <p class="instructions">Flip two towers, then tap the side you think has <b>more</b> blocks. Score a point for every correct guess!</p>
+
+    <div class="towers">
+      <div class="tower-side" id="sideA">
+        <b>Tower A</b>
+        <div class="tower" id="towerA"></div>
+      </div>
+      <div class="tower-side" id="sideB">
+        <b>Tower B</b>
+        <div class="tower" id="towerB"></div>
+      </div>
+    </div>
+
+    <div class="guess-row">
+      <button class="btn-guess" id="guessA" onclick="guessTower('A')">Tower A has more</button>
+      <button class="btn-guess" id="guessB" onclick="guessTower('B')">Tower B has more</button>
+    </div>
+    <div class="feedback" id="towerFeedback"></div>
+    <div class="btnrow" style="justify-content:center; margin-top:.8rem;">
+      <button class="btn-add" onclick="newTowers()">🔄 Flip new towers</button>
+    </div>
+    <div class="score">Score: <span id="towerScore">0</span> / <span id="towerRounds">0</span></div>
+  </section>
+
+  <!-- PRACTICE GAME 2: Monster Snack Battle -->
+  <section class="card">
+    <span class="tag">SILLY PRACTICE GAME</span>
+    <h2>👹 Monster Snack Battle</h2>
+    <p class="instructions">Feed each monster their favorite snack and see who eats <b>more</b> — the loser has to watch the winner do a victory dance. (Not really. But it's funny to imagine.)</p>
+
+    <div class="monster-row">
+      <div class="monster-card">
+        <b>Grumble</b>
+        <div class="monster-face" id="faceG">😴</div>
+        <span class="count-pill small" id="mcountG">0</span>
+        <div class="snack-row" id="snacksG"></div>
+        <button class="btn-add" onclick="feedMonster('G')">🥒 Feed a pickle</button>
+      </div>
+      <div class="monster-card">
+        <b>Blorp</b>
+        <div class="monster-face" id="faceB">😴</div>
+        <span class="count-pill small" id="mcountB">0</span>
+        <div class="snack-row" id="snacksB"></div>
+        <button class="btn-add" onclick="feedMonster('B')">🍩 Feed a donut</button>
+      </div>
+    </div>
+    <div class="result" id="monsterResult">Feed the monsters some snacks!</div>
+    <button class="btn-reset" onclick="resetMonsters()">Send the monsters home (reset)</button>
+  </section>
+
+  <!-- PRACTICE GAME 3: Silly Story Showdown -->
+  <section class="card">
+    <span class="tag">SILLY PRACTICE GAME</span>
+    <h2>📖 Silly Story Showdown</h2>
+    <p class="instructions">Read the goofy story, figure out who has more in your head, then tap to reveal the answer!</p>
+    <div class="story-box" id="storyText">Tap the button for a silly story!</div>
+    <div class="story-answer" id="storyAnswer"></div>
+    <div class="btnrow" style="justify-content:center; margin-top:.9rem;">
+      <button class="btn-add" onclick="newStory()">🎲 New silly story</button>
+      <button class="btn-remove" onclick="revealStory()">👀 Reveal answer</button>
+    </div>
+  </section>
+
+  <!-- QUICK CHECK -->
+  <section class="card">
+    <span class="tag">QUICK CHECK</span>
+    <h2>✏️ Show What You Know</h2>
+    <p class="instructions">Answer each question, then check your work.</p>
+    <div id="quizBox"></div>
+    <div class="quiz-score" id="quizScore"></div>
+  </section>
+
+</main>
+
+<footer>enVision Mathematics · Grade 1 · Topic 1 Lesson 5 — Compare Situations</footer>
+
+<script>
+/* ---------- Build & Compare ---------- */
+let counts = {A:0, B:0};
+function changeFruit(side, delta){
+  counts[side] = Math.max(0, Math.min(10, counts[side] + delta));
+  renderFruit();
+}
+function resetFruit(){ counts = {A:0,B:0}; renderFruit(); }
+function renderFruit(){
+  document.getElementById('countA').textContent = counts.A;
+  document.getElementById('countB').textContent = counts.B;
+  document.getElementById('dotsA').innerHTML = '<div class="dot red">🍎</div>'.repeat(counts.A);
+  document.getElementById('dotsB').innerHTML = '<div class="dot green">🍏</div>'.repeat(counts.B);
+  const r = document.getElementById('compareResult');
+  if(counts.A===0 && counts.B===0){ r.textContent = 'Add some apples to compare!'; return; }
+  const diff = Math.abs(counts.A - counts.B);
+  if(counts.A === counts.B){ r.textContent = `Jackson and Emma have the same amount — ${counts.A} apples each!`; }
+  else if(counts.A > counts.B){ r.textContent = `Jackson has ${diff} more than Emma. Emma has ${diff} fewer than Jackson.`; }
+  else { r.textContent = `Emma has ${diff} more than Jackson. Jackson has ${diff} fewer than Emma.`; }
+}
+renderFruit();
+
+/* ---------- Who Has More ---------- */
+let towerVals = {A:0,B:0}, towerScore=0, towerRounds=0, guessed=false;
+function newTowers(){
+  towerVals.A = 1 + Math.floor(Math.random()*10);
+  towerVals.B = 1 + Math.floor(Math.random()*10);
+  guessed = false;
+  document.getElementById('towerA').innerHTML = '<div class="block blockA"></div>'.repeat(towerVals.A);
+  document.getElementById('towerB').innerHTML = '<div class="block blockB"></div>'.repeat(towerVals.B);
+  document.getElementById('sideA').classList.remove('win');
+  document.getElementById('sideB').classList.remove('win');
+  document.getElementById('guessA').className = 'btn-guess';
+  document.getElementById('guessB').className = 'btn-guess';
+  document.getElementById('towerFeedback').textContent = '';
+}
+function guessTower(side){
+  if(guessed) return;
+  guessed = true;
+  towerRounds++;
+  const winner = towerVals.A === towerVals.B ? null : (towerVals.A > towerVals.B ? 'A' : 'B');
+  const fb = document.getElementById('towerFeedback');
+  if(winner === null){
+    fb.textContent = `Tricky! Both towers have ${towerVals.A} blocks — that's the same!`;
+  } else if(side === winner){
+    towerScore++;
+    document.getElementById('guess'+side).classList.add('correct');
+    fb.textContent = `Correct! Tower ${winner} has ${Math.abs(towerVals.A-towerVals.B)} more.`;
+  } else {
+    document.getElementById('guess'+side).classList.add('wrong');
+    document.getElementById('guess'+winner).classList.add('correct');
+    fb.textContent = `Not quite — Tower ${winner} has ${Math.abs(towerVals.A-towerVals.B)} more.`;
+  }
+  document.getElementById('sideA').classList.toggle('win', winner==='A');
+  document.getElementById('sideB').classList.toggle('win', winner==='B');
+  document.getElementById('towerScore').textContent = towerScore;
+  document.getElementById('towerRounds').textContent = towerRounds;
+}
+newTowers();
+
+/* ---------- Quiz ---------- */
+const questions = [
+  {q:"Sam has 3 marbles. Lily has 7 marbles. How many more does Lily have?", opts:["2","4","7"], correct:1},
+  {q:"Tom has 6 stars. Ana has 6 stars. Which word describes their groups?", opts:["More","Fewer","The same as"], correct:2},
+  {q:"A group of 8 has 5 fewer than another group. How many is the other group?", opts:["3","13","5"], correct:0}
+];
+const quizBox = document.getElementById('quizBox');
+let quizScore = 0, quizAnswered = 0;
+questions.forEach((item, qi)=>{
+  const div = document.createElement('div');
+  div.className = 'q';
+  const p = document.createElement('p');
+  p.textContent = `${qi+1}. ${item.q}`;
+  div.appendChild(p);
+  const optsDiv = document.createElement('div');
+  optsDiv.className = 'opts';
+  item.opts.forEach((opt, oi)=>{
+    const b = document.createElement('button');
+    b.className = 'opt';
+    b.textContent = opt;
+    b.onclick = ()=>{
+      if(b.dataset.locked) return;
+      [...optsDiv.children].forEach(c=>c.dataset.locked = "1");
+      quizAnswered++;
+      if(oi === item.correct){
+        b.classList.add('correct'); quizScore++;
+      } else {
+        b.classList.add('wrong');
+        optsDiv.children[item.correct].classList.add('correct');
+      }
+      document.getElementById('quizScore').textContent = `Score: ${quizScore} / ${questions.length} answered so far: ${quizAnswered}`;
+    };
+    optsDiv.appendChild(b);
+  });
+  div.appendChild(optsDiv);
+  quizBox.appendChild(div);
+});
+
+/* ---------- Monster Snack Battle ---------- */
+const monsters = {G:{count:0, snack:'🥒'}, B:{count:0, snack:'🍩'}};
+const faces = ['😴','🙂','😋','🤪','🤯'];
+function feedMonster(id){
+  monsters[id].count = Math.min(10, monsters[id].count + 1);
+  renderMonsters();
+}
+function resetMonsters(){ monsters.G.count = 0; monsters.B.count = 0; renderMonsters(); }
+function renderMonsters(){
+  document.getElementById('mcountG').textContent = monsters.G.count;
+  document.getElementById('mcountB').textContent = monsters.B.count;
+  document.getElementById('snacksG').textContent = monsters.G.snack.repeat(monsters.G.count);
+  document.getElementById('snacksB').textContent = monsters.B.snack.repeat(monsters.B.count);
+  document.getElementById('faceG').textContent = faces[Math.min(4, Math.floor(monsters.G.count/2))];
+  document.getElementById('faceB').textContent = faces[Math.min(4, Math.floor(monsters.B.count/2))];
+  const g = monsters.G.count, b = monsters.B.count;
+  const el = document.getElementById('monsterResult');
+  if(g===0 && b===0){ el.textContent = 'Feed the monsters some snacks!'; return; }
+  if(g===b){ el.textContent = `Grumble and Blorp both ate ${g} snacks — a perfectly fair, equally gross feast!`; return; }
+  const diff = Math.abs(g-b);
+  if(g>b){ el.textContent = `🥒 Grumble ate ${diff} more snacks than Blorp and lets out a GIANT pickle burp!`; }
+  else{ el.textContent = `🍩 Blorp ate ${diff} more snacks than Grumble and is now bouncing off the walls!`; }
+}
+renderMonsters();
+
+/* ---------- Silly Story Showdown ---------- */
+const storyNames = ['Sir Burpsalot','Captain Wiggle','Doctor Sneezy','Professor Noodle','Zippy the Zebra','Bumble the Bee','Grandma Turbo','Wally the Waffle'];
+const storyItems = ['rubber chickens','stinky socks','jellybeans','wobbly wigs','giant pickles','bouncy balls','kazoos','disco shoes'];
+function pickTwo(arr){
+  const i = Math.floor(Math.random()*arr.length);
+  let j = Math.floor(Math.random()*arr.length);
+  while(j===i){ j = Math.floor(Math.random()*arr.length); }
+  return [arr[i], arr[j]];
+}
+function newStory(){
+  const [n1, n2] = pickTwo(storyNames);
+  const item = storyItems[Math.floor(Math.random()*storyItems.length)];
+  let a = 1 + Math.floor(Math.random()*9);
+  let b = 1 + Math.floor(Math.random()*9);
+  while(b === a){ b = 1 + Math.floor(Math.random()*9); }
+  const diff = Math.abs(a-b);
+  const more = a > b ? n1 : n2;
+  const less = a > b ? n2 : n1;
+  document.getElementById('storyText').textContent = `${n1} has ${a} ${item}. ${n2} has ${b} ${item}. Who has more, and how many more?`;
+  const ansEl = document.getElementById('storyAnswer');
+  ansEl.textContent = '';
+  ansEl.dataset.reveal = `🎉 ${more} has ${diff} more ${item} than ${less}!`;
+}
+function revealStory(){
+  const ansEl = document.getElementById('storyAnswer');
+  ansEl.textContent = ansEl.dataset.reveal || '';
+}
+newStory();
+</script>
+</body>
+</html>

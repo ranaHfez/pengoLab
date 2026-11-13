@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Grade 2 Math: Use Arrays to Find Totals (Lesson 2-3)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#E9F5FF; --panel:#FFFFFF; --ink:#1F2350; --muted:#555C8F; --line:#CFE0F4; --soft:#F3F8FF;
+  --blue:#2D7DF6; --orange:#FF8A3D; --sun:#FFD23F; --pink:#F0498B; --mint:#13A57C; --grape:#7A4DE8; --red:#FF6B6B;
+  --good:#DDF7EC; --goodink:#0B6B4E; --hint:#FFF1D6; --hintink:#7A4A00;
+  --r:22px;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#121634; --panel:#1C2250; --ink:#F2F4FF; --muted:#B6BDE8; --line:#343C7A; --soft:#242B5E;
+    --good:#14463A; --goodink:#B8F5DD; --hint:#4A3A14; --hintink:#FFE2A6;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121634; --panel:#1C2250; --ink:#F2F4FF; --muted:#B6BDE8; --line:#343C7A; --soft:#242B5E;
+  --good:#14463A; --goodink:#B8F5DD; --hint:#4A3A14; --hintink:#FFE2A6;
+}
+*{box-sizing:border-box}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px);scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Nunito",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:18px;line-height:1.55}
+h1,h2,h3,h4{font-family:"Baloo 2","Nunito",system-ui,sans-serif;line-height:1.15;margin:0 0 .4em}
+h1{font-size:clamp(2.2rem,5vw,3.6rem);font-weight:800}
+h2{font-size:clamp(1.6rem,3.2vw,2.2rem);font-weight:800}
+h3{font-size:1.3rem;font-weight:700}
+p{margin:.3em 0 .7em}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:4px solid var(--grape);outline-offset:2px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 18px}
+
+/* nav */
+nav.top{position:sticky;top:0;z-index:30;background:var(--panel);border-bottom:3px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+nav.top .wrap{display:flex;gap:8px;align-items:center;overflow-x:auto;padding-top:10px;padding-bottom:10px}
+nav.top a{flex:none;text-decoration:none;color:var(--ink);font-weight:800;padding:6px 14px;border-radius:999px;background:var(--soft);border:2px solid var(--line)}
+nav.top a:hover{background:var(--sun);border-color:var(--sun);color:#1F2350}
+.tools{margin-left:auto;display:flex;gap:8px;flex:none}
+.tbtn{border:2px solid var(--line);background:var(--soft);color:var(--ink);border-radius:999px;padding:6px 12px;font-weight:800}
+.tbtn[aria-pressed="false"]{opacity:.55;text-decoration:line-through}
+
+/* hero */
+.hero{padding:34px 0 20px}
+.hero .wrap{display:grid;grid-template-columns:1.05fr 1fr;gap:28px;align-items:center}
+@media(max-width:820px){.hero .wrap{grid-template-columns:1fr}}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{background:var(--panel);border:2px solid var(--line);border-radius:999px;padding:4px 14px;font-weight:800;font-size:.95rem}
+.chip.o{background:var(--orange);border-color:var(--orange);color:#1F2350}
+.chip.b{background:var(--blue);border-color:var(--blue);color:#fff}
+.chip.m{background:var(--mint);border-color:var(--mint);color:#fff}
+.heroart{background:var(--panel);border:4px solid var(--ink);border-radius:30px;padding:22px;text-align:center;box-shadow:8px 8px 0 var(--sun)}
+.heroart p{margin:.6em 0 0;font-weight:800;color:var(--muted)}
+.heroeq{font-family:"Baloo 2",sans-serif;font-weight:800;font-size:1.7rem;min-height:2.3rem}
+
+/* sections */
+section.block{padding:26px 0}
+.panel{background:var(--panel);border:3px solid var(--line);border-radius:var(--r);padding:22px}
+.panel.blue{border-color:var(--blue)} .panel.orange{border-color:var(--orange)} .panel.mint{border-color:var(--mint)} .panel.grape{border-color:var(--grape)} .panel.pink{border-color:var(--pink)}
+.sechead{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.sechead .badge{font-size:2rem}
+.sub{color:var(--muted);font-weight:700;margin-top:-4px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media(max-width:820px){.grid2,.grid3{grid-template-columns:1fr}}
+.say{background:var(--hint);color:var(--hintink);border-left:8px solid var(--orange);padding:10px 14px;border-radius:12px;margin:10px 0;font-weight:700}
+.say b{font-family:"Baloo 2",sans-serif}
+ul.clean{padding-left:1.2em;margin:.3em 0}
+ul.clean li{margin:.25em 0}
+.vocab{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:820px){.vocab{grid-template-columns:1fr}}
+.vocab div{background:var(--soft);border:3px solid var(--line);border-radius:18px;padding:12px 14px}
+.vocab strong{font-family:"Baloo 2",sans-serif;font-size:1.4rem;display:block}
+
+/* timeline */
+ol.steps{list-style:none;padding:0;margin:0;display:grid;gap:12px}
+ol.steps li{display:grid;grid-template-columns:auto 1fr;gap:14px;background:var(--soft);border:3px solid var(--line);border-radius:18px;padding:12px 14px}
+ol.steps .num{width:46px;height:46px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font-family:"Baloo 2",sans-serif;font-weight:800;font-size:1.3rem}
+ol.steps li:nth-child(2n) .num{background:var(--orange);color:#1F2350}
+ol.steps li:nth-child(3n) .num{background:var(--mint)}
+ol.steps li:nth-child(5n) .num{background:var(--grape)}
+ol.steps h4{margin:0}
+.time{display:inline-block;background:var(--sun);color:#1F2350;border-radius:999px;padding:0 10px;font-weight:800;font-size:.85rem;margin-left:6px}
+
+/* buttons */
+.btn{border:0;border-radius:16px;padding:10px 20px;font-weight:800;color:#fff;background:var(--blue);box-shadow:0 5px 0 rgba(0,0,0,.22);transition:transform .08s}
+.btn:active{transform:translateY(3px);box-shadow:0 2px 0 rgba(0,0,0,.22)}
+.btn.o{background:var(--orange);color:#1F2350}
+.btn.g{background:var(--mint)}
+.btn.p{background:var(--grape)}
+.btn.k{background:var(--pink)}
+.btn.s{padding:6px 14px;font-size:.95rem}
+.btn[disabled]{opacity:.5}
+
+/* arrays */
+.arr{display:inline-flex;flex-direction:column;gap:6px;--cs:2.6rem}
+.arow{display:flex;gap:6px;align-items:center}
+.cell{width:var(--cs);height:var(--cs);display:grid;place-items:center;font-size:calc(var(--cs)*.7);line-height:1;border-radius:12px;background:var(--soft);border:2px solid var(--line);transition:background .15s}
+.cell.empty{background:transparent;border:2px dashed var(--line);opacity:.5}
+.cell .dot{width:70%;height:70%;border-radius:50%;display:block}
+.tag{min-width:3ch;font-family:"Baloo 2",sans-serif;font-weight:800;font-size:1.3rem;padding-left:6px;text-align:left}
+.arow.tap{cursor:pointer}
+.arow.tap:hover .cell{border-color:var(--grape)}
+.arr.sm{--cs:1.5rem;gap:3px}
+.arr.sm .arow{gap:3px}
+.arr.lg{--cs:3.3rem}
+@media(max-width:560px){.arr{--cs:2.1rem}.arr.lg{--cs:2.6rem}}
+
+/* shells for games */
+.shell{background:var(--soft);border:3px solid var(--line);border-radius:20px;padding:16px}
+.gbar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.prog{display:flex;gap:6px;flex-wrap:wrap}
+.prog i{width:22px;height:22px;border-radius:50%;background:var(--line);display:block}
+.prog i.done{background:var(--mint)} .prog i.cur{background:var(--sun);outline:3px solid var(--orange)}
+.stats{font-weight:800;display:flex;gap:12px}
+.stage{min-height:200px;text-align:center}
+.q{font-family:"Baloo 2",sans-serif;font-weight:700;font-size:1.5rem;margin:6px 0 12px}
+.opts{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:12px}
+.opt{border:3px solid var(--line);background:var(--panel);color:var(--ink);border-radius:18px;padding:12px 18px;font-weight:800;font-size:1.15rem;min-width:110px}
+.opt:hover{border-color:var(--blue)}
+.opt.right{background:var(--mint);border-color:var(--mint);color:#fff}
+.opt.again{background:var(--hint);border-color:var(--orange);color:var(--hintink)}
+.opt.pic{padding:10px}
+.fb{min-height:3.2em;margin-top:10px;font-weight:800;font-size:1.1rem;border-radius:14px;padding:8px 12px;text-align:center}
+.fb.good{background:var(--good);color:var(--goodink)}
+.fb.hint{background:var(--hint);color:var(--hintink)}
+.gctl{text-align:center;margin-top:8px;min-height:50px}
+.build{display:inline-grid;gap:6px;margin:6px 0}
+.slot{width:3rem;height:3rem;border-radius:12px;border:3px dashed var(--line);background:var(--panel);font-size:1.9rem;display:grid;place-items:center;padding:0}
+.slot.on{border-style:solid;border-color:var(--blue);background:#DCEBFF}
+.result{padding:14px}
+.result .big{font-size:3rem;letter-spacing:.2rem}
+.eqline{font-family:"Baloo 2",sans-serif;font-weight:800;font-size:1.6rem;margin:6px 0}
+
+/* visual learning demo */
+.demo{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:center}
+@media(max-width:700px){.demo{grid-template-columns:1fr}}
+.stepper{display:flex;align-items:center;gap:8px;margin:6px 0;font-weight:800}
+.stepper button{width:38px;height:38px;border-radius:50%;border:3px solid var(--line);background:var(--panel);color:var(--ink);font-weight:800;font-size:1.2rem;padding:0}
+.stepper output{min-width:2ch;text-align:center;font-family:"Baloo 2",sans-serif;font-size:1.5rem}
+.seg{display:inline-flex;border:3px solid var(--line);border-radius:999px;overflow:hidden;margin:6px 0}
+.seg button{border:0;background:var(--panel);color:var(--ink);padding:6px 16px;font-weight:800}
+.seg button.on{background:var(--blue);color:#fff}
+
+details{background:var(--soft);border:3px solid var(--line);border-radius:14px;padding:8px 14px;margin:8px 0}
+details summary{font-weight:800;cursor:pointer}
+
+/* whiteboard */
+.wbtools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px}
+.wbgroup{display:flex;flex-wrap:wrap;gap:6px;align-items:center;background:var(--soft);border:3px solid var(--line);border-radius:16px;padding:6px 8px}
+.wbgroup .lbl{font-weight:800;font-size:.85rem;color:var(--muted);margin-right:2px}
+.tb{border:3px solid var(--line);background:var(--panel);color:var(--ink);border-radius:12px;padding:4px 10px;font-weight:800;font-size:.95rem}
+.tb.on{background:var(--blue);border-color:var(--blue);color:#fff}
+.sw{width:30px;height:30px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 2px var(--line);padding:0}
+.sw.on{box-shadow:0 0 0 4px var(--ink)}
+.wbwrap{position:relative;border:4px solid var(--ink);border-radius:18px;overflow:hidden;background:#fff;aspect-ratio:1000/560;width:100%}
+.wbwrap:fullscreen{border-radius:0;aspect-ratio:auto;height:100vh}
+.wbwrap canvas{display:block;width:100%;height:100%;touch-action:none;cursor:crosshair}
+.wbwrap.grid{background-image:linear-gradient(#BFD6EE 2px,transparent 2px),linear-gradient(90deg,#BFD6EE 2px,transparent 2px);background-size:4% 7.1429%}
+.wbwrap.dots{background-image:radial-gradient(#8FB3D9 3px,transparent 3.5px);background-size:5% 8.9286%}
+.wbwrap.lines{background-image:linear-gradient(#BFD6EE 2px,transparent 2px);background-size:100% 8.9286%}
+.wbwrap.tens{background-image:linear-gradient(#BFD6EE 2px,transparent 2px),linear-gradient(90deg,#BFD6EE 2px,transparent 2px);background-size:20% 35.7%}
+.wbtext{position:absolute;border:2px dashed var(--grape);background:rgba(255,255,255,.85);font-family:"Baloo 2",sans-serif;font-weight:700;min-width:120px;outline:none;padding:0 4px;z-index:3}
+.wbnum{width:3.2em;padding:4px;border-radius:10px;border:3px solid var(--line);background:var(--panel);color:var(--ink);font:inherit;font-weight:800}
+.wbsel{border:3px solid var(--line);border-radius:10px;background:var(--panel);color:var(--ink);font:inherit;font-weight:800;padding:3px 6px}
+
+/* confetti */
+.cf{position:fixed;top:-20px;width:10px;height:14px;z-index:99;pointer-events:none;animation:fall 2.8s ease-in forwards}
+@keyframes fall{to{transform:translate(var(--dx),108vh) rotate(720deg)}}
+@keyframes pop{0%{transform:scale(.7)}60%{transform:scale(1.15)}100%{transform:scale(1)}}
+.pop{animation:pop .35s ease-out}
+
+footer{padding:30px 0 50px;text-align:center;color:var(--muted);font-weight:700}
+</style>
+
+<!-- Shared template: colors, fonts, sounds, buttons, mascots. Keep this. -->
+<link rel="stylesheet" href="../../shared/theme.css">
+<script src="../../shared/theme.js" defer></script>
+</head>
+<body>
+
+<nav class="top" aria-label="Lesson sections">
+  <div class="wrap">
+    <a href="#plan">Lesson plan</a>
+    <a href="#learn">Learn</a>
+    <a href="#warm">Warm-up</a>
+    <a href="#board">Whiteboard</a>
+    <a href="#g1">Game 1</a>
+    <a href="#g2">Game 2</a>
+    <a href="#g3">Game 3</a>
+    <a href="#g4">Game 4</a>
+    <a href="#exit">Exit ticket</a>
+    <div class="tools">
+      <button class="tbtn" id="sndBtn" aria-pressed="true" title="Turn game sounds on or off">🔊 Sounds</button>
+      <button class="tbtn" id="voiceBtn" aria-pressed="true" title="Turn the cheering voice on or off">🗣️ Voice</button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <div class="chips">
+        <span class="chip b">enVision Math Grade 2</span>
+        <span class="chip o">Volume 1 · Topic 2</span>
+        <span class="chip m">Lesson 2-3</span>
+      </div>
+      <h1 style="margin-top:14px">Use Arrays to Find Totals</h1>
+      <p style="font-weight:700;color:var(--muted)">Topic 2: Work With Equal Groups. Rows, columns and repeated addition, with a warm-up, a whiteboard and four games.</p>
+      <div class="chips">
+        <span class="chip">About 60 minutes</span>
+        <span class="chip">Standard 2.OA.C.4</span>
+      </div>
+    </div>
+    <div class="heroart">
+      <div id="heroArr"></div>
+      <div class="heroeq" id="heroEq">Tap a row to count!</div>
+      <p>3 rows of 5. Tap each row to skip count.</p>
+    </div>
+  </div>
+</header>
+
+<main>
+<!-- PLAN -->
+<section class="block" id="plan">
+  <div class="wrap">
+    <div class="panel blue">
+      <div class="sechead"><span class="badge">📋</span><h2>Lesson plan at a glance</h2></div>
+      <div class="grid2">
+        <div>
+          <h3>Objective</h3>
+          <p>Students write repeated addition equations to match an array, by rows and by columns, and use the equation to find the total. Arrays have up to 5 rows and 5 columns.</p>
+          <h3>Essential question</h3>
+          <p><b>How can you use arrays to find totals?</b></p>
+          <h3>Success criteria (kid-friendly)</h3>
+          <ul class="clean">
+            <li>I can tell what a row is and what a column is.</li>
+            <li>I can write an equation like 5 + 5 + 5 = 15 for an array.</li>
+            <li>I can find the total by skip counting or adding.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Materials</h3>
+          <ul class="clean">
+            <li>This page, projected for the class</li>
+            <li>Counters or cubes and a 5 by 5 grid mat for each pair</li>
+            <li>Student whiteboards and markers</li>
+            <li>Student Edition, Lesson 2-3</li>
+            <li>Tablets or computers for the games (optional)</li>
+          </ul>
+          <h3>Vocabulary</h3>
+          <div class="vocab" style="grid-template-columns:1fr">
+            <div><strong>array</strong>Objects in equal rows and equal columns.</div>
+            <div><strong>row</strong>Objects that go across, side to side.</div>
+            <div><strong>column</strong>Objects that go up and down.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <div class="panel orange">
+      <div class="sechead"><span class="badge">⏱️</span><h2>Lesson flow</h2></div>
+      <ol class="steps">
+        <li><span class="num">1</span><div><h4>Warm-up game: Array or Not? <span class="time">5 min</span></h4>
+          <p>Students decide if each picture is an array. This brings back equal groups and gets the words row and column ready.</p>
+          <div class="say"><b>Ask:</b> What must be true for objects to make an array? Listen for: equal rows, lined up in columns, no gaps.</div></div></li>
+        <li><span class="num">2</span><div><h4>Solve and Share on the whiteboard <span class="time">10 min</span></h4>
+          <p>Pose the problem and let pairs model it before you show any method.</p>
+          <div class="say"><b>Problem:</b> Maya puts stickers on a page. She makes 3 rows. Each row has 5 stickers. How many stickers does Maya have in all? Show it with counters, a drawing, or an equation.</div>
+          <p>Use the whiteboard tools below. Pick the array tool, set 3 rows and 5 columns, and tap the board. Invite two students to share different ways of finding the total.</p></div></li>
+        <li><span class="num">3</span><div><h4>Visual Learning: rows and columns <span class="time">10 min</span></h4>
+          <p>Use the explorer in the Learn section. Show the rows first, then switch to columns for the same array.</p>
+          <div class="say"><b>Say:</b> A row goes across. A column goes up and down. This array has 3 rows with 5 in each row, so I write 5 + 5 + 5 = 15. Now I look at columns: 5 columns with 3 in each column, so 3 + 3 + 3 + 3 + 3 = 15. Same array, same total!</div></div></li>
+        <li><span class="num">4</span><div><h4>Convince Me! <span class="time">3 min</span></h4>
+          <p>Ask: Can an array have 4 in each row and still have a different total than 4 + 4 + 4? Have partners explain with a drawing. (Yes. If there are 4 rows, the total is 4 + 4 + 4 + 4 = 16.)</p></div></li>
+        <li><span class="num">5</span><div><h4>Guided practice: Games 1 and 2 <span class="time">12 min</span></h4>
+          <p>Play Game 1 as a whole class with volunteers building on the board. Pairs then play Game 2. Circulate and ask students to point to one row and one column.</p></div></li>
+        <li><span class="num">6</span><div><h4>Independent practice: Games 3 and 4 <span class="time">12 min</span></h4>
+          <p>Students choose their own pace. Watch for students who add the number of rows and columns (3 + 5 = 8) instead of adding the same number again and again.</p></div></li>
+        <li><span class="num">7</span><div><h4>Exit ticket and reflection <span class="time">8 min</span></h4>
+          <p>Use the three questions at the end of the page. Finish with: How can you use an array to find a total?</p></div></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <div class="grid2">
+      <div class="panel pink">
+        <h3>Watch for these mistakes</h3>
+        <ul class="clean">
+          <li>Mixing up rows and columns. Use arm motions: rows go across, columns go up and down.</li>
+          <li>Adding the numbers of rows and columns (3 + 5) instead of repeated addition (5 + 5 + 5).</li>
+          <li>Counting objects twice or skipping one. Have students mark each row as they count it.</li>
+          <li>Thinking uneven rows still make an array.</li>
+        </ul>
+      </div>
+      <div class="panel mint">
+        <h3>Support and challenge</h3>
+        <ul class="clean">
+          <li><b>Support:</b> Use counters on a 5 by 5 mat. Skip count by 2s and 5s together. Color each row a different color.</li>
+          <li><b>On level:</b> Write both the row equation and the column equation for each array.</li>
+          <li><b>Challenge:</b> Make two different arrays that each have 12 in all. Write an equation for each.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LEARN -->
+<section class="block" id="learn">
+  <div class="wrap">
+    <div class="panel grape">
+      <div class="sechead"><span class="badge">🔍</span><h2>Learn: rows and columns explorer</h2></div>
+      <p class="sub">Change the array, then switch between rows and columns. Each color shows one group.</p>
+      <div class="demo">
+        <div style="text-align:center"><div id="demoArr"></div></div>
+        <div>
+          <div class="stepper">Rows <button id="rMinus" aria-label="Fewer rows">−</button><output id="rVal">3</output><button id="rPlus" aria-label="More rows">+</button></div>
+          <div class="stepper">Columns <button id="cMinus" aria-label="Fewer columns">−</button><output id="cVal">5</output><button id="cPlus" aria-label="More columns">+</button></div>
+          <div class="seg" role="group" aria-label="Show groups by">
+            <button id="modeRow" class="on">Show rows</button>
+            <button id="modeCol">Show columns</button>
+          </div>
+          <div class="eqline" id="demoEq"></div>
+          <p id="demoTxt" style="font-weight:700"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WARM-UP -->
+<section class="block" id="warm-wrap">
+  <div class="wrap">
+    <div class="panel orange" id="warm">
+      <div class="sechead"><span class="badge">🔥</span><h2>Warm-up game: Array or Not?</h2></div>
+      <p class="sub">Look at the picture. Is it an array? Remember: equal rows, lined up in columns.</p>
+      <div class="shell" id="warmShell"></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHITEBOARD -->
+<section class="block" id="board">
+  <div class="wrap">
+    <div class="panel blue">
+      <div class="sechead"><span class="badge">🖍️</span><h2>Whiteboard</h2></div>
+      <p class="sub">Draw, write, stamp objects, or build an array. Great for Solve and Share.</p>
+      <div class="wbtools">
+        <div class="wbgroup" id="toolGroup"><span class="lbl">Tools</span>
+          <button class="tb on" data-tool="pen">✏️ Pen</button>
+          <button class="tb" data-tool="marker">🖊️ Marker</button>
+          <button class="tb" data-tool="eraser">🧽 Eraser</button>
+          <button class="tb" data-tool="line">📏 Line</button>
+          <button class="tb" data-tool="rect">⬜ Box</button>
+          <button class="tb" data-tool="circle">⭕ Circle</button>
+          <button class="tb" data-tool="triangle">🔺 Triangle</button>
+          <button class="tb" data-tool="text">🔤 Text</button>
+          <button class="tb" data-tool="stamp">📍 Stamp</button>
+          <button class="tb" data-tool="array">🔢 Array</button>
+        </div>
+        <div class="wbgroup"><span class="lbl">Color</span><span id="swatches"></span>
+          <input type="color" id="customColor" value="#1F2350" aria-label="Custom color" style="width:34px;height:30px;border:0;background:none;padding:0">
+        </div>
+        <div class="wbgroup"><span class="lbl">Size</span><input type="range" id="size" min="2" max="30" value="6" aria-label="Brush size"><span id="sizeVal">6</span>
+          <label style="font-weight:800;font-size:.9rem"><input type="checkbox" id="fill"> Fill shapes</label>
+        </div>
+      </div>
+      <div class="wbtools">
+        <div class="wbgroup"><span class="lbl">Stamp</span><span id="stamps"></span></div>
+        <div class="wbgroup"><span class="lbl">Array</span>
+          <label>rows <input class="wbnum" type="number" id="aRows" min="1" max="10" value="3"></label>
+          <label>columns <input class="wbnum" type="number" id="aCols" min="1" max="10" value="5"></label>
+          <select class="wbsel" id="aStyle" aria-label="Array objects">
+            <option value="dot">Counters</option><option value="🍎">Apples</option><option value="⭐">Stars</option><option value="🍪">Cookies</option><option value="🐞">Ladybugs</option><option value="🌸">Flowers</option>
+          </select>
+          <label style="font-weight:800;font-size:.9rem"><input type="checkbox" id="aRowColor" checked> Color each row</label>
+          <button class="btn s" id="aGo">Place array</button>
+        </div>
+      </div>
+      <div class="wbtools">
+        <div class="wbgroup"><span class="lbl">Paper</span>
+          <button class="tb on" data-bg="">White</button>
+          <button class="tb" data-bg="grid">Grid</button>
+          <button class="tb" data-bg="dots">Dots</button>
+          <button class="tb" data-bg="lines">Lines</button>
+          <button class="tb" data-bg="tens">Big boxes</button>
+        </div>
+        <div class="wbgroup">
+          <button class="tb" id="undo">↩️ Undo</button>
+          <button class="tb" id="redo">↪️ Redo</button>
+          <button class="tb" id="clear">🗑️ Clear all</button>
+          <button class="tb" id="savePng">💾 Save picture</button>
+          <button class="tb" id="full">⛶ Full screen</button>
+        </div>
+      </div>
+      <div class="wbwrap" id="wbwrap"><canvas id="wb" width="1000" height="560" aria-label="Whiteboard drawing area"></canvas></div>
+      <p class="sub" id="wbHint" style="margin-top:8px">Tip: pick Array, choose rows and columns, then tap the board where you want the array.</p>
+    </div>
+  </div>
+</section>
+
+<!-- GAMES -->
+<section class="block" id="g1">
+  <div class="wrap">
+    <div class="panel mint">
+      <div class="sechead"><span class="badge">🧱</span><h2>Game 1: Build the Array</h2></div>
+      <p class="sub">Tap the squares to place objects. Make neat rows and columns that match the clue.</p>
+      <div class="shell" id="g1Shell"></div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="g2">
+  <div class="wrap">
+    <div class="panel pink">
+      <div class="sechead"><span class="badge">🕵️</span><h2>Game 2: Equation Detective</h2></div>
+      <p class="sub">Rows go across. Columns go up and down. Pick the equation that matches.</p>
+      <div class="shell" id="g2Shell"></div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="g3">
+  <div class="wrap">
+    <div class="panel orange">
+      <div class="sechead"><span class="badge">💎</span><h2>Game 3: Treasure Totals</h2></div>
+      <p class="sub">Tap each row to skip count. Then choose how many treasures there are in all.</p>
+      <div class="shell" id="g3Shell"></div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="g4">
+  <div class="wrap">
+    <div class="panel grape">
+      <div class="sechead"><span class="badge">📖</span><h2>Game 4: Story Match</h2></div>
+      <p class="sub">Read the story. Pick the array that matches. Then find the total.</p>
+      <div class="shell" id="g4Shell"></div>
+    </div>
+  </div>
+</section>
+
+<!-- EXIT -->
+<section class="block" id="exit">
+  <div class="wrap">
+    <div class="panel blue">
+      <div class="sechead"><span class="badge">🎟️</span><h2>Exit ticket and quick check</h2></div>
+      <p class="sub">Students answer on their whiteboards. Open an answer to check.</p>
+      <div class="grid3">
+        <div>
+          <h3>1. Rows</h3>
+          <div style="text-align:center" id="ex1"></div>
+          <p>Write an equation for the rows. Then find the total.</p>
+          <details><summary>Show answer</summary>4 + 4 = 8. The array has 2 rows with 4 in each row.</details>
+        </div>
+        <div>
+          <h3>2. Columns</h3>
+          <div style="text-align:center" id="ex2"></div>
+          <p>Write an equation for the columns. Then find the total.</p>
+          <details><summary>Show answer</summary>3 + 3 + 3 + 3 = 12. There are 4 columns with 3 in each column.</details>
+        </div>
+        <div>
+          <h3>3. Tell how</h3>
+          <p>Mia says: "I added 3 + 5 to find the total of 3 rows of 5." What would you tell Mia?</p>
+          <details><summary>Show answer</summary>Add the number in one row again for each row: 5 + 5 + 5 = 15. Adding the number of rows and columns does not count every object.</details>
+        </div>
+      </div>
+      <div class="say"><b>Reflect:</b> How can you use an array to find a total? Have students finish: "I look at the rows. I add the number in one row ____ times."</div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">Great thinking today, mathematicians! ⭐</div>
+</footer>
+
+<script>
+/* ---------- helpers ---------- */
+const $=id=>document.getElementById(id);
+function el(t,c,txt){const e=document.createElement(t);if(c)e.className=c;if(txt!=null)e.textContent=txt;return e;}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function sumStr(n,t){return Array(t).fill(n).join(' + ');}
+function eq(n,t){return sumStr(n,t)+' = '+(n*t);}
+const PC=['#FF6B6B','#FFA53D','#FFD23F','#3CCB8A','#4DA3FF','#8A5CF6'];
+function pick(a){return a[Math.floor(Math.random()*a.length)];}
+
+/* ---------- sounds ---------- */
+let soundOn=true, voiceOn=true, AC=null;
+function actx(){
+  if(!AC){try{AC=new (window.AudioContext||window.webkitAudioContext)();}catch(e){}}
+  if(AC&&AC.state==='suspended'){try{AC.resume();}catch(e){}}
+  return AC;
+}
+function tone(freq,t0,dur,type,vol){
+  if(!soundOn)return;
+  const a=actx(); if(!a)return;
+  const o=a.createOscillator(), g=a.createGain();
+  o.type=type||'sine'; o.frequency.value=freq;
+  o.connect(g); g.connect(a.destination);
+  const t=a.currentTime+t0;
+  g.gain.setValueAtTime(0.0001,t);
+  g.gain.exponentialRampToValueAtTime(vol||.2,t+.02);
+  g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+  o.start(t); o.stop(t+dur+.05);
+}
+const sfx={
+  pop(){tone(620,0,.08,'triangle',.14);},
+  note(i){tone(392*Math.pow(1.122,i*2),0,.22,'triangle',.18);},
+  good(){[523,659,784,1047].forEach((f,i)=>tone(f,i*.09,.26,'triangle',.2));},
+  cheer(){[659,784,1047].forEach((f,i)=>tone(f,i*.08,.2,'triangle',.16));},
+  oops(){tone(440,0,.16,'sine',.14);tone(523,.15,.24,'sine',.14);}, /* soft, rising: a friendly "try again" */
+  win(){[523,659,784,659,784,1047,1319,1568].forEach((f,i)=>tone(f,i*.11,.32,'triangle',.2));}
+};
+function say(txt){
+  if(!soundOn||!voiceOn)return;
+  try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(txt);u.rate=.95;u.pitch=1.25;u.lang='en-US';speechSynthesis.speak(u);}catch(e){}
+}
+$('sndBtn').addEventListener('click',e=>{soundOn=!soundOn;e.currentTarget.setAttribute('aria-pressed',soundOn);if(soundOn)sfx.pop();else{try{speechSynthesis.cancel();}catch(x){}}});
+$('voiceBtn').addEventListener('click',e=>{voiceOn=!voiceOn;e.currentTarget.setAttribute('aria-pressed',voiceOn);if(!voiceOn){try{speechSynthesis.cancel();}catch(x){}}});
+
+const CHEERS=['Great job!','Awesome!','You did it!','Super thinking!','Fantastic!','Brilliant!','Way to go!','You are a math star!'];
+const TRIES=['Almost! Try again.','Good try! Look once more.','You can do it! Try again.','So close! Think again.','Keep going! You are learning!'];
+
+function confetti(){
+  if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  for(let k=0;k<60;k++){
+    const s=document.createElement('i');s.className='cf';
+    s.style.left=Math.random()*100+'vw';
+    s.style.background=PC[k%PC.length];
+    s.style.animationDelay=(Math.random()*.7)+'s';
+    s.style.setProperty('--dx',(Math.random()*240-120)+'px');
+    document.body.append(s);setTimeout(()=>s.remove(),3800);
+  }
+}
+
+/* ---------- array builder ---------- */
+function arrayEl(r,c,em,o){
+  o=o||{};
+  const d=el('div','arr'+(o.cls?' '+o.cls:''));
+  for(let i=0;i<r;i++){
+    const row=el('div','arow'+(o.tap?' tap':''));row.dataset.i=i;
+    for(let j=0;j<c;j++){
+      const s=el('span','cell');s.dataset.i=i;s.dataset.j=j;
+      if(em==='dot'){const dt=el('i','dot');dt.style.background=PC[(o.by==='col'?j:i)%5];s.append(dt);}
+      else s.textContent=em;
+      if(o.by==='row')s.style.background=PC[i%5]+'66';
+      if(o.by==='col')s.style.background=PC[j%5]+'66';
+      row.append(s);
+    }
+    const t=el('span','tag');row.append(t);d.append(row);
+  }
+  return d;
+}
+function patternEl(p,em){
+  const d=el('div','arr');
+  p.split('/').forEach(line=>{
+    const row=el('div','arow');
+    line.split('').forEach(ch=>{const s=el('span','cell'+(ch==='.'?' empty':''));if(ch!=='.')s.textContent=em;row.append(s);});
+    d.append(row);
+  });
+  return d;
+}
+
+/* ---------- game shell ---------- */
+function mkShell(root,total,render){
+  root.innerHTML='<div class="gbar"><div class="prog"></div><div class="stats"><span class="score">⭐ 0</span><span class="streak"></span></div></div><div class="stage"></div><div class="fb" role="status" aria-live="polite"></div><div class="gctl"><button class="btn next" hidden>Next round</button></div>';
+  const stage=root.querySelector('.stage'),fb=root.querySelector('.fb'),prog=root.querySelector('.prog'),
+        scoreEl=root.querySelector('.score'),streakEl=root.querySelector('.streak'),nextBtn=root.querySelector('.next');
+  let i=0,score=0,streak=0,tries=0,done=false;
+  function drawProg(){prog.innerHTML='';for(let k=0;k<total;k++){prog.append(el('i',k<i?'done':(k===i?'cur':'')));}
+    scoreEl.textContent='⭐ '+score;streakEl.textContent=streak>=2?'🔥 '+streak+' in a row!':'';}
+  const api={
+    stage,
+    say(msg,cls){fb.className='fb '+(cls||'');fb.textContent=msg;},
+    cheer(msg){sfx.cheer();api.say(msg,'good');},
+    correct(msg){
+      if(done)return;done=true;
+      if(tries===0){score++;streak++;}else{streak=0;}
+      scoreEl.textContent='⭐ '+score;streakEl.textContent=streak>=2?'🔥 '+streak+' in a row!':'';
+      const c=pick(CHEERS);sfx.good();say(c);
+      api.say(c+' '+(msg||''),'good');
+      nextBtn.textContent=(i+1>=total)?'See my stars':'Next round';nextBtn.hidden=false;nextBtn.focus({preventScroll:true});
+    },
+    wrong(hint){
+      tries++;streak=0;streakEl.textContent='';sfx.oops();
+      const t=pick(TRIES);say(t);api.say(t+(hint?' '+hint:''),'hint');
+    },
+    get tries(){return tries;}
+  };
+  function nextRound(){
+    fb.className='fb';fb.textContent='';nextBtn.hidden=true;tries=0;done=false;
+    if(i>=total){finish();return;}
+    drawProg();stage.innerHTML='';render(i,api);
+  }
+  function finish(){
+    drawProg();
+    const msg=score>=total-1?'Super star mathematician!':score>=Math.ceil(total/2)?'Great work! You are getting stronger!':'Nice effort! Practice makes you stronger. Try again!';
+    stage.innerHTML='';
+    const r=el('div','result');
+    r.append(el('div','big','⭐'.repeat(Math.max(1,Math.round(score/total*5)))));
+    r.append(el('div','q',msg));
+    r.append(el('p',null,'You got '+score+' out of '+total+' on the first try.'));
+    const again=el('button','btn o','Play again');
+    again.addEventListener('click',()=>{i=0;score=0;streak=0;nextRound();});
+    r.append(again);stage.append(r);
+    fb.className='fb';fb.textContent='';nextBtn.hidden=true;
+    sfx.win();say('Hooray! You finished!');confetti();
+  }
+  nextBtn.addEventListener('click',()=>{i++;nextRound();});
+  nextRound();
+  return api;
+}
+
+/* ---------- hero ---------- */
+(function(){
+  const host=$('heroArr');const a=arrayEl(3,5,'dot',{cls:'lg',tap:true,by:'row'});host.append(a);
+  const rows=[...a.querySelectorAll('.arow')];let n=0;
+  rows.forEach((row,i)=>row.addEventListener('click',()=>{
+    sfx.note(i);
+    rows.forEach((r,k)=>{r.querySelector('.tag').textContent=k<=i?(k+1)*5:'';r.querySelectorAll('.cell').forEach(c=>c.style.background=k<=i?PC[k]+'66':'');});
+    $('heroEq').textContent=sumStr(5,i+1)+(i===2?' = 15':'');
+    if(i===2){sfx.cheer();}
+  }));
+})();
+
+/* ---------- visual learning explorer ---------- */
+(function(){
+  let r=3,c=5,mode='row';
+  function draw(){
+    const host=$('demoArr');host.innerHTML='';
+    host.append(arrayEl(r,c,'dot',{cls:'lg',by:mode}));
+    $('rVal').textContent=r;$('cVal').textContent=c;
+    if(mode==='row'){
+      $('demoEq').textContent=eq(c,r);
+      $('demoTxt').textContent=r+(r===1?' row':' rows')+' of '+c+'. Add '+c+', '+r+(r===1?' time.':' times.');
+    }else{
+      $('demoEq').textContent=eq(r,c);
+      $('demoTxt').textContent=c+(c===1?' column':' columns')+' of '+r+'. Add '+r+', '+c+(c===1?' time.':' times.');
+    }
+    $('modeRow').classList.toggle('on',mode==='row');$('modeCol').classList.toggle('on',mode==='col');
+  }
+  $('rMinus').onclick=()=>{if(r>1){r--;sfx.pop();draw();}};
+  $('rPlus').onclick=()=>{if(r<5){r++;sfx.pop();draw();}};
+  $('cMinus').onclick=()=>{if(c>1){c--;sfx.pop();draw();}};
+  $('cPlus').onclick=()=>{if(c<5){c++;sfx.pop();draw();}};
+  $('modeRow').onclick=()=>{mode='row';sfx.pop();draw();};
+  $('modeCol').onclick=()=>{mode='col';sfx.pop();draw();};
+  draw();
+  $('ex1').append(arrayEl(2,4,'🍎',{cls:'sm'}));
+  $('ex2').append(arrayEl(3,4,'⭐',{cls:'sm'}));
+})();
+
+/* ---------- warm-up ---------- */
+const WU=[
+ {p:'XXXXX/XXXXX',yes:true,em:'🍎',why:'It has 2 rows of 5. Every row is equal and the columns line up.'},
+ {p:'XXX/XXXX/XXX',yes:false,em:'🍪',why:'The rows are 3, 4 and 3. An array needs equal rows.'},
+ {p:'XXX/XXX/XXX/XXX',yes:true,em:'🌸',why:'It has 4 rows of 3. Neat rows and columns!'},
+ {p:'X.X.X/.X.X./X.X.X',yes:false,em:'🐞',why:'The ladybugs are scattered. They do not line up in rows and columns.'},
+ {p:'XXX/XXX/XXX',yes:true,em:'⭐',why:'It has 3 rows of 3. A square is still an array.'},
+ {p:'XXXX/XXXX/XXX.',yes:false,em:'🍓',why:'One spot is empty, so the last row is shorter than the others.'}
+];
+mkShell($('warmShell'),WU.length,(i,api)=>{
+  const w=WU[i];
+  api.stage.append(el('div','q','Is this an array?'));
+  api.stage.append(patternEl(w.p,w.em));
+  const o=el('div','opts');
+  const yes=el('button','opt','Yes, it is an array'),no=el('button','opt','No, it is not');
+  [[yes,true],[no,false]].forEach(([b,v])=>b.addEventListener('click',()=>{
+    if(b.disabled)return;
+    if(v===w.yes){b.classList.add('right');yes.disabled=no.disabled=true;api.correct(w.why);}
+    else{b.classList.add('again');b.disabled=true;api.wrong('Check: are all the rows equal, and do they line up in columns?');}
+  }));
+  o.append(yes,no);api.stage.append(o);
+});
+
+/* ---------- game 1: build the array ---------- */
+const G1=[[3,4,'🍎'],[2,5,'⭐'],[4,3,'🍪'],[5,2,'🌸'],[3,3,'🐞'],[4,5,'🍓']];
+mkShell($('g1Shell'),G1.length,(i,api)=>{
+  const [r,c,em]=G1[i];const R=5,C=6;
+  const on=Array.from({length:R},()=>Array(C).fill(false));
+  api.stage.append(el('div','q','Make an array with '+r+' rows and '+c+' columns.'));
+  const grid=el('div','build');grid.style.gridTemplateColumns='repeat('+C+',3rem)';
+  const slots=[];
+  for(let a=0;a<R;a++)for(let b=0;b<C;b++){
+    const s=el('button','slot');s.setAttribute('aria-label','Row '+(a+1)+', column '+(b+1));
+    s.addEventListener('click',()=>{
+      if(s.dataset.lock)return;
+      on[a][b]=!on[a][b];s.classList.toggle('on',on[a][b]);s.textContent=on[a][b]?em:'';sfx.pop();
+    });
+    slots.push(s);grid.append(s);
+  }
+  api.stage.append(grid);
+  const ctl=el('div','opts');
+  const chk=el('button','btn g','Check my array'),clr=el('button','btn o','Clear');
+  clr.addEventListener('click',()=>{if(slots[0].dataset.lock)return;for(let a=0;a<R;a++)for(let b=0;b<C;b++)on[a][b]=false;slots.forEach(s=>{s.classList.remove('on');s.textContent='';});api.say('');});
+  chk.addEventListener('click',()=>{
+    if(slots[0].dataset.lock)return;
+    let minr=99,maxr=-1,minc=99,maxc=-1,count=0;
+    for(let a=0;a<R;a++)for(let b=0;b<C;b++)if(on[a][b]){count++;minr=Math.min(minr,a);maxr=Math.max(maxr,a);minc=Math.min(minc,b);maxc=Math.max(maxc,b);}
+    if(!count){api.wrong('Tap the squares to place objects first.');return;}
+    const h=maxr-minr+1,w=maxc-minc+1;
+    if(count!==h*w){api.wrong('There are gaps. Every row needs the same number, lined up in columns.');return;}
+    if(h!==r&&w!==c){api.wrong('You made '+h+' rows of '+w+'. We need '+r+' rows of '+c+'.');return;}
+    if(h!==r){api.wrong('You have '+h+' rows. We need '+r+' rows. Rows go across.');return;}
+    if(w!==c){api.wrong('You have '+w+' columns. We need '+c+' columns. Columns go up and down.');return;}
+    slots.forEach(s=>s.dataset.lock='1');
+    api.correct(r+' rows of '+c+': '+eq(c,r)+'.');
+  });
+  ctl.append(chk,clr);api.stage.append(ctl);
+});
+
+/* ---------- game 2: equation detective ---------- */
+const G2=[[3,5,'row'],[4,2,'col'],[2,4,'row'],[5,3,'col'],[3,2,'row'],[2,5,'col'],[4,3,'row'],[5,4,'col']];
+mkShell($('g2Shell'),G2.length,(i,api)=>{
+  const [r,c,mode]=G2[i];const em=['🍎','⭐','🍪','🌸','🐞','🍓','🧁','🎈'][i];
+  const word=mode==='row'?'ROWS':'COLUMNS';
+  const good=mode==='row'?eq(c,r):eq(r,c);
+  const swapped=mode==='row'?eq(r,c):eq(c,r);
+  const cand=[swapped,r+' + '+c+' = '+(r+c),(mode==='row'?sumStr(c,r):sumStr(r,c))+' = '+(r*c+(mode==='row'?c:r)),(mode==='row'?sumStr(c,r+1):sumStr(r,c+1))+' = '+((mode==='row'?c*(r+1):r*(c+1)))];
+  const wrongs=[];cand.forEach(x=>{if(x!==good&&!wrongs.includes(x))wrongs.push(x);});
+  const opts=shuffle([good].concat(wrongs.slice(0,2)));
+  api.stage.append(el('div','q','Which equation matches the '+word+' of this array?'));
+  api.stage.append(arrayEl(r,c,em,{by:mode==='row'?'row':'col'}));
+  const o=el('div','opts');
+  opts.forEach(t=>{
+    const b=el('button','opt',t);
+    b.addEventListener('click',()=>{
+      if(b.disabled)return;
+      if(t===good){o.querySelectorAll('button').forEach(x=>x.disabled=true);b.classList.add('right');
+        api.correct(mode==='row'?r+' rows with '+c+' in each row.':c+' columns with '+r+' in each column.');}
+      else{b.classList.add('again');b.disabled=true;
+        api.wrong(mode==='row'?'Rows go across. How many are in one row? Add that number once for each row.':'Columns go up and down. How many are in one column? Add that number once for each column.');}
+    });
+    o.append(b);
+  });
+  api.stage.append(o);
+});
+
+/* ---------- game 3: treasure totals ---------- */
+const G3=[[2,3],[3,3],[4,2],[3,5],[5,2],[4,4],[5,3],[5,5]];
+mkShell($('g3Shell'),G3.length,(i,api)=>{
+  const [r,c]=G3[i];const t=r*c;const em=['💎','⭐','🪙','🍬','💎','⭐','🍬','💎'][i];
+  api.stage.append(el('div','q','Tap each row to skip count. How many in all?'));
+  const a=arrayEl(r,c,em,{tap:true});api.stage.append(a);
+  const rows=[...a.querySelectorAll('.arow')];
+  rows.forEach((row,k)=>row.addEventListener('click',()=>{
+    sfx.note(k);
+    rows.forEach((rw,m)=>{rw.querySelector('.tag').textContent=m<=k?(m+1)*c:'';rw.querySelectorAll('.cell').forEach(x=>x.style.background=m<=k?PC[m%5]+'66':'');});
+  }));
+  api.stage.append(el('p',null,'Each row has '+c+'. Count by '+c+'s!'));
+  const pool=[t+c,t-c,t+r,t-r,t+1,t-1,t+2].filter(x=>x>0&&x!==t);
+  const uniq=[...new Set(shuffle(pool))].slice(0,3);
+  const o=el('div','opts');
+  shuffle([t].concat(uniq)).forEach(n=>{
+    const b=el('button','opt',String(n));
+    b.addEventListener('click',()=>{
+      if(b.disabled)return;
+      if(n===t){o.querySelectorAll('button').forEach(x=>x.disabled=true);b.classList.add('right');
+        rows.forEach((rw,m)=>{rw.querySelector('.tag').textContent=(m+1)*c;});api.correct(eq(c,r)+'.');}
+      else{b.classList.add('again');b.disabled=true;api.wrong('Tap the rows and count by '+c+'s to check.');}
+    });
+    o.append(b);
+  });
+  api.stage.append(o);
+});
+
+/* ---------- game 4: story match ---------- */
+const G4=[
+ {s:'Mia plants 3 rows of 4 flowers.',r:3,c:4,em:'🌸',by:'row'},
+ {s:'A baker puts 2 rows of 5 cookies on a tray.',r:2,c:5,em:'🍪',by:'row'},
+ {s:'A sticker page has 5 rows with 2 stickers in each row.',r:5,c:2,em:'⭐',by:'row'},
+ {s:'Leo lines up 4 rows of 3 cupcakes.',r:4,c:3,em:'🧁',by:'row'},
+ {s:'A garden has 3 columns of carrots. Each column has 5 carrots.',r:5,c:3,em:'🥕',by:'col'},
+ {s:'A shelf has 2 columns of toy cars. Each column has 4 cars.',r:4,c:2,em:'🚗',by:'col'}
+];
+mkShell($('g4Shell'),G4.length,(i,api)=>{
+  const g=G4[i];const t=g.r*g.c;
+  const story=el('div','q','📖 '+g.s);api.stage.append(story);
+  const q=el('p',null,'Step 1: Which array matches the story?');q.style.fontWeight='800';api.stage.append(q);
+  const alt=g.c<5?[g.r,g.c+1]:[g.r,g.c-1];
+  const dims=[[g.r,g.c],[g.c,g.r],alt];
+  const ok=g.r+','+g.c;
+  const o=el('div','opts');
+  shuffle(dims).forEach(d=>{
+    const b=el('button','opt pic');b.append(arrayEl(d[0],d[1],g.em,{cls:'sm'}));
+    b.setAttribute('aria-label',d[0]+' rows of '+d[1]);
+    b.addEventListener('click',()=>{
+      if(b.disabled)return;
+      if(d[0]+','+d[1]===ok){
+        o.querySelectorAll('button').forEach(x=>x.disabled=true);b.classList.add('right');
+        api.cheer('Yes! That is '+g.r+' rows of '+g.c+'. Now find the total.');
+        step2();
+      }else{
+        b.classList.add('again');b.disabled=true;
+        api.wrong(g.by==='row'?'Rows go across. Count the rows, then count how many are in each row.':'Columns go up and down. Count the columns, then count how many are in each column.');
+      }
+    });
+    o.append(b);
+  });
+  api.stage.append(o);
+  function step2(){
+    const q2=el('p',null,'Step 2: How many in all?');q2.style.fontWeight='800';q2.style.marginTop='16px';api.stage.append(q2);
+    const e=el('div','eqline',g.by==='row'?sumStr(g.c,g.r)+' = ?':sumStr(g.r,g.c)+' = ?');api.stage.append(e);
+    const pool=[t+g.c,t-g.c,t+g.r,t-g.r,t+1,t-1].filter(x=>x>0&&x!==t);
+    const uniq=[...new Set(shuffle(pool))].slice(0,3);
+    const o2=el('div','opts');
+    shuffle([t].concat(uniq)).forEach(n=>{
+      const b=el('button','opt',String(n));
+      b.addEventListener('click',()=>{
+        if(b.disabled)return;
+        if(n===t){o2.querySelectorAll('button').forEach(x=>x.disabled=true);b.classList.add('right');
+          const mine=g.by==='row'?eq(g.c,g.r):eq(g.r,g.c);e.textContent=mine;
+          api.correct('Total: '+t+'. You can also write '+(g.by==='row'?eq(g.r,g.c):eq(g.c,g.r))+'.');}
+        else{b.classList.add('again');b.disabled=true;api.wrong('Use the equation and skip count to check.');}
+      });
+      o2.append(b);
+    });
+    api.stage.append(o2);
+  }
+});
+
+/* ---------- whiteboard ---------- */
+(function(){
+  const cv=$('wb'),cx=cv.getContext('2d'),wrap=$('wbwrap'),W=cv.width,H=cv.height;
+  let tool='pen',color='#1F2350',size=6,drawing=false,sx=0,sy=0,base=null,pts=[],stamp='dot',bg='';
+  const hist=[];let hi=-1;
+  function snap(){hist.length=hi+1;hist.push(cx.getImageData(0,0,W,H));if(hist.length>20)hist.shift();hi=hist.length-1;}
+  snap();
+  $('undo').onclick=()=>{if(hi>0){hi--;cx.putImageData(hist[hi],0,0);}};
+  $('redo').onclick=()=>{if(hi<hist.length-1){hi++;cx.putImageData(hist[hi],0,0);}};
+  $('clear').onclick=()=>{cx.clearRect(0,0,W,H);snap();};
+
+  /* swatches and stamps */
+  const cols=['#1F2350','#E53935','#FF8A3D','#FFC400','#13A57C','#2D7DF6','#7A4DE8','#F0498B','#8D6E63','#FFFFFF'];
+  cols.forEach((col,i)=>{const b=el('button','sw'+(i===0?' on':''));b.style.background=col;b.setAttribute('aria-label','Color '+col);
+    b.onclick=()=>{color=col;document.querySelectorAll('.sw').forEach(x=>x.classList.remove('on'));b.classList.add('on');};
+    $('swatches').append(b);});
+  $('customColor').oninput=e=>{color=e.target.value;document.querySelectorAll('.sw').forEach(x=>x.classList.remove('on'));};
+  const stampList=[['dot','⚫'],['🍎','🍎'],['⭐','⭐'],['🍪','🍪'],['🐞','🐞'],['🌸','🌸'],['✅','✅']];
+  stampList.forEach(([v,lab],i)=>{const b=el('button','tb'+(i===0?' on':''),lab);b.setAttribute('aria-label','Stamp '+lab);
+    b.onclick=()=>{stamp=v;document.querySelectorAll('#stamps .tb').forEach(x=>x.classList.remove('on'));b.classList.add('on');setTool('stamp');};
+    $('stamps').append(b);});
+  $('size').oninput=e=>{size=+e.target.value;$('sizeVal').textContent=size;};
+
+  function setTool(t){
+    tool=t;
+    document.querySelectorAll('#toolGroup .tb').forEach(b=>b.classList.toggle('on',b.dataset.tool===t));
+    cv.style.cursor=t==='text'?'text':'crosshair';
+    $('wbHint').textContent=t==='array'?'Tap the board where you want the array. Change rows and columns above first.':t==='stamp'?'Tap the board to stamp objects.':t==='text'?'Tap the board, type, then press Enter.':'Draw on the board with your finger or mouse.';
+  }
+  document.querySelectorAll('#toolGroup .tb').forEach(b=>b.onclick=()=>setTool(b.dataset.tool));
+  $('aGo').onclick=()=>{setTool('array');wrap.scrollIntoView({behavior:'smooth',block:'center'});};
+  document.querySelectorAll('[data-bg]').forEach(b=>b.onclick=()=>{
+    bg=b.dataset.bg;wrap.className='wbwrap'+(bg?' '+bg:'');
+    document.querySelectorAll('[data-bg]').forEach(x=>x.classList.toggle('on',x===b));
+  });
+
+  function pos(e){const r=cv.getBoundingClientRect();return[(e.clientX-r.left)*W/r.width,(e.clientY-r.top)*H/r.height];}
+  function style(){cx.lineCap='round';cx.lineJoin='round';cx.lineWidth=size;cx.strokeStyle=color;cx.fillStyle=color;cx.globalAlpha=1;cx.globalCompositeOperation='source-over';}
+  function shape(t,x0,y0,x1,y1){
+    style();cx.beginPath();
+    if(t==='line'){cx.moveTo(x0,y0);cx.lineTo(x1,y1);cx.stroke();return;}
+    if(t==='rect'){cx.rect(x0,y0,x1-x0,y1-y0);}
+    if(t==='circle'){cx.ellipse((x0+x1)/2,(y0+y1)/2,Math.abs(x1-x0)/2,Math.abs(y1-y0)/2,0,0,Math.PI*2);}
+    if(t==='triangle'){cx.moveTo((x0+x1)/2,y0);cx.lineTo(x1,y1);cx.lineTo(x0,y1);cx.closePath();}
+    if($('fill').checked)cx.fill();
+    cx.stroke();
+  }
+  function stampAt(x,y){
+    style();
+    if(stamp==='dot'){cx.beginPath();cx.arc(x,y,Math.max(14,size*2),0,Math.PI*2);cx.fill();}
+    else{cx.font=Math.max(34,size*5)+'px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';cx.textAlign='center';cx.textBaseline='middle';cx.fillText(stamp,x,y);}
+  }
+  function placeArray(x,y){
+    const rr=Math.min(10,Math.max(1,parseInt($('aRows').value)||1)),cc=Math.min(10,Math.max(1,parseInt($('aCols').value)||1));
+    const gap=Math.min(52,Math.floor(520/Math.max(rr,1)),Math.floor(960/Math.max(cc,1)));
+    const w=cc*gap,h=rr*gap;
+    const px=Math.min(Math.max(10,x-w/2),W-w-10),py=Math.min(Math.max(10,y-h/2),H-h-10);
+    const st=$('aStyle').value,byRow=$('aRowColor').checked;
+    style();
+    for(let i=0;i<rr;i++)for(let j=0;j<cc;j++){
+      const cxp=px+j*gap+gap/2,cyp=py+i*gap+gap/2;
+      if(st==='dot'){cx.fillStyle=byRow?PC[i%5]:color;cx.beginPath();cx.arc(cxp,cyp,gap*.38,0,Math.PI*2);cx.fill();}
+      else{cx.font=Math.floor(gap*.78)+'px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';cx.textAlign='center';cx.textBaseline='middle';cx.fillText(st,cxp,cyp);}
+    }
+    snap();
+  }
+  function openText(x,y,ev){
+    const rect=cv.getBoundingClientRect(),sc=W/rect.width,fs=Math.max(20,size*3+16);
+    const inp=document.createElement('input');inp.className='wbtext';
+    inp.style.left=(ev.clientX-rect.left)+'px';inp.style.top=(ev.clientY-rect.top-fs/sc/2)+'px';
+    inp.style.fontSize=(fs/sc)+'px';inp.style.color=color;inp.style.height=(fs/sc*1.3)+'px';
+    wrap.append(inp);setTimeout(()=>inp.focus(),0);
+    let fin=false;
+    function done(){
+      if(fin)return;fin=true;const v=inp.value.trim();inp.remove();
+      if(v){cx.save();cx.globalAlpha=1;cx.globalCompositeOperation='source-over';cx.fillStyle=color;cx.font='700 '+fs+'px "Baloo 2",sans-serif';cx.textAlign='left';cx.textBaseline='middle';cx.fillText(v,x,y);cx.restore();snap();}
+    }
+    inp.addEventListener('keydown',k=>{if(k.key==='Enter')done();if(k.key==='Escape'){inp.value='';done();}});
+    inp.addEventListener('blur',done);
+  }
+
+  cv.addEventListener('pointerdown',e=>{
+    e.preventDefault();
+    const [x,y]=pos(e);
+    if(tool==='text'){openText(x,y,e);return;}
+    if(tool==='stamp'){stampAt(x,y);snap();sfx.pop();return;}
+    if(tool==='array'){placeArray(x,y);sfx.pop();return;}
+    drawing=true;sx=x;sy=y;pts=[[x,y]];
+    try{cv.setPointerCapture(e.pointerId);}catch(x2){}
+    if(tool==='marker'||['line','rect','circle','triangle'].includes(tool))base=cx.getImageData(0,0,W,H);
+    if(tool==='pen'||tool==='eraser'){
+      style();
+      if(tool==='eraser'){cx.globalCompositeOperation='destination-out';cx.lineWidth=size*3;}
+      cx.beginPath();cx.moveTo(x,y);cx.lineTo(x+.01,y+.01);cx.stroke();
+    }
+  });
+  cv.addEventListener('pointermove',e=>{
+    if(!drawing)return;
+    const [x,y]=pos(e);
+    if(tool==='pen'||tool==='eraser'){
+      style();
+      if(tool==='eraser'){cx.globalCompositeOperation='destination-out';cx.lineWidth=size*3;}
+      const l=pts[pts.length-1];cx.beginPath();cx.moveTo(l[0],l[1]);cx.lineTo(x,y);cx.stroke();pts.push([x,y]);
+    }else if(tool==='marker'){
+      pts.push([x,y]);cx.putImageData(base,0,0);style();cx.globalAlpha=.35;cx.lineWidth=size*3;cx.beginPath();cx.moveTo(pts[0][0],pts[0][1]);pts.forEach(p=>cx.lineTo(p[0],p[1]));cx.stroke();cx.globalAlpha=1;
+    }else{
+      cx.putImageData(base,0,0);shape(tool,sx,sy,x,y);
+    }
+  });
+  function end(){if(!drawing)return;drawing=false;cx.globalAlpha=1;cx.globalCompositeOperation='source-over';base=null;snap();}
+  cv.addEventListener('pointerup',end);cv.addEventListener('pointercancel',end);
+
+  $('full').onclick=()=>{try{if(document.fullscreenElement)document.exitFullscreen();else wrap.requestFullscreen();}catch(e){}};
+  $('savePng').onclick=()=>{
+    const t=document.createElement('canvas');t.width=W;t.height=H;const c2=t.getContext('2d');
+    c2.fillStyle='#fff';c2.fillRect(0,0,W,H);c2.strokeStyle='#BFD6EE';c2.lineWidth=2;c2.fillStyle='#8FB3D9';
+    if(bg==='grid'){for(let x=0;x<=W;x+=40){c2.beginPath();c2.moveTo(x,0);c2.lineTo(x,H);c2.stroke();}for(let y=0;y<=H;y+=40){c2.beginPath();c2.moveTo(0,y);c2.lineTo(W,y);c2.stroke();}}
+    if(bg==='lines'){for(let y=0;y<=H;y+=50){c2.beginPath();c2.moveTo(0,y);c2.lineTo(W,y);c2.stroke();}}
+    if(bg==='tens'){for(let x=0;x<=W;x+=200){c2.beginPath();c2.moveTo(x,0);c2.lineTo(x,H);c2.stroke();}for(let y=0;y<=H;y+=200){c2.beginPath();c2.moveTo(0,y);c2.lineTo(W,y);c2.stroke();}}
+    if(bg==='dots'){for(let x=0;x<=W;x+=50)for(let y=0;y<=H;y+=50){c2.beginPath();c2.arc(x,y,3,0,Math.PI*2);c2.fill();}}
+    c2.drawImage(cv,0,0);
+    const a=document.createElement('a');a.download='my-array-board.png';a.href=t.toDataURL('image/png');document.body.append(a);a.click();a.remove();
+  };
+})();
+</script>
+</body>
+</html>

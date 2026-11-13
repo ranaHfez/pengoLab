@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Change Unknown – Grade 1 Lesson</title>
+<style>
+:root{--bg:#fff8ec;--card:#fff;--ink:#2b2a4c;--mut:#6b6a86;--pri:#5b5bd6;--good:#2e9e5b;--bad:#e5484d;--acc:#ffb84d;--line:#ecdfc8;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1c1b2e;--card:#26254a;--ink:#f3f1ff;--mut:#b5b3d4;--pri:#8f8fff;--line:#3a3968}}
+:root[data-theme="dark"]{--bg:#1c1b2e;--card:#26254a;--ink:#f3f1ff;--mut:#b5b3d4;--pri:#8f8fff;--line:#3a3968}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 "Trebuchet MS","Segoe UI",system-ui,sans-serif}
+header{padding:20px 16px 8px;text-align:center}
+h1{margin:0;font-size:1.6rem}h2{margin:.2em 0 .5em}h3{margin:.8em 0 .3em}
+.sub{color:var(--mut);margin:.2em 0}
+nav{display:flex;gap:8px;overflow-x:auto;padding:10px 12px;position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);z-index:5}
+nav button{flex:0 0 auto;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:8px 14px;font:inherit;font-weight:700;cursor:pointer}
+nav button.on{background:var(--pri);border-color:var(--pri);color:#fff}
+main{max-width:860px;margin:0 auto;padding:8px 14px 40px}
+.tab{display:none;background:var(--card);border:2px solid var(--line);border-radius:18px;padding:18px}
+.tab.on{display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.box{border:2px solid var(--line);border-radius:14px;padding:10px 14px}
+.pill{display:inline-block;background:var(--acc);color:#2b2a4c;border-radius:999px;padding:2px 10px;font-weight:700;font-size:.85rem}
+ul{padding-left:1.2em}
+.chk{list-style:none;padding:0}.chk li{margin:6px 0}
+.bar{height:12px;background:var(--line);border-radius:9px;overflow:hidden}.bar i{display:block;height:100%;width:0;background:var(--good);transition:width .3s}
+.info{color:var(--mut);font-weight:700;min-height:1.5em}
+.stage{text-align:center;padding:6px 0}
+.big{font-size:1.2rem}
+.eq{font-size:2.2rem;font-weight:800;margin:10px 0}
+.q{display:inline-block;min-width:1.6em;border-bottom:4px dashed var(--pri);color:var(--pri)}
+.row{font-size:2rem;margin:10px 0;word-break:break-all}
+.cup{display:inline-block;font-size:2.4rem}
+.opts{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:14px 0}
+.opt{min-width:72px;height:72px;font:800 1.8rem inherit;font-family:inherit;border:3px solid var(--pri);background:var(--card);color:var(--ink);border-radius:16px;cursor:pointer}
+.opt.balloon{border-radius:50% 50% 50% 50%/45% 45% 55% 55%;border:none;color:#fff;width:80px;height:92px}
+.opt.balloon:nth-child(1){background:#e5484d}.opt.balloon:nth-child(2){background:#2e7dd7}.opt.balloon:nth-child(3){background:#2e9e5b}.opt.balloon:nth-child(4){background:#c77d00}
+.opt.good{background:var(--good)!important;color:#fff;border-color:var(--good);transform:scale(1.12)}
+.opt.bad{opacity:.35}
+.fb{min-height:1.6em;font-weight:700}
+.btn{background:var(--pri);color:#fff;border:0;border-radius:12px;padding:10px 20px;font:700 1.05rem inherit;font-family:inherit;cursor:pointer;margin:8px 0}
+.btn:disabled{opacity:.5}
+.frame{display:grid;grid-template-columns:repeat(5,56px);gap:8px;justify-content:center;margin:14px 0}
+.cell{width:56px;height:56px;border:3px solid var(--ink);border-radius:10px;background:transparent;cursor:pointer;padding:0}
+.cell.r{background:#e5484d}.cell.y{background:#ffc93c}
+.mem{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:460px;margin:10px auto}
+.card{height:84px;border:3px solid var(--pri);border-radius:14px;background:var(--pri);color:#fff;font:800 1.1rem inherit;font-family:inherit;cursor:pointer;padding:2px}
+.card.up{background:var(--card);color:var(--ink)}.card.done{background:var(--good);border-color:var(--good);color:#fff}
+.trophy{font-size:4rem}
+@media (max-width:480px){.frame{grid-template-columns:repeat(5,46px)}.cell{width:46px;height:46px}.eq{font-size:1.8rem}}
+</style>
+<!-- Shared template: colors, fonts, sounds, buttons, mascots. Keep this. -->
+<link rel="stylesheet" href="../../shared/theme.css">
+<script src="../../shared/theme.js" defer></script>
+</head><body>
+<header><h1>🎈 Change Unknown</h1><p class="sub">enVision Math · Grade 1 · Topic 1 · Lesson 7</p></header>
+<nav id="nav">
+<button data-t="plan" class="on">📋 Plan</button><button data-t="warm">☀️ Warm-Up</button><button data-t="g1">🎈 Game 1</button><button data-t="g2">🔟 Game 2</button><button data-t="g3">🔎 Game 3</button><button data-t="g4">🧠 Game 4</button><button data-t="exit">🎟️ Exit Ticket</button>
+</nav>
+<main>
+<section id="plan" class="tab on">
+<h2>Lesson Plan <span class="pill">45–50 min</span></h2>
+<div class="grid">
+<div class="box"><h3>🎯 Objective</h3><p>Students solve add-to problems where the <b>change</b> (what is added) is unknown, e.g. 4 + ? = 7, using objects, ten-frames and equations.</p></div>
+<div class="box"><h3>📚 Standards</h3><p>CCSS 1.OA.A.1, 1.OA.D.8 (adapt to your district's list)</p></div>
+<div class="box"><h3>🔤 Vocabulary</h3><p><b>change unknown</b>, start, change, total, equation, missing number</p></div>
+<div class="box"><h3>🧰 Materials</h3><p>Counters or cubes, small cups, ten-frames, whiteboards, a device per pair (for the games)</p></div>
+</div>
+<h3>Lesson Flow (tick as you go)</h3>
+<div class="bar"><i id="pb"></i></div>
+<ul class="chk" id="cl">
+<li><label><input type="checkbox"> <b>Warm-Up (5 min)</b> – play <i>Peek-a-Boo Cup</i> as a whole class; ask “How did you know?”</label></li>
+<li><label><input type="checkbox"> <b>Launch (5 min)</b> – tell a story: “4 birds are on a branch. Some more fly in. Now there are 7.”</label></li>
+<li><label><input type="checkbox"> <b>Model (10 min)</b> – <i>I do:</i> show 4 cubes, cover the rest with a cup, reveal 7 total. <i>We do:</i> count on 5, 6, 7 and write 4 + <u>3</u> = 7. Repeat with 2 more problems.</label></li>
+<li><label><input type="checkbox"> <b>Game Stations (20 min)</b> – rotate pairs through Games 1–4 (5 min each).</label></li>
+<li><label><input type="checkbox"> <b>Share &amp; Reflect (5 min)</b> – “How do you find the missing number?” Count on, ten-frame, or think “what goes with 4 to make 7?”</label></li>
+<li><label><input type="checkbox"> <b>Exit Ticket (5 min)</b> – 3 quick questions; record who needs a small group.</label></li>
+</ul>
+<div class="grid">
+<div class="box"><h3>🌱 Support</h3><ul><li>Keep totals to 5</li><li>Use real counters under a cup</li><li>Color the start red, the change yellow</li></ul></div>
+<div class="box"><h3>🚀 Extend</h3><ul><li>Totals up to 10 only, no pictures</li><li>Students write their own story for 3 + ? = 8</li><li>Find two more equations in the same fact family</li></ul></div>
+<div class="box"><h3>💬 Key Questions</h3><ul><li>What do you know? What don't you know?</li><li>Is the total bigger than the start?</li><li>How can you check your answer?</li></ul></div>
+</div>
+<p class="sub">Built from the lesson title and Grade 1 standards; match wording and examples to your enVision teacher edition.</p>
+</section>
+
+<section id="warm" class="tab"><h2>☀️ Warm-Up: Peek-a-Boo Cup</h2><p class="sub">Some counters are hiding! Use the total to figure out how many.</p><div class="info"></div><div class="stage"></div></section>
+<section id="g1" class="tab"><h2>🎈 Game 1: Balloon Pop</h2><p class="sub">Pop the balloon with the missing number.</p><div class="info"></div><div class="stage"></div></section>
+<section id="g2" class="tab"><h2>🔟 Game 2: Ten-Frame Builder</h2><p class="sub">Add yellow dots to reach the total.</p><div class="info"></div><div class="stage"></div></section>
+<section id="g3" class="tab"><h2>🔎 Game 3: Story Detective</h2><p class="sub">Read the story and find how many more came.</p><div class="info"></div><div class="stage"></div></section>
+<section id="g4" class="tab"><h2>🧠 Game 4: Match the Missing Number</h2><p class="sub">Flip two cards: one equation and its missing number.</p><div class="info"></div><div class="stage"></div></section>
+<section id="exit" class="tab"><h2>🎟️ Exit Ticket</h2><p class="sub">Three questions. Do your best thinking!</p><div class="info"></div><div class="stage"></div></section>
+</main>
+<script>
+const $=s=>document.querySelector(s),R=(a,b)=>Math.floor(Math.random()*(b-a+1))+a,sh=a=>a.sort(()=>Math.random()-.5);
+const opts=n=>{const s=new Set([n]);while(s.size<4)s.add(R(0,10));return sh([...s])};
+const pair=()=>{const a=R(1,8),t=R(a+1,Math.min(10,a+6));return{a,t,n:t-a}};
+function choices(box,ans,end,cls,after){const w=document.createElement('div');w.className='opts';const fb=document.createElement('p');fb.className='fb';let first=true,done=false;
+opts(ans).forEach(o=>{const b=document.createElement('button');b.className='opt '+(cls||'');b.textContent=o;b.onclick=()=>{if(done)return;if(o===ans){done=true;b.classList.add('good');fb.textContent='🎉 Yes! '+ans+' is the change.';after&&after();end(first)}else{first=false;b.classList.add('bad');b.disabled=true;fb.textContent='Not quite. Try again! Count on from the first number.'}};w.append(b)});box.append(w,fb)}
+function Game(id,n,render){const s=$('#'+id),box=s.querySelector('.stage'),info=s.querySelector('.info');let i=0,sc=0;
+const upd=()=>info.textContent='Round '+Math.min(i,n)+' of '+n+'  ·  ⭐ '+sc;
+function next(){if(i>=n){box.innerHTML='<div class="end"><div class="trophy">🏆</div><h3>You earned '+sc+' of '+n+' stars!</h3><button class="btn">Play again</button></div>';box.querySelector('button').onclick=()=>{i=0;sc=0;next()};info.textContent='';return}
+i++;upd();box.innerHTML='';render(box,f=>{if(f)sc++;upd();setTimeout(next,1400)})}
+next()}
+const rWarm=(box,end)=>{const t=R(3,9),s=R(1,t-1),h=t-s;
+box.innerHTML=`<p class="big">There are <b>${t}</b> counters in all.</p><div class="row">${'🔴'.repeat(s)}<span id="cup" class="cup">🥤</span></div><p class="big">How many are hiding under the cup?</p>`;
+choices(box,h,end,'',()=>{$('#cup').textContent='🔴'.repeat(h)})};
+const rBal=(box,end)=>{const{a,t,n}=pair();
+box.innerHTML=`<div class="eq">${a} + <span class="q" id="q">?</span> = ${t}</div><p class="big">Pop the balloon with the missing number!</p>`;
+choices(box,n,end,'balloon',()=>{$('#q').textContent=n})};
+const rFrame=(box,end)=>{const{a,t,n}=pair();let first=true;
+box.innerHTML=`<div class="eq">${a} + <span class="q">?</span> = ${t}</div><p class="big">Red dots are the start. Tap empty boxes to add yellow dots until you have ${t} in all.</p><div class="frame">${Array.from({length:10},(_,i)=>`<button class="cell ${i<a?'r':''}"></button>`).join('')}</div><button class="btn" id="chk">Check ✔</button><p class="fb"></p>`;
+const cells=[...box.querySelectorAll('.cell')],fb=box.querySelector('.fb');
+cells.forEach((c,i)=>{if(i>=a)c.onclick=()=>c.classList.toggle('y')});
+$('#chk').onclick=()=>{const y=box.querySelectorAll('.cell.y').length;
+if(y===n){fb.textContent='🎉 '+a+' + '+n+' = '+t+'. You added '+n+'!';cells.forEach(c=>c.onclick=null);$('#chk').disabled=true;end(first)}
+else{first=false;fb.textContent='Count all the dots. Do you have '+t+' in all?'}}};
+const S=[['🐦','birds','on the tree'],['🍎','apples','in the basket'],['🐸','frogs','on the log'],['🚗','cars','in the lot'],['⭐','stars','in the sky']];
+const rStory=(box,end)=>{const{a,t,n}=pair(),[e,nm,pl]=S[R(0,4)];
+box.innerHTML=`<p class="big">${a} ${nm} are ${pl}. Some more come. Now there are ${t} ${nm}. How many more came?</p><div class="row">${e.repeat(a)} ➕ <span id="q2">❓</span> ➡️ ${e.repeat(t)}</div>`;
+choices(box,n,end,'',()=>{$('#q2').textContent=e.repeat(n);box.insertAdjacentHTML('beforeend','<div class="eq">'+a+' + '+n+' = '+t+'</div>')})};
+function memory(){const box=$('#g4 .stage'),info=$('#g4 .info');const ns=sh([1,2,3,4,5,6]).slice(0,4);const cards=[];
+ns.forEach(n=>{const a=R(1,10-n);cards.push({k:n,h:a+' + ? = '+(a+n),type:'e'},{k:n,h:String(n),type:'a'})});sh(cards);
+let open=[],moves=0,found=0;box.innerHTML='<div class="mem"></div>';const g=box.firstChild;
+cards.forEach(c=>{const b=document.createElement('button');b.className='card';b.textContent='❓';
+b.onclick=()=>{if(open.length>=2||b.classList.contains('up')||b.classList.contains('done'))return;
+b.classList.add('up');b.textContent=c.h;open.push([b,c]);
+if(open.length==2){moves++;const[[b1,c1],[b2,c2]]=open;
+if(c1.k===c2.k&&c1.type!==c2.type){[b1,b2].forEach(x=>{x.classList.remove('up');x.classList.add('done')});open=[];found++;
+if(found===4){info.textContent='🏆 All matched in '+moves+' moves!';box.insertAdjacentHTML('beforeend','<button class="btn" id="again">Play again</button>');$('#again').onclick=memory}}
+else setTimeout(()=>{[b1,b2].forEach(x=>{x.classList.remove('up');x.textContent='❓'});open=[]},1000)}};
+g.append(b)});
+info.textContent='Match each equation to its missing number.'}
+const init={warm:()=>Game('warm',5,rWarm),g1:()=>Game('g1',6,rBal),g2:()=>Game('g2',5,rFrame),g3:()=>Game('g3',5,rStory),g4:memory,exit:()=>Game('exit',3,(b,e)=>[rBal,rStory,rFrame][R(0,2)](b,e))};
+const started={};
+document.querySelectorAll('#nav button').forEach(b=>b.onclick=()=>{const id=b.dataset.t;
+document.querySelectorAll('#nav button').forEach(x=>x.classList.toggle('on',x===b));
+document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('on',t.id===id));
+if(init[id]&&!started[id]){started[id]=1;init[id]()}window.scrollTo(0,0)});
+document.querySelectorAll('#cl input').forEach(c=>c.onchange=()=>{const all=document.querySelectorAll('#cl input');
+$('#pb').style.width=100*[...all].filter(x=>x.checked).length/all.length+'%'});
+</script></body></html>

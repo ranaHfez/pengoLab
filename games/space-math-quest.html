@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Space Math Quest</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-deep:#0B1026;
+    --bg-panel:#141A38;
+    --star:#FFD166;
+    --mint:#4ECDC4;
+    --coral:#FF6B6B;
+    --ink:#F4F6FB;
+    --ink-dim:#9AA3C4;
+    --font-head:'Baloo 2', system-ui, sans-serif;
+    --font-body:'Nunito', system-ui, sans-serif;
+    box-sizing:border-box;
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-padding-top:env(safe-area-inset-top,0px);}
+  html,body{height:100%;}
+  body{
+    margin:0;
+    min-height:100%;
+    background:
+      radial-gradient(1.5px 1.5px at 20% 30%, #ffffffaa 0, transparent 60%),
+      radial-gradient(1.5px 1.5px at 70% 20%, #ffffff88 0, transparent 60%),
+      radial-gradient(2px 2px at 40% 70%, #ffffff77 0, transparent 60%),
+      radial-gradient(1.5px 1.5px at 85% 60%, #ffffff66 0, transparent 60%),
+      radial-gradient(1.5px 1.5px at 55% 85%, #ffffffaa 0, transparent 60%),
+      radial-gradient(1.5px 1.5px at 10% 80%, #ffffff55 0, transparent 60%),
+      linear-gradient(180deg, var(--bg-deep), #05060f);
+    background-repeat:no-repeat;
+    background-size:cover;
+    font-family:var(--font-body);
+    color:var(--ink);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+  }
+  .wrap{ width:100%; max-width:520px; }
+  .top{
+    display:flex; justify-content:space-between; align-items:center;
+    margin-bottom:14px; font-family:var(--font-head); font-weight:700;
+  }
+  .badge{
+    background:var(--bg-panel); border:2px solid #262e57;
+    border-radius:14px; padding:8px 14px; font-size:15px;
+    display:flex; align-items:center; gap:6px;
+  }
+  .badge b{color:var(--star); font-size:18px;}
+  .progress-track{
+    height:10px; border-radius:999px; background:#1c2350;
+    overflow:hidden; margin-bottom:22px; border:1px solid #2a3266;
+  }
+  .progress-fill{
+    height:100%; background:linear-gradient(90deg, var(--mint), var(--star));
+    width:0%; transition:width .4s ease;
+  }
+  .card{
+    background:var(--bg-panel);
+    border:2px solid #262e57;
+    border-radius:26px;
+    padding:30px 26px;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  .rocket{ font-size:44px; margin-bottom:6px; display:inline-block; }
+  .op-label{
+    font-family:var(--font-head); font-weight:700; letter-spacing:.02em;
+    color:var(--mint); font-size:14px; margin-bottom:10px;
+  }
+  .question{
+    font-family:var(--font-head); font-weight:800;
+    font-size:clamp(20px, 5.6vw, 30px);
+    line-height:1.35; margin:0 0 24px;
+  }
+  .question .story{ font-family:var(--font-body); font-weight:600; font-size:16px; color:var(--ink-dim); display:block; margin-bottom:10px;}
+  .options{
+    display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  }
+  .opt{
+    font-family:var(--font-head); font-size:22px; font-weight:700;
+    background:#1b2350; color:var(--ink);
+    border:2px solid #2c3672; border-radius:16px;
+    padding:16px 10px; cursor:pointer;
+    transition:transform .12s ease, background .15s ease, border-color .15s ease;
+  }
+  .opt:hover:not(:disabled){ transform:translateY(-2px); border-color:var(--mint); }
+  .opt:active:not(:disabled){ transform:translateY(0); }
+  .opt:disabled{ cursor:default; }
+  .opt.correct{ background:#173a34; border-color:var(--mint); color:var(--mint); }
+  .opt.wrong{ background:#3a1a1a; border-color:var(--coral); color:var(--coral); }
+  .feedback{
+    min-height:26px; margin-top:16px; font-weight:700; font-family:var(--font-head);
+  }
+  .feedback.good{ color:var(--mint); }
+  .feedback.bad{ color:var(--coral); }
+  .next-btn{
+    margin-top:16px; font-family:var(--font-head); font-weight:700; font-size:16px;
+    background:var(--star); color:#26200a; border:none; border-radius:14px;
+    padding:12px 24px; cursor:pointer; display:none;
+  }
+  .next-btn:hover{ filter:brightness(1.05); }
+  .end-title{ font-family:var(--font-head); font-size:28px; font-weight:800; margin-bottom:6px; }
+  .end-sub{ color:var(--ink-dim); margin-bottom:22px; }
+  .restart-btn{
+    font-family:var(--font-head); font-weight:700; font-size:16px;
+    background:var(--mint); color:#062824; border:none; border-radius:14px;
+    padding:14px 26px; cursor:pointer;
+  }
+  .restart-btn:hover{ filter:brightness(1.05); }
+  .hint{ color:var(--ink-dim); font-size:13px; margin-top:18px; text-align:center; }
+</style>
+
+<!-- Shared template: colors, fonts, sounds, buttons, mascots. Keep this. -->
+<link rel="stylesheet" href="../shared/theme.css">
+<script src="../shared/theme.js" defer></script>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="badge">⭐ <b id="score">0</b></div>
+    <div class="badge">🔥 <b id="streak">0</b></div>
+    <div class="badge" id="qcount">Q 1/10</div>
+  </div>
+  <div class="progress-track"><div class="progress-fill" id="progress"></div></div>
+
+  <div class="card" id="game-card">
+    <!-- filled by JS -->
+  </div>
+
+  <p class="hint" id="hint-text">Two steps: work out the part in the parentheses first, then apply the second step.</p>
+</div>
+
+<script>
+(function(){
+  const TOTAL_Q = 10;
+  let score = 0, streak = 0, qIndex = 0, questions = [];
+
+  const el = {
+    card: document.getElementById('game-card'),
+    score: document.getElementById('score'),
+    streak: document.getElementById('streak'),
+    qcount: document.getElementById('qcount'),
+    progress: document.getElementById('progress'),
+    hint: document.getElementById('hint-text')
+  };
+
+  const rocketByOrder = { addFirst:'🚀', multFirst:'🛸' };
+  const wordItems = ['space rocks', 'star tokens', 'fuel cells', 'alien eggs', 'moon crystals', 'comet chips'];
+  const names = ['Nova', 'Zeke', 'Mira', 'Kip', 'Astra', 'Rex'];
+
+  function randPick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+  function randInt(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+
+  function makeQuestion(){
+    const order = randPick(['addFirst','multFirst']);
+    const addOp = randPick(['+','-']);
+    const multBy = Math.random() < 0.8 ? 10 : 1; // focus on ×10, occasional ×1
+    let a, b, answer, inner;
+
+    if(order === 'addFirst'){
+      if(addOp === '+'){
+        a = randInt(2,9); b = randInt(2,9);
+      } else {
+        a = randInt(5,9); b = randInt(1,4); // a > b, stays positive
+      }
+      inner = addOp === '+' ? a + b : a - b;
+      answer = inner * multBy;
+    } else {
+      a = randInt(2,9);
+      inner = a * multBy;
+      if(addOp === '+'){
+        b = randInt(1,9);
+      } else {
+        b = randInt(1, Math.min(9, inner)); // stays non-negative
+      }
+      answer = addOp === '+' ? inner + b : inner - b;
+    }
+
+    const isStory = Math.random() < 0.5;
+    let prompt, story = '';
+
+    if(isStory){
+      const name = randPick(names);
+      const item = randPick(wordItems);
+      if(order === 'addFirst'){
+        if(addOp === '+'){
+          story = `${name} found ${a} ${item} and then ${b} more ${item}. Each one is worth ${multBy} point${multBy===1?'':'s'}.`;
+          prompt = `How many points does ${name} have in total?`;
+        } else {
+          story = `${name} had ${a} ${item} but lost ${b} of them. Each remaining one is worth ${multBy} point${multBy===1?'':'s'}.`;
+          prompt = `How many points does ${name} have now?`;
+        }
+      } else {
+        story = `${name} has ${a} bags with ${multBy} ${item} in each bag.`;
+        if(addOp === '+'){
+          prompt = `Then ${name} found ${b} more loose ${item}. How many ${item} does ${name} have in total?`;
+        } else {
+          prompt = `Then ${name} used ${b} of the ${item}. How many ${item} does ${name} have left?`;
+        }
+      }
+    } else {
+      if(order === 'addFirst'){
+        prompt = `(${a} ${addOp} ${b}) × ${multBy} = ?`;
+      } else {
+        prompt = `(${a} × ${multBy}) ${addOp} ${b} = ?`;
+      }
+    }
+
+    const opts = new Set([answer]);
+    while(opts.size < 4){
+      let delta = randInt(-8,8);
+      if(delta === 0) delta = randInt(1,8);
+      let fake = answer + delta;
+      if(fake < 0) fake = answer + Math.abs(delta) + 1;
+      opts.add(fake);
+    }
+    const optionsArr = shuffle([...opts]);
+
+    const labelMap = {
+      addFirst: { '+':'ADD, THEN MULTIPLY', '-':'SUBTRACT, THEN MULTIPLY' },
+      multFirst: { '+':'MULTIPLY, THEN ADD', '-':'MULTIPLY, THEN SUBTRACT' }
+    };
+
+    return { order, addOp, multBy, a, b, answer, isStory, story, prompt, optionsArr, label: labelMap[order][addOp] };
+  }
+
+  function shuffle(arr){
+    for(let i=arr.length-1;i>0;i--){
+      const j = Math.floor(Math.random()*(i+1));
+      [arr[i],arr[j]]=[arr[j],arr[i]];
+    }
+    return arr;
+  }
+
+  function buildRound(){
+    questions = Array.from({length: TOTAL_Q}, makeQuestion);
+    score = 0; streak = 0; qIndex = 0;
+    updateBadges();
+    renderQuestion();
+  }
+
+  function updateBadges(){
+    el.score.textContent = score;
+    el.streak.textContent = streak;
+    el.qcount.textContent = `Q ${Math.min(qIndex+1, TOTAL_Q)}/${TOTAL_Q}`;
+    el.progress.style.width = `${(qIndex/TOTAL_Q)*100}%`;
+  }
+
+  function renderQuestion(){
+    if(qIndex >= TOTAL_Q){ renderEnd(); return; }
+    const q = questions[qIndex];
+    updateBadges();
+
+    const storyHtml = q.isStory ? `<span class="story">${q.story}</span>` : '';
+
+    el.card.innerHTML = `
+      <div class="rocket">${rocketByOrder[q.order]}</div>
+      <div class="op-label">${q.label}</div>
+      <div class="question">${storyHtml}${q.prompt}</div>
+      <div class="options" id="options"></div>
+      <div class="feedback" id="feedback"></div>
+      <button class="next-btn" id="next-btn">Next question →</button>
+    `;
+
+    const optsWrap = document.getElementById('options');
+    q.optionsArr.forEach(val => {
+      const btn = document.createElement('button');
+      btn.className = 'opt';
+      btn.textContent = val;
+      btn.addEventListener('click', () => handleAnswer(val, q, btn));
+      optsWrap.appendChild(btn);
+    });
+
+    el.hint.textContent = hintFor(q);
+  }
+
+  function hintFor(q){
+    if(q.multBy === 10) return "Multiplying by 10? Just add a zero to the end of the number.";
+    return "Multiplying by 1 keeps a number exactly the same.";
+  }
+
+  function handleAnswer(val, q, btn){
+    const buttons = document.querySelectorAll('.opt');
+    buttons.forEach(b => b.disabled = true);
+    const feedback = document.getElementById('feedback');
+    const nextBtn = document.getElementById('next-btn');
+
+    if(val === q.answer){
+      btn.classList.add('correct');
+      score += 10;
+      streak += 1;
+      feedback.textContent = pickPraise();
+      feedback.className = 'feedback good';
+    } else {
+      btn.classList.add('wrong');
+      buttons.forEach(b => { if(parseInt(b.textContent) === q.answer) b.classList.add('correct'); });
+      streak = 0;
+      feedback.textContent = `Not quite — the answer is ${q.answer}.`;
+      feedback.className = 'feedback bad';
+    }
+    updateBadges();
+    nextBtn.style.display = 'inline-block';
+    nextBtn.onclick = () => { qIndex += 1; renderQuestion(); };
+  }
+
+  function pickPraise(){
+    return randPick(['Nice work! 🚀','Correct! Full speed ahead.','Great job, navigator!','Perfect launch!','You nailed it!']);
+  }
+
+  function renderEnd(){
+    updateBadges();
+    el.qcount.textContent = 'Done!';
+    el.progress.style.width = '100%';
+    const pct = Math.round((score / (TOTAL_Q*10)) * 100);
+    let msg = 'Keep practicing — you\'re building speed!';
+    if(pct >= 90) msg = 'Mission perfect! You\'re a math astronaut. 🌟';
+    else if(pct >= 70) msg = 'Great flight! Just a few bumps.';
+    else if(pct >= 50) msg = 'Solid landing — review the two steps and try again.';
+
+    el.card.innerHTML = `
+      <div class="rocket">🪐</div>
+      <div class="end-title">Mission Complete</div>
+      <div class="end-sub">${score} / ${TOTAL_Q*10} points — ${msg}</div>
+      <button class="restart-btn" id="restart-btn">Fly again</button>
+    `;
+    el.hint.textContent = '';
+    document.getElementById('restart-btn').addEventListener('click', buildRound);
+  }
+
+  buildRound();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Count On to Add – Grade 1 Lesson Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#e9f5ff;--card:#fff;--ink:#23224a;--grape:#6c4bd6;--sun:#ffc233;--coral:#ff5d73;--mint:#1fb89a;--sky:#2f8cff;--soft:#f3f0ff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15142e;--card:#201f45;--ink:#f1efff;--soft:#2a2860}}
+:root[data-theme="dark"]{--bg:#15142e;--card:#201f45;--ink:#f1efff;--soft:#2a2860}
+html{scroll-padding-top:70px}
+*,*:before,*:after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Baloo 2','Trebuchet MS',system-ui,sans-serif;font-size:18px;line-height:1.45}
+header{background:linear-gradient(135deg,var(--grape),var(--sky));color:#fff;text-align:center;padding:28px 16px 36px}
+header h1{margin:0;font-size:clamp(30px,6vw,54px);line-height:1.1}
+header p{margin:6px 0 0;font-size:20px}
+.sum{display:inline-flex;gap:8px;align-items:center;margin-top:14px;font-size:clamp(28px,6vw,44px);font-weight:800}
+.sum span{background:#fff;color:var(--grape);border-radius:16px;padding:0 14px}
+.sum .c{background:var(--sun);color:var(--ink)}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;display:flex;gap:8px;overflow-x:auto;padding:10px 12px;background:var(--bg)}
+nav a{flex:none;text-decoration:none;color:#fff;font-weight:700;padding:6px 16px;border-radius:99px}
+nav a:nth-child(1){background:var(--grape)}nav a:nth-child(2){background:var(--coral)}nav a:nth-child(3){background:var(--mint)}nav a:nth-child(4){background:var(--sky)}nav a:nth-child(5){background:#e59a00}
+main{max-width:860px;margin:0 auto;padding:8px 14px 40px}
+section{background:var(--card);border-radius:26px;margin:18px 0;overflow:hidden;box-shadow:0 6px 0 rgba(108,75,214,.18)}
+section>h2{margin:0;padding:12px 20px;color:#fff;font-size:26px}
+.body{padding:16px 20px 22px}
+.plan>h2{background:var(--grape)}.g0>h2{background:var(--coral)}.g1>h2{background:var(--mint)}.g2>h2{background:var(--sky)}.g3>h2{background:#e59a00}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.box{background:var(--soft);border-radius:18px;padding:12px 16px}
+.box h3{margin:0 0 4px;font-size:20px}
+.box ul{margin:0;padding-left:20px}
+details{background:var(--soft);border-radius:18px;margin:10px 0;padding:10px 16px}
+summary{cursor:pointer;font-weight:700;font-size:20px}
+details p,details ul{margin:8px 0 2px}
+.chip{display:inline-block;background:var(--sun);color:#23224a;border-radius:99px;padding:0 12px;font-weight:700;font-size:15px;margin-right:6px}
+button{font:inherit;font-weight:800;cursor:pointer;border:0;border-radius:16px;padding:8px 20px;background:var(--grape);color:#fff;box-shadow:0 4px 0 rgba(0,0,0,.2);min-height:44px}
+button:active{transform:translateY(2px);box-shadow:0 2px 0 rgba(0,0,0,.2)}
+button:focus-visible,a:focus-visible,summary:focus-visible{outline:4px solid var(--sun);outline-offset:2px}
+button:disabled{opacity:.55;cursor:default}
+.game{text-align:center}
+.prog{font-weight:700;opacity:.8}
+.prompt{font-size:clamp(32px,8vw,52px);font-weight:800;margin:10px 0;min-height:70px;display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap}
+.opts{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin:10px 0}
+.opts button{font-size:32px;min-width:76px;background:var(--sky)}
+.opts button.ok{background:var(--mint)}
+.opts button.no{background:var(--coral);animation:shake .3s}
+.opts.bal button{width:92px;height:112px;border-radius:50% 50% 46% 46%;position:relative;color:#fff;font-size:36px}
+.opts.bal button:nth-child(1){background:var(--coral)}.opts.bal button:nth-child(2){background:#e59a00}.opts.bal button:nth-child(3){background:var(--grape)}
+.opts.bal button.ok{background:var(--mint)}
+.opts.bal button.no{opacity:.5}
+.msg{min-height:56px;font-size:20px;font-weight:700}
+.die{width:84px;height:84px;border-radius:18px;background:#fff;color:var(--coral);border:5px solid var(--coral);display:inline-flex;align-items:center;justify-content:center;font-size:48px}
+.die.s{color:var(--mint);border-color:var(--mint)}
+.die.roll{animation:spin .5s}
+.stars{font-size:44px}
+.pads{display:flex;gap:6px;overflow-x:auto;padding:30px 4px 6px;justify-content:flex-start}
+.pad{flex:none;width:52px;height:38px;border-radius:50%;background:var(--mint);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;position:relative}
+.pad.on{background:var(--sun);color:#23224a}
+.frog{position:absolute;top:-30px;left:10px;font-size:30px}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+@keyframes spin{from{transform:rotate(-200deg) scale(.5)}to{transform:none}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+
+<!-- Shared template: colors, fonts, sounds, buttons, mascots. Keep this. -->
+<link rel="stylesheet" href="../../shared/theme.css">
+<script src="../../shared/theme.js" defer></script>
+</head>
+<body>
+<header>
+<h1>Count On to Add</h1>
+<p>enVision Math · Grade 1 · Topic 2 · Lesson 1</p>
+<div class="sum"><span>6</span>+<span>3</span>=<span class="c">9</span></div>
+</header>
+<nav>
+<a href="#plan">Lesson plan</a><a href="#warm">Warm-up</a><a href="#frog">Frog hop</a><a href="#balloon">Balloon pop</a><a href="#dice">Count-on dice</a>
+</nav>
+<main>
+
+<section class="plan" id="plan">
+<h2>📘 Lesson plan</h2>
+<div class="body">
+<div class="grid">
+<div class="box"><h3>🎯 Learning goal</h3>Students count on 1, 2, or 3 from the greater number to find a sum.</div>
+<div class="box"><h3>🧰 Materials</h3><ul><li>Number line 0–20</li><li>Counters</li><li>Number cubes</li><li>This webpage</li></ul></div>
+<div class="box"><h3>🗣️ Vocabulary</h3><ul><li><b>add</b></li><li><b>count on</b></li><li><b>sum</b></li><li><b>plus (+)</b></li></ul></div>
+</div>
+<details open><summary><span class="chip">5 min</span>1. Warm-up: Number Path</summary>
+<p>Play the warm-up game below. Ask: "What number comes after 7? After 8?" Students say the numbers aloud.</p></details>
+<details><summary><span class="chip">10 min</span>2. Explore: Counting on with a story</summary>
+<p>Story: "There are 6 ducks in the pond. 3 more ducks swim in. How many ducks now?"</p>
+<ul><li>Show 6 counters. Say the big number, <b>6</b>, without counting them again.</li><li>Add 3 counters one at a time: "7, 8, 9."</li><li>Write 6 + 3 = 9. Repeat with 8 + 2 and 5 + 1.</li></ul></details>
+<details><summary><span class="chip">10 min</span>3. Learn: Count on from the greater number</summary>
+<p>Model the number line. Start on the bigger number and hop the smaller one. Try 2 + 7: start at 7, hop on 2. Ask, "Why start with the bigger number?" (fewer hops).</p>
+<p><b>Say it:</b> "Put the big number in your head. Count on 1, 2, 3."</p></details>
+<details><summary><span class="chip">15 min</span>4. Practice: Games</summary>
+<p>Students play Frog Hop, Balloon Pop, and Count-On Dice in pairs or on tablets. Walk around and ask, "Where did you start? How many did you count on?"</p></details>
+<details><summary><span class="chip">5 min</span>5. Close: Exit ticket</summary>
+<p>Ask each student to solve 4 + 3, 9 + 1, and 5 + 2 and tell you where they started.</p>
+<button onclick="this.nextElementSibling.hidden=false;this.hidden=true">Show answers</button>
+<p hidden><b>7, 10, 7.</b> Look for students who start on the greater number.</p></details>
+<div class="box"><h3>⚠️ Watch for</h3><ul><li>Counting the first number again (counting "6" as the first hop).</li><li>Hopping too many or too few times. Have students tap a finger for each count.</li></ul></div>
+</div>
+</section>
+
+<section class="g0" id="warm">
+<h2>🔢 Warm-up: Number Path</h2>
+<div class="body game" id="g0"></div>
+</section>
+
+<section class="g1" id="frog">
+<h2>🐸 Game 1: Frog Hop</h2>
+<div class="body game" id="g1"></div>
+</section>
+
+<section class="g2" id="balloon">
+<h2>🎈 Game 2: Balloon Pop</h2>
+<div class="body game" id="g2"></div>
+</section>
+
+<section class="g3" id="dice">
+<h2>🎲 Game 3: Count-On Dice</h2>
+<div class="body game" id="g3"></div>
+</section>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+const rnd=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+const shuf=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(x=>x[1]);
+function say(a,b){let s=a+'… ';for(let i=1;i<=b;i++)s+=(a+i)+(i<b?', ':'');return s+' → '+(a+b)}
+
+function quiz(id,total,gen,mode){
+  const root=$(id);let n,score,cur,tried;
+  function start(){n=0;score=0;next()}
+  function next(){
+    if(n>=total){end();return}
+    cur=gen();n++;tried=false;draw();
+  }
+  function draw(){
+    const rolled=mode!=='dice'||cur.rolled;
+    root.innerHTML='<div class="prog">Question '+n+' of '+total+'</div><div class="prompt">'+(rolled?cur.html:'<span class="die">?</span>+<span class="die s">?</span>')+'</div>'+
+      (rolled?'<div class="opts '+(mode==='balloon'?'bal':'')+'">'+cur.opts.map(o=>'<button>'+o+'</button>').join('')+'</div>':'<button id="'+id+'r">🎲 Roll!</button>')+
+      '<div class="msg" aria-live="polite"></div>';
+    if(!rolled){$(id+'r').onclick=()=>{cur.rolled=true;draw();root.querySelectorAll('.die').forEach(d=>d.classList.add('roll'))};return}
+    root.querySelectorAll('.opts button').forEach(b=>b.onclick=()=>pick(b));
+  }
+  function pick(b){
+    const m=root.querySelector('.msg');
+    if(+b.textContent===cur.ans){
+      if(!tried)score++;
+      b.classList.add('ok');
+      root.querySelectorAll('.opts button').forEach(x=>x.disabled=true);
+      m.innerHTML='🎉 Yes! '+cur.say+'<br><button>'+(n<total?'Next':'Finish')+'</button>';
+      m.querySelector('button').onclick=next;
+    }else{tried=true;b.classList.add('no');b.disabled=true;m.textContent='Try again! Start at the big number and count on.'}
+  }
+  function end(){
+    const st=score>=total-1?3:score>=total/2?2:1;
+    root.innerHTML='<div class="stars">'+'⭐'.repeat(st)+'</div><div class="prompt">'+score+' / '+total+'</div><div class="msg">'+(st==3?'Super counter!':st==2?'Great job! Play again for 3 stars.':'Good try! Count on again.')+'</div><button>Play again</button>';
+    root.querySelector('button').onclick=start;
+  }
+  start();
+}
+
+// Warm-up
+quiz('g0',6,()=>{const s=rnd(1,9),a=s+3;
+  return{html:s+', '+(s+1)+', '+(s+2)+', <b style="color:var(--coral)">?</b>',ans:a,opts:shuf([a,a+1,Math.max(0,a-2)]),say:s+', '+(s+1)+', '+(s+2)+', '+a}},'warm');
+
+// Balloon Pop
+quiz('g2',8,()=>{const a=rnd(2,9),b=rnd(1,3),s=a+b;
+  return{html:a+' + '+b+' = ?',ans:s,opts:shuf([s,s-1,s+1]),say:say(a,b)}},'balloon');
+
+// Count-On Dice
+quiz('g3',6,()=>{const a=rnd(4,9),b=rnd(1,3),s=a+b;
+  return{html:'<span class="die">'+a+'</span>+<span class="die s">'+b+'</span>=?',ans:s,opts:shuf([s,s-1,s+1]),say:say(a,b)}},'dice');
+
+// Frog Hop
+(function(){
+  const root=$('g1');let a,b,pos,hops,total=5,round,score;
+  function start(){round=0;score=0;nextRound()}
+  function nextRound(){
+    if(round>=total){
+      const st=score>=total-1?3:score>=3?2:1;
+      root.innerHTML='<div class="stars">'+'⭐'.repeat(st)+'</div><div class="prompt">'+score+' / '+total+'</div><div class="msg">'+(st==3?'Frog champion!':'Nice hopping! Try again.')+'</div><button>Play again</button>';
+      root.querySelector('button').onclick=start;return}
+    round++;a=rnd(3,9);b=rnd(1,3);pos=a;hops=0;draw();
+  }
+  function draw(){
+    let pads='';
+    for(let i=0;i<=12;i++)pads+='<div class="pad'+(i==pos?' on':'')+'">'+i+(i==pos?'<span class="frog">🐸</span>':'')+'</div>';
+    const done=hops>=b;
+    root.innerHTML='<div class="prog">Round '+round+' of '+total+'</div><div class="prompt">'+a+' + '+b+' = ?</div>'+
+      '<p>The frog starts on <b>'+a+'</b>. Hop on <b>'+b+'</b>.</p><div class="pads">'+pads+'</div>'+
+      (done?'<p>Where did the frog land?</p><div class="opts">'+shuf([a+b,a+b-1,a+b+1]).map(o=>'<button>'+o+'</button>').join('')+'</div>':
+      '<button id="hop">🐸 Hop! ('+hops+' of '+b+')</button>')+'<div class="msg" aria-live="polite"></div>';
+    if(done){let tried=false;root.querySelectorAll('.opts button').forEach(x=>x.onclick=()=>{
+      const m=root.querySelector('.msg');
+      if(+x.textContent===a+b){if(!tried)score++;x.classList.add('ok');root.querySelectorAll('.opts button').forEach(y=>y.disabled=true);
+        m.innerHTML='🎉 '+say(a,b)+'<br><button>'+(round<total?'Next':'Finish')+'</button>';m.querySelector('button').onclick=nextRound}
+      else{tried=true;x.classList.add('no');x.disabled=true;m.textContent='Look at the pad where the frog stopped.'}
+    })}
+    else $('hop').onclick=()=>{hops++;pos++;draw();const h=$('hop');if(h)h.focus();else{const f=root.querySelector('.opts button');f&&f.focus()}};
+  }
+  start();
+})();
+</script>
+</body>
+</html>

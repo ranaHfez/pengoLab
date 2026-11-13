@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Think Addition to Subtract</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sky:#EAF4FB; --coral:#FF6B6B; --sun:#FFD166; --leaf:#06D6A0; --blue:#118AB2; --navy:#073B4C;
+  --card:#ffffff;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*{box-sizing:border-box;}
+html,body{height:100%;}
+body{
+  margin:0; background:var(--sky); color:var(--navy);
+  font-family:'Nunito',sans-serif; -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,.num{font-family:'Baloo 2',sans-serif;}
+.wrap{max-width:900px;margin:0 auto;padding:20px 16px 60px;}
+header{text-align:center;padding:18px 0 10px;}
+header h1{font-size:clamp(26px,5vw,38px);margin:0 0 4px;color:var(--navy);}
+header p{margin:0;font-weight:700;color:var(--blue);font-size:15px;}
+nav{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:18px 0;}
+nav button{
+  font-family:'Baloo 2',sans-serif;font-size:15px;font-weight:700;
+  border:none;border-radius:14px;padding:12px 16px;cursor:pointer;
+  background:#fff;color:var(--navy);box-shadow:0 3px 0 rgba(7,59,76,.15);
+  transition:transform .12s ease;
+}
+nav button:hover{transform:translateY(-2px);}
+nav button.active{background:var(--blue);color:#fff;box-shadow:0 3px 0 #0c5f7a;}
+.panel{display:none;background:var(--card);border-radius:22px;padding:26px 22px;box-shadow:0 8px 0 rgba(7,59,76,.08);}
+.panel.active{display:block;animation:pop .25s ease;}
+@keyframes pop{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
+.panel h2{margin:0 0 4px;font-size:22px;}
+.panel .sub{color:#4a7285;font-weight:700;font-size:14px;margin-bottom:18px;}
+.scorebar{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;font-weight:800;font-size:14px;color:var(--navy);}
+.scorebar .stars{color:var(--sun);}
+.stage{background:var(--sky);border-radius:18px;padding:24px;text-align:center;min-height:170px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;}
+.num{font-size:clamp(34px,6vw,46px);font-weight:800;color:var(--navy);}
+.hint{font-weight:700;color:var(--blue);font-size:14px;}
+.choices{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;}
+.choices button{
+  font-family:'Baloo 2',sans-serif;font-size:22px;font-weight:700;min-width:64px;
+  border:none;border-radius:14px;padding:12px 14px;cursor:pointer;background:#fff;color:var(--navy);
+  box-shadow:0 3px 0 rgba(7,59,76,.18);
+}
+.choices button:hover{transform:translateY(-2px);}
+.choices button.right{background:var(--leaf);color:#fff;box-shadow:0 3px 0 #039c78;}
+.choices button.wrong{background:var(--coral);color:#fff;box-shadow:0 3px 0 #c23f3f;}
+.feedback{min-height:26px;font-weight:800;font-size:15px;}
+.feedback.good{color:#03966f;}
+.feedback.bad{color:#c23f3f;}
+.nextbtn{margin-top:6px;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;border:none;border-radius:12px;padding:10px 20px;background:var(--navy);color:#fff;cursor:pointer;display:none;}
+.triangle-wrap{display:flex;justify-content:center;margin-bottom:6px;}
+.triangle{position:relative;width:190px;height:160px;}
+.tri-svg{position:absolute;top:0;left:0;}
+.tnum{position:absolute;font-family:'Baloo 2',sans-serif;font-weight:800;font-size:26px;color:var(--navy);width:54px;text-align:center;}
+.t-top{top:2px;left:68px;} .t-left{top:112px;left:8px;} .t-right{top:112px;left:128px;}
+.blank{background:#fff;border:3px dashed var(--blue);border-radius:10px;}
+.wp-box{background:var(--sky);border-radius:16px;padding:18px;font-size:16px;font-weight:700;line-height:1.5;text-align:left;color:var(--navy);}
+.foot{text-align:center;margin-top:28px;color:#5d8194;font-size:13px;font-weight:700;}
+.badge{display:inline-block;background:var(--sun);color:var(--navy);font-family:'Baloo 2',sans-serif;font-weight:800;font-size:12px;padding:4px 10px;border-radius:20px;margin-bottom:10px;}
+</style>
+
+<!-- Shared template: colors, fonts, sounds, buttons, mascots. Keep this. -->
+<link rel="stylesheet" href="../../shared/theme.css">
+<script src="../../shared/theme.js" defer></script>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="badge">enVision Math · Grade 2 · Topic 1 · Lesson 6</div>
+  <h1>Think Addition to Subtract</h1>
+  <p>If you know an addition fact, you know a subtraction fact too!</p>
+</header>
+
+<nav id="nav"></nav>
+
+<section class="panel" id="panel-warmup">
+  <h2>🔥 Warm-Up: Addition Blast</h2>
+  <div class="sub">Get your addition facts ready — quick as you can!</div>
+  <div class="scorebar"><span id="wu-score">Score: 0/0</span><span class="stars" id="wu-stars">⭐</span></div>
+  <div class="stage">
+    <div class="num" id="wu-q">3 + 4 = ?</div>
+    <div class="choices" id="wu-choices"></div>
+    <div class="feedback" id="wu-fb"></div>
+  </div>
+  <button class="nextbtn" id="wu-next">Next Problem →</button>
+</section>
+
+<section class="panel" id="panel-game1">
+  <h2>🧩 Game 1: Flip It to Solve It</h2>
+  <div class="sub">Every subtraction fact has a hidden addition fact. Find the missing part!</div>
+  <div class="scorebar"><span id="g1-score">Score: 0/0</span><span class="stars" id="g1-stars">⭐</span></div>
+  <div class="stage">
+    <div class="num" id="g1-sub">13 − 6 = ?</div>
+    <div class="hint" id="g1-hint">Think: 6 + ? = 13</div>
+    <div class="choices" id="g1-choices"></div>
+    <div class="feedback" id="g1-fb"></div>
+  </div>
+  <button class="nextbtn" id="g1-next">Next Problem →</button>
+</section>
+
+<section class="panel" id="panel-game2">
+  <h2>🔺 Game 2: Fact Family Triangle</h2>
+  <div class="sub">Every triangle holds one addition fact and two subtraction facts. Fill the missing number!</div>
+  <div class="scorebar"><span id="g2-score">Score: 0/0</span><span class="stars" id="g2-stars">⭐</span></div>
+  <div class="stage">
+    <div class="triangle-wrap">
+      <div class="triangle">
+        <svg class="tri-svg" width="190" height="160"><polygon points="95,10 15,140 175,140" fill="none" stroke="#118AB2" stroke-width="4"/></svg>
+        <div class="tnum t-top" id="tri-top">9</div>
+        <div class="tnum t-left" id="tri-left">4</div>
+        <div class="tnum t-right" id="tri-right">5</div>
+      </div>
+    </div>
+    <div class="num" id="g2-q">4 + ? = 9</div>
+    <div class="choices" id="g2-choices"></div>
+    <div class="feedback" id="g2-fb"></div>
+  </div>
+  <button class="nextbtn" id="g2-next">Next Triangle →</button>
+</section>
+
+<section class="panel" id="panel-game3">
+  <h2>📖 Game 3: Story Problem Solver</h2>
+  <div class="sub">Real-life subtraction stories — think addition to solve!</div>
+  <div class="scorebar"><span id="g3-score">Score: 0/0</span><span class="stars" id="g3-stars">⭐</span></div>
+  <div class="stage">
+    <div class="wp-box" id="g3-story">Story loading…</div>
+    <div class="hint" id="g3-hint">Think: ? + part = whole</div>
+    <div class="choices" id="g3-choices"></div>
+    <div class="feedback" id="g3-fb"></div>
+  </div>
+  <button class="nextbtn" id="g3-next">Next Story →</button>
+</section>
+
+<div class="foot">Built for enVision Math 2.0 · Grade 2 · Volume 1 · Topic 1 · Lesson 6</div>
+</div>
+
+<script>
+const tabs = [
+  {id:'warmup', label:'🔥 Warm-Up'},
+  {id:'game1', label:'🧩 Game 1'},
+  {id:'game2', label:'🔺 Game 2'},
+  {id:'game3', label:'📖 Game 3'}
+];
+const nav = document.getElementById('nav');
+tabs.forEach((t,i)=>{
+  const b = document.createElement('button');
+  b.textContent = t.label; b.dataset.id=t.id;
+  if(i===0) b.classList.add('active');
+  b.onclick = ()=> showPanel(t.id);
+  nav.appendChild(b);
+});
+function showPanel(id){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active', b.dataset.id===id));
+}
+showPanel('warmup');
+
+function rnd(min,max){return Math.floor(Math.random()*(max-min+1))+min;}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function choiceSet(answer,min,max){
+  const set = new Set([answer]);
+  while(set.size<4){ set.add(rnd(min,max)); }
+  return shuffle([...set]);
+}
+
+/* ---- Warm-Up: straight addition facts ---- */
+let wu = {right:0,total:0};
+function newWarmup(){
+  const a=rnd(2,9), b=rnd(2,9);
+  const answer=a+b;
+  document.getElementById('wu-q').textContent = `${a} + ${b} = ?`;
+  const box = document.getElementById('wu-choices'); box.innerHTML='';
+  choiceSet(answer, Math.max(0,answer-4), answer+4).forEach(v=>{
+    const btn=document.createElement('button');
+    btn.textContent=v;
+    btn.onclick=()=>checkAnswer(v,answer,'wu');
+    box.appendChild(btn);
+  });
+  document.getElementById('wu-fb').textContent='';
+  document.getElementById('wu-fb').className='feedback';
+  document.getElementById('wu-next').style.display='none';
+}
+
+/* ---- Game 1: think-addition subtraction ---- */
+let g1 = {right:0,total:0};
+function newGame1(){
+  const part=rnd(3,9);
+  const whole=rnd(part+3, part+9 > 18 ? 18 : part+9);
+  const answer = whole-part;
+  document.getElementById('g1-sub').textContent = `${whole} − ${part} = ?`;
+  document.getElementById('g1-hint').textContent = `Think: ${part} + ? = ${whole}`;
+  const box=document.getElementById('g1-choices'); box.innerHTML='';
+  choiceSet(answer, Math.max(0,answer-4), answer+4).forEach(v=>{
+    const btn=document.createElement('button');
+    btn.textContent=v;
+    btn.onclick=()=>checkAnswer(v,answer,'g1');
+    box.appendChild(btn);
+  });
+  document.getElementById('g1-fb').textContent='';
+  document.getElementById('g1-fb').className='feedback';
+  document.getElementById('g1-next').style.display='none';
+}
+
+/* ---- Game 2: fact family triangle, missing spot rotates ---- */
+let g2 = {right:0,total:0, cur:null};
+function newGame2(){
+  const left=rnd(2,9), right=rnd(2,9);
+  const top=left+right;
+  const missing = ['top','left','right'][rnd(0,2)];
+  g2.cur = {top,left,right,missing};
+  document.getElementById('tri-top').textContent = missing==='top' ? '?' : top;
+  document.getElementById('tri-left').textContent = missing==='left' ? '?' : left;
+  document.getElementById('tri-right').textContent = missing==='right' ? '?' : right;
+  let qText, answer;
+  if(missing==='top'){ qText=`${left} + ${right} = ?`; answer=top; }
+  else if(missing==='left'){ qText=`? + ${right} = ${top}`; answer=left; }
+  else { qText=`${left} + ? = ${top}`; answer=right; }
+  document.getElementById('g2-q').textContent = qText;
+  const box=document.getElementById('g2-choices'); box.innerHTML='';
+  choiceSet(answer, Math.max(0,answer-4), answer+4).forEach(v=>{
+    const btn=document.createElement('button');
+    btn.textContent=v;
+    btn.onclick=()=>{ checkAnswer(v,answer,'g2'); if(v===answer){document.getElementById('tri-'+missing).textContent=answer;} };
+    box.appendChild(btn);
+  });
+  document.getElementById('g2-fb').textContent='';
+  document.getElementById('g2-fb').className='feedback';
+  document.getElementById('g2-next').style.display='none';
+}
+
+/* ---- Game 3: word problems ---- */
+let g3 = {right:0,total:0};
+const templates = [
+  (w,p)=>`Mia had ${w} stickers. She gave ${p} stickers to her friend. How many stickers does Mia have now?`,
+  (w,p)=>`There were ${w} birds on a branch. ${p} birds flew away. How many birds are left on the branch?`,
+  (w,p)=>`Leo had ${w} marbles. He lost ${p} of them. How many marbles does Leo have left?`,
+  (w,p)=>`A basket had ${w} apples. ${p} apples were eaten. How many apples are still in the basket?`,
+  (w,p)=>`There were ${w} kids on the bus. ${p} kids got off. How many kids are still on the bus?`
+];
+function newGame3(){
+  const part=rnd(3,9);
+  const whole=rnd(part+3, part+9 > 18 ? 18 : part+9);
+  const answer = whole-part;
+  const story = templates[rnd(0,templates.length-1)](whole,part);
+  document.getElementById('g3-story').textContent = story;
+  document.getElementById('g3-hint').textContent = `Think: ${part} + ? = ${whole}`;
+  const box=document.getElementById('g3-choices'); box.innerHTML='';
+  choiceSet(answer, Math.max(0,answer-4), answer+4).forEach(v=>{
+    const btn=document.createElement('button');
+    btn.textContent=v;
+    btn.onclick=()=>checkAnswer(v,answer,'g3');
+    box.appendChild(btn);
+  });
+  document.getElementById('g3-fb').textContent='';
+  document.getElementById('g3-fb').className='feedback';
+  document.getElementById('g3-next').style.display='none';
+}
+
+function starsFor(right,total){
+  if(total===0) return '⭐';
+  const pct = right/total;
+  return pct>=.8 ? '⭐⭐⭐' : pct>=.5 ? '⭐⭐' : '⭐';
+}
+
+function checkAnswer(val, answer, game){
+  const state = {wu, g1, g2, g3}[game];
+  const box = document.getElementById(game+'-choices');
+  const fb = document.getElementById(game+'-fb');
+  const scoreEl = document.getElementById(game+'-score');
+  const starsEl = document.getElementById(game+'-stars');
+  const nextBtn = document.getElementById(game+'-next');
+  if(nextBtn.style.display==='inline-block') return;
+  state.total++;
+  [...box.children].forEach(b=>{
+    b.disabled=true;
+    if(Number(b.textContent)===answer) b.classList.add('right');
+    else if(Number(b.textContent)===val && val!==answer) b.classList.add('wrong');
+  });
+  if(val===answer){
+    state.right++;
+    fb.textContent="Great job! That's correct. 🎉";
+    fb.className='feedback good';
+  } else {
+    fb.textContent=`Not quite — the answer is ${answer}. Keep going!`;
+    fb.className='feedback bad';
+  }
+  scoreEl.textContent = `Score: ${state.right}/${state.total}`;
+  starsEl.textContent = starsFor(state.right, state.total);
+  nextBtn.style.display='inline-block';
+}
+
+document.getElementById('wu-next').onclick=newWarmup;
+document.getElementById('g1-next').onclick=newGame1;
+document.getElementById('g2-next').onclick=newGame2;
+document.getElementById('g3-next').onclick=newGame3;
+
+newWarmup(); newGame1(); newGame2(); newGame3();
+</script>
+</body>
+</html>

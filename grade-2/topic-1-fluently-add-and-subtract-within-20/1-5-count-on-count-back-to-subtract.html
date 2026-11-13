@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Count On and Count Back to Subtract — Lesson 1-5</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAF3E3;
+    --ink: #2B2420;
+    --chalk: #2D5A4A;
+    --chalk-dark: #234A3C;
+    --coral: #FF6B4A;
+    --coral-dark: #E14E2F;
+    --sky: #3E8FCC;
+    --sky-dark: #2C6E9F;
+    --sun: #FFC845;
+    --card: #FFFDF7;
+    --line: #D8CBAE;
+    --good: #3F9142;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    box-sizing: border-box;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1E1B16; --ink: #F3EEE2; --card: #2A251E; --line: #453D30;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1E1B16; --ink: #F3EEE2; --card: #2A251E; --line: #453D30;
+  }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Nunito', sans-serif;
+    line-height: 1.55;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 20px 80px; }
+
+  header.hero {
+    background: linear-gradient(180deg, var(--chalk), var(--chalk-dark));
+    color: #FAF3E3;
+    padding: 36px 20px 44px;
+    border-bottom: 6px solid var(--sun);
+  }
+  header.hero .wrap { padding-bottom: 0; }
+  .kicker {
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--sun);
+    letter-spacing: 0.02em;
+  }
+  h1 {
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.8rem, 4.2vw, 2.6rem);
+    margin: 6px 0 14px;
+    max-width: 14ch;
+  }
+  .meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 22px;
+    font-size: 0.95rem;
+    color: #E7E0CC;
+  }
+  .meta-row strong { color: #fff; }
+
+  .dotline {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 40px 0 20px;
+    color: var(--line);
+  }
+  .dotline .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--line);
+    flex: none;
+  }
+  .dotline .label {
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    color: var(--chalk);
+    background: var(--bg);
+    padding: 0 10px;
+    font-size: 1rem;
+    white-space: nowrap;
+  }
+  @media (prefers-color-scheme: dark) { .dotline .label { color: var(--sun); } }
+  :root[data-theme="dark"] .dotline .label { color: var(--sun); }
+  .dotline::before, .dotline::after {
+    content: "";
+    flex: 1;
+    border-top: 2px dashed var(--line);
+  }
+
+  .step-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: var(--coral);
+    color: #fff;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    flex: none;
+  }
+
+  section.card {
+    background: var(--card);
+    border: 2px solid var(--ink);
+    border-radius: 18px;
+    padding: 24px 24px 28px;
+    margin-bottom: 4px;
+  }
+  section.card h2 {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 1.4rem;
+    margin: 0 0 4px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  section.card .time {
+    font-size: 0.85rem;
+    color: var(--chalk);
+    font-weight: 700;
+    background: #E8E1CC;
+    border-radius: 999px;
+    padding: 3px 12px;
+    margin-left: auto;
+    white-space: nowrap;
+  }
+  :root[data-theme="dark"] section.card .time { background: #3A3327; color: var(--sun); }
+  @media (prefers-color-scheme: dark) { section.card .time { background: #3A3327; color: var(--sun); } }
+
+  .lead { color: var(--ink); opacity: 0.85; max-width: 68ch; }
+
+  ul.tight, ol.tight { margin: 10px 0; padding-left: 22px; }
+  ul.tight li, ol.tight li { margin: 4px 0; }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-top: 14px;
+  }
+  @media (max-width: 620px) { .two-col { grid-template-columns: 1fr; } }
+  .pill-box {
+    border: 2px solid var(--line);
+    border-radius: 14px;
+    padding: 14px 16px;
+  }
+  .pill-box.coral { border-color: var(--coral); }
+  .pill-box.sky { border-color: var(--sky); }
+  .pill-box h3 {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 1.05rem;
+    margin: 0 0 6px;
+  }
+  .pill-box.coral h3 { color: var(--coral-dark); }
+  .pill-box.sky h3 { color: var(--sky-dark); }
+
+  .vocab {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 12px;
+  }
+  .vocab span {
+    background: var(--sun);
+    color: #4A3400;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 5px 14px;
+    border-radius: 999px;
+  }
+
+  /* --- Game shared chrome --- */
+  .game {
+    margin-top: 16px;
+    border-radius: 14px;
+    padding: 18px;
+    background: repeating-linear-gradient(135deg, rgba(45,90,74,0.05) 0 10px, rgba(45,90,74,0.09) 10px 20px);
+    border: 2px dashed var(--chalk);
+  }
+  .game-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .scoreboard {
+    display: flex;
+    gap: 14px;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  .scoreboard b { color: var(--coral-dark); }
+  button {
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    border: none;
+    border-radius: 999px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: transform 0.08s ease;
+  }
+  button:active { transform: scale(0.96); }
+  button:focus-visible { outline: 3px solid var(--sky); outline-offset: 2px; }
+  .btn-primary { background: var(--coral); color: #fff; }
+  .btn-primary:hover { background: var(--coral-dark); }
+  .btn-secondary { background: var(--sky); color: #fff; }
+  .btn-secondary:hover { background: var(--sky-dark); }
+  .btn-ghost { background: transparent; color: var(--chalk); border: 2px solid var(--chalk); padding: 8px 16px; }
+  :root[data-theme="dark"] .btn-ghost { color: #E7E0CC; border-color: #E7E0CC; }
+  @media (prefers-color-scheme: dark) { .btn-ghost { color: #E7E0CC; border-color: #E7E0CC; } }
+
+  .prompt {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 1.5rem;
+    text-align: center;
+    margin: 10px 0 16px;
+  }
+  .prompt .op { color: var(--coral-dark); }
+
+  /* number line */
+  .numline-wrap { overflow-x: auto; padding: 34px 4px 10px; }
+  .numline {
+    position: relative;
+    height: 46px;
+    min-width: 620px;
+    border-top: 4px solid var(--ink);
+    margin: 0 10px;
+  }
+  .tick {
+    position: absolute;
+    top: -4px;
+    width: 4px; height: 12px;
+    background: var(--ink);
+    transform: translateX(-2px);
+  }
+  .tick-label {
+    position: absolute;
+    top: 12px;
+    transform: translateX(-50%);
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--ink);
+    opacity: 0.7;
+  }
+  .hopper {
+    position: absolute;
+    top: -34px;
+    transform: translateX(-50%);
+    font-size: 1.6rem;
+    transition: left 0.35s ease;
+  }
+  .target-flag {
+    position: absolute;
+    top: -30px;
+    transform: translateX(-50%);
+    font-size: 1.3rem;
+  }
+  .hop-controls {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+
+  .feedback {
+    text-align: center;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    min-height: 26px;
+    margin-top: 8px;
+  }
+  .feedback.good { color: var(--good); }
+  .feedback.bad { color: var(--coral-dark); }
+
+  /* strategy choice game */
+  .strategy-choices {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+  .choice-btn {
+    flex: 1 1 220px;
+    max-width: 260px;
+    background: var(--card);
+    border: 3px solid var(--line);
+    border-radius: 14px;
+    padding: 14px;
+    text-align: center;
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+  }
+  .choice-btn:hover { border-color: var(--ink); }
+  .choice-btn .icon { font-size: 1.6rem; display: block; margin-bottom: 4px; }
+  .choice-btn .name { font-family: 'Fredoka', sans-serif; font-weight: 600; }
+  .choice-btn.chosen-right { border-color: var(--good); background: #E9F6E9; }
+  .choice-btn.chosen-wrong { border-color: var(--coral-dark); background: #FBEAE5; }
+  :root[data-theme="dark"] .choice-btn.chosen-right { background: #223A24; }
+  :root[data-theme="dark"] .choice-btn.chosen-wrong { background: #3A241F; }
+
+  .answer-row {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 14px;
+  }
+  .answer-chip {
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    font-size: 1.1rem;
+    background: var(--card);
+    border: 2px solid var(--ink);
+    border-radius: 10px;
+    padding: 8px 18px;
+    cursor: pointer;
+  }
+  .answer-chip:hover { background: var(--sun); }
+  .answer-chip.right { background: var(--good); color: #fff; border-color: var(--good); }
+  .answer-chip.wrong { background: var(--coral-dark); color: #fff; border-color: var(--coral-dark); }
+
+  /* blitz game */
+  .blitz-timer {
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--coral-dark);
+  }
+  .blitz-card {
+    text-align: center;
+  }
+  .start-screen { text-align: center; padding: 10px; }
+
+  footer.foot {
+    text-align: center;
+    padding: 30px 20px 50px;
+    font-size: 0.85rem;
+    opacity: 0.6;
+  }
+
+  table.plain {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 0.95rem;
+  }
+  table.plain th, table.plain td {
+    text-align: left;
+    padding: 7px 10px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  table.plain th { font-family: 'Fredoka', sans-serif; color: var(--chalk); }
+  :root[data-theme="dark"] table.plain th { color: var(--sun); }
+  @media (prefers-color-scheme: dark) { table.plain th { color: var(--sun); } }
+</style>
+
+<!-- Shared template: colors, fonts, sounds, buttons, mascots. Keep this. -->
+<link rel="stylesheet" href="../../shared/theme.css">
+<script src="../../shared/theme.js" defer></script>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker">enVision Mathematics 2.0 · Grade 2 · Volume 1 · Topic 1</div>
+    <h1>Lesson 1-5: Count On and Count Back to Subtract</h1>
+    <div class="meta-row">
+      <span><strong>Standard:</strong> CCSS 2.OA.B.2</span>
+      <span><strong>Duration:</strong> ~45 minutes</span>
+      <span><strong>Grouping:</strong> Whole group → partners → independent</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="dotline"><div class="dot"></div><span class="label">Lesson at a glance</span><div class="dot"></div></div>
+
+  <section class="card">
+    <h2><span class="step-badge">1</span> Objective &amp; focus</h2>
+    <p class="lead">Students will subtract fluently within 20 by choosing an efficient counting strategy — <strong>counting back</strong> when the number being subtracted is small, or <strong>counting on</strong> when the two numbers are close together — and will justify which strategy they picked.</p>
+    <p class="lead"><strong>Essential question:</strong> How can counting on or counting back help you subtract?</p>
+    <div class="vocab">
+      <span>count on</span><span>count back</span><span>number line</span><span>difference</span><span>minus</span>
+    </div>
+  </section>
+
+  <div class="dotline"><div class="dot"></div><span class="label">Step 1 · Warm-Up (5–7 min)</span><div class="dot"></div></div>
+
+  <section class="card">
+    <h2><span class="step-badge">2</span> Number Hop Warm-Up <span class="time">Interactive</span></h2>
+    <p class="lead">Quick activation of yesterday's skill — counting on to add — before the lesson bridges it into subtraction. Project this and hop as a class, cold-calling students to click.</p>
+    <div class="game" id="warmup-game">
+      <div class="game-top">
+        <div class="scoreboard">Problem <b id="wu-count">1</b> of <b id="wu-total">5</b></div>
+        <button class="btn-ghost" id="wu-skip">Skip to next</button>
+      </div>
+      <div class="prompt" id="wu-prompt">Start at 8. Count on <span class="op">4</span>.</div>
+      <div class="numline-wrap"><div class="numline" id="wu-numline"></div></div>
+      <div class="hop-controls">
+        <button class="btn-secondary" id="wu-back">◀ Hop back</button>
+        <button class="btn-primary" id="wu-forward">Hop on ▶</button>
+        <button class="btn-ghost" id="wu-reset">Reset hopper</button>
+      </div>
+      <div class="feedback" id="wu-feedback"></div>
+    </div>
+  </section>
+
+  <div class="dotline"><div class="dot"></div><span class="label">Step 2 · Teach (8–10 min)</span><div class="dot"></div></div>
+
+  <section class="card">
+    <h2><span class="step-badge">3</span> Mini-lesson: Pick your path</h2>
+    <p class="lead">Model on the board with a large number line or the hop tool above. Introduce the idea that both directions solve subtraction — the trick is picking whichever one takes <em>fewer hops</em>.</p>
+    <div class="two-col">
+      <div class="pill-box sky">
+        <h3>Count back ⬅</h3>
+        <p>Best when the number you're subtracting is <strong>small</strong>.<br>Example: <strong>12 − 3</strong> → start at 12, hop back 3 times: 11, 10, 9. Answer: 9.</p>
+      </div>
+      <div class="pill-box coral">
+        <h3>Count on ➡</h3>
+        <p>Best when the two numbers are <strong>close together</strong>.<br>Example: <strong>14 − 12</strong> → start at 12, hop on to 14: 13, 14 — that's 2 hops. Answer: 2.</p>
+      </div>
+    </div>
+    <p class="lead" style="margin-top:14px;">Think-aloud prompt for the class: <em>"Are these numbers close together, or is the number I'm subtracting small? Which path has fewer hops?"</em></p>
+    <ol class="tight">
+      <li>Write a problem (e.g., 15 − 2). Ask: close together, or small subtrahend?</li>
+      <li>Have students show thumbs up (count back) or thumbs sideways (count on).</li>
+      <li>Solve together on the number line, counting hops out loud.</li>
+      <li>Repeat with 2–3 more problems, gradually releasing to student volunteers.</li>
+    </ol>
+  </section>
+
+  <div class="dotline"><div class="dot"></div><span class="label">Step 3 · Guided Practice Game (10 min)</span><div class="dot"></div></div>
+
+  <section class="card">
+    <h2><span class="step-badge">4</span> Pick the Path <span class="time">Interactive</span></h2>
+    <p class="lead">Students choose the smarter strategy first, then hop to solve. Play whole-class on the board, then let pairs take turns at a shared device. Correct strategy + correct answer both earn points.</p>
+    <div class="game" id="strategy-game">
+      <div class="game-top">
+        <div class="scoreboard">Score <b id="sg-score">0</b> &nbsp;·&nbsp; Round <b id="sg-round">1</b>/<b id="sg-total">8</b></div>
+        <button class="btn-ghost" id="sg-restart">Restart game</button>
+      </div>
+      <div class="prompt" id="sg-prompt">14 − 12 = ?</div>
+      <div class="strategy-choices">
+        <div class="choice-btn" id="sg-choice-back" data-choice="back">
+          <span class="icon">⬅</span><span class="name">Count back</span>
+        </div>
+        <div class="choice-btn" id="sg-choice-on" data-choice="on">
+          <span class="icon">➡</span><span class="name">Count on</span>
+        </div>
+      </div>
+      <div class="numline-wrap"><div class="numline" id="sg-numline"></div></div>
+      <div class="answer-row" id="sg-answers"></div>
+      <div class="feedback" id="sg-feedback"></div>
+    </div>
+  </section>
+
+  <div class="dotline"><div class="dot"></div><span class="label">Step 4 · Independent Practice (8–10 min)</span><div class="dot"></div></div>
+
+  <section class="card">
+    <h2><span class="step-badge">5</span> Workbook &amp; partner check</h2>
+    <p class="lead">Students complete enVision Student Edition p. 1-5, items 1–12 independently. Fast finishers move to the Facts Blitz game below. Circulate and pull a small group for reteach using ten-frame counters for anyone still counting all instead of counting on/back.</p>
+    <ul class="tight">
+      <li>Support: provide a printed 0–20 number line and counters for physically marking hops.</li>
+      <li>On level: complete workbook page, checking answers with a partner using the "close together or small number?" question.</li>
+      <li>Extension: write one count-on and one count-back problem of their own for a partner to solve, using numbers up to 20.</li>
+    </ul>
+  </section>
+
+  <div class="dotline"><div class="dot"></div><span class="label">Step 5 · Fluency Game (8 min)</span><div class="dot"></div></div>
+
+  <section class="card">
+    <h2><span class="step-badge">6</span> Facts Blitz <span class="time">Interactive · 60 sec</span></h2>
+    <p class="lead">A fast-paced fluency check for facts to 20. Great for a math-center rotation, a brain-break, or as the lesson's closing activity — see who can beat their own score.</p>
+    <div class="game" id="blitz-game">
+      <div class="start-screen" id="blitz-start">
+        <p class="lead" style="margin-bottom:14px;">60 seconds. How many subtraction facts can you solve?</p>
+        <button class="btn-primary" id="blitz-begin">Start Facts Blitz</button>
+      </div>
+      <div id="blitz-play" style="display:none;">
+        <div class="game-top">
+          <div class="scoreboard">Score <b id="blitz-score">0</b></div>
+          <div class="blitz-timer">⏱ <span id="blitz-time">60</span>s</div>
+        </div>
+        <div class="blitz-card">
+          <div class="prompt" id="blitz-prompt">9 − 3 = ?</div>
+          <div class="answer-row" id="blitz-answers"></div>
+          <div class="feedback" id="blitz-feedback">&nbsp;</div>
+        </div>
+      </div>
+      <div id="blitz-end" style="display:none;" class="start-screen">
+        <p class="prompt">Time's up! Final score: <span id="blitz-final">0</span></p>
+        <button class="btn-primary" id="blitz-again">Play again</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="dotline"><div class="dot"></div><span class="label">Step 6 · Wrap-Up (3–5 min)</span><div class="dot"></div></div>
+
+  <section class="card">
+    <h2><span class="step-badge">7</span> Closure &amp; exit ticket</h2>
+    <p class="lead">Ask 2–3 students to share which strategy they used most today and why. Then hand out (or display) this quick exit ticket:</p>
+    <ol class="tight">
+      <li>Solve: 16 − 2 = ___. Which strategy did you use?</li>
+      <li>Solve: 13 − 11 = ___. Which strategy did you use?</li>
+      <li>In your own words: when is counting back easier than counting on?</li>
+    </ol>
+    <p class="lead">Use responses to sort tomorrow's small groups: reteach (still counting all), practice (inconsistent strategy choice), extend (ready for Lesson 1-6).</p>
+  </section>
+
+  <div class="dotline"><div class="dot"></div><span class="label">Teacher reference</span><div class="dot"></div></div>
+
+  <section class="card">
+    <h2><span class="step-badge">✓</span> Materials &amp; timing summary</h2>
+    <table class="plain">
+      <tr><th>Segment</th><th>Time</th><th>Materials</th></tr>
+      <tr><td>Number Hop Warm-Up</td><td>5–7 min</td><td>Projector / interactive board</td></tr>
+      <tr><td>Mini-lesson: Pick your path</td><td>8–10 min</td><td>Large number line, dry-erase board</td></tr>
+      <tr><td>Pick the Path game</td><td>10 min</td><td>Shared device or projector, student partners</td></tr>
+      <tr><td>Independent workbook practice</td><td>8–10 min</td><td>enVision Student Edition p. 1-5, printed number lines, counters</td></tr>
+      <tr><td>Facts Blitz</td><td>8 min</td><td>1 device per student/pair (math center)</td></tr>
+      <tr><td>Closure &amp; exit ticket</td><td>3–5 min</td><td>Exit ticket slips</td></tr>
+    </table>
+  </section>
+
+</div>
+
+<footer class="foot">Lesson plan built for enVision Mathematics 2.0, Grade 2, Volume 1, Topic 1, Lesson 5.</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  function buildNumberLine(el, min, max, startVal){
+    el.innerHTML = "";
+    var w = el.clientWidth || 600;
+    var step = w / (max - min);
+    for (var i = min; i <= max; i++){
+      var t = document.createElement("div");
+      t.className = "tick";
+      t.style.left = ((i-min)*step) + "px";
+      el.appendChild(t);
+      if (i % 1 === 0){
+        var l = document.createElement("div");
+        l.className = "tick-label";
+        l.style.left = ((i-min)*step) + "px";
+        l.textContent = i;
+        el.appendChild(l);
+      }
+    }
+    return step;
+  }
+
+  function posFor(min, step, val){ return ((val-min)*step) + "px"; }
+
+  /* ---------------- WARM-UP: Number Hop ---------------- */
+  (function(){
+    var problems = [
+      {start:8, hop:4, dir:1},
+      {start:9, hop:3, dir:1},
+      {start:7, hop:5, dir:1},
+      {start:6, hop:6, dir:1},
+      {start:9, hop:4, dir:1}
+    ];
+    var idx = 0, hopsDone = 0, min = 0, max = 20, step = 0;
+    var lineEl = document.getElementById("wu-numline");
+    var hopper = document.createElement("div");
+    hopper.className = "hopper";
+    hopper.textContent = "🐞";
+    var flag = document.createElement("div");
+    flag.className = "target-flag";
+    flag.textContent = "🏁";
+
+    var promptEl = document.getElementById("wu-prompt");
+    var fbEl = document.getElementById("wu-feedback");
+    var countEl = document.getElementById("wu-count");
+    document.getElementById("wu-total").textContent = problems.length;
+
+    function load(){
+      var p = problems[idx];
+      hopsDone = 0;
+      step = buildNumberLine(lineEl, min, max, p.start);
+      lineEl.appendChild(hopper);
+      lineEl.appendChild(flag);
+      hopper.style.left = posFor(min, step, p.start);
+      flag.style.left = posFor(min, step, p.start + p.hop);
+      promptEl.innerHTML = "Start at " + p.start + ". Count on <span class='op'>" + p.hop + "</span>.";
+      fbEl.textContent = "";
+      fbEl.className = "feedback";
+      countEl.textContent = idx + 1;
+    }
+
+    function currentVal(){
+      var p = problems[idx];
+      return p.start + hopsDone;
+    }
+
+    document.getElementById("wu-forward").addEventListener("click", function(){
+      var p = problems[idx];
+      if (hopsDone >= p.hop){ return; }
+      hopsDone++;
+      hopper.style.left = posFor(min, step, currentVal());
+      if (hopsDone === p.hop){
+        fbEl.textContent = "Landed on " + currentVal() + "! " + p.start + " + " + p.hop + " = " + currentVal() + " 🎉";
+        fbEl.className = "feedback good";
+        setTimeout(function(){
+          idx = (idx + 1) % problems.length;
+          load();
+        }, 1400);
+      }
+    });
+    document.getElementById("wu-back").addEventListener("click", function(){
+      if (hopsDone <= 0) return;
+      hopsDone--;
+      hopper.style.left = posFor(min, step, currentVal());
+      fbEl.textContent = "";
+    });
+    document.getElementById("wu-reset").addEventListener("click", load);
+    document.getElementById("wu-skip").addEventListener("click", function(){
+      idx = (idx + 1) % problems.length;
+      load();
+    });
+    window.addEventListener("resize", load);
+    load();
+  })();
+
+  /* ---------------- GAME 2: Pick the Path ---------------- */
+  (function(){
+    var rounds = [
+      {a:12, b:2, correct:"back"},
+      {a:15, b:3, correct:"back"},
+      {a:9,  b:1, correct:"back"},
+      {a:18, b:3, correct:"back"},
+      {a:14, b:12, correct:"on"},
+      {a:9,  b:8,  correct:"on"},
+      {a:16, b:14, correct:"on"},
+      {a:11, b:9,  correct:"on"}
+    ];
+    var round = 0, score = 0, strategyLocked = null;
+    var min = 0, max = 20, step = 0;
+    var lineEl = document.getElementById("sg-numline");
+    var promptEl = document.getElementById("sg-prompt");
+    var choiceBack = document.getElementById("sg-choice-back");
+    var choiceOn = document.getElementById("sg-choice-on");
+    var answersEl = document.getElementById("sg-answers");
+    var fbEl = document.getElementById("sg-feedback");
+    var scoreEl = document.getElementById("sg-score");
+    var roundEl = document.getElementById("sg-round");
+    document.getElementById("sg-total").textContent = rounds.length;
+
+    function shuffledAnswers(correctVal){
+      var set = new Set([correctVal]);
+      while(set.size < 4){
+        var delta = Math.floor(Math.random()*5) - 2;
+        var v = correctVal + delta;
+        if (v >= 0 && v <= 20) set.add(v);
+      }
+      var arr = Array.from(set);
+      for (var i = arr.length -1; i>0; i--){
+        var j = Math.floor(Math.random()*(i+1));
+        var tmp = arr[i]; arr[i]=arr[j]; arr[j]=tmp;
+      }
+      return arr;
+    }
+
+    function drawLine(a){
+      step = buildNumberLine(lineEl, min, max, a);
+    }
+
+    function load(){
+      if (round >= rounds.length){
+        promptEl.textContent = "Game complete! Final score: " + score + "/" + rounds.length;
+        answersEl.innerHTML = "";
+        choiceBack.style.display = "none";
+        choiceOn.style.display = "none";
+        lineEl.innerHTML = "";
+        fbEl.textContent = "Nice work choosing smart strategies! 🌟";
+        fbEl.className = "feedback good";
+        return;
+      }
+      var r = rounds[round];
+      strategyLocked = null;
+      choiceBack.classList.remove("chosen-right","chosen-wrong");
+      choiceOn.classList.remove("chosen-right","chosen-wrong");
+      choiceBack.style.display = "";
+      choiceOn.style.display = "";
+      promptEl.textContent = r.a + " − " + r.b + " = ?";
+      drawLine(r.a);
+      answersEl.innerHTML = "";
+      answersEl.style.display = "none";
+      fbEl.textContent = "First, pick the smarter path.";
+      fbEl.className = "feedback";
+      roundEl.textContent = round + 1;
+      scoreEl.textContent = score;
+    }
+
+    function onStrategyPick(choice){
+      if (strategyLocked) return;
+      var r = rounds[round];
+      strategyLocked = choice;
+      var right = (choice === r.correct);
+      (choice === "back" ? choiceBack : choiceOn).classList.add(right ? "chosen-right" : "chosen-wrong");
+      if (!right){
+        (r.correct === "back" ? choiceBack : choiceOn).classList.add("chosen-right");
+      }
+      fbEl.textContent = right ? "Smart pick! Now find the answer." : "Let's try that path anyway — now find the answer.";
+      fbEl.className = "feedback " + (right ? "good" : "");
+      var correctVal = r.a - r.b;
+      var opts = shuffledAnswers(correctVal);
+      answersEl.style.display = "";
+      answersEl.innerHTML = "";
+      opts.forEach(function(v){
+        var chip = document.createElement("div");
+        chip.className = "answer-chip";
+        chip.textContent = v;
+        chip.addEventListener("click", function(){
+          if (chip.dataset.locked) return;
+          chip.dataset.locked = "1";
+          var isRight = (v === correctVal);
+          chip.classList.add(isRight ? "right" : "wrong");
+          if (isRight){
+            if (right) score++;
+            fbEl.textContent = r.a + " − " + r.b + " = " + correctVal + (right ? " and you picked the smarter path! +1" : " — got there!");
+            fbEl.className = "feedback good";
+          } else {
+            fbEl.textContent = "Not quite — try counting the hops again.";
+            fbEl.className = "feedback bad";
+            return;
+          }
+          scoreEl.textContent = score;
+          setTimeout(function(){ round++; load(); }, 1300);
+        });
+        answersEl.appendChild(chip);
+      });
+    }
+
+    choiceBack.addEventListener("click", function(){ onStrategyPick("back"); });
+    choiceOn.addEventListener("click", function(){ onStrategyPick("on"); });
+    document.getElementById("sg-restart").addEventListener("click", function(){
+      round = 0; score = 0; load();
+    });
+    window.addEventListener("resize", function(){ if (round < rounds.length) drawLine(rounds[round].a); });
+    load();
+  })();
+
+  /* ---------------- GAME 3: Facts Blitz ---------------- */
+  (function(){
+    var startScreen = document.getElementById("blitz-start");
+    var playScreen = document.getElementById("blitz-play");
+    var endScreen = document.getElementById("blitz-end");
+    var promptEl = document.getElementById("blitz-prompt");
+    var answersEl = document.getElementById("blitz-answers");
+    var fbEl = document.getElementById("blitz-feedback");
+    var scoreEl = document.getElementById("blitz-score");
+    var timeEl = document.getElementById("blitz-time");
+    var finalEl = document.getElementById("blitz-final");
+    var score = 0, timeLeft = 60, timer = null;
+
+    function newProblem(){
+      var a = Math.floor(Math.random()*11) + 10; // 10-20
+      var b = Math.floor(Math.random()* (Math.min(9, a))) + 1; // 1..min(9,a)
+      var correct = a - b;
+      promptEl.textContent = a + " − " + b + " = ?";
+      var set = new Set([correct]);
+      while(set.size < 3){
+        var delta = Math.floor(Math.random()*5) - 2;
+        var v = correct + delta;
+        if (v >= 0 && v !== correct) set.add(v);
+      }
+      var arr = Array.from(set);
+      for (var i = arr.length -1; i>0; i--){
+        var j = Math.floor(Math.random()*(i+1));
+        var tmp = arr[i]; arr[i]=arr[j]; arr[j]=tmp;
+      }
+      answersEl.innerHTML = "";
+      arr.forEach(function(v){
+        var chip = document.createElement("div");
+        chip.className = "answer-chip";
+        chip.textContent = v;
+        chip.addEventListener("click", function(){
+          if (timeLeft <= 0) return;
+          if (v === correct){
+            score++;
+            scoreEl.textContent = score;
+            fbEl.textContent = "Yes! " + a + " − " + b + " = " + correct;
+            fbEl.className = "feedback good";
+          } else {
+            fbEl.textContent = "Almost — " + a + " − " + b + " = " + correct;
+            fbEl.className = "feedback bad";
+          }
+          newProblem();
+        });
+        answersEl.appendChild(chip);
+      });
+    }
+
+    function tick(){
+      timeLeft--;
+      timeEl.textContent = timeLeft;
+      if (timeLeft <= 0){
+        clearInterval(timer);
+        playScreen.style.display = "none";
+        endScreen.style.display = "";
+        finalEl.textContent = score;
+      }
+    }
+
+    function start(){
+      score = 0; timeLeft = 60;
+      scoreEl.textContent = 0;
+      timeEl.textContent = 60;
+      startScreen.style.display = "none";
+      endScreen.style.display = "none";
+      playScreen.style.display = "";
+      fbEl.textContent = "\u00A0";
+      newProblem();
+      clearInterval(timer);
+      timer = setInterval(tick, 1000);
+    }
+
+    document.getElementById("blitz-begin").addEventListener("click", start);
+    document.getElementById("blitz-again").addEventListener("click", start);
+  })();
+
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Think Addition to Subtract — Lesson 6</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#1F4B3F; --panel:#FFF8EC; --ink:#1B2B24; --sub:#4C6459;
+    --orange:#FF8A3D; --blue:#3D7EFF; --yellow:#FFD166; --pink:#F26D82;
+    --line:#E4DAC4; --radius:18px;
+    padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+    box-sizing:border-box;
+  }
+  *{box-sizing:border-box}
+  html{scroll-padding-top:env(safe-area-inset-top,0px)}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:'Nunito',sans-serif; min-height:100%;
+    background-image:radial-gradient(circle at 12% 8%, rgba(255,255,255,.06), transparent 40%),
+                      radial-gradient(circle at 90% 85%, rgba(255,255,255,.05), transparent 45%);
+  }
+  h1,h2,h3,.disp{font-family:'Baloo 2',sans-serif}
+  header{padding:28px 20px 14px; text-align:center; color:#FFF8EC}
+  header h1{margin:0 0 4px; font-size:1.7rem; font-weight:800}
+  header p{margin:0; color:#C9DED2; font-size:.95rem}
+
+  nav{display:flex; gap:8px; overflow-x:auto; padding:6px 16px 18px; -webkit-overflow-scrolling:touch}
+  nav button{
+    flex:0 0 auto; border:none; padding:10px 16px; border-radius:999px;
+    font-family:'Baloo 2',sans-serif; font-weight:700; font-size:.92rem; cursor:pointer;
+    background:rgba(255,255,255,.12); color:#F4F1E8; transition:background .15s, color .15s, transform .1s;
+  }
+  nav button.active{background:var(--orange); color:#231303}
+  nav button:hover{transform:translateY(-1px)}
+
+  main{max-width:760px; margin:0 auto; padding:0 16px 60px}
+  section{display:none; animation:fade .25s ease}
+  section.active{display:block}
+  @keyframes fade{from{opacity:0; transform:translateY(4px)} to{opacity:1; transform:none}}
+
+  .card{
+    background:var(--panel); border-radius:var(--radius); padding:22px 22px 26px;
+    box-shadow:0 10px 30px rgba(0,0,0,.18); border:1px solid rgba(0,0,0,.04);
+  }
+  .card + .card{margin-top:16px}
+  .card h2{margin:0 0 4px; font-size:1.3rem}
+  .card .tag{display:inline-block; font-size:.78rem; font-weight:700; color:var(--sub); margin-bottom:10px}
+  .card p{line-height:1.55; color:#33453C}
+  .btnrow{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px}
+  button.action{
+    border:none; border-radius:12px; padding:12px 20px; font-family:'Baloo 2',sans-serif;
+    font-weight:700; font-size:1rem; cursor:pointer; color:#231303; background:var(--yellow);
+    box-shadow:0 3px 0 rgba(0,0,0,.15); transition:transform .08s;
+  }
+  button.action:active{transform:translateY(2px); box-shadow:0 1px 0 rgba(0,0,0,.15)}
+  button.action.blue{background:var(--blue); color:#fff}
+  button.action.pink{background:var(--pink); color:#fff}
+  button.action.orange{background:var(--orange); color:#231303}
+
+  .stage{
+    margin-top:16px; border:2px dashed var(--line); border-radius:14px; padding:22px;
+    text-align:center; min-height:110px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px;
+  }
+  .fact{font-family:'Baloo 2',sans-serif; font-size:2.1rem; font-weight:800; color:var(--ink)}
+  .answer{font-size:1.6rem; font-weight:800; color:var(--orange)}
+  .muted{color:var(--sub); font-size:.9rem}
+
+  .triangle-wrap svg{width:220px; height:200px}
+  .facts-list{display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:14px; max-width:340px}
+  .facts-list div{background:#fff; border-radius:10px; padding:8px 6px; font-weight:700; font-family:'Baloo 2',sans-serif}
+
+  .dice-row{display:flex; gap:18px; justify-content:center; align-items:center}
+  .die{
+    width:64px; height:64px; border-radius:14px; background:#fff; color:var(--ink);
+    display:flex; align-items:center; justify-content:center; font-size:2rem; font-weight:800;
+    font-family:'Baloo 2',sans-serif; box-shadow:0 3px 0 rgba(0,0,0,.15);
+  }
+
+  .bingo-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:8px; max-width:320px; margin:14px auto 0}
+  .bingo-cell{
+    aspect-ratio:1; background:#fff; border-radius:10px; display:flex; align-items:center; justify-content:center;
+    font-family:'Baloo 2',sans-serif; font-weight:800; font-size:1.1rem; cursor:pointer; border:2px solid transparent;
+  }
+  .bingo-cell.marked{background:var(--orange); color:#fff; border-color:#c9691f}
+
+  textarea{
+    width:100%; min-height:70px; border-radius:12px; border:2px solid var(--line); padding:10px 12px;
+    font-family:'Nunito',sans-serif; font-size:1rem; resize:vertical;
+  }
+  .steps{padding-left:18px; line-height:1.6; color:#33453C}
+  footer{text-align:center; color:#C9DED2; font-size:.8rem; padding:20px}
+</style>
+
+<!-- Shared template: colors, fonts, sounds, buttons, mascots. Keep this. -->
+<link rel="stylesheet" href="../../shared/theme.css">
+<script src="../../shared/theme.js" defer></script>
+</head>
+<body>
+
+<header>
+  <h1>🧮 Think Addition to Subtract</h1>
+  <p>enVision Math 2.0 · Grade 2 · Topic 1, Lesson 6</p>
+</header>
+
+<nav id="tabs"></nav>
+
+<main>
+
+  <section id="warmup" class="active">
+    <div class="card">
+      <span class="tag">WARM-UP GAME</span>
+      <h2>Speedy Sums Circle</h2>
+      <p>Toss it around the room! Hit <strong>New Fact</strong>, say the missing number out loud before time's up, then reveal.</p>
+      <div class="stage">
+        <div class="fact" id="wu-fact">7 + 6 = ?</div>
+        <div class="answer" id="wu-answer" style="display:none"></div>
+      </div>
+      <div class="btnrow">
+        <button class="action" onclick="wuNew()">🔄 New Fact</button>
+        <button class="action orange" onclick="wuReveal()">👀 Reveal</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="learn">
+    <div class="card">
+      <span class="tag">MINI-LESSON</span>
+      <h2>The Big Idea</h2>
+      <p>To solve a subtraction fact, think of the addition fact hiding inside it. Every three numbers make a <strong>fact family</strong>.</p>
+      <div class="stage">
+        <div class="triangle-wrap">
+          <svg viewBox="0 0 220 200">
+            <polygon points="110,15 20,180 200,180" fill="none" stroke="#1B2B24" stroke-width="3"/>
+            <text x="110" y="55" text-anchor="middle" font-family="Baloo 2" font-weight="800" font-size="26">9</text>
+            <text x="55" y="165" text-anchor="middle" font-family="Baloo 2" font-weight="800" font-size="26">4</text>
+            <text x="165" y="165" text-anchor="middle" font-family="Baloo 2" font-weight="800" font-size="26">5</text>
+          </svg>
+        </div>
+        <p class="muted">Say it with me: "4 plus what makes 9? Five! So 9 minus 4 is 5."</p>
+      </div>
+      <div class="facts-list">
+        <div>4 + 5 = 9</div><div>5 + 4 = 9</div>
+        <div>9 − 4 = 5</div><div>9 − 5 = 4</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="game1">
+    <div class="card">
+      <span class="tag">GAME 1 · GUIDED PRACTICE</span>
+      <h2>Fact Family Triangle Match</h2>
+      <p>Build a triangle, then say all four facts before checking.</p>
+      <div class="stage">
+        <div class="triangle-wrap" id="g1-tri"></div>
+      </div>
+      <div class="btnrow">
+        <button class="action" onclick="g1New()">🎲 New Triangle</button>
+        <button class="action blue" onclick="g1Show()">✅ Show the 4 Facts</button>
+      </div>
+      <div class="facts-list" id="g1-facts" style="display:none"></div>
+    </div>
+  </section>
+
+  <section id="game2">
+    <div class="card">
+      <span class="tag">GAME 2 · PARTNER PRACTICE</span>
+      <h2>Roll, Add, Subtract Relay</h2>
+      <p>Roll both dice, add the numbers, then write the whole fact family before revealing.</p>
+      <div class="stage">
+        <div class="dice-row">
+          <div class="die" id="d1">4</div>
+          <div class="die" id="d2">6</div>
+        </div>
+        <div class="answer" id="g2-sum">Sum: 10</div>
+      </div>
+      <div class="btnrow">
+        <button class="action" onclick="g2Roll()">🎲 Roll Dice</button>
+        <button class="action blue" onclick="g2Show()">✅ Reveal Fact Family</button>
+      </div>
+      <div class="facts-list" id="g2-facts" style="display:none"></div>
+    </div>
+  </section>
+
+  <section id="game3">
+    <div class="card">
+      <span class="tag">GAME 3 · WHOLE-CLASS GAME</span>
+      <h2>Think Addition Bingo</h2>
+      <p>Draw a subtraction fact, think the addition fact, then tap the matching answer on your card.</p>
+      <div class="stage">
+        <div class="fact" id="g3-fact">Draw a card to begin!</div>
+      </div>
+      <div class="btnrow">
+        <button class="action pink" onclick="g3Draw()">🃏 Draw Card</button>
+        <button class="action" onclick="g3New()">🔄 New Card</button>
+      </div>
+      <div class="bingo-grid" id="g3-grid"></div>
+    </div>
+  </section>
+
+  <section id="wrap">
+    <div class="card">
+      <span class="tag">WRAP-UP</span>
+      <h2>Exit Ticket</h2>
+      <div class="stage">
+        <div class="fact">11 − 4 = ?</div>
+      </div>
+      <p>What addition fact did you think of to solve it? Write it below.</p>
+      <textarea placeholder="I thought... 4 + ___ = 11, so 11 − 4 = ___"></textarea>
+    </div>
+  </section>
+
+</main>
+
+<footer>Grade 2 · enVision Math 2.0 · Topic 1, Lesson 6</footer>
+
+<script>
+const tabs=[["warmup","Warm-Up"],["learn","Learn"],["game1","Game 1"],["game2","Game 2"],["game3","Game 3"],["wrap","Wrap-Up"]];
+const nav=document.getElementById('tabs');
+tabs.forEach(([id,label])=>{
+  const b=document.createElement('button');
+  b.textContent=label; b.onclick=()=>show(id);
+  b.id='tab-'+id;
+  nav.appendChild(b);
+});
+function show(id){
+  document.querySelectorAll('section').forEach(s=>s.classList.toggle('active', s.id===id));
+  document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active', b.id==='tab-'+id));
+}
+show('warmup');
+
+function rnd(a,b){return Math.floor(Math.random()*(b-a+1))+a}
+
+// Warm-up
+let wuA=7, wuB=6;
+function wuNew(){
+  wuA=rnd(2,10); wuB=rnd(2,10);
+  document.getElementById('wu-fact').textContent=`${wuA} + ${wuB} = ?`;
+  const ansEl=document.getElementById('wu-answer'); ansEl.style.display='none';
+}
+function wuReveal(){
+  const ansEl=document.getElementById('wu-answer');
+  ansEl.textContent=wuA+wuB; ansEl.style.display='block';
+}
+
+// Fact triangle SVG builder
+function triSVG(a,b,sum){
+  return `<svg viewBox="0 0 220 200">
+    <polygon points="110,15 20,180 200,180" fill="none" stroke="#1B2B24" stroke-width="3"/>
+    <text x="110" y="55" text-anchor="middle" font-family="Baloo 2" font-weight="800" font-size="26">${sum}</text>
+    <text x="55" y="165" text-anchor="middle" font-family="Baloo 2" font-weight="800" font-size="26">${a}</text>
+    <text x="165" y="165" text-anchor="middle" font-family="Baloo 2" font-weight="800" font-size="26">${b}</text>
+  </svg>`;
+}
+
+// Game 1
+let g1a=3, g1b=5;
+function g1New(){
+  g1a=rnd(2,9); g1b=rnd(2,9);
+  document.getElementById('g1-tri').innerHTML=triSVG(g1a,g1b,g1a+g1b);
+  document.getElementById('g1-facts').style.display='none';
+}
+function g1Show(){
+  const s=g1a+g1b;
+  document.getElementById('g1-facts').innerHTML=
+    `<div>${g1a} + ${g1b} = ${s}</div><div>${g1b} + ${g1a} = ${s}</div>
+     <div>${s} − ${g1a} = ${g1b}</div><div>${s} − ${g1b} = ${g1a}</div>`;
+  document.getElementById('g1-facts').style.display='grid';
+}
+g1New();
+
+// Game 2
+let d1v=4, d2v=6;
+function g2Roll(){
+  d1v=rnd(1,6); d2v=rnd(1,6);
+  document.getElementById('d1').textContent=d1v;
+  document.getElementById('d2').textContent=d2v;
+  document.getElementById('g2-sum').textContent='Sum: '+(d1v+d2v);
+  document.getElementById('g2-facts').style.display='none';
+}
+function g2Show(){
+  const s=d1v+d2v;
+  document.getElementById('g2-facts').innerHTML=
+    `<div>${d1v} + ${d2v} = ${s}</div><div>${d2v} + ${d1v} = ${s}</div>
+     <div>${s} − ${d1v} = ${d2v}</div><div>${s} − ${d2v} = ${d1v}</div>`;
+  document.getElementById('g2-facts').style.display='grid';
+}
+
+// Game 3 Bingo
+let g3nums=[];
+function g3New(){
+  g3nums=[];
+  const set=new Set();
+  while(set.size<16) set.add(rnd(1,15));
+  g3nums=[...set];
+  const grid=document.getElementById('g3-grid');
+  grid.innerHTML='';
+  g3nums.forEach(n=>{
+    const c=document.createElement('div');
+    c.className='bingo-cell'; c.textContent=n;
+    c.onclick=()=>c.classList.toggle('marked');
+    grid.appendChild(c);
+  });
+  document.getElementById('g3-fact').textContent='Draw a card to begin!';
+}
+function g3Draw(){
+  const big=rnd(6,18), small=rnd(1,Math.min(big-1,9));
+  document.getElementById('g3-fact').textContent=`${big} − ${small} = ?`;
+}
+g3New();
+</script>
+</body>
+</html>

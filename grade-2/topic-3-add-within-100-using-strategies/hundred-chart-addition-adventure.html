@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hundred Chart Addition Adventure</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:linear-gradient(135deg,#6a11cb 0%,#e6399b 55%,#ff9f1c 100%);--card:#fff;--ink:#2a1a5e;--mut:#6b5b95;--cell:#fff;--line:#ffd6f0;--rl:86%;--s:#1ec8ff;--t:#ff9f1c;--o:#2ecc71;--e:#8e2de2;--x:#ef476f;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:linear-gradient(135deg,#2b1055,#7b2a8f 60%,#b24a1f);--card:#2a1d55;--ink:#fff;--mut:#cdbdf5;--cell:#3a2b73;--line:#5a4694;--rl:34%}}
+:root[data-theme="dark"]{--bg:linear-gradient(135deg,#2b1055,#7b2a8f 60%,#b24a1f);--card:#2a1d55;--ink:#fff;--mut:#cdbdf5;--cell:#3a2b73;--line:#5a4694;--rl:34%}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg) fixed;color:var(--ink);font-family:'Fredoka','Trebuchet MS',Verdana,sans-serif;font-size:18px;line-height:1.4}
+.wrap{max-width:1100px;margin:0 auto;padding:10px 12px 16px}
+h1{font-size:clamp(22px,4.5vw,32px);margin:0 0 2px;text-align:center;color:#fff;text-shadow:0 2px 0 rgba(0,0,0,.25)}
+h2{margin:0 0 4px;font-size:22px}
+.sub{text-align:center;margin:0 0 8px;color:#fff}
+.sub b{padding:2px 10px;border-radius:99px;color:#fff;margin:0 3px;white-space:nowrap}
+.sub .a{background:var(--t)}.sub .b2{background:var(--o)}
+nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:12px}
+nav button{font:inherit;font-weight:600;border:3px solid var(--line);background:var(--card);color:var(--ink);padding:8px 14px;border-radius:99px;cursor:pointer}
+nav button.on{background:var(--e);border-color:var(--e);color:#fff}
+.card{background:var(--card);border-radius:22px;padding:14px;margin-bottom:12px;border:3px solid var(--line)}
+.main{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:12px;align-items:start}
+.main .side{position:sticky;top:8px}
+.main .card{margin:0 0 8px}
+@media (max-width:560px){.main{grid-template-columns:1fr}.main .side{position:static}}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0}
+input{font:inherit;width:84px;padding:6px 8px;border-radius:12px;border:3px solid var(--line);background:var(--cell);color:var(--ink)}
+.b{font:inherit;font-weight:600;border:0;border-radius:16px;padding:10px 16px;background:var(--s);color:#04202c;cursor:pointer;box-shadow:0 4px 0 rgba(0,0,0,.2)}
+.b:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.2)}
+.b.t{background:var(--t);color:#2b1700}.b.o{background:var(--o);color:#05260f}
+.eq{font-size:clamp(22px,6vw,32px);font-weight:700;text-align:center;padding:8px;border-radius:16px;background:var(--bg)}
+.eq b{color:var(--e)}
+.msg{min-height:28px;font-weight:600;margin:6px 0 0;text-align:center}
+.bar{display:flex;justify-content:space-between;color:var(--mut);font-weight:600}
+.q{font-size:clamp(22px,5.5vw,30px);font-weight:700;margin:8px 0}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
+.opts .b{font-size:26px;background:var(--cell);color:var(--ink);border:3px solid var(--line)}
+.opts .b.ok{background:var(--o);color:#05260f}.opts .b.no{background:var(--x);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(10,1fr);gap:3px;background:var(--card);padding:6px;border-radius:18px;border:3px solid var(--line)}
+.cell{font:inherit;font-weight:600;font-size:clamp(12px,2.4vw,22px);aspect-ratio:1;padding:0;border:0;border-radius:8px;background:var(--rc,var(--cell));color:var(--ink);cursor:pointer}
+.cell:focus-visible,.b:focus-visible,nav button:focus-visible,input:focus-visible{outline:3px solid var(--e);outline-offset:2px}
+.cell.s{background:var(--s);color:#04202c}.cell.t{background:var(--t);color:#2b1700}.cell.o{background:var(--o);color:#05260f}
+.cell.e{background:var(--e);color:#fff;transform:scale(1.15);position:relative;z-index:1}
+.cell.x{background:var(--x);color:#fff;animation:sh .35s}
+@keyframes sh{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:center;font-size:14px;color:#fff;margin-top:8px}
+.legend i{display:inline-block;width:14px;height:14px;border-radius:4px;margin-right:4px;vertical-align:-2px}
+@media (prefers-reduced-motion:reduce){.cell.x{animation:none}}
+#panel{padding:10px 12px}#panel p{margin:4px 0;font-size:16px}#panel h2{font-size:18px;margin:0}
+#panel .q{font-size:clamp(18px,2.6vw,24px);margin:4px 0}#panel .b{padding:6px 12px;font-size:16px}#panel .opts .b{font-size:20px}
+#panel .eq{font-size:clamp(18px,2.6vw,24px);padding:4px}#panel .msg{min-height:22px;margin:2px 0 0;font-size:16px}
+#panel .row{margin:4px 0}#panel input{width:70px;padding:3px 6px}#panel .bar{font-size:15px}
+.board{padding:10px}
+.tools{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:6px}
+.tools button{font:inherit;font-size:16px;border:2px solid var(--line);background:var(--cell);color:var(--ink);border-radius:12px;padding:3px 9px;cursor:pointer}
+.tools button.on{background:var(--e);border-color:var(--e);color:#fff}
+.tools .sw{width:26px;height:26px;padding:0;border-radius:50%;border:3px solid #fff}
+.tools .sw.on{outline:3px solid var(--e)}
+.tools input[type=color]{width:34px;height:30px;padding:0;border:0;background:none}
+.tools input[type=range]{width:80px;padding:0;border:0}
+#bd{display:block;width:100%;height:190px;background:#fff;border:3px solid var(--line);border-radius:14px;touch-action:none;cursor:crosshair}
+</style>
+
+<!-- Shared template: colors, fonts, sounds, buttons, mascots. Keep this. -->
+<link rel="stylesheet" href="../../shared/theme.css">
+<script src="../../shared/theme.js" defer></script>
+</head>
+<body>
+<div class="wrap">
+<h1>🚀 Hundred Chart Addition Adventure</h1>
+<p class="sub"><b class="a">Down a row = +10</b><b class="b2">One step right = +1</b></p>
+<nav id="tabs">
+<button data-m="explore" class="on">🧭 Explore</button>
+<button data-m="g1">🎯 Click the Answer</button>
+<button data-m="g2">🤔 Pick the Answer</button>
+<button data-m="g3">🛸 Move Master</button>
+</nav>
+<div class="main"><div class="side"><section class="card" id="panel"></section>
+<section class="card board"><div class="tools" id="tools">
+<button data-t="pen" class="on" aria-label="Pen" title="Pen">✏️</button><button data-t="eraser" aria-label="Eraser" title="Eraser">🧽</button>
+<button class="sw on" data-c="#1d2b53" style="background:#1d2b53" aria-label="Dark blue"></button><button class="sw" data-c="#e63946" style="background:#e63946" aria-label="Red"></button><button class="sw" data-c="#2a6df4" style="background:#2a6df4" aria-label="Blue"></button><button class="sw" data-c="#2ecc71" style="background:#2ecc71" aria-label="Green"></button><button class="sw" data-c="#ff9f1c" style="background:#ff9f1c" aria-label="Orange"></button><button class="sw" data-c="#8e2de2" style="background:#8e2de2" aria-label="Purple"></button>
+<input type="color" id="pc" value="#1d2b53" aria-label="Any color" title="Any color"><input type="range" id="ps" min="2" max="24" value="5" aria-label="Pen size" title="Size">
+<button id="undo" title="Undo">↩️ Undo</button><button id="clr" title="Clear board">🗑️ Clear</button></div>
+<canvas id="bd" aria-label="Whiteboard"></canvas></section></div>
+<div><div id="grid" class="grid"></div>
+<div class="legend"><span><i style="background:var(--s)"></i>Start</span><span><i style="background:var(--t)"></i>Tens jumps</span><span><i style="background:var(--o)"></i>Ones steps</span><span><i style="background:var(--e)"></i>Answer</span></div></div></div>
+</div>
+<script>
+const $=s=>document.querySelector(s),R=(a,b)=>Math.floor(Math.random()*(b-a+1))+a,pick=a=>a[R(0,a.length-1)];
+const good=['Boom! 🎉','Nailed it! 🌟','Super jumper! 🐸','You rock! 🎸','Genius alert! 🧠','Yippee! 🦄'];
+const bad=['Oops! Try again 🙈','Almost! Check the rows 👀','Not that one, silly goose 🪿','Wiggle back and try again 🐛'];
+const grid=$('#grid'),panel=$('#panel');
+for(let i=1;i<=100;i++){const c=document.createElement('button');c.className='cell';c.textContent=i;c.setAttribute('aria-label','Number '+i);c.style.setProperty('--rc','hsl('+Math.floor((i-1)/10)*36+' 95% var(--rl))');c.onclick=()=>cellClick(i);grid.appendChild(c)}
+const cells=[...grid.children];
+function paint(m){cells.forEach((c,i)=>c.className='cell'+(m[i+1]?' '+m[i+1]:''))}
+let mode='explore',ex,g;
+function setMode(m){mode=m;document.querySelectorAll('#tabs button').forEach(b=>b.classList.toggle('on',b.dataset.m===m));m==='explore'?exStart(34):newGame()}
+document.querySelectorAll('#tabs button').forEach(b=>b.onclick=()=>setMode(b.dataset.m));
+
+/* ---------- Explore ---------- */
+function exStart(s){
+ ex={s,cur:s,t:0,o:0,path:{}};
+ panel.innerHTML=`<h2>Explore the chart</h2><p>Tap a number on the chart to jump to it (tap a smaller number to restart there), or use the buttons. Try 34 + 23!</p>
+ <div class="row"><label>Start at <input id="st" type="number" min="1" max="99" value="${s}"></label><button class="b" id="go">Set</button><button class="b" id="rnd">🎲 Random</button></div>
+ <div class="row"><button class="b t" id="d10">⬇️ Down a row (+10)</button><button class="b o" id="d1">➡️ Right a step (+1)</button><button class="b" id="rs">↺ Start over</button></div>
+ <div class="eq" id="eq" aria-live="polite"></div><p class="msg" id="msg"></p>`;
+ $('#go').onclick=()=>exStart(Math.min(99,Math.max(1,parseInt($('#st').value)||1)));
+ $('#rnd').onclick=()=>exStart(R(1,60));
+ $('#rs').onclick=()=>exStart(ex.s);
+ $('#d10').onclick=()=>exStep(10,'t');
+ $('#d1').onclick=()=>exStep(1,'o');
+ exDraw();
+}
+function exStep(d,k){
+ if(ex.cur+d>100){$('#msg').textContent='Whoa! The chart stops at 100 🛑';return}
+ ex.cur+=d;ex.path[ex.cur]=k;d===10?ex.t++:ex.o++;
+ $('#msg').textContent=d===10?'Down a row! The tens digit grows 🌱':'One step right! Ones go up 🐾';
+ exDraw();
+}
+function exDraw(){
+ const p=[ex.s];if(ex.t)p.push(ex.t*10);if(ex.o)p.push(ex.o);
+ $('#eq').innerHTML=p.length>1?`${p.join(' + ')} = <b>${ex.cur}</b>`:`Start at <b>${ex.s}</b>`;
+ const m={...ex.path};m[ex.cur]='e';m[ex.s]=ex.cur===ex.s?'e':'s';paint(m);
+}
+
+/* ---------- Games ---------- */
+function mkQ(){let a,t,o;do{a=R(11,60);t=R(1,4)*10;o=R(1,9)}while(a+t+o>99);return{a,t,o,ans:a+t+o}}
+function mk3(){let a,r,k;do{a=R(1,58)}while(a%10===0||a%10>8);r=R(1,4);k=R(1,9-a%10);return{a,r,k,ans:a+10*r+k}}
+function newGame(){g={n:0,score:0,total:10,tries:0,lock:false};nextQ()}
+function nextQ(){if(g.n>=g.total)return finish();g.n++;g.tries=0;g.lock=false;g.q=mode==='g3'?mk3():mkQ();drawQ()}
+function drawQ(){
+ const q=g.q;
+ const text=mode==='g3'?`Start at <b>${q.a}</b>. Go <b>down ${q.r} row${q.r>1?'s':''}</b> and <b>right ${q.k} step${q.k>1?'s':''}</b>. Where do you land?`:`What is <b>${q.a} + ${q.t+q.o}</b>?`;
+ let h=`<div class="bar"><span>Question ${g.n} of ${g.total}</span><span>⭐ ${g.score}</span></div><p class="q">${text}</p>`;
+ if(mode==='g2'){
+  const d=[q.ans+10,q.ans-10,q.ans+1,q.ans-1].filter(x=>x>0&&x<=100&&x!==q.ans).sort(()=>Math.random()-.5).slice(0,3);
+  const o=[q.ans,...d].sort(()=>Math.random()-.5);
+  h+=`<div class="opts">${o.map(v=>`<button class="b" data-v="${v}">${v}</button>`).join('')}</div>`;
+ }else h+=`<p>Tap the answer on the chart 👉</p><button class="b" id="hint">💡 Hint</button>`;
+ panel.innerHTML=h+`<p class="msg" id="msg" aria-live="polite"></p>`;
+ if(mode==='g2'){document.querySelectorAll('.opts .b').forEach(b=>b.onclick=()=>answer(+b.dataset.v,b));paint({})}
+ else{paint({[q.a]:'s'});$('#hint').onclick=hint}
+}
+function hint(){
+ const q=g.q,mid=mode==='g3'?q.a+10*q.r:q.a+q.t,rows=mode==='g3'?q.r:q.t/10,steps=mode==='g3'?q.k:q.o;
+ paint({[q.a]:'s',[mid]:'t'});
+ $('#msg').textContent=`First jump down ${rows} row${rows>1?'s':''} to ${mid}. Then go right ${steps}!`;
+}
+function cellClick(i){
+ if(mode==='explore'){
+  if(i<ex.cur){exStart(i);$('#msg').textContent='New start: '+i+' 🚩';return}
+  if(i===ex.cur)return;
+  let d=i-ex.cur;
+  while(d>=10){ex.cur+=10;ex.path[ex.cur]='t';ex.t++;d-=10}
+  while(d>0){ex.cur++;ex.path[ex.cur]='o';ex.o++;d--}
+  $('#msg').textContent=ex.t+' row jump'+(ex.t===1?'':'s')+' and '+ex.o+' step'+(ex.o===1?'':'s')+' 🎯';
+  exDraw();return}
+ if(mode==='g1'||mode==='g3')answer(i,cells[i-1])}
+function answer(v,el){
+ if(g.lock)return;
+ const q=g.q;
+ if(v===q.ans){
+  g.lock=true;if(g.tries===0)g.score++;
+  if(mode==='g2')el.classList.add('ok');else paint({[q.a]:'s',[q.ans]:'e'});
+  $('#msg').textContent=pick(good);
+  setTimeout(nextQ,1100);
+ }else{
+  g.tries++;
+  el.classList.add(mode==='g2'?'no':'x');
+  $('#msg').textContent=pick(bad);
+  if(mode!=='g2')setTimeout(()=>el.classList.remove('x'),600);
+ }
+}
+function finish(){
+ const s=g.score,m=s>=9?'Math superstar! 🏆':s>=6?'Great jumping! 🌈':'Keep going, practice makes champions! 💪';
+ panel.innerHTML=`<h2>All done!</h2><p class="q">You got <b>${s} out of ${g.total}</b> on the first try.</p><p class="msg">${m}</p><div class="row" style="justify-content:center"><button class="b" id="again">🔁 Play again</button></div>`;
+ $('#again').onclick=newGame;paint({});
+}
+/* ---------- Whiteboard ---------- */
+const bd=$('#bd'),bx=bd.getContext('2d');let tool='pen',col='#1d2b53',sz=5,drawing=false,last=null,hist=[];
+function bsize(){const r=bd.getBoundingClientRect(),d=window.devicePixelRatio||1,w=Math.round(r.width*d),h=Math.round(r.height*d);
+ if(!w||(bd.width===w&&bd.height===h))return;
+ const t=document.createElement('canvas');t.width=bd.width;t.height=bd.height;t.getContext('2d').drawImage(bd,0,0);
+ bd.width=w;bd.height=h;bx.fillStyle='#fff';bx.fillRect(0,0,w,h);bx.drawImage(t,0,0);hist=[]}
+function pos(e){const r=bd.getBoundingClientRect();return{x:(e.clientX-r.left)*bd.width/r.width,y:(e.clientY-r.top)*bd.height/r.height}}
+function seg(a,b){bx.lineCap=bx.lineJoin='round';bx.strokeStyle=tool==='eraser'?'#fff':col;bx.lineWidth=(tool==='eraser'?sz*3:sz)*bd.width/bd.getBoundingClientRect().width;bx.beginPath();bx.moveTo(a.x,a.y);bx.lineTo(b.x,b.y);bx.stroke()}
+function snap(){hist.push(bx.getImageData(0,0,bd.width,bd.height));if(hist.length>20)hist.shift()}
+function sync(){document.querySelectorAll('#tools [data-t]').forEach(x=>x.classList.toggle('on',x.dataset.t===tool));document.querySelectorAll('#tools .sw').forEach(x=>x.classList.toggle('on',tool==='pen'&&x.dataset.c===col))}
+bd.addEventListener('pointerdown',e=>{e.preventDefault();bd.setPointerCapture(e.pointerId);snap();drawing=true;last=pos(e);seg(last,last)});
+bd.addEventListener('pointermove',e=>{if(!drawing)return;const p=pos(e);seg(last,p);last=p});
+['pointerup','pointercancel'].forEach(n=>bd.addEventListener(n,()=>{drawing=false}));
+document.querySelectorAll('#tools [data-t]').forEach(b=>b.onclick=()=>{tool=b.dataset.t;sync()});
+document.querySelectorAll('#tools .sw').forEach(b=>b.onclick=()=>{col=b.dataset.c;tool='pen';$('#pc').value=col;sync()});
+$('#pc').oninput=e=>{col=e.target.value;tool='pen';sync()};
+$('#ps').oninput=e=>{sz=+e.target.value};
+$('#undo').onclick=()=>{const h=hist.pop();if(h)bx.putImageData(h,0,0)};
+$('#clr').onclick=()=>{snap();bx.fillStyle='#fff';bx.fillRect(0,0,bd.width,bd.height)};
+addEventListener('resize',bsize);addEventListener('load',bsize);bsize();
+setMode('explore');
+</script>
+</body>
+</html>

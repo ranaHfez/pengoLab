@@ -1,0 +1,393 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+<!-- Shared template: colors, fonts, sounds, buttons, mascots. Keep this. -->
+<link rel="stylesheet" href="../../shared/theme.css">
+<script src="../../shared/theme.js" defer></script>
+</head><body>
+<title>34 + 59 Partial Sums Video</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@600;800&display=swap">
+<style>
+/* Layout: one 16:9 "video" stage framed in enVision-style bridge green, captions bar + player controls below. Single bright classroom look. */
+:root{
+  --page:#E4F3E6; --frame:#2E9E4F; --frame-dk:#1F7A3A; --stage:#FFFFFF; --ink:#1E2A3A; --muted:#5B6B7C;
+  --a:#FF8A3D; --a-dk:#D9661C; --b:#3D8BFF; --b-dk:#1F64D1; --c:#9B5CF6; --gold:#FFC93C; --tens:#2563EB; --ones:#E23D3D;
+  --mat:#F3F8FF; --line:#C9D8E8;
+  --display:"Baloo 2","Comic Sans MS","Trebuchet MS",sans-serif; --body:"Nunito","Trebuchet MS",system-ui,sans-serif;
+  color-scheme:light;
+}
+html,body{background:var(--page);color:var(--ink)}
+body{font-family:var(--body);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:16px 28px}
+.wrap{max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+header{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px}
+header h1{font-family:var(--display);font-size:clamp(22px,4vw,34px);margin:0;line-height:1.1;text-wrap:balance}
+header .tag{font-weight:800;color:#fff;background:var(--frame);border-radius:6px;padding:2px 10px;font-size:14px}
+header .by{color:var(--muted);font-weight:700;font-size:14px}
+
+.player{background:var(--frame);border-radius:18px;padding:10px;box-shadow:0 6px 0 var(--frame-dk)}
+.stage{position:relative;width:100%;aspect-ratio:16/9;max-width:100%;background:var(--stage);border-radius:10px;overflow:hidden;container-type:inline-size;font-family:var(--display)}
+.stage *{box-sizing:border-box}
+.ab{position:absolute;transition:left .9s cubic-bezier(.5,0,.3,1),top .9s cubic-bezier(.5,0,.3,1),width .9s,height .9s,opacity .5s,transform .5s,background .4s,box-shadow .3s}
+.stage.instant .ab,.stage.instant *{transition:none!important;animation:none!important}
+.hide{opacity:0!important;transform:scale(.4)!important;pointer-events:none}
+
+/* mat */
+.mat{left:16cqw;top:1cqw;width:44cqw;height:54cqw;background:var(--mat);border:.3cqw solid var(--line);border-radius:1.4cqw}
+.colhead{top:1.6cqw;height:4.4cqw;display:flex;align-items:center;justify-content:center;font-size:2.6cqw;font-weight:800;color:#fff;border-radius:1cqw}
+.colhead.t{left:17cqw;width:24cqw;background:var(--tens)}
+.colhead.o{left:42cqw;width:17cqw;background:var(--ones)}
+.colzone{top:6.6cqw;height:47.6cqw;border-radius:1cqw;background:transparent}
+.colzone.t{left:17cqw;width:24cqw}.colzone.o{left:42cqw;width:17cqw}
+.colzone.lit{background:rgba(255,201,60,.28);box-shadow:inset 0 0 0 .35cqw var(--gold)}
+.rowline{left:17cqw;width:42cqw;top:30cqw;height:0;border-top:.3cqw dashed var(--line)}
+
+.rod{width:2cqw;height:20cqw;border-radius:.3cqw;border:.18cqw solid rgba(0,0,0,.25);
+  background-image:repeating-linear-gradient(to bottom,transparent 0 1.82cqw,rgba(0,0,0,.28) 1.82cqw 2cqw)}
+.rod.A{background-color:var(--a)}.rod.B{background-color:var(--b)}
+.cube{width:2.4cqw;height:2.4cqw;border-radius:.3cqw;border:.18cqw solid rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:1.5cqw;font-weight:800;color:#fff;line-height:1}
+.cube.A{background-color:var(--a)}.cube.B{background-color:var(--b)}
+.cube.gold,.rod.gold{background-color:var(--gold)!important;color:var(--ink)}
+.cube.small{width:2cqw;height:2cqw;border-radius:0;font-size:0}
+.glow{box-shadow:0 0 0 .4cqw var(--gold),0 0 1.6cqw .4cqw rgba(255,201,60,.9);z-index:3}
+.badge{width:4.4cqw;height:3.2cqw;margin-left:-1.2cqw;border-radius:1cqw;background:var(--ink);color:#fff;font-size:2cqw;font-weight:800;display:flex;align-items:center;justify-content:center;z-index:4}
+
+/* characters */
+.char{width:13cqw;height:17cqw;z-index:5}
+.char svg{width:100%;height:100%;overflow:visible}
+.char.talk svg{animation:bob .45s ease-in-out infinite alternate}
+.char.talk .mouth{animation:yap .18s ease-in-out infinite alternate;transform-origin:50px 86px;transform-box:view-box}
+.char .tagline{position:absolute;left:0;right:0;bottom:-3cqw;text-align:center;font-size:1.7cqw;font-weight:800;color:var(--muted)}
+@keyframes bob{from{transform:translateY(0)}to{transform:translateY(-.8cqw) rotate(-2deg)}}
+@keyframes yap{from{transform:scaleY(.35)}to{transform:scaleY(1.25)}}
+.eye{animation:blink 4s infinite}
+@keyframes blink{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.1)}}
+.eye{transform-box:fill-box;transform-origin:center}
+
+/* table */
+.tbl-head{top:2cqw;height:4.6cqw;width:8.6cqw;display:flex;align-items:center;justify-content:center;font-size:2.2cqw;font-weight:800;color:#fff;border-radius:.8cqw .8cqw 0 0}
+.cell{width:8.6cqw;height:6.4cqw;border:.25cqw solid #8FA6BF;background:#fff;display:flex;align-items:center;justify-content:center;font-size:4.4cqw;font-weight:800;color:var(--ink)}
+.cell.t{color:var(--tens)}.cell.o{color:var(--ones)}
+.cell.lit,.lab.lit{background:#FFF3C4}
+.lab{left:62cqw;width:17.4cqw;height:6.4cqw;display:flex;align-items:center;justify-content:flex-end;padding-right:.8cqw;font-size:3.2cqw;font-weight:800;color:var(--ink);border-radius:.8cqw;white-space:nowrap}
+.rule{left:62cqw;width:36.4cqw;height:.55cqw;background:var(--ink);border-radius:.3cqw}
+.pop{animation:popin .5s cubic-bezier(.3,1.6,.5,1)}
+@keyframes popin{0%{transform:scale(.3)}100%{transform:scale(1)}}
+.banner{left:62cqw;top:44cqw;width:36.4cqw;height:9cqw;border-radius:1.4cqw;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;gap:1.2cqw;font-size:5cqw;font-weight:800}
+.banner .q{color:var(--gold)}
+
+/* overlays */
+.scrim{inset:0;background:rgba(30,42,58,.55);z-index:8}
+.title{inset:0;z-index:10;background:radial-gradient(circle at 50% 120%,#BFF0CB 0 35%,transparent 36%),linear-gradient(#FFFFFF,#EEF9F0);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1cqw;text-align:center}
+.title .kick{font-size:2.6cqw;font-weight:800;color:#fff;background:var(--frame);border-radius:1cqw;padding:.4cqw 2cqw}
+.title h2{margin:0;font-size:7.4cqw;line-height:1;color:var(--ink);text-wrap:balance}
+.title .ex{font-size:5cqw;font-weight:800}
+.title .ex .a{color:var(--a-dk)}.title .ex .b{color:var(--b-dk)}
+.title .sig{font-family:var(--body);font-size:1.9cqw;color:var(--muted);font-weight:800}
+.recap{left:8cqw;top:5cqw;width:84cqw;height:46cqw;z-index:10;background:#fff;border-radius:2cqw;border:.5cqw solid var(--frame);padding:3cqw 4cqw;display:flex;flex-direction:column;gap:1.6cqw}
+.recap h3{margin:0;font-size:4.4cqw;color:var(--frame-dk)}
+.rstep{display:flex;align-items:center;gap:2cqw;font-size:3.6cqw;font-weight:800;padding:1cqw 1.6cqw;border-radius:1.2cqw;background:#F2F6FA;transition:background .3s,transform .3s}
+.rstep b{flex:none;width:6cqw;height:6cqw;border-radius:50%;background:var(--frame);color:#fff;display:flex;align-items:center;justify-content:center;font-size:3.4cqw}
+.rstep span.eq{margin-left:auto;color:var(--tens)}
+.rstep.lit{background:#FFF3C4;transform:scale(1.02)}
+.think{left:30cqw;top:18cqw;width:40cqw;height:20cqw;z-index:9;background:#fff;border-radius:3cqw;border:.5cqw solid var(--gold);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.6cqw}
+.think .t1{font-size:4.6cqw;font-weight:800;color:var(--ink)}
+.think .t2{font-size:7cqw;font-weight:800;color:var(--a-dk);line-height:1}
+.loop{border:.45cqw dashed var(--gold);border-radius:1.4cqw;z-index:2}
+
+/* captions + controls */
+.caption{margin-top:10px;min-height:66px;background:#fff;border-radius:12px;padding:10px 14px;display:flex;align-items:center;gap:12px}
+.who{flex:none;font-family:var(--display);font-weight:800;color:#fff;border-radius:999px;padding:4px 14px;font-size:clamp(15px,2.2vw,20px);background:var(--muted)}
+.said{font-family:var(--display);font-weight:800;font-size:clamp(18px,3vw,30px);line-height:1.2;min-width:0}
+.controls{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;align-items:center}
+button{font-family:var(--body);font-weight:800;font-size:16px;border:0;border-radius:10px;padding:10px 14px;background:#fff;color:var(--ink);cursor:pointer;box-shadow:0 3px 0 rgba(0,0,0,.18)}
+button:active{transform:translateY(2px);box-shadow:0 1px 0 rgba(0,0,0,.18)}
+button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+button.big{background:var(--gold);font-size:18px;padding:10px 22px}
+button[aria-pressed="true"]{background:#D7F0DD}
+.spacer{flex:1}
+.chapters{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.chapters button{font-size:13px;padding:6px 10px;background:rgba(255,255,255,.75)}
+.chapters button.on{background:#fff;outline:3px solid var(--gold)}
+.bar{height:8px;background:rgba(255,255,255,.35);border-radius:4px;margin-top:10px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--gold);transition:width .4s}
+.note{color:var(--muted);font-size:14px;font-weight:700;max-width:70ch;margin:0}
+@media (prefers-reduced-motion:reduce){.char.talk svg,.char.talk .mouth,.eye,.pop{animation:none}}
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="tag">Topic 4 · Lesson 4-3</span>
+    <h1>Add with Partial Sums: 34 + 59</h1>
+    <span class="by">T.Rana Elsisi</span>
+  </header>
+
+  <div class="player">
+    <div class="stage" id="stage" aria-label="Animated lesson video"></div>
+    <div class="caption" aria-live="polite"><span class="who" id="who">Narrator</span><span class="said" id="said">Press Play to start the video.</span></div>
+    <div class="bar"><i id="prog"></i></div>
+    <div class="controls">
+      <button class="big" id="play">▶ Play</button>
+      <button id="prev" aria-label="Previous part">⏮ Back</button>
+      <button id="next" aria-label="Next part">Next ⏭</button>
+      <button id="restart">⟲ Restart</button>
+      <span class="spacer"></span>
+      <button id="speed" aria-pressed="true">🐢 Slow</button>
+      <button id="voice" aria-pressed="true">🔊 Voice on</button>
+      <button id="full">⛶ Full screen</button>
+    </div>
+    <div class="chapters" id="chapters"></div>
+  </div>
+  <p class="note">The voices use your device's speech. Tip: to save it as a video file, play it in full screen and use your phone or computer's screen recorder.</p>
+</div>
+
+<script>
+(()=>{
+const S=document.getElementById('stage');
+const el=(cls,x,y,w,h,html='')=>{const d=document.createElement('div');d.className='ab '+cls;if(x!=null)d.style.left=x+'cqw';if(y!=null)d.style.top=y+'cqw';if(w!=null)d.style.width=w+'cqw';if(h!=null)d.style.height=h+'cqw';d.innerHTML=html;S.appendChild(d);return d};
+const pos=(d,x,y,w,h)=>{d.style.left=x+'cqw';d.style.top=y+'cqw';if(w!=null){d.style.width=w+'cqw';d.style.height=h+'cqw'}};
+
+/* ---------- build scene ---------- */
+el('mat');
+el('colhead t',null,null,null,null,'Tens');el('colhead o',null,null,null,null,'Ones');
+const zoneT=el('colzone t'),zoneO=el('colzone o');
+el('rowline');
+
+function charSVG(num,col,dk){return `<svg viewBox="0 0 100 130" aria-hidden="true">
+ <ellipse cx="50" cy="126" rx="34" ry="4" fill="rgba(0,0,0,.12)"/>
+ <rect x="22" y="110" width="16" height="14" rx="6" fill="${dk}"/><rect x="62" y="110" width="16" height="14" rx="6" fill="${dk}"/>
+ <rect x="2" y="62" width="16" height="9" rx="4.5" fill="${dk}" transform="rotate(-25 10 66)"/><rect x="82" y="62" width="16" height="9" rx="4.5" fill="${dk}" transform="rotate(25 90 66)"/>
+ <rect x="10" y="8" width="80" height="106" rx="26" fill="${col}" stroke="${dk}" stroke-width="4"/>
+ <ellipse class="eye" cx="36" cy="42" rx="8" ry="10" fill="#fff"/><ellipse class="eye" cx="64" cy="42" rx="8" ry="10" fill="#fff"/>
+ <circle cx="38" cy="44" r="4.5" fill="#1E2A3A"/><circle cx="66" cy="44" r="4.5" fill="#1E2A3A"/>
+ <circle cx="24" cy="62" r="5" fill="rgba(255,255,255,.35)"/><circle cx="76" cy="62" r="5" fill="rgba(255,255,255,.35)"/>
+ <rect x="20" y="66" width="60" height="30" rx="10" fill="rgba(255,255,255,.9)"/>
+ <text x="50" y="90" text-anchor="middle" font-family="Baloo 2,Trebuchet MS,sans-serif" font-weight="800" font-size="28" fill="${dk}">${num}</text>
+ <ellipse class="mouth" cx="50" cy="58" rx="8" ry="4" fill="#7A1F1F"/>
+</svg>`}
+const chA=el('char',1,4,null,null,charSVG(34,'#FF8A3D','#C2561A')+'<div class="tagline">3 tens, 4 ones</div>');
+const chB=el('char',1,30,null,null,charSVG(59,'#3D8BFF','#1A55B8')+'<div class="tagline">5 tens, 9 ones</div>');
+const chC=el('char',40,9,20,26,charSVG(93,'#9B5CF6','#6A2FC7'));chC.style.zIndex=9;
+
+const rodXY=(row,i)=>[18+i*2.8,row?31:8];
+const cubeXY=(row,k)=>[43.2+(k%5)*3,(row?32:9)+Math.floor(k/5)*3];
+const rodsA=[0,1,2].map(i=>{const [x,y]=rodXY(0,i);return el('rod A',x,y)});
+const rodsB=[0,1,2,3,4].map(i=>{const [x,y]=rodXY(1,i);return el('rod B',x,y)});
+const cubesA=[0,1,2,3].map(k=>{const [x,y]=cubeXY(0,k);return el('cube A',x,y)});
+const cubesB=[...Array(9).keys()].map(k=>{const [x,y]=cubeXY(1,k);return el('cube B',x,y)});
+const allCubes=[...cubesA,...cubesB];
+const ten=allCubes.slice(0,10), left3=allCubes.slice(10);
+const loop=el('loop',42.4,8.2,15.8,10.4);
+const badges=[];
+function badge(x,y,t){const b=el('badge pop',x,y,null,null,t);badges.push(b);return b}
+function clearBadges(){badges.splice(0).forEach(b=>b.remove())}
+
+/* table */
+const TX=80,OX=88.6,R=[8.6,15,23.4,29.8,38.2];
+el('tbl-head',TX,null,null,null,'Tens').style.background='var(--tens)';
+el('tbl-head',OX,null,null,null,'Ones').style.background='var(--ones)';
+const cell={};
+R.forEach((y,r)=>{cell['t'+r]=el('cell t',TX,y);cell['o'+r]=el('cell o',OX,y)});
+const lab=R.map(y=>el('lab',null,y));
+el('rule',null,21.9);el('rule',null,36.7);
+const banner=el('banner',null,null,null,null,'<span>34 + 59 =</span><span class="q" id="ans">?</span>');
+
+const think=el('think',null,null,null,null,'<div class="t1" id="thinkq">Think!</div><div class="t2" id="thinkn">4</div>');
+const scrim=el('scrim');
+const title=el('title',null,null,null,null,`<div class="kick">enVision Math · Grade 2 · Topic 4</div><h2>Lesson 4-3<br>Add with Partial Sums</h2><div class="ex"><span class="a">34</span> + <span class="b">59</span></div><div class="sig">T.Rana Elsisi</div>`);
+const recap=el('recap',null,null,null,null,`<h3>Remember the steps</h3>
+ <div class="rstep" id="rs1"><b>1</b>Add the tens<span class="eq">30 + 50 = 80</span></div>
+ <div class="rstep" id="rs2"><b>2</b>Add the ones<span class="eq" style="color:var(--ones)">4 + 9 = 13</span></div>
+ <div class="rstep" id="rs3"><b>3</b>Add the partial sums<span class="eq" style="color:var(--c)">80 + 13 = 93</span></div>`);
+
+/* ---------- state helpers ---------- */
+const show=(...a)=>a.flat().forEach(d=>d.classList.remove('hide'));
+const hide=(...a)=>a.flat().forEach(d=>d.classList.add('hide'));
+const glowOnly=(...a)=>{S.querySelectorAll('.glow').forEach(d=>d.classList.remove('glow'));a.flat().forEach(d=>d.classList.add('glow'))};
+const unlit=()=>S.querySelectorAll('.lit').forEach(d=>d.classList.remove('lit'));
+const lit=(...a)=>a.flat().forEach(d=>d.classList.add('lit'));
+function put(d,t){d.textContent=t;d.classList.remove('pop');void d.offsetWidth;d.classList.add('pop')}
+const setAns=t=>{const a=document.getElementById('ans');a.textContent=t};
+
+function resetAll(){
+  clearBadges();unlit();glowOnly();
+  hide(chA,chB,chC,rodsA,rodsB,allCubes,loop,think,scrim,recap,banner,lab);
+  Object.values(cell).forEach(c=>{c.textContent='';});
+  [rodsA,rodsB].flat().forEach(r=>r.classList.remove('gold'));
+  allCubes.forEach((c,i)=>{c.textContent='';c.classList.remove('gold','small');const [x,y]=i<4?cubeXY(0,i):cubeXY(1,i-4);pos(c,x,y,2.4,2.4)});
+  lab.forEach(l=>l.textContent='');
+  setAns('?');show(title);
+}
+
+/* ---------- script ---------- */
+const N='N',A='A',B='B',C='C';
+const L=(who,txt,dofn,say)=>({who,txt,say:say||txt,do:dofn});
+const P=(q,secs)=>({who:N,txt:q,think:secs});
+const chapters=[
+ {name:'Title',lines:[
+  L(N,'Topic 4. Lesson 4-3.',()=>{show(title)},'Topic four. Lesson four, three.'),
+  L(N,'Add with Partial Sums.'),
+  L(N,'Two number friends will show us how to add 34 + 59. Let’s go!',null,'Two number friends will show us how to add 34 plus 59. Let\'s go!'),
+ ]},
+ {name:'Meet the numbers',lines:[
+  L(A,'Hi! I am 34.',()=>{hide(title);show(chA)}),
+  L(A,'I have 3 tens…',()=>{show(rodsA);glowOnly(rodsA)},'I have 3 tens.'),
+  L(A,'…and 4 ones.',()=>{show(cubesA);glowOnly(cubesA)},'and 4 ones.'),
+  L(B,'Hello! I am 59.',()=>{show(chB);glowOnly()}),
+  L(B,'I have 5 tens…',()=>{show(rodsB);glowOnly(rodsB)},'I have 5 tens.'),
+  L(B,'…and 9 ones.',()=>{show(cubesB);glowOnly(cubesB)},'and 9 ones.'),
+  L(N,'Let’s write them in the place-value chart.',()=>{glowOnly();put(cell.t0,'3');put(cell.o0,'4');put(cell.t1,'5');put(cell.o1,'9');show(lab[1]);lab[1].textContent='+'},'Let\'s write them in the place value chart.'),
+  L(A,'Me: 3 tens and 4 ones.',()=>{unlit();lit(cell.t0,cell.o0)},'Me! 3 tens and 4 ones.'),
+  L(B,'Me: 5 tens and 9 ones.',()=>{unlit();lit(cell.t1,cell.o1)},'Me! 5 tens and 9 ones.'),
+  L(N,'Let’s find 34 + 59.',()=>{unlit();show(banner)},'Let\'s find 34 plus 59.'),
+ ]},
+ {name:'Step 1: Tens',lines:[
+  L(A,'Step 1. Add the tens!',()=>{lit(zoneT,cell.t0,cell.t1)}),
+  L(A,'I have 3 tens. That is 30.',()=>{glowOnly(rodsA)}),
+  L(B,'I have 5 tens. That is 50.',()=>{glowOnly(rodsB)}),
+  P('How many tens altogether?',4),
+  L(A,'Let’s count by tens!',()=>{glowOnly()},'Let\'s count by tens!'),
+  ...[...rodsA,...rodsB].map((r,i)=>L(i<3?A:B,String((i+1)*10),()=>{glowOnly(r);const x=parseFloat(r.style.left),y=parseFloat(r.style.top);badge(x,y-3.6,(i+1)*10)})),
+  L(B,'8 tens! 30 + 50 = 80.',()=>{glowOnly();show(lab[2]);lab[2].textContent='30 + 50 =';put(cell.t2,'8');put(cell.o2,'0');unlit();lit(lab[2],cell.t2,cell.o2)},'8 tens! 30 plus 50 equals 80.'),
+  L(A,'We write 80: 8 tens and 0 ones.',null,'We write 80. 8 tens and 0 ones.'),
+ ]},
+ {name:'Step 2: Ones',lines:[
+  L(B,'Step 2. Add the ones!',()=>{clearBadges();unlit();lit(zoneO,cell.o0,cell.o1)}),
+  L(A,'I have 4 ones.',()=>{glowOnly(cubesA)}),
+  L(B,'I have 9 ones.',()=>{glowOnly(cubesB)}),
+  P('How many ones altogether?',4),
+  L(B,'Let’s count the ones!',()=>{glowOnly()},'Let\'s count the ones!'),
+  ...allCubes.map((c,i)=>L(i<4?A:B,String(i+1),()=>{glowOnly(c);c.textContent=i+1})),
+  L(A,'4 + 9 = 13!',()=>{glowOnly();show(lab[3]);lab[3].textContent='4 + 9 =';put(cell.t3,'1');put(cell.o3,'3');unlit();lit(lab[3],cell.t3,cell.o3)},'4 plus 9 equals 13!'),
+  L(B,'We write 13: 1 ten and 3 ones.',null,'We write 13. 1 ten and 3 ones.'),
+ ]},
+ {name:'Partial sums',lines:[
+  L(N,'Look! 80 and 13 are the partial sums.',()=>{unlit();lit(lab[2],cell.t2,cell.o2,lab[3],cell.t3,cell.o3);allCubes.forEach(c=>c.textContent='')}),
+  L(A,'Partial means a part.'),
+  L(B,'Each partial sum is a part of the answer!'),
+ ]},
+ {name:'Step 3: Add the partial sums',lines:[
+  L(A,'Step 3. Add the partial sums!',()=>{unlit();lit(lab[2],cell.t2,cell.o2,lab[3],cell.t3,cell.o3)}),
+  L(N,'80 + 13',null,'80 plus 13.'),
+  L(B,'Look at the ones. We have 13 ones.',()=>{unlit();lit(zoneO);glowOnly(allCubes)}),
+  L(A,'We found 10 ones!',()=>{glowOnly(ten);ten.forEach(c=>c.classList.add('gold'));pos(loop,42.4,8.2,15.8,10.4);show(loop)}),
+  L(B,'10 ones can’t stay with the ones.',null,'10 ones can\'t stay with the ones.'),
+  L(A,'We send them home to the tens!',()=>{hide(loop);unlit();lit(zoneT);glowOnly();ten.forEach((c,j)=>{c.classList.add('small');pos(c,26.4,8+j*2,2,2)})}),
+  L(B,'Now they make 1 new ten!',()=>{glowOnly(ten)}),
+  L(N,'Let’s count the tens.',()=>{glowOnly();clearBadges()},'Let\'s count the tens.'),
+  ...[rodsA[0],rodsA[1],rodsA[2],'new',...rodsB].map((r,i)=>L(N,String((i+1)*10),()=>{if(r==='new'){glowOnly(ten);badge(26.4,4.4,(i+1)*10)}else{glowOnly(r);badge(parseFloat(r.style.left),parseFloat(r.style.top)-3.6,(i+1)*10)}})),
+  L(N,'Now count on the ones: 91, 92, 93!',()=>{unlit();lit(zoneO);glowOnly(left3);left3.forEach((c,i)=>c.textContent=91+i)},'Now count on the ones. 91. 92. 93!'),
+  L(B,'9 tens and 3 ones is 93!'),
+  L(A,'80 + 13 = 93.',()=>{unlit();glowOnly();show(lab[4]);lab[4].textContent='Sum =';put(cell.t4,'9');put(cell.o4,'3');lit(lab[4],cell.t4,cell.o4)},'80 plus 13 equals 93.'),
+ ]},
+ {name:'The answer',lines:[
+  L(C,'Ta-da! I am 93!',()=>{show(scrim,chC)}),
+  L(C,'I am the sum!'),
+  L(N,'So, 34 + 59 = 93.',()=>{hide(scrim,chC);setAns('93');put(document.getElementById('ans'),'93');lit(cell.t4,cell.o4)},'So, 34 plus 59 equals 93.'),
+  L(A,'Hooray!'),
+  L(B,'Hooray!'),
+ ]},
+ {name:'Remember',lines:[
+  L(N,'Let’s remember the steps.',()=>{show(scrim,recap);unlit()},'Let\'s remember the steps.'),
+  L(N,'Step 1. Add the tens: 30 + 50 = 80.',()=>{unlit();lit(document.getElementById('rs1'))},'Step 1. Add the tens. 30 plus 50 equals 80.'),
+  L(N,'Step 2. Add the ones: 4 + 9 = 13.',()=>{unlit();lit(document.getElementById('rs2'))},'Step 2. Add the ones. 4 plus 9 equals 13.'),
+  L(N,'Step 3. Add the partial sums: 80 + 13 = 93.',()=>{unlit();lit(document.getElementById('rs3'))},'Step 3. Add the partial sums. 80 plus 13 equals 93.'),
+  L(C,'Great job, math stars!',()=>{unlit();show(chC);pos(chC,78,30,18,23)}),
+ ]},
+];
+// reset 93's position when replaying earlier parts
+const origReset=resetAll;resetAll=function(){origReset();pos(chC,40,9,20,26)};
+
+const lines=[];const chapStart=[];
+chapters.forEach((c,ci)=>{chapStart.push(lines.length);c.lines.forEach(l=>lines.push({...l,ci}))});
+
+/* ---------- voice ---------- */
+const synth=window.speechSynthesis;
+const VO={N:{p:1.05,r:1,name:'Narrator',col:'#2E9E4F',ch:null},A:{p:1.6,r:1.05,name:'34',col:'#D9661C',ch:chA},B:{p:.7,r:.95,name:'59',col:'#1F64D1',ch:chB},C:{p:1.25,r:1,name:'93',col:'#7C3AED',ch:chC}};
+let voice=null;
+function pickVoice(){try{const vs=synth.getVoices().filter(v=>/^en/i.test(v.lang));const pref=[/Google US English/i,/Samantha/i,/Aria/i,/Jenny/i,/Zira/i,/en-US/i];for(const re of pref){const v=vs.find(v=>re.test(v.name)||re.test(v.lang));if(v){voice=v;return}}voice=vs[0]||null}catch(e){}}
+if(synth){pickVoice();synth.onvoiceschanged=pickVoice}
+
+let slow=true,voiceOn=!!synth,playing=false,idx=0,token=0;
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+
+function speak(text,who,my){
+  const base=slow?.78:.95;
+  const fallback=Math.max(1500,text.length*(slow?95:75))+600;
+  if(!voiceOn||!synth)return wait(fallback);
+  return new Promise(res=>{
+    let done=false;const fin=()=>{if(!done){done=true;res()}};
+    try{
+      const u=new SpeechSynthesisUtterance(text);
+      if(voice)u.voice=voice;u.lang=voice?voice.lang:'en-US';
+      u.pitch=VO[who].p;u.rate=base*VO[who].r;
+      u.onend=fin;u.onerror=fin;
+      synth.speak(u);
+    }catch(e){fin()}
+    setTimeout(fin,fallback*2.2+2000);
+  });
+}
+
+const whoEl=document.getElementById('who'),saidEl=document.getElementById('said'),prog=document.getElementById('prog');
+function caption(ln){const v=VO[ln.who];whoEl.textContent=v.name;whoEl.style.background=v.col;saidEl.textContent=ln.txt}
+function talk(who){[chA,chB,chC].forEach(c=>c.classList.remove('talk'));if(who&&VO[who].ch)VO[who].ch.classList.add('talk')}
+
+async function runThink(ln,my){
+  document.getElementById('thinkq').textContent=ln.txt;show(think);
+  await speak('Think! '+ln.txt,N,my);
+  for(let s=ln.think;s>0;s--){if(my!==token)return;document.getElementById('thinkn').textContent=s;await wait(1000)}
+  hide(think);
+}
+
+async function run(){
+  const my=++token;
+  while(playing&&idx<lines.length){
+    const ln=lines[idx];
+    if(ln.do)ln.do();
+    caption(ln);markChapter(ln.ci);
+    if(ln.think){talk(null);await runThink(ln,my)}
+    else{talk(ln.who);await speak(ln.say,ln.who,my)}
+    if(my!==token)return;
+    talk(null);idx++;prog.style.width=(idx/lines.length*100)+'%';
+    await wait(slow?650:350);
+    if(my!==token)return;
+  }
+  if(idx>=lines.length){playing=false;setPlayBtn();whoEl.textContent='The end';whoEl.style.background='#2E9E4F';saidEl.textContent='34 + 59 = 93 🎉 Press Restart to watch again.'}
+}
+function stopSpeech(){token++;try{synth&&synth.cancel()}catch(e){};talk(null);hide(think)}
+function jumpTo(i){
+  stopSpeech();S.classList.add('instant');resetAll();
+  for(let k=0;k<i;k++){if(lines[k].do)lines[k].do()}
+  hide(think);clearBadgesIfNeeded(i);
+  void S.offsetWidth;S.classList.remove('instant');
+  idx=i;prog.style.width=(idx/lines.length*100)+'%';markChapter(lines[Math.min(i,lines.length-1)].ci);
+  if(playing)run();
+}
+function clearBadgesIfNeeded(){S.querySelectorAll('.badge').forEach(b=>b.classList.remove('pop'))}
+function unlock(){try{if(synth&&voiceOn){const u=new SpeechSynthesisUtterance(' ');u.volume=0;synth.speak(u)}}catch(e){}}
+
+const playBtn=document.getElementById('play');
+function setPlayBtn(){playBtn.textContent=playing?'⏸ Pause':'▶ Play'}
+playBtn.onclick=()=>{
+  if(playing){playing=false;stopSpeech();setPlayBtn();return}
+  unlock();playing=true;setPlayBtn();
+  if(idx>=lines.length)jumpTo(0);else jumpTo(idx);
+};
+const curChap=()=>lines[Math.min(idx,lines.length-1)].ci;
+document.getElementById('prev').onclick=()=>{let c=curChap();if(idx===chapStart[c]&&c>0)c--;jumpTo(chapStart[c])};
+document.getElementById('next').onclick=()=>{const c=curChap();if(c<chapters.length-1)jumpTo(chapStart[c+1])};
+document.getElementById('restart').onclick=()=>{unlock();playing=true;setPlayBtn();jumpTo(0)};
+const sp=document.getElementById('speed');sp.onclick=()=>{slow=!slow;sp.textContent=slow?'🐢 Slow':'🐇 Normal';sp.setAttribute('aria-pressed',slow)};
+const vb=document.getElementById('voice');
+if(!synth){vb.textContent='🔇 No voice on this device';vb.disabled=true}
+vb.onclick=()=>{voiceOn=!voiceOn;vb.textContent=voiceOn?'🔊 Voice on':'🔇 Voice off';vb.setAttribute('aria-pressed',voiceOn);if(!voiceOn)try{synth.cancel()}catch(e){}};
+document.getElementById('full').onclick=()=>{const p=document.querySelector('.player');try{(p.requestFullscreen||p.webkitRequestFullscreen).call(p)}catch(e){}};
+
+const chapWrap=document.getElementById('chapters');
+const chapBtns=chapters.map((c,i)=>{const b=document.createElement('button');b.textContent=(i+1)+'. '+c.name;b.onclick=()=>jumpTo(chapStart[i]);chapWrap.appendChild(b);return b});
+function markChapter(ci){chapBtns.forEach((b,i)=>b.classList.toggle('on',i===ci))}
+
+S.classList.add('instant');resetAll();void S.offsetWidth;S.classList.remove('instant');markChapter(0);
+})();
+</script>
+
+</body></html>

@@ -1,0 +1,226 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+<!-- Shared template: colors, fonts, sounds, buttons, mascots. Keep this. -->
+<link rel="stylesheet" href="../../shared/theme.css">
+<script src="../../shared/theme.js" defer></script>
+</head><body>
+<title>Hop to Ten</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Lexend:wght@400;500;600&display=swap">
+<style>
+/* Layout: a pond map of 6 lily-pad stations; each station is one big card with a picture, a question and 3 giant answer buttons */
+:root{
+  --bg:#e8f6f3; --surface:#ffffff; --ink:#173a40; --muted:#4f6f73;
+  --pond:#bfe7df; --lily:#3fae6a; --lily-dk:#2b7f4c;
+  --sun:#ffb627; --coral:#ff6b5a; --sky:#3d8bd9; --berry:#c2417a;
+  --line:#9cc9c1; --good:#2e9d55; --bad:#d9483b;
+  --display:"Fredoka","Baloo 2","Comic Sans MS",system-ui,sans-serif;
+  --body:"Lexend","Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f2427; --surface:#173337; --ink:#e7f5f2; --muted:#a3c4c0;
+  --pond:#1d4247; --lily:#4cc27b; --lily-dk:#8be0ab;
+  --sun:#ffc24d; --coral:#ff8476; --sky:#6aaaf0; --berry:#e56b9f;
+  --line:#3b676b; --good:#58c97c; --bad:#ff7a6e; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f2427; --surface:#173337; --ink:#e7f5f2; --muted:#a3c4c0;
+  --pond:#1d4247; --lily:#4cc27b; --lily-dk:#8be0ab;
+  --sun:#ffc24d; --coral:#ff8476; --sky:#6aaaf0; --berry:#e56b9f;
+  --line:#3b676b; --good:#58c97c; --bad:#ff7a6e; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;margin:0}
+.wrap{max-width:860px;margin:0 auto;padding-block:20px 40px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:20px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.15}
+button{font:inherit;cursor:pointer}
+button:focus-visible{outline:3px solid var(--sky);outline-offset:3px}
+.top{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.top svg{flex:0 0 auto}
+.top .t{flex:1 1 220px;min-width:0}
+.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+h1{font-size:clamp(34px,8vw,52px);color:var(--lily-dk)}
+.sub{color:var(--muted);margin:4px 0 0}
+.tools{display:flex;gap:8px}
+.chip{border:2px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:6px 14px;font-weight:600;font-size:14px}
+.chip[aria-pressed="true"]{border-color:var(--lily);color:var(--lily-dk)}
+.total{font-family:var(--display);font-size:20px;display:flex;align-items:center;gap:6px}
+.pond{background:var(--pond);border-radius:28px;padding:18px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media (max-width:620px){.pond{grid-template-columns:repeat(2,1fr)}}
+.pad{background:var(--surface);border:none;border-radius:22px;padding:14px 12px 12px;text-align:left;color:var(--ink);display:flex;flex-direction:column;gap:6px;box-shadow:0 4px 0 var(--line);transition:transform .15s}
+.pad:hover{transform:translateY(-3px)}
+.pad .num{font-family:var(--display);font-size:13px;color:var(--muted)}
+.pad h3{font-size:19px}
+.pad .eg{font-size:13px;color:var(--muted)}
+.pad .stars{font-size:18px;letter-spacing:2px;color:var(--sun)}
+.pad .stars .off{color:var(--line)}
+.game{background:var(--surface);border-radius:28px;padding:18px;display:flex;flex-direction:column;gap:14px;box-shadow:0 6px 0 var(--line)}
+.ghead{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.ghead h2{font-size:24px;flex:1 1 160px;min-width:0}
+.back{background:none;border:2px solid var(--line);color:var(--ink);border-radius:999px;padding:6px 12px;font-weight:600;font-size:14px}
+.prog{display:flex;gap:6px}
+.prog i{width:14px;height:14px;border-radius:50%;background:var(--line);display:block}
+.prog i.done{background:var(--sun)}
+.prog i.miss{background:var(--muted)}
+.prog i.now{outline:3px solid var(--lily);outline-offset:1px}
+.pic{background:var(--bg);border-radius:20px;padding:10px;overflow-x:auto}
+.pic svg{display:block;width:100%;max-width:560px;height:auto;margin:0 auto}
+.q{font-family:var(--display);font-size:clamp(34px,10vw,54px);text-align:center;letter-spacing:.02em}
+.helper{text-align:center;color:var(--muted);font-size:15px;min-height:1.5em}
+.answers{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.ans{font-family:var(--display);font-size:40px;font-weight:700;border:none;border-radius:20px;padding:14px 0;color:#fff;box-shadow:0 5px 0 rgba(0,0,0,.18)}
+.ans:nth-child(1){background:var(--coral)}
+.ans:nth-child(2){background:var(--sky)}
+.ans:nth-child(3){background:var(--berry)}
+.ans:disabled{opacity:.35}
+.ans.right{background:var(--good)!important;opacity:1}
+.shake{animation:shake .35s}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.say{display:flex;gap:10px;align-items:center}
+.bubble{background:var(--bg);border-radius:16px;padding:10px 14px;font-weight:500;flex:1;min-width:0}
+.next{align-self:center;background:var(--lily);color:#fff;border:none;border-radius:999px;padding:12px 28px;font-family:var(--display);font-size:22px;box-shadow:0 4px 0 var(--lily-dk)}
+.tip{border-top:2px dashed var(--line);padding-top:12px;font-size:14px;color:var(--muted)}
+.tip b{color:var(--ink)}
+.done{text-align:center;display:flex;flex-direction:column;gap:12px;align-items:center}
+.done .big{font-size:44px;color:var(--sun);letter-spacing:4px}
+footer{text-align:center;color:var(--muted);font-size:13px;display:flex;flex-direction:column;gap:2px}
+footer b{color:var(--ink);font-family:var(--display);font-size:16px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <svg width="74" height="64" viewBox="0 0 74 64" aria-hidden="true"><g id="frogArt"><ellipse cx="37" cy="40" rx="30" ry="22" fill="var(--lily)"/><circle cx="22" cy="18" r="11" fill="var(--lily)"/><circle cx="52" cy="18" r="11" fill="var(--lily)"/><circle cx="22" cy="18" r="6" fill="#fff"/><circle cx="52" cy="18" r="6" fill="#fff"/><circle cx="23" cy="19" r="3" fill="#173a40"/><circle cx="53" cy="19" r="3" fill="#173a40"/><path d="M24 42 Q37 54 50 42" stroke="#173a40" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="16" cy="42" r="4" fill="var(--coral)" opacity=".55"/><circle cx="58" cy="42" r="4" fill="var(--coral)" opacity=".55"/></g></svg>
+    <div class="t">
+      <div class="eyebrow">Grade 1 · Topic 2 · Add &amp; subtract within 10</div>
+      <h1>Hop to Ten</h1>
+      <p class="sub">Help Hoppy the frog cross the pond. Every station is a new strategy.</p>
+    </div>
+    <div class="tools">
+      <div class="total" aria-live="polite"><span style="color:var(--sun)">★</span><span id="total">0</span>/30</div>
+      <button class="chip" id="sound" aria-pressed="true">Sound on</button>
+    </div>
+  </header>
+
+  <main id="view"></main>
+
+  <footer>
+    <b>Created by Eng.Rana Elsisi</b>
+    <span>Original practice games aligned to Grade 1, Topic 2 (Fluently add and subtract within 10).</span>
+  </footer>
+</div>
+
+<script>
+const STATIONS=[
+ {id:'on',name:'Count On',eg:'6 + 3',tip:'Start at the <b>bigger</b> number and count on. Say the big number with your mouth closed, then hop: "6… 7, 8, 9".'},
+ {id:'dbl',name:'Doubles',eg:'4 + 4',tip:'A double is the same number twice. Children see it as twins in a mirror. Practise the doubles until they are instant.'},
+ {id:'near',name:'Near Doubles',eg:'3 + 4',tip:'Find the double hiding inside: 3 + 4 is 3 + 3 and 1 more. Point to the extra dot.'},
+ {id:'turn',name:'Turn-Around',eg:'2 + 7 = 7 + 2',tip:'Adding in any order gives the same total. Flip the cube train to show the parts swap and the whole stays.'},
+ {id:'back',name:'Count Back',eg:'9 − 2',tip:'Start at the first number and hop back. Do not count the start number: "9… 8, 7".'},
+ {id:'think',name:'Think Addition',eg:'8 − 3',tip:'Turn the take-away into a missing part: 3 + ? = 8. Use the part-part-whole box.'}
+];
+const PER=5;
+let stars={}, st=null, soundOn=true, actx=null;
+try{stars=JSON.parse(localStorage.getItem('hop10')||'{}')}catch(e){stars={}}
+const save=()=>{try{localStorage.setItem('hop10',JSON.stringify(stars))}catch(e){}};
+const R=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const view=document.getElementById('view');
+
+function beep(ok){if(!soundOn)return;try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();const notes=ok?[523,659,784]:[220,180];notes.forEach((f,i)=>{const o=actx.createOscillator(),g=actx.createGain();o.type=ok?'triangle':'sine';o.frequency.value=f;g.gain.setValueAtTime(.0001,actx.currentTime+i*.09);g.gain.exponentialRampToValueAtTime(.18,actx.currentTime+i*.09+.02);g.gain.exponentialRampToValueAtTime(.0001,actx.currentTime+i*.09+.22);o.connect(g).connect(actx.destination);o.start(actx.currentTime+i*.09);o.stop(actx.currentTime+i*.09+.25)})}catch(e){}}
+document.getElementById('sound').onclick=e=>{soundOn=!soundOn;e.target.setAttribute('aria-pressed',soundOn);e.target.textContent=soundOn?'Sound on':'Sound off'};
+
+/* ---------- pictures ---------- */
+const X=i=>20+i*30;
+function frog(x,y,s=.42){return `<g transform="translate(${x-37*s},${y-60*s}) scale(${s})">${document.getElementById('frogArt').innerHTML}</g>`}
+function numberLine(start,hops,dir){
+  let s=`<svg viewBox="0 0 340 120" role="img" aria-label="Number line from 0 to 10">`;
+  s+=`<line x1="10" y1="90" x2="330" y2="90" stroke="var(--ink)" stroke-width="3" stroke-linecap="round"/>`;
+  for(let i=0;i<=10;i++){s+=`<line x1="${X(i)}" y1="82" x2="${X(i)}" y2="98" stroke="var(--ink)" stroke-width="2.5"/><text x="${X(i)}" y="116" text-anchor="middle" font-family="Fredoka,sans-serif" font-size="15" fill="var(--ink)">${i}</text>`}
+  for(let k=0;k<hops;k++){const a=start+dir*k,b=a+dir,m=(X(a)+X(b))/2;
+    s+=`<path d="M${X(a)} 82 Q${m} 40 ${X(b)} 82" fill="none" stroke="${dir>0?'var(--lily)':'var(--coral)'}" stroke-width="3" stroke-dasharray="${0}" marker-end="url(#ah${dir>0?'g':'r'})"/>`;
+    s+=`<text x="${m}" y="50" text-anchor="middle" font-family="Fredoka,sans-serif" font-size="13" fill="var(--muted)">${dir>0?'+1':'−1'}</text>`}
+  s+=`<defs><marker id="ahg" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="var(--lily)"/></marker><marker id="ahr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="var(--coral)"/></marker></defs>`;
+  s+=`<circle cx="${X(start)}" cy="90" r="7" fill="var(--sun)" stroke="var(--ink)" stroke-width="2"/>`;
+  s+=frog(X(start),80,.34);
+  return s+`</svg>`}
+function dots(groups){ // groups: [{n,color,hi}]
+  const r=13,gap=34;let w=0;groups.forEach(g=>w+=g.n*gap+30);w=Math.max(w,120);
+  let s=`<svg viewBox="0 0 ${w} 60" role="img" aria-label="Counters">`,x=24;
+  groups.forEach((g,gi)=>{for(let i=0;i<g.n;i++){const hi=g.hi&&i===g.n-1;s+=`<circle cx="${x}" cy="30" r="${r}" fill="${g.color}" ${hi?'stroke="var(--sun)" stroke-width="5"':''}/>`;x+=gap}
+    if(gi<groups.length-1){s+=`<text x="${x-8}" y="38" font-family="Fredoka,sans-serif" font-size="24" fill="var(--muted)">+</text>`;x+=22}});
+  return s+`</svg>`}
+function train(a,b){
+  const c=26;const row=(p,q,y,c1,c2)=>{let s='',x=10;for(let i=0;i<p;i++){s+=`<rect x="${x}" y="${y}" width="${c-2}" height="${c-2}" rx="5" fill="${c1}"/>`;x+=c}for(let i=0;i<q;i++){s+=`<rect x="${x}" y="${y}" width="${c-2}" height="${c-2}" rx="5" fill="${c2}"/>`;x+=c}return s};
+  const w=20+(a+b)*c+70;
+  return `<svg viewBox="0 0 ${w} 80" role="img" aria-label="Cube trains">${row(a,b,6,'var(--coral)','var(--sky)')}<text x="${20+(a+b)*c}" y="26" font-family="Fredoka,sans-serif" font-size="16" fill="var(--ink)">${a} + ${b}</text>${row(b,a,46,'var(--sky)','var(--coral)')}<text x="${20+(a+b)*c}" y="66" font-family="Fredoka,sans-serif" font-size="16" fill="var(--ink)">${b} + ${a}</text></svg>`}
+function ppw(whole,part){
+  return `<svg viewBox="0 0 240 130" role="img" aria-label="Part part whole"><rect x="60" y="6" width="120" height="50" rx="10" fill="var(--surface)" stroke="var(--lily)" stroke-width="3"/><text x="120" y="42" text-anchor="middle" font-family="Fredoka,sans-serif" font-size="30" fill="var(--ink)">${whole}</text><rect x="20" y="72" width="96" height="50" rx="10" fill="var(--surface)" stroke="var(--sky)" stroke-width="3"/><text x="68" y="108" text-anchor="middle" font-family="Fredoka,sans-serif" font-size="30" fill="var(--ink)">${part}</text><rect x="124" y="72" width="96" height="50" rx="10" fill="var(--surface)" stroke="var(--coral)" stroke-width="3" stroke-dasharray="6 5"/><text x="172" y="108" text-anchor="middle" font-family="Fredoka,sans-serif" font-size="30" fill="var(--coral)">?</text><text x="120" y="68" text-anchor="middle" font-size="11" fill="var(--muted)" font-family="Lexend,sans-serif">whole</text></svg>`}
+
+/* ---------- questions ---------- */
+function make(id){
+  let a,b,ans,q,pic,help,hint;
+  if(id==='on'){a=R(5,8);b=R(1,Math.min(3,10-a));if(Math.random()<.5){q=`${a} + ${b}`}else{q=`${b} + ${a}`}ans=a+b;pic=numberLine(a,b,1);help=`Start at ${a}. Hop on ${b}.`;hint=`Put ${a} in your head, then count ${b} more.`}
+  if(id==='dbl'){a=R(1,5);ans=a*2;q=`${a} + ${a}`;pic=dots([{n:a,color:'var(--sky)'},{n:a,color:'var(--sky)'}]);help='Same number twice. That is a double!';hint=`Count all the dots: ${a} and ${a} more.`}
+  if(id==='near'){a=R(1,4);ans=a*2+1;q=Math.random()<.5?`${a} + ${a+1}`:`${a+1} + ${a}`;pic=dots([{n:a,color:'var(--berry)'},{n:a+1,color:'var(--berry)',hi:true}]);help=`Find the double: ${a} + ${a} = ${a*2}`;hint=`${a} + ${a} = ${a*2}. Now add 1 more.`}
+  if(id==='turn'){a=R(1,4);b=R(a+1,10-a);ans=a+b;q=`${b} + ${a}`;pic=train(a,b);help=`${a} + ${b} = ${a+b}. Now turn it around!`;hint=`Same cubes, same total. ${a} + ${b} = ${a+b}.`}
+  if(id==='back'){a=R(5,10);b=R(1,3);ans=a-b;q=`${a} − ${b}`;pic=numberLine(a,b,-1);help=`Start at ${a}. Hop back ${b}.`;hint=`Say ${a}, then count back ${b}: don't count ${a} again.`}
+  if(id==='think'){a=R(5,10);b=R(1,a-1);ans=a-b;q=`${a} − ${b}`;pic=ppw(a,b);help=`Think: ${b} + ? = ${a}`;hint=`What do you add to ${b} to make ${a}?`}
+  const set=new Set([ans]);let tries=0;
+  while(set.size<3&&tries<50){tries++;const d=ans+[-2,-1,1,2][R(0,3)];if(d>=0&&d<=10)set.add(d)}
+  return {q,ans,pic,help,hint,opts:shuffle([...set])};
+}
+
+/* ---------- views ---------- */
+function total(){return Object.values(stars).reduce((s,v)=>s+v,0)}
+function starRow(n){let s='';for(let i=0;i<PER;i++)s+=i<n?'★':'<span class="off">★</span>';return s}
+function home(){
+  st=null;document.getElementById('total').textContent=total();
+  view.innerHTML=`<section class="pond" aria-label="Stations">${STATIONS.map((s,i)=>`<button class="pad" data-i="${i}"><span class="num">Station ${i+1}</span><h3>${s.name}</h3><span class="eg">${s.eg}</span><span class="stars" aria-label="${stars[s.id]||0} of 5 stars">${starRow(stars[s.id]||0)}</span></button>`).join('')}</section>`;
+  view.querySelectorAll('.pad').forEach(b=>b.onclick=()=>start(+b.dataset.i));
+}
+function start(i){st={i,k:0,res:[],miss:false,cur:make(STATIONS[i].id)};render()}
+function render(){
+  const S=STATIONS[st.i],c=st.cur;
+  const prog=Array.from({length:PER},(_,k)=>`<i class="${k<st.k?(st.res[k]?'done':'miss'):k===st.k?'now':''}"></i>`).join('');
+  view.innerHTML=`<section class="game">
+    <div class="ghead"><button class="back" id="back">← Pond</button><h2>${st.i+1}. ${S.name}</h2><div class="prog" aria-label="Question ${st.k+1} of ${PER}">${prog}</div></div>
+    <div class="pic">${c.pic}</div>
+    <div class="q" aria-live="polite">${c.q} = ?</div>
+    <div class="helper">${c.help}</div>
+    <div class="answers">${c.opts.map(o=>`<button class="ans" data-v="${o}">${o}</button>`).join('')}</div>
+    <div class="say"><svg width="44" height="38" viewBox="0 0 74 64" aria-hidden="true">${document.getElementById('frogArt').outerHTML}</svg><div class="bubble" id="bubble">Tap the answer!</div></div>
+    <div class="tip"><b>Teacher tip:</b> ${S.tip}</div></section>`;
+  document.getElementById('back').onclick=home;
+  view.querySelectorAll('.ans').forEach(b=>b.onclick=()=>pick(b));
+}
+const PRAISE=['Ribbit! Brilliant!','Super hop!','You are a maths star!','Splash! Correct!','Wow, so fast!'];
+function pick(b){
+  const v=+b.dataset.v,c=st.cur,bub=document.getElementById('bubble');
+  if(v===c.ans){
+    beep(true);b.classList.add('right');view.querySelectorAll('.ans').forEach(x=>x.disabled=true);
+    bub.textContent=st.miss?`Yes! ${c.q} = ${c.ans}. Good try!`:PRAISE[R(0,PRAISE.length-1)];
+    st.res.push(!st.miss);
+    const n=document.createElement('button');n.className='next';n.textContent=st.k+1<PER?'Next hop →':'Finish!';
+    n.onclick=()=>{st.k++;st.miss=false;if(st.k<PER){st.cur=make(STATIONS[st.i].id);render()}else finish()};
+    view.querySelector('.say').after(n);n.focus();
+  }else{
+    beep(false);st.miss=true;b.disabled=true;b.classList.remove('shake');void b.offsetWidth;b.classList.add('shake');
+    bub.textContent='Oops! '+c.hint;
+  }
+}
+function finish(){
+  const S=STATIONS[st.i],got=st.res.filter(Boolean).length;
+  stars[S.id]=Math.max(stars[S.id]||0,got);save();document.getElementById('total').textContent=total();
+  const nx=st.i+1<STATIONS.length;
+  view.innerHTML=`<section class="game done"><svg width="110" height="96" viewBox="0 0 74 64" aria-hidden="true">${document.getElementById('frogArt').outerHTML}</svg>
+  <h2>${S.name} done!</h2><div class="big" aria-label="${got} of 5 stars">${starRow(got)}</div>
+  <p>${got===5?'Perfect! Hoppy is so proud of you.':got>=3?'Great hopping! Play again for all 5 stars.':'Good practice! Try again and use the hint.'}</p>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+  <button class="back" id="again">Play again</button>${nx?`<button class="next" id="nx">Next station →</button>`:`<button class="next" id="pond">Back to the pond</button>`}</div></section>`;
+  document.getElementById('again').onclick=()=>start(st.i);
+  if(nx)document.getElementById('nx').onclick=()=>start(st.i+1);else document.getElementById('pond').onclick=home;
+  if(got>=3)beep(true);
+}
+home();
+</script>
+
+</body></html>

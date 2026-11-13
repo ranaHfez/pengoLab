@@ -1,0 +1,198 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+<!-- Shared template: colors, fonts, sounds, buttons, mascots. Keep this. -->
+<link rel="stylesheet" href="../shared/theme.css">
+<script src="../shared/theme.js" defer></script>
+</head><body>
+<title>Tens and Ones Houses</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@600;800&display=swap">
+<style>
+/* Layout: one playful screen — big number on top, two houses side by side, one action area below */
+:root{
+  --sky:#dff3ff; --ink:#24324a; --tens:#2f7de1; --tens-soft:#cfe3ff;
+  --ones:#ff8a1f; --ones-soft:#ffe3c7; --good:#2fb36b; --card:#ffffff; --muted:#5d6b85;
+  --display:"Baloo 2","Comic Sans MS",system-ui,sans-serif;
+  --body:"Nunito",system-ui,sans-serif;
+  color-scheme:light;
+}
+html,body{min-height:100%}
+body{background:var(--sky);color:var(--ink);font-family:var(--body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:14px 30px}
+.wrap{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+header{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+h1{font-family:var(--display);font-size:clamp(1.5rem,5vw,2.2rem);margin:0;line-height:1;text-wrap:balance}
+h1 .t{color:var(--tens)} h1 .o{color:var(--ones)}
+.pill{background:var(--card);border-radius:999px;padding:6px 14px;font-weight:800;box-shadow:0 2px 0 #0001;font-variant-numeric:tabular-nums}
+.stage{background:var(--card);border-radius:24px;padding:16px;display:flex;flex-direction:column;gap:14px;box-shadow:0 4px 0 #0000000f}
+.top{display:flex;align-items:center;gap:14px}
+.mascot{width:64px;height:64px;flex:none}
+.bubble{background:#fff8d6;border:2px solid #f2d76b;border-radius:18px;padding:10px 14px;font-size:1.1rem;font-weight:800;min-width:0;flex:1}
+.big{font-family:var(--display);font-size:clamp(3.5rem,14vw,5.5rem);line-height:.9;text-align:center;font-weight:800}
+.big .t{color:var(--tens)} .big .o{color:var(--ones)}
+.houses{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.house{border-radius:18px;padding:0 10px 12px;display:flex;flex-direction:column;align-items:center;gap:8px;min-height:190px;position:relative}
+.house.tens{background:var(--tens-soft)} .house.ones{background:var(--ones-soft)}
+.roof{width:calc(100% + 20px);height:34px;clip-path:polygon(50% 0,100% 100%,0 100%);margin-top:-1px}
+.tens .roof{background:var(--tens)} .ones .roof{background:var(--ones)}
+.label{font-family:var(--display);font-size:1.25rem;font-weight:800}
+.tens .label{color:var(--tens)} .ones .label{color:#c75f00}
+.count{font-family:var(--display);font-size:2rem;font-weight:800;line-height:1}
+.tens .count{color:var(--tens)} .ones .count{color:var(--ones)}
+.rods{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;min-height:120px;align-items:flex-end}
+.rod{display:grid;grid-template-rows:repeat(10,11px);gap:1px;padding:2px;background:#1f5fb3;border-radius:5px;animation:pop .5s cubic-bezier(.3,1.6,.5,1)}
+.rod i{width:22px;background:var(--tens);border-radius:2px}
+.cubes{display:grid;grid-template-columns:repeat(5,28px);gap:5px;justify-content:center;align-content:start;min-height:120px}
+.cube{width:28px;height:28px;border-radius:7px;background:var(--ones);box-shadow:inset 0 -4px 0 #0002;display:grid;place-items:center;font-weight:800;color:#fff;font-size:.85rem;transition:transform .25s,background .25s}
+.cube.picked{background:#ffcf33;color:var(--ink);transform:scale(1.12)}
+.cube.fly{transform:translateX(-140px) scale(.2);opacity:0;transition:transform .55s ease-in,opacity .55s}
+@keyframes pop{from{transform:scale(0)}to{transform:scale(1)}}
+.actions{display:flex;flex-direction:column;align-items:center;gap:10px}
+button{font-family:var(--display);font-weight:800;font-size:1.2rem;border:0;border-radius:16px;padding:12px 20px;cursor:pointer;color:#fff;box-shadow:0 5px 0 #0003;transition:transform .1s}
+button:active{transform:translateY(3px);box-shadow:0 2px 0 #0003}
+button:focus-visible{outline:4px solid var(--ink);outline-offset:3px}
+.go{background:var(--good)} .send{background:var(--tens)}
+.choices{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.choices button{width:56px;height:56px;padding:0;font-size:1.6rem}
+.choices.t button{background:var(--tens)} .choices.o button{background:var(--ones)}
+.choices button.no{background:#c9ced8;animation:shake .35s}
+@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.q{font-family:var(--display);font-size:1.3rem;font-weight:800;text-align:center}
+.eq{font-family:var(--display);font-size:clamp(2.2rem,9vw,3.4rem);font-weight:800;text-align:center;line-height:1.1;animation:pop .5s}
+.eq .t{color:var(--tens)} .eq .o{color:var(--ones)}
+.sub{color:var(--muted);font-weight:800;text-align:center;font-size:1.1rem}
+.stars{font-size:1.5rem;letter-spacing:2px}
+canvas#fx{position:fixed;inset:0;pointer-events:none;width:100%;height:100%}
+@media (max-width:420px){.cubes{grid-template-columns:repeat(5,24px)}.cube{width:24px;height:24px}.mascot{width:52px;height:52px}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header>
+    <h1><span class="t">Tens</span> &amp; <span class="o">Ones</span> Houses</h1>
+    <div class="pill" id="round">Number 1 of 6</div>
+  </header>
+
+  <div class="stage">
+    <div class="top">
+      <svg class="mascot" viewBox="0 0 64 64" aria-hidden="true">
+        <rect x="6" y="10" width="52" height="48" rx="12" fill="#ff8a1f"/>
+        <rect x="6" y="48" width="52" height="10" rx="5" fill="#0002"/>
+        <circle cx="23" cy="30" r="6" fill="#fff"/><circle cx="41" cy="30" r="6" fill="#fff"/>
+        <circle cx="24" cy="31" r="3" fill="#24324a"/><circle cx="42" cy="31" r="3" fill="#24324a"/>
+        <path d="M24 42 Q32 49 40 42" stroke="#24324a" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <rect x="28" y="2" width="8" height="10" rx="3" fill="#2f7de1"/>
+      </svg>
+      <div class="bubble" id="say">Hi! I'm Cubby.</div>
+    </div>
+
+    <div class="big" id="num">14</div>
+
+    <div class="houses">
+      <div class="house tens">
+        <div class="roof"></div>
+        <div class="label">Tens House</div>
+        <div class="rods" id="rods"></div>
+        <div class="count" id="tc">0</div>
+      </div>
+      <div class="house ones">
+        <div class="roof"></div>
+        <div class="label">Ones House</div>
+        <div class="cubes" id="cubes"></div>
+        <div class="count" id="oc">0</div>
+      </div>
+    </div>
+
+    <div class="actions" id="act"></div>
+  </div>
+  <div class="stars" id="stars" aria-label="stars"></div>
+</div>
+<canvas id="fx"></canvas>
+
+<script>
+const NUMS=[14,12,17,15,19,20];
+let r=0,n,tens,ones,stars=0,busy=false;
+const $=id=>document.getElementById(id);
+let ac;
+function beep(f,d=.15,type='triangle'){try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();const o=ac.createOscillator(),g=ac.createGain();o.type=type;o.frequency.value=f;g.gain.setValueAtTime(.18,ac.currentTime);g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+d);o.connect(g).connect(ac.destination);o.start();o.stop(ac.currentTime+d)}catch(e){}}
+const yay=()=>[523,659,784,1047].forEach((f,i)=>setTimeout(()=>beep(f,.2),i*90));
+const oops=()=>beep(180,.25,'sawtooth');
+
+function draw(){
+  $('rods').innerHTML='';
+  for(let i=0;i<tens;i++){const d=document.createElement('div');d.className='rod';d.innerHTML='<i></i>'.repeat(10);$('rods').appendChild(d)}
+  $('cubes').innerHTML='';
+  for(let i=0;i<ones;i++){const c=document.createElement('div');c.className='cube';$('cubes').appendChild(c)}
+  $('tc').textContent=tens;$('oc').textContent=ones;
+}
+function start(){
+  n=NUMS[r];tens=0;ones=n;busy=false;
+  $('round').textContent=r===0?'Number 1 of 6':`Example ${r} of 5`;
+  $('num').textContent=n;
+  draw();
+  $('say').textContent=`Here are ${n} ones! Can we find 10 ones?`;
+  $('act').innerHTML='<button class="send" id="sendBtn">Find 10 ones and send them home 🏠</button>';
+  $('sendBtn').onclick=sendTen;
+}
+function sendTen(){
+  if(busy||ones<10)return;busy=true;
+  const cs=[...document.querySelectorAll('.cube')].slice(0,10);
+  cs.forEach((c,i)=>setTimeout(()=>{c.classList.add('picked');c.textContent=i+1;beep(400+i*45,.1)},i*170));
+  setTimeout(()=>{
+    $('say').textContent='We found 10 ones! A ten can\'t stay with the ones, so it goes home to the Tens House.';
+    cs.forEach(c=>c.classList.add('fly'));
+  },1900);
+  setTimeout(()=>{
+    tens++;ones-=10;draw();yay();busy=false;
+    if(ones>=10){$('say').textContent='Look! We can find 10 more ones. Send them home too!'}
+    else askTens();
+  },2600);
+}
+function choices(cls,max,correct,next){
+  const box=document.createElement('div');box.className='choices '+cls;
+  for(let i=0;i<=max;i++){const b=document.createElement('button');b.textContent=i;b.id=cls+'c'+i;
+    b.onclick=()=>{if(i===correct){yay();next()}else{oops();b.classList.add('no');$('say').textContent=cls==='t'?'Try again! Count the blue rods.':'Try again! Count the orange cubes.'}};
+    box.appendChild(b)}
+  return box;
+}
+function askTens(){
+  $('say').textContent='Great job! Now let\'s count.';
+  $('act').innerHTML='<div class="q">How many <span style="color:var(--tens)">tens</span>?</div>';
+  $('act').appendChild(choices('t',3,tens,askOnes));
+}
+function askOnes(){
+  $('act').innerHTML=`<div class="q">${tens} ten${tens>1?'s':''} ✔ How many <span style="color:var(--ones)">ones</span>?</div>`;
+  $('act').appendChild(choices('o',9,ones,done));
+}
+function done(){
+  stars++;$('stars').textContent='⭐'.repeat(stars);
+  $('num').innerHTML=`<span class="t">${tens}</span><span class="o">${ones}</span>`;
+  $('say').textContent=['Super!','Amazing!','You did it!','Wow, smart!','Fantastic!','Math star!'][r];
+  $('act').innerHTML=`<div class="eq">${n} = <span class="t">${tens*10}</span> + <span class="o">${ones}</span></div>
+    <div class="sub">${n} is ${tens} ten${tens>1?'s':''} and ${ones} one${ones===1?'':'s'}</div>
+    <button class="go" id="nextBtn">${r<NUMS.length-1?'Next number ➜':'Finish 🎉'}</button>`;
+  $('nextBtn').onclick=()=>{r++; r<NUMS.length?start():finish()};
+  confetti();
+}
+function finish(){
+  $('round').textContent='All done!';$('num').textContent='🏆';
+  tens=0;ones=0;draw();
+  $('say').textContent='You are a Tens and Ones champion!';
+  $('act').innerHTML=`<div class="eq">14 = <span class="t">10</span> + <span class="o">4</span></div>
+    <div class="sub">When we find 10 ones, we send them home to the tens.</div>
+    <button class="go" id="againBtn">Play again ↺</button>`;
+  $('againBtn').onclick=()=>{r=0;stars=0;$('stars').textContent='';start()};
+  confetti();confetti();
+}
+// confetti
+const cv=$('fx'),cx=cv.getContext('2d');let parts=[];
+function confetti(){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  cv.width=innerWidth;cv.height=innerHeight;
+  for(let i=0;i<90;i++)parts.push({x:innerWidth/2,y:innerHeight/3,vx:(Math.random()-.5)*12,vy:Math.random()*-10-3,c:['#2f7de1','#ff8a1f','#2fb36b','#ffcf33','#e94f8a'][i%5],l:90});
+  if(parts.length<=90)tick();
+}
+function tick(){cx.clearRect(0,0,cv.width,cv.height);parts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.35;p.l--;cx.fillStyle=p.c;cx.fillRect(p.x,p.y,8,8)});parts=parts.filter(p=>p.l>0);if(parts.length)requestAnimationFrame(tick);else cx.clearRect(0,0,cv.width,cv.height)}
+start();
+</script>
+
+</body></html>

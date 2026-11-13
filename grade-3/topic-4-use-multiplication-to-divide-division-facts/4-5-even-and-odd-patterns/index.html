@@ -1,0 +1,586 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+<!-- Shared template: colors, fonts, sounds, buttons, mascots. Keep this. -->
+<link rel="stylesheet" href="../../../shared/theme.css">
+<script src="../../../shared/theme.js" defer></script>
+</head><body>
+<title>Lesson 4-5 Even and Odd Patterns</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@500;700;800&display=swap">
+<style>
+/* Layout: aquarium-themed classroom page; sticky tab bar, one wide "stage" with an ink layer over it, vertical pen tools fixed on the right */
+:root{
+  --water:#fff1e3; --deep:#8a3307; --teal:#e8590c; --sea:#ffd8a8;
+  --coral:#1c7c8c; --sun:#ffd43b; --ink:#173038; --paper:#ffffff;
+  --good:#1f9d55; --bad:#d64545; --muted:#8a6450;
+  --board:#24493a; --board2:#1d3d30; --wood:#8a5a32;
+  --display:"Baloo 2","Comic Sans MS",system-ui,sans-serif;
+  --body:"Nunito",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{background:var(--water);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.5;
+  background-image:radial-gradient(circle at 12% 18%,rgba(255,255,255,.7) 0 6px,transparent 7px),radial-gradient(circle at 80% 60%,rgba(255,255,255,.55) 0 4px,transparent 5px);
+  background-size:220px 260px,170px 190px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--deep)}
+button{font-family:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+
+/* tab bar */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:var(--deep);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:10px}
+.bar-in{max-width:1320px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;padding-right:72px}
+.brand{font-family:var(--display);color:#fff;font-weight:800;font-size:20px;letter-spacing:.3px}
+.brand span{color:var(--sun)}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin-left:auto}
+.tab{border:0;border-radius:999px;padding:8px 16px;font-weight:800;font-size:15px;background:rgba(255,255,255,.12);color:#dff4f6}
+.tab[aria-selected="true"]{background:var(--sun);color:var(--deep)}
+
+/* stage + ink layer */
+.wrap{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 60px}
+#stage{position:relative;max-width:1320px;margin:0 auto;padding-right:76px}
+#ink{position:absolute;left:0;top:0;width:100%;height:100%;z-index:20;pointer-events:none;touch-action:auto}
+#ink.on{pointer-events:auto;touch-action:none;cursor:crosshair}
+#ink.erase{cursor:cell}
+
+/* hero */
+.hero{background:linear-gradient(160deg,#fd7e14,var(--deep));color:#fff;border-radius:28px;padding:26px 28px;display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-60px;bottom:-80px;width:260px;height:260px;border-radius:50%;background:rgba(255,255,255,.07)}
+.eyebrow{font-weight:800;text-transform:uppercase;letter-spacing:1.4px;font-size:13px;color:var(--sun)}
+h1{font-family:var(--display);font-size:clamp(30px,5vw,50px);line-height:1.05;margin:4px 0 6px;text-wrap:balance}
+.eq{font-size:18px;opacity:.95;margin:0}
+.sign{font-family:var(--display);font-weight:700;font-size:18px;margin-top:10px;color:#ffe8a3}
+.rulechips{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;position:relative;z-index:1}
+.chip{background:rgba(255,255,255,.14);border-radius:14px;padding:8px 14px;font-weight:800;font-family:var(--display);font-size:20px;text-align:center;font-variant-numeric:tabular-nums}
+.chip small{display:block;font-family:var(--body);font-size:12px;font-weight:700;opacity:.85}
+
+.panel{margin-top:22px}
+.card{background:var(--paper);border-radius:22px;padding:22px;box-shadow:0 3px 0 rgba(138,51,7,.12)}
+h2{font-family:var(--display);font-size:30px;color:var(--deep);margin:0 0 4px;line-height:1.1}
+.sub{color:var(--muted);margin:0 0 16px;font-weight:700}
+
+/* quiz shared */
+.qbox{font-family:var(--display);font-size:clamp(28px,5vw,46px);font-weight:800;text-align:center;color:var(--deep);margin:14px 0 18px;font-variant-numeric:tabular-nums}
+.qbox .story{font-family:var(--body);font-size:20px;font-weight:700;display:block;max-width:640px;margin:0 auto 6px;color:var(--ink)}
+.opts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;max-width:760px;margin:0 auto}
+.opt{border:3px solid var(--sea);background:#fff;border-radius:18px;padding:14px 8px;font-family:var(--display);font-size:26px;font-weight:800;color:var(--deep);transition:transform .12s}
+.opt.small{font-size:19px}
+.opt:hover{transform:translateY(-2px);border-color:var(--teal)}
+.opt.ok{background:var(--good);border-color:var(--good);color:#fff}
+.opt.no{background:var(--bad);border-color:var(--bad);color:#fff;animation:shake .35s}
+.opt:disabled{cursor:default}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.fb{min-height:56px;text-align:center;font-weight:800;font-size:18px;margin-top:14px}
+.fb.ok{color:var(--good)} .fb.no{color:var(--bad)}
+.row{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:8px}
+.btn{border:0;border-radius:999px;padding:12px 24px;font-weight:800;font-size:17px;background:var(--coral);color:#fff;box-shadow:0 3px 0 #0f5560}
+.btn.alt{background:var(--teal);box-shadow:0 3px 0 var(--deep)}
+.dots{display:flex;gap:8px;justify-content:center}
+.dot{width:16px;height:16px;border-radius:50%;background:var(--sea)}
+.dot.ok{background:var(--good)} .dot.no{background:var(--bad)} .dot.cur{outline:3px solid var(--sun)}
+
+/* learn */
+.rules{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:16px}
+.rulebtn{border:3px solid var(--sea);background:#fff;border-radius:18px;padding:12px;text-align:left;color:var(--ink)}
+.rulebtn b{display:block;font-family:var(--display);font-size:24px;color:var(--deep)}
+.rulebtn span{font-size:14px;font-weight:700;color:var(--muted)}
+.rulebtn[aria-pressed="true"]{border-color:var(--coral);background:#e6f4f6}
+.explore{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:18px}
+.tank{background:linear-gradient(#fffaf3,#ffe3c4);border-radius:20px;padding:18px;min-height:300px}
+.waiting{display:flex;flex-wrap:wrap;gap:4px;align-items:center;min-height:44px;font-weight:800;color:var(--muted)}
+.bowls{display:flex;flex-wrap:wrap;gap:14px;margin-top:14px;justify-content:center}
+.bowl{width:84px;height:84px;border-radius:50% 50% 46% 46%;border:4px solid #9fd3da;border-top-color:transparent;background:linear-gradient(transparent 30%,rgba(19,128,143,.22) 30%);display:flex;align-items:center;justify-content:center;position:relative}
+.bowl::after{content:"";position:absolute;bottom:6px;left:18px;right:18px;height:8px;border-radius:6px;background:#d9b98a}
+.nobowl{border:3px dashed var(--bad);border-radius:18px;padding:16px 20px;color:var(--bad);font-weight:800;text-align:center;max-width:320px}
+.fish{width:40px;height:26px;flex:none}
+.drop{animation:drop .5s both}
+@keyframes drop{from{transform:translateY(-60px);opacity:0}to{transform:none;opacity:1}}
+.swim{animation:swim 1.6s ease-in-out infinite alternate}
+@keyframes swim{to{transform:translateX(6px)}}
+.ctrl{display:flex;align-items:center;gap:12px;margin-top:16px;flex-wrap:wrap;font-weight:800}
+.ctrl input{flex:1;min-width:160px;accent-color:var(--coral)}
+.think{display:flex;flex-direction:column;gap:12px}
+.step{background:var(--water);border-radius:16px;padding:12px 16px}
+.step .lab{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--teal)}
+.big{font-family:var(--display);font-size:32px;font-weight:800;color:var(--deep);font-variant-numeric:tabular-nums}
+.big .hl{color:var(--coral)}
+.rulebox{background:var(--sun);border-radius:16px;padding:12px 16px;font-weight:800;font-size:18px}
+.convince{margin-top:18px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:center;border:3px dashed var(--teal);border-radius:20px;padding:16px 18px}
+.convince h3{font-family:var(--display);margin:0;color:var(--coral);font-size:24px}
+.convince p{margin:4px 0 0;font-weight:700}
+
+/* chalkboard */
+.boardframe{background:var(--wood);border-radius:22px;padding:14px;box-shadow:inset 0 0 0 4px #6e4424}
+.board{position:relative;background:radial-gradient(ellipse at 30% 20%,rgba(255,255,255,.06),transparent 60%),linear-gradient(var(--board),var(--board2));border-radius:10px;min-height:max(560px,72vh);color:rgba(255,255,255,.28);font-family:var(--display);font-size:22px;padding:16px 20px}
+.tray{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-top:12px}
+.chalks{display:flex;gap:10px;flex-wrap:wrap}
+.chalk{width:54px;height:16px;border-radius:5px;border:0;box-shadow:0 2px 0 rgba(0,0,0,.35)}
+.chalk[aria-pressed="true"]{outline:3px solid var(--sun);outline-offset:3px}
+.traybtn{border:0;border-radius:999px;padding:8px 16px;font-weight:800;background:#f3e3cf;color:#4a2e16}
+
+/* book */
+.bookbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;margin-bottom:14px}
+.pbtn{border:3px solid var(--sea);background:#fff;border-radius:14px;padding:8px 14px;font-weight:800;color:var(--deep)}
+.pbtn[aria-pressed="true"]{background:var(--deep);border-color:var(--deep);color:#fff}
+.bookpage{max-width:980px;margin:0 auto;background:#fff;border-radius:10px;box-shadow:0 6px 20px rgba(138,51,7,.18);overflow:hidden}
+.bookpage img{display:block;width:100%;height:auto;max-width:100%}
+
+/* game */
+.game{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:18px}
+.aq{background:linear-gradient(#ffc078,#e8590c 70%,#8a3307);border-radius:22px;padding:14px;color:#fff;display:flex;flex-direction:column;gap:10px}
+.aq h3{margin:0;font-family:var(--display);font-size:22px}
+.fishgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;flex:1;align-content:start}
+.slot{height:38px;border-radius:12px;background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center}
+.score{font-family:var(--display);font-size:28px;font-weight:800;font-variant-numeric:tabular-nums}
+.topline{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.qnum{font-weight:800;color:var(--teal);font-size:15px;text-transform:uppercase;letter-spacing:1px}
+.mute{border:0;background:var(--water);border-radius:999px;padding:6px 14px;font-weight:800;color:var(--deep)}
+.end{text-align:center;padding:20px}
+.end .stars{font-size:46px;color:var(--sun);letter-spacing:6px;font-family:var(--display)}
+
+.arr{display:flex;flex-direction:column;gap:6px;align-items:center;margin-top:12px}
+.arow{display:flex;gap:6px;align-items:center}
+.adot{width:20px;height:20px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ffc078,#e8590c);display:inline-block}
+.adot.left{background:radial-gradient(circle at 35% 35%,#ffa8a8,#d64545);outline:3px solid var(--bad);outline-offset:2px}
+.cut.h{width:100%;max-width:300px;border-top:3px dashed var(--coral);margin:4px 0}
+.cut.v{align-self:stretch;border-left:3px dashed var(--coral);margin:0 4px;min-height:20px}
+.hc{margin-top:18px;background:var(--water);border-radius:20px;padding:16px 18px}
+.hgrid{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:4px;max-width:560px}
+.hcell{background:#fff;border-radius:8px;text-align:center;padding:6px 0;font-weight:800;font-family:var(--display);font-size:18px;color:var(--deep);font-variant-numeric:tabular-nums}
+.hcell.ev{background:var(--coral);color:#fff}
+.hcell.od{background:var(--teal);color:#fff}
+.opts.two{grid-template-columns:repeat(2,minmax(0,1fr));max-width:420px}
+/* pen tools (right, vertical) */
+.tools{position:fixed;right:calc(10px + env(safe-area-inset-right,0px));top:50%;transform:translateY(-50%);z-index:40;display:flex;flex-direction:column;align-items:center;gap:6px;background:var(--deep);padding:8px;border-radius:22px;box-shadow:0 8px 24px rgba(13,40,48,.35);max-height:calc(100vh - 90px);overflow-y:auto}
+.tools.hide .tset{display:none}
+.tset{display:flex;flex-direction:column;align-items:center;gap:6px}
+.tbtn{width:46px;height:46px;border-radius:14px;border:0;background:rgba(255,255,255,.1);color:#fff;display:flex;align-items:center;justify-content:center;flex:none}
+.tbtn svg{width:24px;height:24px}
+.tbtn[aria-pressed="true"]{background:var(--sun);color:var(--deep)}
+.tbtn.toggle{background:var(--coral)}
+.sw{width:30px;height:30px;border-radius:50%;border:3px solid rgba(255,255,255,.35);flex:none}
+.sw[aria-pressed="true"]{border-color:#fff;transform:scale(1.15)}
+.sz{width:46px;height:30px;border-radius:10px;border:0;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center}
+.sz i{display:block;border-radius:50%;background:#fff}
+.sz[aria-pressed="true"]{background:rgba(255,201,60,.35)}
+.sep{width:30px;height:2px;background:rgba(255,255,255,.2);border-radius:2px;flex:none}
+.tlabel{color:#fff;font-size:10px;font-weight:800;letter-spacing:.5px;text-transform:uppercase}
+
+@media (max-width:860px){
+  .hero{grid-template-columns:1fr}
+  .rules{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .explore,.game{grid-template-columns:1fr}
+  .opts{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .convince{grid-template-columns:1fr}
+  #stage{padding-right:64px}
+  .bar-in{padding-right:0}
+  .fishgrid{grid-template-columns:repeat(6,1fr)}
+}
+@media (max-width:480px){#stage{padding-right:58px}.tbtn{width:40px;height:40px}.sz{width:40px}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<header class="bar"><div class="bar-in">
+  <div class="brand">Lesson <span>4-5</span></div>
+  <nav class="tabs" role="tablist">
+    <button class="tab" role="tab" data-tab="warm" aria-selected="true" id="t-warm">Warm-up</button>
+    <button class="tab" role="tab" data-tab="learn" aria-selected="false" id="t-learn">Learn</button>
+    <button class="tab" role="tab" data-tab="board" aria-selected="false" id="t-board">Chalkboard</button>
+    <button class="tab" role="tab" data-tab="book" aria-selected="false" id="t-book">Book Pages</button>
+    <button class="tab" role="tab" data-tab="game" aria-selected="false" id="t-game">Game</button>
+  </nav>
+</div></header>
+
+<div class="wrap"><main id="stage">
+  <canvas id="ink"></canvas>
+
+  <section class="hero">
+    <div>
+      <div class="eyebrow">enVision Math · Grade 3 · Topic 4 · Lesson 4-5</div>
+      <h1>Multiplication Patterns: Even and Odd Numbers</h1>
+      <p class="eq"><b>Essential question:</b> How can you explain multiplication patterns for even and odd numbers?</p>
+      <p class="eq">I can use properties to explain patterns of even and odd products.</p>
+      <div class="sign">T.Rana Elsisi</div>
+    </div>
+    <div class="rulechips">
+      <div class="chip">4 × 6 = 24<small>even × even = even</small></div>
+      <div class="chip">2 × 5 = 10<small>even × odd = even</small></div>
+      <div class="chip">4 × 3 = 12<small>odd × even = even</small></div>
+      <div class="chip">3 × 5 = 15<small>odd × odd = odd</small></div>
+    </div>
+  </section>
+
+  <!-- WARM UP -->
+  <section class="panel" id="p-warm">
+    <div class="card">
+      <h2>Warm-up: Even or Odd?</h2>
+      <p class="sub">5 quick questions about even numbers, odd numbers and multiplication.</p>
+      <div class="dots" id="wDots"></div>
+      <div class="qbox" id="wQ"></div>
+      <div class="opts" id="wOpts"></div>
+      <div class="fb" id="wFb"></div>
+      <div class="row"><button class="btn" id="wNext" hidden>Next</button></div>
+    </div>
+  </section>
+
+  <!-- LEARN -->
+  <section class="panel" id="p-learn" hidden>
+    <div class="card">
+      <h2>Learn: Even and Odd Factors</h2>
+      <p class="sub">Choose two factors. Can a factor be split into 2 equal groups with none left over? Then the product is even.</p>
+      <div class="rules" id="rules">
+        <button class="rulebtn" data-a="4" data-b="6" aria-pressed="true"><b>even × even</b><span>4 × 6</span></button>
+        <button class="rulebtn" data-a="2" data-b="5" aria-pressed="false"><b>even × odd</b><span>2 × 5</span></button>
+        <button class="rulebtn" data-a="3" data-b="4" aria-pressed="false"><b>odd × even</b><span>3 × 4</span></button>
+        <button class="rulebtn" data-a="3" data-b="5" aria-pressed="false"><b>odd × odd</b><span>3 × 5</span></button>
+      </div>
+      <div class="explore">
+        <div>
+          <div class="tank">
+            <div class="waiting" id="waiting"></div>
+            <div class="arr" id="arr"></div>
+          </div>
+          <div class="ctrl"><label for="aSlide">Rows: <span id="aVal">4</span></label><input type="range" id="aSlide" min="1" max="10" value="4"></div>
+          <div class="ctrl" style="margin-top:6px"><label for="bSlide">In each row: <span id="bVal">6</span></label><input type="range" id="bSlide" min="1" max="10" value="6"></div>
+        </div>
+        <div class="think">
+          <div class="step"><div class="lab">Check the factors</div><div id="fa" style="font-weight:800"></div><div id="fb2" style="font-weight:800"></div></div>
+          <div class="step"><div class="lab">Multiply</div><div class="big" id="soEq"></div></div>
+          <div class="step"><div class="lab">Ones place</div><div id="ones" style="font-weight:700"></div></div>
+          <div class="rulebox" id="ruleTxt"></div>
+        </div>
+      </div>
+      <div class="hc">
+        <div class="lab" style="font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--teal)">Number chart 1–40</div>
+        <div class="row" style="justify-content:flex-start;margin:6px 0 10px"><button class="btn alt" id="showEven">Show even numbers</button><button class="btn" id="showOdd">Show odd numbers</button></div>
+        <div class="hgrid" id="hgrid"></div>
+        <p style="font-weight:700;margin:10px 0 0">Even numbers have 0, 2, 4, 6, or 8 in the ones place.</p>
+      </div>
+      <div class="convince">
+        <div>
+          <h3>Convince Me!</h3>
+          <p>Does multiplying by 8 always give an even product? Choose the best answer.</p>
+          <div class="fb" id="cFb" style="text-align:left;min-height:28px;margin-top:6px"></div>
+        </div>
+        <div class="row" style="margin:0">
+          <button class="opt small" data-c="1" id="c0">Yes, 8 is 2 equal groups of 4</button>
+          <button class="opt small" data-c="0" id="c1">No, it depends on the other factor</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- CHALKBOARD -->
+  <section class="panel" id="p-board" hidden>
+    <div class="boardframe">
+      <div class="board">Chalkboard · write with the pen tools</div>
+      <div class="tray">
+        <div class="chalks" id="chalks">
+          <button class="chalk" style="background:#ffffff" data-c="#ffffff" aria-label="White chalk" aria-pressed="true"></button>
+          <button class="chalk" style="background:#ffe27a" data-c="#ffe27a" aria-label="Yellow chalk" aria-pressed="false"></button>
+          <button class="chalk" style="background:#ff9fc2" data-c="#ff9fc2" aria-label="Pink chalk" aria-pressed="false"></button>
+          <button class="chalk" style="background:#8fd8ff" data-c="#8fd8ff" aria-label="Blue chalk" aria-pressed="false"></button>
+          <button class="chalk" style="background:#a6f08f" data-c="#a6f08f" aria-label="Green chalk" aria-pressed="false"></button>
+        </div>
+        <button class="traybtn" id="boardClear">Wipe the board</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOOK -->
+  <section class="panel" id="p-book" hidden>
+    <div class="bookbar" id="bookbar">
+      <button class="pbtn" data-p="0" aria-pressed="true">p. 133 Solve &amp; Share</button>
+      <button class="pbtn" data-p="1" aria-pressed="false">p. 134 Learn</button>
+      <button class="pbtn" data-p="2" aria-pressed="false">p. 135 Practice</button>
+      <button class="pbtn" data-p="3" aria-pressed="false">p. 136 Problem Solving</button>
+    </div>
+    <div class="bookpage"><img id="bookImg" src="pages/pg-17.jpg" alt="Book page for Lesson 4-5"></div>
+  </section>
+
+  <!-- GAME -->
+  <section class="panel" id="p-game" hidden>
+    <div class="game">
+      <div class="card">
+        <div class="topline"><h2>Orange Orchard</h2><button class="mute" id="mute">Sound: on</button></div>
+        <p class="sub">18 questions. Every right answer picks an orange for the basket!</p>
+        <div id="gPlay">
+          <div class="qnum" id="gNum"></div>
+          <div class="qbox" id="gQ"></div>
+          <div class="opts" id="gOpts"></div>
+          <div class="fb" id="gFb"></div>
+          <div class="row"><button class="btn" id="gNext" hidden>Next question</button></div>
+        </div>
+        <div class="end" id="gEnd" hidden>
+          <div class="stars" id="gStars"></div>
+          <h2 id="gMsg"></h2>
+          <p class="sub" id="gScoreTxt"></p>
+          <button class="btn" id="gAgain">Play again</button>
+        </div>
+      </div>
+      <aside class="aq">
+        <h3>Our basket</h3>
+        <div class="score" id="gScore">0 / 18</div>
+        <div class="fishgrid" id="fishgrid"></div>
+      </aside>
+    </div>
+  </section>
+</main></div>
+
+<!-- PEN TOOLS -->
+<div class="tools" id="tools" aria-label="Writing tools">
+  <button class="tbtn toggle" id="tToggle" aria-label="Hide writing tools" title="Hide / show writing tools">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l4-1 11-11-3-3L5 16z"/><path d="M14 6l3 3"/></svg>
+  </button>
+  <div class="tlabel" id="tState">Off</div>
+  <div class="tset">
+    <div class="sep"></div>
+    <button class="tbtn" data-tool="mouse" aria-pressed="true" aria-label="Pointer (pen off)" title="Pointer (pen off)">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 3l14 8-6 1.5L16 20l-2.5 1-3-7.5L6 18z"/></svg></button>
+    <button class="tbtn" data-tool="pen" aria-pressed="false" aria-label="Pen" title="Pen">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l3.5-1L19 7.5 16.5 5 4 17.5z"/><path d="M14.5 7l2.5 2.5"/></svg></button>
+    <button class="tbtn" data-tool="hl" aria-pressed="false" aria-label="Highlighter" title="Highlighter">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M9 14l6-10 4 2.5-6 10z"/><path d="M9 14l-2 4h4l2-1.5"/><path d="M4 21h16" stroke-linecap="round"/></svg></button>
+    <button class="tbtn" data-tool="eraser" aria-pressed="false" aria-label="Eraser" title="Eraser">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M8 20h12"/><path d="M4.5 15.5l9-9a2 2 0 012.8 0l3.2 3.2a2 2 0 010 2.8L13 19H8z"/><path d="M9 11l5 5"/></svg></button>
+    <div class="sep"></div>
+    <div id="swatches" style="display:flex;flex-direction:column;gap:6px;align-items:center"></div>
+    <div class="sep"></div>
+    <button class="sz" data-sz="3" aria-pressed="false" aria-label="Thin"><i style="width:5px;height:5px"></i></button>
+    <button class="sz" data-sz="6" aria-pressed="true" aria-label="Medium"><i style="width:10px;height:10px"></i></button>
+    <button class="sz" data-sz="12" aria-pressed="false" aria-label="Thick"><i style="width:16px;height:16px"></i></button>
+    <div class="sep"></div>
+    <button class="tbtn" id="tUndo" aria-label="Undo" title="Undo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14L4 9l5-5"/><path d="M4 9h10a6 6 0 010 12h-3"/></svg></button>
+    <button class="tbtn" id="tClear" aria-label="Clear writing on this page" title="Clear writing on this page">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg></button>
+  </div>
+</div>
+
+<script>
+(function(){
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const FISH=(c='#f26b3a')=>`<svg class="fish" viewBox="0 0 40 26"><path d="M30 13 L40 3 L40 23 Z" fill="${c}"/><ellipse cx="18" cy="13" rx="15" ry="10" fill="${c}"/><path d="M14 4 q6 -6 10 1" fill="${c}"/><circle cx="9" cy="11" r="2.6" fill="#fff"/><circle cx="8.4" cy="11" r="1.3" fill="#173038"/></svg>`;
+const ORANGE=(c)=>`<svg class="fish" viewBox="0 0 30 30" style="width:30px;height:30px"><circle cx="15" cy="17" r="11" fill="${c}"/><circle cx="11" cy="13" r="2.5" fill="#fff" opacity=".45"/><path d="M15 6 q5 -5 9 -2 q-4 4 -9 2z" fill="#2f9e44"/><path d="M15 6v-3" stroke="#6b3a12" stroke-width="2" stroke-linecap="round"/></svg>`;
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+
+/* ---------- sound ---------- */
+let actx=null, soundOn=true;
+function tone(freqs,dur=.12){ if(!soundOn) return; try{ actx=actx||new (window.AudioContext||window.webkitAudioContext)();
+  freqs.forEach((f,i)=>{const o=actx.createOscillator(),g=actx.createGain();o.type='triangle';o.frequency.value=f;
+  const t=actx.currentTime+i*dur;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.25,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+dur*1.6);
+  o.connect(g).connect(actx.destination);o.start(t);o.stop(t+dur*1.8)});}catch(e){} }
+const good=()=>tone([660,880,1100]), bad=()=>tone([260,200],.16), win=()=>tone([523,659,784,1047,1319],.14);
+
+/* ---------- tabs ---------- */
+let curTab='warm', bookPage=0;
+const pages=['pages/pg-17.jpg','pages/pg-18.jpg','pages/pg-19.jpg','pages/pg-20.jpg'];
+function showTab(t){ curTab=t;
+  $$('.tab').forEach(b=>b.setAttribute('aria-selected',b.dataset.tab===t));
+  ['warm','learn','board','book','game'].forEach(k=>$('#p-'+k).hidden=k!==t);
+  if(t==='board' && !boardColorSet){ setColor('#ffffff'); boardColorSet=true; }
+  if(t!=='board' && boardColorSet){ setColor(prevColor); boardColorSet=false; }
+  requestAnimationFrame(sizeInk);
+}
+let boardColorSet=false, prevColor='#1565c0';
+$$('.tab').forEach(b=>b.onclick=()=>showTab(b.dataset.tab));
+
+/* ---------- WARM UP ---------- */
+const warmQs=[
+  {q:'2 × 4 = ?',o:['6','8','10','2'],a:'8',why:'2 groups of 4 make 8.'},
+  {q:'3 × 5 = ?',o:['8','15','35','12'],a:'15',why:'3 × 5 = 15'},
+  {q:'Is 7 even or odd?',o:['Even','Odd'],a:'Odd',why:'7 cannot be shared into 2 equal groups. 3 + 3 + 1 left over.'},
+  {q:'Is 12 even or odd?',o:['Even','Odd'],a:'Even',why:'12 = 6 + 6, so 12 is even.'},
+  {q:'6 × 2 = ?',o:['8','12','10','14'],a:'12',why:'6 × 2 = 12'}
+]
+let wi=0, wRes=[];
+function wRender(){
+  $('#wDots').innerHTML=warmQs.map((_,i)=>`<span class="dot ${wRes[i]||''} ${i===wi?'cur':''}"></span>`).join('');
+  if(wi>=warmQs.length){ const s=wRes.filter(r=>r==='ok').length;
+    $('#wQ').innerHTML=`<span class="story">Warm-up done!</span>${s} / 5`; $('#wOpts').innerHTML='';
+    $('#wFb').className='fb ok'; $('#wFb').textContent=s>=4?'Super! You are ready for today’s lesson.':'Good try! Even numbers end in 0, 2, 4, 6 or 8.';
+    $('#wNext').hidden=false; $('#wNext').textContent='Start again'; return; }
+  const q=warmQs[wi]; $('#wQ').textContent=q.q; $('#wFb').textContent=''; $('#wFb').className='fb'; $('#wNext').hidden=true;
+  $('#wOpts').classList.toggle('two',q.o.length===2); $('#wOpts').innerHTML=q.o.map(o=>`<button class="opt">${o}</button>`).join('');
+  $$('#wOpts .opt').forEach(b=>b.onclick=()=>{
+    const ok=b.textContent===q.a; wRes[wi]=ok?'ok':'no';
+    $$('#wOpts .opt').forEach(x=>{x.disabled=true; if(x.textContent===q.a)x.classList.add('ok')});
+    if(!ok)b.classList.add('no'); ok?good():bad();
+    $('#wFb').className='fb '+(ok?'ok':'no'); $('#wFb').textContent=(ok?'Correct! ':'Not this time. ')+q.why;
+    $('#wNext').hidden=false; $('#wNext').textContent=wi===warmQs.length-1?'See my score':'Next';
+    $('#wDots').innerHTML=warmQs.map((_,i)=>`<span class="dot ${wRes[i]||''} ${i===wi?'cur':''}"></span>`).join('');
+  });
+}
+$('#wNext').onclick=()=>{ if(wi>=warmQs.length){wi=0;wRes=[]} else wi++; wRender(); };
+wRender();
+
+/* ---------- LEARN ---------- */
+let A=4, Bn=6;
+const isEven=x=>x%2===0;
+function learnRender(){
+  $('#aVal').textContent=A; $('#bVal').textContent=Bn; $('#aSlide').value=A; $('#bSlide').value=Bn;
+  const P=A*Bn, splitRows=isEven(A), splitCols=!splitRows&&isEven(Bn);
+  let h='';
+  for(let r=0;r<A;r++){
+    if(splitRows && r===A/2) h+='<div class="cut h"></div>';
+    h+='<div class="arow">';
+    for(let c=0;c<Bn;c++){
+      if(splitCols && c===Bn/2) h+='<span class="cut v"></span>';
+      const left = !splitRows && !splitCols && r===A-1 && c===Bn-1;
+      h+=`<span class="adot drop ${left?'left':''}" style="animation-delay:${(r*Bn+c)*0.012}s"></span>`;
+    }
+    h+='</div>';
+  }
+  $('#arr').innerHTML=h;
+  $('#waiting').textContent = splitRows? `${A} rows can make 2 equal groups of ${A/2} rows.` : splitCols? `${Bn} in each row can make 2 equal groups of ${Bn/2}.` : `No factor makes 2 equal groups. There is 1 left over!`;
+  const lab=x=>`${x} is <span style="color:${isEven(x)?'var(--good)':'var(--bad)'}">${isEven(x)?'even':'odd'}</span> — ${isEven(x)?`it can be divided by 2 (${x/2} + ${x/2})`:'it cannot be divided by 2 with none left over'}`;
+  $('#fa').innerHTML=lab(A); $('#fb2').innerHTML=lab(Bn);
+  $('#soEq').innerHTML=`${A} × ${Bn} = <span class="hl">${P}</span>`;
+  $('#ones').textContent=`${P} has ${P%10} in the ones place, so ${P} is ${isEven(P)?'even':'odd'}.`;
+  const kind=(isEven(A)?'even':'odd')+' × '+(isEven(Bn)?'even':'odd');
+  $('#ruleTxt').textContent=`${kind} = ${isEven(P)?'even':'odd'}. ` + (isEven(P)?'If one factor is even, the product is even.':'Both factors are odd, so the product is odd.');
+  $$('#rules .rulebtn').forEach(x=>x.setAttribute('aria-pressed', +x.dataset.a===A && +x.dataset.b===Bn));
+  requestAnimationFrame(sizeInk);
+}
+$$('#rules .rulebtn').forEach(b=>b.onclick=()=>{A=+b.dataset.a;Bn=+b.dataset.b;learnRender()});
+$('#aSlide').oninput=e=>{A=+e.target.value;learnRender()};
+$('#bSlide').oninput=e=>{Bn=+e.target.value;learnRender()};
+$('#hgrid').innerHTML=Array.from({length:40},(_,i)=>`<span class="hcell" data-n="${i+1}">${i+1}</span>`).join('');
+$('#showEven').onclick=()=>$$('.hcell').forEach(c=>{c.classList.toggle('ev',+c.dataset.n%2===0);c.classList.remove('od')});
+$('#showOdd').onclick=()=>$$('.hcell').forEach(c=>{c.classList.toggle('od',+c.dataset.n%2===1);c.classList.remove('ev')});
+$$('.convince .opt').forEach(b=>b.onclick=()=>{
+  const ok=b.dataset.c==='1'; $$('.convince .opt').forEach(x=>x.classList.remove('ok','no')); b.classList.add(ok?'ok':'no'); ok?good():bad();
+  $('#cFb').className='fb '+(ok?'ok':'no');
+  $('#cFb').textContent= ok?'Yes! 8 × 3 = (2 × 4) × 3 = 2 × 12. It is always 2 equal groups, so it is always even.':'Try 8 × 1, 8 × 3, 8 × 5: 8, 24, 40. All even! 8 is even, so the product is always even.';
+});
+learnRender();
+/* ---------- BOARD ---------- */
+$$('#chalks .chalk').forEach(b=>b.onclick=()=>{ setColor(b.dataset.c); if(tool==='mouse'||tool==='eraser') setTool('pen'); });
+$('#boardClear').onclick=()=>clearPage();
+
+/* ---------- BOOK ---------- */
+$$('#bookbar .pbtn').forEach(b=>b.onclick=()=>{ bookPage=+b.dataset.p; $$('#bookbar .pbtn').forEach(x=>x.setAttribute('aria-pressed',x===b)); $('#bookImg').src=pages[bookPage]; requestAnimationFrame(sizeInk); });
+$('#bookImg').addEventListener('load',()=>requestAnimationFrame(sizeInk));
+
+/* ---------- GAME ---------- */
+const EV='Even', OD='Odd', CANT='__none__';
+const gameQs=[
+  {q:'<span class="story">Is the product even or odd?</span>4 × 6',o:[EV,OD],a:EV,why:'4 × 6 = 24. Both factors are even.'},
+  {q:'<span class="story">Is the product even or odd?</span>3 × 5',o:[EV,OD],a:OD,why:'3 × 5 = 15. odd × odd = odd'},
+  {q:'<span class="story">Is the product even or odd?</span>8 × 7',o:[EV,OD],a:EV,why:'8 × 7 = 56. 8 is even, so the product is even.'},
+  {q:'9 × 5 = ?',o:['45','40','54','35'],a:'45',why:'9 × 5 = 45. odd × odd = odd'},
+  {q:'<span class="story">Is the product even or odd?</span>9 × 3',o:[EV,OD],a:OD,why:'9 × 3 = 27. Both factors are odd.'},
+  {q:'<span class="story">Which number is even?</span>',o:['15','27','34','9'],a:'34',why:'34 has 4 in the ones place.'},
+  {q:'<span class="story">Which number is odd?</span>',o:['18','20','23','40'],a:'23',why:'23 has 3 in the ones place.'},
+  {q:'even × odd = ?',o:[EV,OD],a:EV,why:'If one factor is even, the product is even.'},
+  {q:'odd × odd = ?',o:[EV,OD],a:OD,why:'Odd numbers cannot make 2 equal groups, so the product is odd.'},
+  {q:'even × even = ?',o:[EV,OD],a:EV,why:'Both factors can be divided by 2, so the product is even.'},
+  {q:'<span class="story">Which product is odd?</span>',o:['2 × 7','4 × 5','3 × 7','6 × 3'],a:'3 × 7',why:'3 and 7 are both odd. 3 × 7 = 21',small:true},
+  {q:'<span class="story">Which product is even?</span>',o:['5 × 9','7 × 3','1 × 9','8 × 5'],a:'8 × 5',why:'8 is even. 8 × 5 = 40',small:true},
+  {q:'4 × 8 = ?',o:['32','36','24','28'],a:'32',why:'4 × 8 = 32. even × even = even'},
+  {q:'<span class="story">Caitlin rode 7 miles each day for 8 days. Is the total even or odd?</span>',o:[EV,OD],a:EV,why:'8 × 7 = 56 miles. 56 is even.'},
+  {q:'<span class="story">5 bags have 3 apples in each bag. How many apples?</span>',o:['15','8','18','12'],a:'15',why:'5 × 3 = 15. odd × odd = odd'},
+  {q:'<span class="story">Does multiplying by 8 always give an even product?</span>',o:['Yes','No'],a:'Yes',why:'8 is even, so 8 times any number is even.'},
+  {q:'<span class="story">Which can be divided by 2 with none left over?</span>',o:['21','13','16','7'],a:'16',why:'16 = 8 + 8. It is even.'},
+  {q:'6 × 6 = ?',o:['36','12','30','42'],a:'36',why:'6 × 6 = 36. even × even = even'}
+];
+const fishColors=['#f08c00','#ff922b','#fd7e14','#ffa94d','#f76707','#ffc078'];
+let order=[], gi=0, gScore=0;
+function gStart(){ order=shuffle(gameQs); gi=0; gScore=0; $('#gEnd').hidden=true; $('#gPlay').hidden=false;
+  $('#fishgrid').innerHTML=Array.from({length:18},()=>'<div class="slot"></div>').join(''); gRender(); }
+function gRender(){
+  $('#gScore').textContent=`${gScore} / 18`;
+  if(gi>=order.length){ $('#gPlay').hidden=true; $('#gEnd').hidden=false;
+    const st=gScore>=16?3:gScore>=11?2:1; $('#gStars').textContent='★'.repeat(st)+'☆'.repeat(3-st);
+    $('#gMsg').textContent=st===3?'Orange champion!':st===2?'Great picking!':'Good effort!';
+    $('#gScoreTxt').textContent=`You picked ${gScore} of 18 oranges.`; win(); requestAnimationFrame(sizeInk); return; }
+  const q=order[gi]; $('#gNum').textContent=`Question ${gi+1} of 18`; $('#gQ').innerHTML=q.q;
+  $('#gFb').textContent=''; $('#gFb').className='fb'; $('#gNext').hidden=true;
+  $('#gOpts').classList.toggle('two',q.o.length===2); $('#gOpts').innerHTML=(q.o.length===2?q.o:shuffle(q.o)).map(o=>`<button class="opt ${q.small||o===CANT?'small':''}">${o}</button>`).join('');
+  $$('#gOpts .opt').forEach(b=>b.onclick=()=>{
+    const ok=b.textContent===q.a;
+    $$('#gOpts .opt').forEach(x=>{x.disabled=true;if(x.textContent===q.a)x.classList.add('ok')});
+    if(ok){ gScore++; good(); const slot=$$('#fishgrid .slot')[gScore-1]; if(slot) slot.innerHTML=`<span class="drop">${ORANGE(fishColors[gScore%fishColors.length])}</span>`; }
+    else { b.classList.add('no'); bad(); }
+    $('#gScore').textContent=`${gScore} / 18`;
+    $('#gFb').className='fb '+(ok?'ok':'no'); $('#gFb').textContent=(ok?'Correct! ':'Oops! ')+q.why;
+    $('#gNext').hidden=false; $('#gNext').textContent=gi===17?'See my basket':'Next question';
+  });
+  requestAnimationFrame(sizeInk);
+}
+$('#gNext').onclick=()=>{gi++;gRender()};
+$('#gAgain').onclick=gStart;
+$('#mute').onclick=()=>{soundOn=!soundOn;$('#mute').textContent='Sound: '+(soundOn?'on':'off')};
+gStart();
+
+/* ---------- INK (pen anywhere on the page) ---------- */
+const stage=$('#stage'), cv=$('#ink'), ctx=cv.getContext('2d');
+const store={}, hist={};
+let tool='mouse', color='#1565c0', size=6, cssW=1, cssH=1, dpr=1, drawing=null, toolsHidden=false;
+const colors=['#1565c0','#d32f2f','#2e7d32','#173038','#f26b3a','#8e24aa','#ffffff','#ffd23f'];
+const key=()=>curTab==='book'?'book'+bookPage:curTab;
+const strokes=()=>store[key()]||(store[key()]=[]);
+function snapshot(){ const k=key(); (hist[k]||(hist[k]=[])).push(strokes().slice()); if(hist[k].length>60) hist[k].shift(); }
+
+function sizeInk(){
+  cssW=stage.clientWidth; cssH=stage.offsetHeight;
+  dpr=Math.min(window.devicePixelRatio||1,2);
+  const maxPx=14e6; if(cssW*cssH*dpr*dpr>maxPx) dpr=Math.sqrt(maxPx/(cssW*cssH));
+  cv.style.height=cssH+'px';
+  cv.width=Math.round(cssW*dpr); cv.height=Math.round(cssH*dpr);
+  redraw();
+}
+function drawStroke(s){
+  const w=cssW; if(!s.pts.length) return;
+  ctx.save(); ctx.lineCap= s.hl?'butt':'round'; ctx.lineJoin='round';
+  ctx.strokeStyle=s.c; ctx.globalAlpha=s.hl?.35:1; ctx.lineWidth=s.lw*w;
+  ctx.beginPath(); ctx.moveTo(s.pts[0][0]*w,s.pts[0][1]*w);
+  if(s.pts.length===1) ctx.lineTo(s.pts[0][0]*w+.01,s.pts[0][1]*w);
+  for(let i=1;i<s.pts.length;i++){ const p=s.pts[i-1], q=s.pts[i]; ctx.quadraticCurveTo(p[0]*w,p[1]*w,(p[0]+q[0])/2*w,(p[1]+q[1])/2*w); }
+  ctx.lineTo(s.pts[s.pts.length-1][0]*w,s.pts[s.pts.length-1][1]*w);
+  ctx.stroke(); ctx.restore();
+}
+let raf=0;
+function redraw(){ ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,cssW,cssH); strokes().forEach(drawStroke); }
+const queue=()=>{ if(!raf) raf=requestAnimationFrame(()=>{raf=0;redraw()}); };
+function pos(e){ const r=cv.getBoundingClientRect(); return [(e.clientX-r.left)/cssW,(e.clientY-r.top)/cssW]; }
+function eraseAt(p){ const R=14/cssW, arr=strokes(); let changed=false;
+  for(let i=arr.length-1;i>=0;i--){ if(arr[i].pts.some(q=>Math.hypot(q[0]-p[0],q[1]-p[1])<R+arr[i].lw/2)){ arr.splice(i,1); changed=true; } }
+  if(changed) queue(); }
+cv.addEventListener('pointerdown',e=>{
+  if(tool==='mouse') return; e.preventDefault(); cv.setPointerCapture(e.pointerId); snapshot();
+  const p=pos(e);
+  if(tool==='eraser'){ drawing={erase:true}; eraseAt(p); return; }
+  const hl=tool==='hl'; drawing={c:hl&&color==='#ffffff'?'#ffd23f':color, lw:(hl?size*3.2:size)/cssW, hl, pts:[p]};
+  strokes().push(drawing); queue();
+});
+cv.addEventListener('pointermove',e=>{ if(!drawing) return; const evs=e.getCoalescedEvents?e.getCoalescedEvents():[e];
+  if(drawing.erase){ evs.forEach(ev=>eraseAt(pos(ev))); return; }
+  evs.forEach(ev=>drawing.pts.push(pos(ev))); queue(); });
+const end=()=>{ drawing=null; };
+cv.addEventListener('pointerup',end); cv.addEventListener('pointercancel',end);
+
+function setTool(t){ tool=t; $$('[data-tool]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.tool===t));
+  cv.classList.toggle('on',t!=='mouse' && !toolsHidden); cv.classList.toggle('erase',t==='eraser');
+  $('#tState').textContent= t==='mouse'?'Off':t==='pen'?'Pen':t==='hl'?'Mark':'Erase'; }
+function setColor(c){ if(curTab!=='board') prevColor=c; color=c;
+  $$('.sw').forEach(b=>b.setAttribute('aria-pressed',b.dataset.c===c));
+  $$('#chalks .chalk').forEach(b=>b.setAttribute('aria-pressed',b.dataset.c===c)); }
+$('#swatches').innerHTML=colors.map(c=>`<button class="sw" data-c="${c}" style="background:${c}" aria-label="Color ${c}" aria-pressed="false"></button>`).join('');
+$$('.sw').forEach(b=>b.onclick=()=>{ setColor(b.dataset.c); if(tool==='mouse'||tool==='eraser') setTool('pen'); });
+$$('[data-tool]').forEach(b=>b.onclick=()=>setTool(b.dataset.tool));
+$$('.sz').forEach(b=>b.onclick=()=>{ size=+b.dataset.sz; $$('.sz').forEach(x=>x.setAttribute('aria-pressed',x===b)); if(tool==='mouse'||tool==='eraser') setTool('pen'); });
+$('#tUndo').onclick=()=>{ const h=hist[key()]; if(h&&h.length){ store[key()]=h.pop(); redraw(); } };
+function clearPage(){ if(!strokes().length) return; snapshot(); store[key()]=[]; redraw(); }
+$('#tClear').onclick=clearPage;
+$('#tToggle').onclick=()=>{ toolsHidden=!toolsHidden; $('#tools').classList.toggle('hide',toolsHidden);
+  $('#tToggle').setAttribute('aria-label',toolsHidden?'Show writing tools':'Hide writing tools');
+  $('#tState').textContent= toolsHidden?'Show':''; if(!toolsHidden) setTool(tool); else cv.classList.remove('on'); };
+setColor('#1565c0'); setTool('mouse');
+
+new ResizeObserver(()=>sizeInk()).observe(stage);
+window.addEventListener('resize',sizeInk);
+sizeInk();
+})();
+</script>
+
+</body></html>

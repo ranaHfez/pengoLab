@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Multiplication Facts 0, 1, 2, 5, 9, 10 – Grade 3 Lesson Plan</title>
+<style>
+:root{--bg:#fff8e7;--card:#fff;--tx:#2b2d42;--a:#ff6b6b;--b:#4ecdc4;--c:#ffd93d;--d:#6c5ce7;--e:#74b9ff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1d1b3a;--card:#2a2850;--tx:#f5f3ff}}
+:root[data-theme="dark"]{--bg:#1d1b3a;--card:#2a2850;--tx:#f5f3ff}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Comic Sans MS","Trebuchet MS",system-ui,sans-serif;background:var(--bg);color:var(--tx)}
+header{background:linear-gradient(120deg,var(--a),var(--c),var(--b),var(--d));color:#fff;text-align:center;padding:18px 10px;text-shadow:0 2px 4px #0004}
+h1{margin:0;font-size:clamp(1.3rem,5vw,2.2rem)}header p{margin:4px 0 0}
+nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:12px;position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);z-index:5}
+nav button,.btn{border:0;border-radius:20px;padding:10px 16px;font:inherit;font-weight:bold;color:#fff;cursor:pointer;background:var(--d);box-shadow:0 3px 0 #0003}
+nav button.on{background:var(--a);transform:translateY(2px)}
+main{max-width:860px;margin:auto;padding:10px 14px 40px}
+section{display:none}section.on{display:block}
+.card{background:var(--card);border-radius:18px;padding:16px;margin:12px 0;box-shadow:0 4px 12px #0002;border-top:8px solid var(--b)}
+.card:nth-child(2n){border-color:var(--a)}.card:nth-child(3n){border-color:var(--c)}.card:nth-child(4n){border-color:var(--d)}
+h2{margin-top:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.tip{border-radius:14px;padding:10px;color:#222}
+.big{font-size:clamp(1.6rem,7vw,2.6rem);font-weight:bold;text-align:center;margin:10px 0}
+.opts{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.opts button{font:inherit;font-size:1.6rem;font-weight:bold;padding:14px;border-radius:14px;border:0;background:var(--e);color:#102;cursor:pointer;box-shadow:0 3px 0 #0003}
+.opts button.ok{background:#55efc4}.opts button.no{background:#ff7675}
+.bar{height:14px;background:#0002;border-radius:9px;overflow:hidden}.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--b),var(--c));transition:width .3s}
+.stat{display:flex;justify-content:space-between;font-weight:bold;margin:6px 0}
+.msg{min-height:1.6em;text-align:center;font-weight:bold}
+.chips{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:6px 0}
+.chips label{background:var(--c);color:#222;padding:5px 12px;border-radius:14px;cursor:pointer;font-weight:bold}
+.chips input{margin-right:4px}
+.mem{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.mem div{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:12px;background:var(--d);color:#fff;font-size:1.1rem;font-weight:bold;cursor:pointer;text-align:center;user-select:none}
+.mem div.up{background:var(--c);color:#222}.mem div.done{background:#55efc4;color:#222}
+.sky{position:relative;height:300px;background:linear-gradient(#a5d8ff,#e7f5ff);border-radius:16px;overflow:hidden}
+.bal{position:absolute;width:14.5%;min-width:46px;max-width:70px;height:78px;padding:0;border-radius:50% 50% 48% 48%;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:1.3rem;color:#fff;cursor:pointer;border:0;touch-action:manipulation}
+input.ans{font:inherit;font-size:1.6rem;width:110px;text-align:center;border-radius:12px;border:3px solid var(--d);padding:8px;background:var(--card);color:var(--tx)}
+.stars{font-size:1.2rem}
+table{border-collapse:collapse;width:100%}td,th{border:1px solid #8884;padding:6px;text-align:center}
+</style>
+<!-- Shared template: colors, fonts, sounds, buttons, mascots. Keep this. -->
+<link rel="stylesheet" href="../../shared/theme.css">
+<script src="../../shared/theme.js" defer></script>
+</head><body>
+<header><h1>✨ Multiplication Facts: 0, 1, 2, 5, 9, 10 ✨</h1><p>enVision Math · Grade 3 · Topic 2 · Lesson 5 &nbsp;|&nbsp; ⭐ Total stars: <b id="tot">0</b></p></header>
+<nav id="nav"></nav>
+<main>
+<section id="plan" class="on">
+<div class="card"><h2>🎯 Learning Goals</h2><ul><li>Fluently multiply by 0, 1, 2, 5, 9 and 10 using patterns and strategies.</li><li>Explain <i>why</i> a strategy works (arrays, equal groups, skip counting).</li><li>Use known facts to solve unknown ones. Time: ~45 minutes.</li></ul>
+<b>Vocabulary:</b> factor · product · array · equal groups · skip count · double · Zero Property · Identity Property</div>
+<div class="card"><h2>🧠 Strategy Cards</h2><div class="grid">
+<div class="tip" style="background:#ffeaa7"><b>×0</b><br>Any number × 0 = 0. Zero groups, or groups of zero, means nothing! 7 × 0 = 0</div>
+<div class="tip" style="background:#fab1a0"><b>×1</b><br>Any number × 1 = itself. One group of 8 is 8. 1 × 8 = 8</div>
+<div class="tip" style="background:#81ecec"><b>×2</b><br>Double the number. 2 × 6 → 6 + 6 = 12</div>
+<div class="tip" style="background:#a29bfe"><b>×5</b><br>Skip count by 5s, or half of ×10. Products end in 0 or 5. 5 × 7 = 35</div>
+<div class="tip" style="background:#55efc4"><b>×10</b><br>Put a 0 after the number. 10 × 6 = 60 (six tens)</div>
+<div class="tip" style="background:#fd79a8"><b>×9</b><br>Do ×10, then take away one group. 9 × 6 = 60 − 6 = 54. Digits of the product add to 9!</div>
+</div></div>
+<div class="card"><h2>📋 Lesson Flow</h2><table>
+<tr><th>Time</th><th>Stage</th><th>What to do</th></tr>
+<tr><td>5 min</td><td>🔥 Warm-up</td><td>Play “Speed Tap” as a class on the board.</td></tr>
+<tr><td>10 min</td><td>👀 Launch</td><td>Problem: “Maya has 5 boxes with 4 crayons each.” Draw arrays and equal groups. Discuss strategies.</td></tr>
+<tr><td>10 min</td><td>🤝 Explore</td><td>Pairs build arrays for ×2, ×5, ×10 with counters; spot patterns in the table.</td></tr>
+<tr><td>15 min</td><td>🎮 Games</td><td>Stations: Memory Match, Missing Number, Balloon Pop, Beat the Clock.</td></tr>
+<tr><td>5 min</td><td>🏁 Exit ticket</td><td>See below.</td></tr></table></div>
+<div class="card"><h2>🎟️ Exit Ticket</h2>1) 9 × 0 = ___ &nbsp; 2) 1 × 12 = ___ &nbsp; 3) 5 × 8 = ___ &nbsp; 4) 9 × 7 = ___ &nbsp; 5) Explain how you can use 10 × 7 to find 9 × 7.
+<p><b>Differentiation:</b> Support – counters and skip-count strips. Extend – write word problems or find 9 × 12 using 10 × 12 − 12.</p></div>
+<div class="card"><h2>🔢 Pattern Table (tap to reveal)</h2><div id="tbl"></div></div>
+</section>
+<section id="g0"><div class="card"><h2>🔥 Warm-up: Speed Tap</h2><div class="chips" id="c0"></div><div class="stat"><span>Question <b id="n0">0</b>/10</span><span>⭐ <b id="s0">0</b></span></div><div class="bar"><i id="p0"></i></div><div class="big" id="q0">Press start!</div><div class="opts" id="o0"></div><div class="msg" id="m0"></div><div style="text-align:center"><button class="btn" onclick="speed()">▶ Start</button></div></div></section>
+<section id="g1"><div class="card"><h2>🃏 Game 1: Memory Match</h2><p>Match each multiplication fact with its product.</p><div class="stat"><span>Moves: <b id="mv">0</b></span><span id="mm"></span></div><div class="mem" id="mem"></div><div style="text-align:center;margin-top:10px"><button class="btn" onclick="memory()">🔄 New Game</button></div></div></section>
+<section id="g2"><div class="card"><h2>❓ Game 2: Missing Number</h2><div class="chips" id="c2"></div><div class="stat"><span>Question <b id="n2">0</b>/10</span><span>⭐ <b id="s2">0</b></span></div><div class="bar"><i id="p2"></i></div><div class="big" id="q2">Press start!</div><div style="text-align:center"><input class="ans" id="a2" type="number" inputmode="numeric"> <button class="btn" onclick="chk2()">Check</button></div><div class="msg" id="m2"></div><div style="text-align:center"><button class="btn" onclick="miss()">▶ Start</button></div></div></section>
+<section id="g3"><div class="card"><h2>🎈 Game 3: Balloon Pop</h2><p>Pop the balloon with the right product!</p><div class="chips" id="c3"></div><div class="stat"><span>Round <b id="n3">0</b>/8</span><span>⭐ <b id="s3">0</b></span></div><div class="big" id="q3"></div><div class="sky" id="sky"></div><div class="msg" id="m3"></div><div style="text-align:center;margin-top:8px"><button class="btn" onclick="balloon()">▶ Start</button></div></div></section>
+<section id="g4"><div class="card"><h2>⏱️ Game 4: Beat the Clock</h2><p>Answer as many as you can in 60 seconds. Type your answer and press Check (or Enter)!</p><div class="chips" id="c4"></div><div class="stat"><span>⏳ <b id="t4">60</b>s</span><span>✅ <b id="s4">0</b></span></div><div class="bar"><i id="p4"></i></div><div class="big" id="q4">Ready?</div><div style="text-align:center"><input class="ans" id="a4" type="number" inputmode="numeric" disabled> <button class="btn" id="b4" onclick="window.sub4&&window.sub4()" disabled>Check</button></div><div class="msg" id="m4"></div><div style="text-align:center"><button class="btn" onclick="clock()">▶ Start</button></div></div></section>
+</main>
+<script>
+const $=id=>document.getElementById(id),F=[0,1,2,5,9,10];
+const R=n=>Math.floor(Math.random()*n),sh=a=>a.map(x=>[Math.random(),x]).sort((a,b)=>a[0]-b[0]).map(x=>x[1]);
+let tot=0;const win=(n=1)=>{tot+=n;$('tot').textContent=tot};
+const tabs=[['plan','📘 Lesson Plan'],['g0','🔥 Warm-up'],['g1','🃏 Match'],['g2','❓ Missing'],['g3','🎈 Balloons'],['g4','⏱️ Clock']];
+tabs.forEach(([id,l])=>{const b=document.createElement('button');b.textContent=l;b.dataset.id=id;b.onclick=()=>{document.querySelectorAll('section').forEach(s=>s.classList.toggle('on',s.id==id));document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('on',x===b));stopAll()};if(id=='plan')b.className='on';$('nav').appendChild(b)});
+['c0','c2','c3','c4'].forEach(id=>{$(id).innerHTML='Factors: '+F.map(f=>`<label><input type=checkbox value=${f} checked>${f}</label>`).join('')});
+const fac=id=>{const v=[...$(id).querySelectorAll('input:checked')].map(i=>+i.value);return v.length?v:F};
+const pair=id=>{const f=fac(id),a=f[R(f.length)],b=R(11);return R(2)?[a,b]:[b,a]};
+let timer=null,sTimer=null;const stopAll=()=>{clearInterval(timer);clearInterval(sTimer)};
+// pattern table
+$('tbl').innerHTML='<table><tr><th>×</th>'+[...Array(11).keys()].map(i=>`<th>${i}</th>`).join('')+'</tr>'+F.map(f=>`<tr><th>${f}</th>`+[...Array(11).keys()].map(i=>`<td style="cursor:pointer;background:#ffeaa755" onclick="this.textContent=${f*i};this.style.background='#55efc455'">?</td>`).join('')+'</tr>').join('')+'</table>';
+// warm-up
+function speed(){let n=0,s=0;const go=()=>{if(n==10){$('q0').textContent='🏆 '+s+'/10';$('o0').innerHTML='';$('m0').textContent=s>=9?'Multiplication master!':'Great effort, play again!';win(s);return}
+n++;$('n0').textContent=n;$('p0').style.width=n*10+'%';const[a,b]=pair('c0'),p=a*b;$('q0').textContent=a+' × '+b+' = ?';
+let o=new Set([p]);while(o.size<4){const x=p+[-10,-5,-2,-1,1,2,5,10][R(8)]*(R(2)?1:1);if(x>=0)o.add(x)}
+$('o0').innerHTML='';sh([...o]).forEach(v=>{const bt=document.createElement('button');bt.textContent=v;bt.onclick=()=>{if(bt.disabled)return;[...$('o0').children].forEach(c=>c.disabled=true);if(v==p){s++;bt.className='ok';$('m0').textContent='✅ Yes!'}else{bt.className='no';$('m0').textContent='❌ It is '+p}$('s0').textContent=s;setTimeout(()=>{$('m0').textContent='';go()},800)};$('o0').appendChild(bt)})};
+$('s0').textContent=0;go()}
+// memory
+function memory(){let ps=[];const used=new Set();while(ps.length<6){const[a,b]=pair('c0');const k=a*b;if(!used.has(k)&&a>1&&b>1||(!used.has(k)&&ps.length>4)){used.add(k);ps.push([a+' × '+b,k])}}
+const cards=sh(ps.flatMap(([t,k])=>[{t,k},{t:String(k),k}]));let open=[],mv=0,found=0;$('mv').textContent=0;$('mm').textContent='';
+$('mem').innerHTML='';cards.forEach(c=>{const d=document.createElement('div');d.textContent='?';d.onclick=()=>{if(d.className||open.length>1)return;d.className='up';d.textContent=c.t;open.push([d,c]);if(open.length==2){mv++;$('mv').textContent=mv;const[[d1,c1],[d2,c2]]=open;if(c1.k==c2.k&&c1.t!=c2.t){d1.className=d2.className='done';open=[];if(++found==6){$('mm').textContent='🎉 You did it!';win(3)}}else setTimeout(()=>{d1.className=d2.className='';d1.textContent=d2.textContent='?';open=[]},800)}};$('mem').appendChild(d)})}
+memory();
+// missing number
+let q2;function miss(){let n=0,s=0;window.nx2=()=>{if(n==10){$('q2').textContent='🏆 '+s+'/10';$('m2').textContent='Finished!';win(s);q2=null;return}n++;$('n2').textContent=n;$('p2').style.width=n*10+'%';const[a,b]=pair('c2'),p=a*b;const hide=R(2);q2={ans:hide?a:b,p};$('q2').textContent=hide?`? × ${b} = ${p}`:`${a} × ? = ${p}`;$('a2').value='';$('a2').focus()};window.sc2=()=>s;window.ad2=()=>{s++;$('s2').textContent=s};$('s2').textContent=0;nx2()}
+function chk2(){if(!q2)return;if(+$('a2').value==q2.ans&&$('a2').value!==''){ad2();$('m2').textContent='✅ Correct!'}else $('m2').textContent='❌ Answer: '+q2.ans;setTimeout(()=>{$('m2').textContent='';nx2()},900)}
+$('a2').addEventListener('keydown',e=>{if(e.key=='Enter')chk2()});
+// balloons
+function balloon(){stopAll();let n=0,s=0,locked=false;$('s3').textContent=0;$('m3').textContent='';const cols=['#ff6b6b','#6c5ce7','#00b894','#e17055','#0984e3','#e84393'];
+const go=()=>{clearInterval(timer);locked=false;$('sky').innerHTML='';if(n==8){$('q3').textContent='🏆 '+s+'/8';win(s);return}n++;$('n3').textContent=n;const[a,b]=pair('c3'),p=a*b;$('q3').textContent=a+' × '+b+' = ?';
+let o=new Set([p]);while(o.size<6){const x=p+[-10,-5,-2,-1,1,2,5,10][R(8)];if(x>=0)o.add(x)}
+const bs=sh([...o]).map((v,i)=>{const d=document.createElement('button');d.className='bal';d.textContent=v;d.style.background=cols[i];d.style.left=(i*16.6+1)+'%';d.pos=10+R(150);d.sp=0.5+Math.random()*0.4;d.style.bottom=d.pos+'px';
+d.onclick=()=>{if(locked)return;locked=true;clearInterval(timer);bs.forEach(x=>x.disabled=true);if(v==p){s++;$('s3').textContent=s;d.textContent='💥';$('m3').textContent='✅ Pop!'}else{d.style.opacity='.4';const c=bs.find(x=>x.textContent==p);if(c)c.style.outline='4px solid gold';$('m3').textContent='❌ It was '+p}setTimeout(()=>{$('m3').textContent='';go()},1100)};
+$('sky').appendChild(d);return d});
+timer=setInterval(()=>{bs.forEach(d=>{d.pos+=d.sp;if(d.pos>230)d.pos=-80;d.style.bottom=d.pos+'px'})},30)};go()}
+// clock
+function clock(){stopAll();let t=60,s=0,cur;$('s4').textContent=0;$('t4').textContent=60;$('p4').style.width='0';$('m4').textContent='';const a=$('a4');a.disabled=false;
+const nx=()=>{const[x,y]=pair('c4');cur=x*y;$('q4').textContent=x+' × '+y+' = ?';a.value='';a.focus()};nx();
+window.sub4=()=>{if(a.disabled||a.value==='')return;if(+a.value==cur){s++;$('s4').textContent=s;$('m4').textContent='✅'}else $('m4').textContent='❌ '+cur;nx()};a.onkeydown=e=>{if(e.key=='Enter')sub4()};$('b4').disabled=false;
+sTimer=setInterval(()=>{t--;$('t4').textContent=t;$('p4').style.width=(60-t)/.6+'%';if(t<=0){clearInterval(sTimer);a.disabled=true;$('b4').disabled=true;$('q4').textContent='⏰ Time!';$('m4').textContent=`You got ${s} right! `+(s>=15?'🚀 Superstar!':'Try to beat it!');win(Math.ceil(s/3))}},1000)}
+</script></body></html>

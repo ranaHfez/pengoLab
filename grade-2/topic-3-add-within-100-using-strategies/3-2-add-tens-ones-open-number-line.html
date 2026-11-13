@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>enVision Math Grade 2 · Lesson 3-2 · Add Tens and Ones on an Open Number Line</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#fff7e0;--card:#fff;--ac:#ff7a00;--tx:#2b2b4a}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Trebuchet MS","Comic Sans MS",system-ui,sans-serif;background:var(--bg);color:var(--tx);transition:background .5s;min-height:100vh}
+body.g{background:var(--bgg)}
+nav{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;padding:10px;position:sticky;top:0;z-index:5;background:#ffffffdd;backdrop-filter:blur(6px)}
+nav button,.btn{font:inherit;font-weight:700;border:0;border-radius:99px;padding:9px 14px;background:#eee;color:#2b2b4a;cursor:pointer}
+nav button.on,.btn{background:var(--ac);color:#fff}
+nav button.on{background:#2b2b4a}
+.wrap{max-width:760px;margin:auto;padding:12px}
+h1{text-align:center;font-size:1.5rem;margin:8px 0}
+.sub{text-align:center;margin:0 0 12px;opacity:.8}
+details{background:#fff;color:#2b2b4a;border-radius:16px;margin:10px 0;padding:12px 16px;box-shadow:0 3px 0 #0002}
+summary{font-weight:800;cursor:pointer;font-size:1.05rem}
+table{width:100%;border-collapse:collapse;margin-top:8px}td,th{border-bottom:1px solid #ddd;padding:6px;text-align:left;vertical-align:top}
+.tag{display:inline-block;background:#ffe08a;border-radius:8px;padding:1px 8px;margin:2px;font-weight:700}
+#plan svg{max-width:100%}
+.stage{position:relative;overflow:hidden;background:var(--card);border-radius:24px;padding:16px;box-shadow:0 6px 0 #0003;color:var(--tx);border:4px solid var(--ac)}
+.deco{position:absolute;inset:0;pointer-events:none;font-size:1.6rem;opacity:.25;display:flex;flex-wrap:wrap;justify-content:space-around;align-content:space-around;animation:fl 6s ease-in-out infinite alternate}
+@keyframes fl{to{transform:translateY(-12px)}}
+.stage>*:not(.deco){position:relative}
+.top{display:flex;align-items:center;gap:10px}
+.ch{font-size:3.4rem;animation:bob 1.2s ease-in-out infinite}
+.ch.happy{animation:jump .5s 2}.ch.sad{animation:shake .4s 2}
+@keyframes bob{50%{transform:translateY(-8px) rotate(-6deg)}}
+@keyframes jump{50%{transform:translateY(-30px) scale(1.3)}}
+@keyframes shake{25%{transform:translateX(-10px)}75%{transform:translateX(10px)}}
+.say{background:#fff;border:3px solid var(--ac);border-radius:16px;padding:8px 12px;flex:1;font-weight:700;color:#2b2b4a}
+.bar{height:12px;border-radius:9px;background:#0002;margin:10px 0}.bar i{display:block;height:100%;border-radius:9px;background:var(--ac);transition:width .4s}
+.q{font-size:1.35rem;font-weight:800;text-align:center;margin:8px 0;color:var(--tx)}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+.opts button{font:inherit;font-size:1.15rem;font-weight:800;padding:14px 6px;border:0;border-radius:16px;background:var(--ac);color:#fff;box-shadow:0 5px 0 #0004;cursor:pointer}
+.opts button:active{transform:translateY(4px);box-shadow:0 1px 0 #0004}
+.opts button.ok{background:#1faa59!important}.opts button.no{background:#d33!important;opacity:.7}
+.nl{width:100%;background:#fffc;border-radius:14px}
+.sc{text-align:center;font-weight:800}
+.end{text-align:center;padding:10px}.end .big{font-size:4rem}
+#mute{position:fixed;right:10px;bottom:calc(10px + env(safe-area-inset-bottom,0px));z-index:9;border-radius:50%;width:46px;height:46px;padding:0;font-size:1.3rem}
+</style>
+<!-- Shared template: colors, fonts, sounds, buttons, mascots. Keep this. -->
+<link rel="stylesheet" href="../../shared/theme.css">
+<script src="../../shared/theme.js" defer></script>
+</head><body>
+<nav id="nav"></nav>
+<div class="wrap">
+<h1>🧮 Add Tens and Ones on an Open Number Line</h1>
+<p class="sub">enVision Math · Grade 2 · Volume 1 · Topic 3 · Lesson 3-2</p>
+
+<div id="plan">
+<details open><summary>🎯 Objectives &amp; Vocabulary</summary>
+<p><b>I can</b> add a two-digit number and a two-digit number by drawing jumps of tens and then jumps of ones on an open number line.</p>
+<p><b>Standards:</b> 2.NBT.B.5, 2.NBT.B.6, 2.NBT.B.9 · <b>Time:</b> 45 minutes</p>
+<span class="tag">open number line</span><span class="tag">tens</span><span class="tag">ones</span><span class="tag">jump</span><span class="tag">sum</span><span class="tag">add</span><span class="tag">strategy</span>
+<p><b>Materials:</b> whiteboards and markers, base-ten blocks, sticky notes, chalk/tape number line, tablet or screen for the games below.</p></details>
+
+<details open><summary>⏱️ Lesson Flow (45 min)</summary>
+<table><tr><th>Min</th><th>Stage</th><th>What to do</th></tr>
+<tr><td>5</td><td>Warm-Up</td><td>Play <b>Bunny Hop</b> as a class. Students show answers on whiteboards, then jump +10 and +1 on a floor number line.</td></tr>
+<tr><td>10</td><td>Explore (Solve &amp; Share)</td><td>Problem: “Mia has 34 stickers. Her friend gives her 25 more. How many now?” Pairs solve with blocks or a drawing, then share.</td></tr>
+<tr><td>10</td><td>Model it</td><td>Draw an <i>open</i> number line (no fixed ticks). Start at 34. Break 25 into 20 + 5. Jump +20 to 54, then +5 to 59. Say: “Tens first, then ones.”</td></tr>
+<tr><td>5</td><td>Guided practice</td><td>Do 3 more together: 27 + 31, 45 + 28 (ones cross a ten), 52 + 36. Students draw jumps on whiteboards.</td></tr>
+<tr><td>12</td><td>Game stations</td><td>Rotate teams through <b>Frog Pond</b>, <b>Rocket Jump</b>, <b>Monster Bakery</b> (about 4 min each).</td></tr>
+<tr><td>3</td><td>Exit ticket</td><td>Solve 43 + 26 on an open number line and write one sentence explaining the jumps.</td></tr></table></details>
+
+<details open><summary>📏 Model: 34 + 25</summary>
+<svg viewBox="0 0 600 130" role="img" aria-label="Open number line 34 plus 20 to 54 plus 5 to 59">
+<line x1="30" y1="95" x2="570" y2="95" stroke="#2b2b4a" stroke-width="4"/>
+<g stroke="#2b2b4a" stroke-width="4"><line x1="90" y1="82" x2="90" y2="108"/><line x1="300" y1="82" x2="300" y2="108"/><line x1="510" y1="82" x2="510" y2="108"/></g>
+<g fill="none" stroke="#ff7a00" stroke-width="4"><path d="M90 82 Q195 20 300 82"/><path d="M300 82 Q405 35 510 82"/></g>
+<g font-size="22" font-weight="700" text-anchor="middle" fill="#2b2b4a"><text x="90" y="128">34</text><text x="300" y="128">54</text><text x="510" y="128">59</text><text x="195" y="38" fill="#ff7a00">+20</text><text x="405" y="45" fill="#ff7a00">+5</text></g></svg>
+<p>Key idea: the line is “open” because we only mark the numbers we need.</p></details>
+
+<details><summary>🧠 Teacher Tips, Misconceptions &amp; Differentiation</summary>
+<ul><li><b>Misconception:</b> jumping +2 instead of +20. Ask “How many tens?”</li>
+<li><b>Misconception:</b> jumping the tens digit only (34 + 25 → 54 + 2). Break the whole addend: 25 = 20 + 5.</li>
+<li><b>Support:</b> use base-ten rods beside the line; start with sums that do not cross a ten (34 + 25) before ones that do (38 + 25).</li>
+<li><b>Challenge:</b> break the ones too: +2 to reach the next ten, then +3. Or ask “Can you solve it in a different order?”</li>
+<li><b>Check for understanding:</b> “Why did we jump 20 and not 2?” “Where did the +5 start?”</li></ul></details>
+
+<details><summary>🎮 How to use the games</summary>
+<p>Tap the game buttons above. Each game has 15 questions (warm-up has 10), its own theme, a funny character, and sounds. Types covered: <b>jump tens</b> (+10, +20…), <b>jump ones</b>, <b>choose the right jumps</b>, <b>solve the sum</b>, <b>find the missing jump</b>, and <b>word problems</b>. Use the 🔊 button to mute.</p></details>
+</div>
+
+<div id="game" hidden></div>
+</div>
+<button class="btn" id="mute" aria-label="Sound on/off">🔊</button>
+<script>
+const $=s=>document.querySelector(s),r=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+const sh=a=>a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(p=>p[1]);
+let AC,muted=false;
+function tone(f,f2,d,t='sine',v=.15,at=0){if(muted)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain(),s=AC.currentTime+at;o.type=t;o.frequency.setValueAtTime(f,s);o.frequency.exponentialRampToValueAtTime(f2,s+d);g.gain.setValueAtTime(v,s);g.gain.exponentialRampToValueAtTime(.001,s+d);o.connect(g);g.connect(AC.destination);o.start(s);o.stop(s+d)}catch(e){}}
+const snd={
+ boing:()=>tone(200,700,.25,'sine'),
+ ok:()=>{[523,659,784,1047].forEach((f,i)=>tone(f,f*1.02,.15,'triangle',.15,i*.09))},
+ no:()=>{tone(300,150,.3,'sawtooth',.12);tone(250,110,.35,'sawtooth',.12,.25)},
+ win:()=>{[523,659,784,659,784,1047,1319].forEach((f,i)=>tone(f,f,.18,'square',.1,i*.12))},
+ pop:()=>tone(900,300,.1,'square',.08)};
+$('#mute').onclick=e=>{muted=!muted;e.target.textContent=muted?'🔇':'🔊'};
+
+const opt=(ans,ds)=>{let s=new Set([ans]);for(const d of sh(ds)){if(d>0&&s.size<4)s.add(d)}let k=1;while(s.size<4)s.add(ans+10*k++);return sh([...s])};
+const G={
+warm:{name:'Warm-Up: Bunny Hop',ch:'🐰',N:10,bg:'linear-gradient(160deg,#ffe29f,#ffa99f)',card:'#fff8ec',ac:'#ff6b6b',tx:'#5a2a2a',deco:'🥕🌼🥕🌸🥕🌼🥕🌸🥕🌼',
+ ok:['Hoppity-hop! Correct!','Boing boing! Yes!','Carrot-tastic!'],no:['Oopsie! Hop again!','Whoa, wrong hop!'],
+ gen(i){const a=r(11,79),k=sh([10,20,30,1,2,3,5])[0],t=k>=10?`${k/10} ten${k>10?'s':''}`:`${k} one${k>1?'s':''}`;
+  return{q:`Start at ${a}. Hop ${t} (+${k}). Where do you land?`,start:a,jumps:[k],ans:a+k,opts:opt(a+k,[a+k+10,a+k-10,a+k+1,a+k-1])}}},
+g1:{name:'Game 1: Frog Pond · Jump the Tens',ch:'🐸',N:15,bg:'linear-gradient(160deg,#7be0a4,#2aa7a1)',card:'#eafff3',ac:'#12936a',tx:'#0b4b3a',deco:'🪷🐟🪷🐸🪷🐟🪷🐸🪷🐟🪷🐸',
+ ok:['Ribbit! You got it!','Splash-tastic!','Croak-a-doodle-doo!'],no:['Ribbit… not quite!','Plop! Try the next one!'],
+ gen(i){const a=r(11,55),k=r(1,4)*10;
+  if(i%3==2){const b=a+k;return{q:`The frog hopped from ${a} to ${b}. How many tens did it jump?`,start:a,jumps:[k],ans:k/10,ansTxt:`${k/10}`,opts:opt(k/10,[k/10+1,k/10-1,k/10+2,k]).map(String),str:1}}
+  return{q:`${a} + ${k} = ?   (jump ${k/10} ten${k>10?'s':''})`,start:a,jumps:[k],ans:a+k,opts:opt(a+k,[a+k+10,a+k-10,a+1+k,a+k+k/10])}}},
+g2:{name:'Game 2: Rocket Jump · Tens, then Ones',ch:'👽',N:15,bg:'linear-gradient(160deg,#1b1464,#6a2fb0)',card:'#2a2370',ac:'#ff4fd8',tx:'#fff',deco:'⭐🪐⭐🚀⭐🌙⭐🛸⭐🪐⭐🚀',
+ ok:['Zoop zoop! Out of this world!','Beep boop! Correct!','Galaxy brain!'],no:['Oh no, asteroid!','Bzzzt! Recalculating…'],
+ gen(i){const a=r(11,50),t=r(1,3)*10,o=r(2,9),m=i%3;
+  if(m==0)return{q:`${a} + ${t+o}: jump the tens first (+${t}). Where does the rocket land?`,start:a,jumps:[t],ans:a+t,opts:opt(a+t,[a+t+10,a+t-10,a+t+o,a+o])};
+  if(m==1)return{q:`The rocket is at ${a+t}. Now jump the ones (+${o}). Where does it land?`,start:a+t,jumps:[o],ans:a+t+o,opts:opt(a+t+o,[a+t+o+10,a+t+o-1,a+t+o+1,a+t])};
+  const c=`+${t} then +${o}`;return{q:`Which jumps show ${a} + ${t+o}?`,start:a,jumps:[t,o],ans:c,full:a+t+o,str:1,opts:sh([c,`+${t} then +${o+10}`,`+${t/10} then +${o}`,`+${o} then +${o}`])}}},
+g3:{name:'Game 3: Monster Bakery · Solve It!',ch:'👾',N:15,bg:'linear-gradient(160deg,#ffd1e8,#ffb36b)',card:'#fff0f7',ac:'#c2188a',tx:'#4b0f3a',deco:'🧁🍩🧁🍪🧁🍰🧁🍩🧁🍪🧁🍰',
+ ok:['Yum yum! Delicious answer!','Nom nom! Perfect!','Munch-tastic!'],no:['Burp! Wrong cupcake!','Oops, the cake fell!'],
+ gen(i){const a=r(21,52),t=r(1,3)*10,o=r(4,9),s=a+t+o,m=i%3;
+  if(m==0)return{q:`${a} + ${t+o} = ?`,start:a,jumps:[t,o],ans:s,opts:opt(s,[s+10,s-10,s+1,s-1,a+t])};
+  if(m==1)return{q:`${a} + ? = ${s}.  How much did the monster add?`,start:a,jumps:[t,o],ans:t+o,end:s,str:1,opts:opt(t+o,[t+o+10,t+o-10,t,t+o+1]).map(String)};
+  return{q:`Gobo has ${a} cupcakes. He bakes ${t/10} ten${t>10?'s':''} and ${o} ones more. How many cupcakes now?`,start:a,jumps:[t,o],ans:s,opts:opt(s,[s+10,s-10,s+o,s-1])}}}
+};
+const order=['plan','warm','g1','g2','g3'],lab={plan:'📘 Plan',warm:'🐰 Warm-Up',g1:'🐸 Game 1',g2:'👽 Game 2',g3:'👾 Game 3'};
+$('#nav').innerHTML=order.map(k=>`<button data-k="${k}">${lab[k]}</button>`).join('');
+document.querySelectorAll('#nav button').forEach(b=>b.onclick=()=>go(b.dataset.k));
+function go(k){snd.pop();document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('on',b.dataset.k==k));
+ if(k=='plan'){$('#plan').hidden=false;$('#game').hidden=true;document.body.classList.remove('g');document.body.style.removeProperty('--bgg');document.documentElement.style.setProperty('--ac','#ff7a00');return}
+ $('#plan').hidden=true;$('#game').hidden=false;begin(k)}
+let K,qs,i,sc,lock;
+function begin(k){K=k;const g=G[k];qs=Array.from({length:g.N},(_,j)=>g.gen(j));i=0;sc=0;
+ document.body.classList.add('g');document.body.style.setProperty('--bgg',g.bg);document.documentElement.style.setProperty('--ac',g.ac);show()}
+function line(q,reveal){const pts=[q.start];let c=q.start;q.jumps.forEach(j=>{c+=j;pts.push(c)});if(q.end!=null)pts[pts.length-1]=q.end;if(q.full!=null)pts[pts.length-1]=q.full;
+ const n=pts.length,W=520,x=j=>40+j*(W/(n-1));let s=`<svg class="nl" viewBox="0 0 600 120"><line x1="20" y1="85" x2="580" y2="85" stroke="currentColor" stroke-width="4"/>`;
+ pts.forEach((p,j)=>{const lastU=j==n-1&&!reveal;s+=`<line x1="${x(j)}" y1="74" x2="${x(j)}" y2="96" stroke="currentColor" stroke-width="4"/><text x="${x(j)}" y="116" text-anchor="middle" font-size="22" font-weight="800" fill="currentColor">${lastU?'?':p}</text>`;
+  if(j<n-1){const lj=q.jumps[j],hid=(q.str&&!reveal);s+=`<path d="M${x(j)} 74 Q${(x(j)+x(j+1))/2} 14 ${x(j+1)} 74" fill="none" stroke="var(--ac)" stroke-width="4"/><text x="${(x(j)+x(j+1))/2}" y="32" text-anchor="middle" font-size="22" font-weight="800" fill="var(--ac)">${hid?'+?':'+'+lj}</text>`}});
+ return s+'</svg>'}
+function show(){const g=G[K],q=qs[i];lock=false;
+ $('#game').innerHTML=`<div class="stage" style="background:${g.card};color:${g.tx};--tx:${g.tx}"><div class="deco">${[...g.deco].map(c=>`<span>${c}</span>`).join('')}</div>
+ <div class="top"><div class="ch" id="ch">${g.ch}</div><div class="say" id="say">${i==0?'Hi! Let’s go! Tap the right answer.':'Next one!'}</div></div>
+ <div class="bar"><i style="width:${i/g.N*100}%"></i></div>
+ <div class="sc">${g.name}<br>Question ${i+1} of ${g.N} · ⭐ ${sc}</div>
+ <div class="q">${q.q}</div><div id="nl">${line(q,false)}</div>
+ <div class="opts">${q.opts.map(o=>`<button data-o="${o}">${o}</button>`).join('')}</div><div id="nx"></div></div>`;
+ document.querySelectorAll('.opts button').forEach(b=>b.onclick=()=>pick(b))}
+function pick(b){if(lock)return;lock=true;const g=G[K],q=qs[i],right=String(q.ans)==b.dataset.o,ch=$('#ch');
+ document.querySelectorAll('.opts button').forEach(x=>{if(String(q.ans)==x.dataset.o)x.classList.add('ok')});
+ if(right){sc++;snd.ok();ch.className='ch happy';$('#say').textContent=sh(g.ok)[0]}else{b.classList.add('no');snd.no();ch.className='ch sad';$('#say').textContent=sh(g.no)[0]+` The answer is ${q.ans}.`}
+ $('#nl').innerHTML=line(q,true);
+ $('#nx').innerHTML=`<button class="btn" style="width:100%;padding:14px;font-size:1.1rem">${i+1==g.N?'See my score 🏆':'Next ➡️'}</button>`;
+ $('#nx button').onclick=()=>{snd.boing();i++;i<g.N?show():finish()}}
+function finish(){const g=G[K],p=sc/g.N,st=p>.85?3:p>.6?2:1;snd.win();const nx=order[order.indexOf(K)+1];
+ $('#game').innerHTML=`<div class="stage" style="background:${g.card};color:${g.tx}"><div class="deco">${[...g.deco].map(c=>`<span>${c}</span>`).join('')}</div><div class="end"><div class="big ch">${g.ch}</div>
+ <h2>${'⭐'.repeat(st)}${'☆'.repeat(3-st)}</h2><h2>${sc} / ${g.N} correct!</h2><p>${st==3?'Number line superstar!':st==2?'Great jumping! Try once more for 3 stars.':'Good start! Jump again and get stronger.'}</p>
+ <button class="btn" id="again">🔁 Play again</button> ${nx?`<button class="btn" id="next" style="background:#2b2b4a">${lab[nx]} ➡️</button>`:''}</div></div>`;
+ $('#again').onclick=()=>begin(K);if(nx)$('#next').onclick=()=>go(nx)}
+go('plan');
+</script></body></html>

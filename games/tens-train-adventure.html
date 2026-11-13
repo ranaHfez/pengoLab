@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tens Train Adventure</title>
+<style>
+:root{--bg1:#fff3c4;--bg2:#d6f0ff;--card:#fff;--ink:#2b2350;--t:#2f8cf0;--o:#ff8c1a;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg1:#2a2252;--bg2:#17324f;--card:#352d66;--ink:#fff}}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:"Trebuchet MS","Comic Sans MS",Arial,sans-serif;background:linear-gradient(160deg,var(--bg1),var(--bg2));color:var(--ink);min-height:100vh;padding:12px}
+h1{text-align:center;margin:4px 0;font-size:26px;background:linear-gradient(90deg,#ff4d6d,#ff9f1c,#2ec4b6,#7b5cff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.top{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:8px 0}
+.tab{border:0;border-radius:20px;padding:10px 16px;font:inherit;font-weight:bold;font-size:16px;color:#fff;cursor:pointer;opacity:.6}
+.tab.on{opacity:1;transform:scale(1.06);box-shadow:0 4px 0 rgba(0,0,0,.25)}
+#tb1{background:#ff4d6d}#tb2{background:#2ec4b6}
+.stars{background:#ffd23f;color:#5a3c00;border-radius:20px;padding:10px 14px;font-weight:bold}
+.panel{max-width:620px;margin:0 auto;background:var(--card);border-radius:24px;padding:14px;box-shadow:0 6px 0 rgba(0,0,0,.15);display:none}
+.panel.on{display:block}
+.rd{display:inline-block;background:#7b5cff;color:#fff;border-radius:14px;padding:4px 12px;font-weight:bold;font-size:14px}
+.guide{display:flex;align-items:center;gap:8px;margin:10px 0}
+.face{font-size:52px;animation:bob 1.6s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-6px) rotate(-4deg)}}
+.bub{flex:1;background:#fff6d6;color:#3b2f00;border:3px solid #ffd23f;border-radius:18px;padding:10px 12px;font-size:17px;font-weight:bold;min-height:56px}
+.num{text-align:center;font-size:64px;font-weight:bold;line-height:1.1}
+.num b{padding:0 4px;border-radius:12px;margin:0 2px}
+b.t{color:#fff;background:var(--t)}b.o{color:#fff;background:var(--o)}
+.lab{display:flex;justify-content:center;gap:10px;font-size:13px;font-weight:bold;margin-bottom:4px}
+.lab span{color:#fff;border-radius:10px;padding:2px 8px}
+#blk1{display:flex;gap:8px;align-items:flex-end;justify-content:center;min-height:96px;background:#eef9ff;border-radius:16px;padding:8px;margin:8px 0}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) #blk1{background:#1f3b63}}
+.rods{display:flex;gap:3px;align-items:flex-end}
+.rod{width:17px;height:80px;border-radius:5px;background:repeating-linear-gradient(#59b4ff 0 7px,#2f8cf0 7px 8px);animation:pop .4s}
+.cubes{display:flex;flex-wrap:wrap;gap:3px;width:70px}
+.cube{width:17px;height:17px;border-radius:5px;background:var(--o);animation:pop .4s}
+@keyframes pop{from{transform:scale(0)}}
+.path{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;align-items:center;margin:6px 0;font-size:20px}
+.chip{background:#f1ecff;color:#3b2f7a;border-radius:12px;padding:2px 8px;font-weight:bold}
+.act{text-align:center;min-height:90px}
+.q{font-size:20px;font-weight:bold;margin:6px 0}
+.opts{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.opt,.big{border:0;border-radius:18px;font:inherit;font-weight:bold;font-size:28px;padding:12px 22px;color:#fff;cursor:pointer;box-shadow:0 5px 0 rgba(0,0,0,.25)}
+.opt:nth-child(1){background:#ff4d6d}.opt:nth-child(2){background:#7b5cff}.opt:nth-child(3){background:#2ec4b6}
+.big{background:linear-gradient(90deg,#ff9f1c,#ff4d6d);font-size:24px}
+.ok{background:#2ecc71!important}.bad{animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+#track{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;align-items:center;margin:10px 0}
+.eng{font-size:44px}
+.wag,.slot{width:54px;height:62px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:bold;border:3px solid #fff}
+.wag{background:#ff9f1c;color:#fff}
+.slot{background:#e8e4ff;color:#3b2f7a;border:3px dashed #7b5cff}
+.slot.done{background:#2ec4b6;color:#fff;border:3px solid #fff;animation:pop .4s}
+#pool{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;min-height:70px;margin-top:10px;background:#fff0f5;border-radius:16px;padding:10px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) #pool{background:#4a2a5a}}
+.card{width:62px;height:56px;border-radius:14px;color:#fff;font-size:26px;font-weight:bold;display:flex;align-items:center;justify-content:center;cursor:grab;touch-action:none;user-select:none;box-shadow:0 4px 0 rgba(0,0,0,.25)}
+.card.gone{visibility:hidden}
+.ghost{position:fixed;z-index:99;pointer-events:none;transform:translate(-50%,-50%) scale(1.15)}
+.sig{text-align:center;margin:14px 0 4px;font-weight:bold;opacity:.8}
+.cf{position:fixed;top:-30px;font-size:28px;z-index:98;pointer-events:none;animation:fall 2.2s linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(360deg)}}
+</style>
+<!-- Shared template: colors, fonts, sounds, buttons, mascots. Keep this. -->
+<link rel="stylesheet" href="../shared/theme.css">
+<script src="../shared/theme.js" defer></script>
+</head><body>
+<h1>🚂 Tens Train Adventure 🚂</h1>
+<div class="top"><button class="tab on" id="tb1">🎮 Game 1: Build &amp; Jump</button><button class="tab" id="tb2">🚃 Game 2: Drag the Train</button><span class="stars">⭐ <span id="st">0</span></span></div>
+
+<div class="panel on" id="p1">
+ <span class="rd" id="rd1"></span>
+ <div class="guide"><span class="face" id="f1">🐻</span><div class="bub" id="b1"></div></div>
+ <div class="lab"><span style="background:var(--t)">TENS</span><span style="background:var(--o)">ONES</span></div>
+ <div class="num" id="n1"></div>
+ <div id="blk1"></div>
+ <div class="path" id="path1"></div>
+ <div class="act" id="act1"></div>
+</div>
+
+<div class="panel" id="p2">
+ <span class="rd" id="rd2"></span>
+ <div class="guide"><span class="face" id="f2">🦊</span><div class="bub" id="b2"></div></div>
+ <div id="track"></div>
+ <div id="pool"></div>
+</div>
+<div class="sig">Made by T.Rana Elsisi</div>
+
+<script>
+const $=s=>document.querySelector(s),rnd=n=>Math.floor(Math.random()*n);
+const shuf=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(x=>x[1]);
+const pals=["🐻","🦊","🐼","🐯","🐸","🦄","🐵","🐰"],cols=["#ff4d6d","#7b5cff","#2ec4b6","#ff9f1c","#2f8cf0","#e84393"];
+let stars=0,ac;
+function star(){stars++;$("#st").textContent=stars}
+function beep(f,d){try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=f;o.type="triangle";g.gain.value=.15;o.connect(g);g.connect(ac.destination);o.start();o.stop(ac.currentTime+d)}catch(e){}}
+const good=()=>{beep(660,.12);setTimeout(()=>beep(880,.18),120)},badS=()=>beep(200,.25);
+function confetti(){const e=["🎉","⭐","🎈","🌟","🍭","🎊"];for(let i=0;i<30;i++){const s=document.createElement("span");s.className="cf";s.textContent=e[rnd(6)];s.style.left=rnd(95)+"%";s.style.animationDelay=Math.random()*.8+"s";document.body.appendChild(s);setTimeout(()=>s.remove(),3200)}}
+const numH=v=>v>=10?`<b class="t">${Math.floor(v/10)}</b><b class="o">${v%10}</b>`:`<b class="o">${v}</b>`;
+const blocks=v=>`<div class="rods">${'<div class="rod"></div>'.repeat(Math.floor(v/10))}</div><div class="cubes">${'<div class="cube"></div>'.repeat(v%10)}</div>`;
+function tab(n){[1,2].forEach(i=>{$("#p"+i).classList.toggle("on",i==n);$("#tb"+i).classList.toggle("on",i==n)})}
+$("#tb1").onclick=()=>tab(1);$("#tb2").onclick=()=>tab(2);
+
+/* ---------- GAME 1 ---------- */
+const R1=[10,10,1,10,1];let g={};
+function start1(){g={r:0};next1()}
+function next1(){
+ if(g.r>=5){$("#f1").textContent="🏆";say1("You are a Counting Champion! Amazing job!");$("#rd1").textContent="All done!";$("#n1").innerHTML="";$("#blk1").innerHTML="🎉🎉🎉";$("#path1").innerHTML="";$("#act1").innerHTML='<button class="big" id="again1">Play again 🔁</button>';$("#again1").onclick=start1;confetti();return}
+ const step=R1[g.r];g.step=step;const t=step==10?1+rnd(4):1+rnd(3),o=step==10?1+rnd(9):1+rnd(5);
+ g.n=g.cur=t*10+o;g.j=0;g.pend=null;g.path=[g.n];g.stage=0;
+ $("#f1").textContent=pals[g.r%8];$("#rd1").textContent="Round "+(g.r+1)+" of 5 • Count by "+step+"s";
+ $("#n1").innerHTML=numH(g.cur);$("#blk1").innerHTML=blocks(g.cur);drawPath();stage1()}
+const say1=m=>$("#b1").textContent=m;
+function drawPath(){$("#path1").innerHTML=g.path.map(v=>`<span class="chip">${v}</span>`).join(" ➜ ")}
+function distinct(c,ws){const s=new Set([c]);ws.forEach(w=>{if(w>=0&&!s.has(w))s.add(w)});let k=1;while(s.size<3){if(!s.has(c+k))s.add(c+k);k++}return shuf([...s].slice(0,3))}
+function ask(el,q,c,wrongs,hintBad,onOk){
+ el.innerHTML=`<div class="q">${q}</div><div class="opts"></div>`;
+ distinct(c,wrongs).forEach(v=>{const b=document.createElement("button");b.className="opt";b.textContent=v;b.onclick=()=>{if(v===c){b.classList.add("ok");good();onOk()}else{b.classList.remove("bad");void b.offsetWidth;b.classList.add("bad");badS();say1(hintBad)}};el.querySelector(".opts").appendChild(b)})}
+function stage1(){
+ const a=$("#act1"),n=g.cur,t=Math.floor(n/10),o=n%10;
+ if(g.stage==0){say1("Let’s look at "+n+". Count the blue tens rods!");ask(a,"How many TENS are in "+n+"? 🔵",t,[t+1,t-1],"Count only the tall blue rods!",()=>{say1("Yes! "+t+" tens = "+t*10+".");g.stage=1;setTimeout(stage1,900)})}
+ else if(g.stage==1){say1("Now count the little orange cubes!");ask(a,"How many ONES are in "+n+"? 🟠",o,[o+1,o-1,t],"Count only the small orange cubes!",()=>{say1("Great! "+t+" tens and "+o+" ones is "+n+".");g.stage=2;setTimeout(stage1,900)})}
+ else{
+  const w=g.step==10?"ten":"one",pend=n+g.step;
+  if(g.pend===null){say1("Jump "+(g.j+1)+" of 4: press the button to add "+(g.step==10?"1 ten":"1 one")+"!");a.innerHTML=`<button class="big" id="go">➕ Add 1 ${w}</button>`;$("#go").onclick=()=>{g.pend=pend;$("#blk1").innerHTML=blocks(pend);$("#n1").innerHTML="<b class='o'>?</b>";beep(520,.15);stage1()}}
+  else{
+   say1(g.step==10?"A new blue rod! Which digit grew?":"A new orange cube! Which digit grew?");
+   const c=g.pend,wr=g.step==10?[n+1,n+20,c+1]:[n+10,n+2,c+10];
+   ask(a,"What number is it now?",c,wr,g.step==10?"Careful! Adding a ten changes the TENS digit.":"Careful! Adding a one changes the ONES digit.",()=>{
+    say1(g.step==10?n+" + 10 = "+c+". The ones digit stays "+c%10+"!":n+" + 1 = "+c+". The tens digit stays "+Math.floor(c/10)+"!");
+    g.cur=c;g.path.push(c);g.j++;g.pend=null;$("#n1").innerHTML=numH(c);drawPath();
+    setTimeout(()=>{if(g.j>=4){star();confetti();say1("Round complete! You earned a star ⭐");a.innerHTML='<button class="big" id="nx">Next round ▶</button>';$("#nx").onclick=()=>{g.r++;next1()}}else stage1()},1300)})}}}
+
+/* ---------- GAME 2 ---------- */
+const R2=[10,10,1,10];let h={};
+function start2(){h={r:0};next2()}
+function say2(m){$("#b2").textContent=m}
+function next2(){
+ if(h.r>=4){$("#f2").textContent="🏆";say2("The train reached the station! You are amazing!");$("#rd2").textContent="All done!";$("#track").innerHTML='<button class="big" id="again2">Play again 🔁</button>';$("#pool").innerHTML="🎉🎉🎉";$("#again2").onclick=start2;confetti();return}
+ const step=R2[h.r],s=step==10?11+rnd(30):11+rnd(4)+(rnd(3)*10);
+ h.step=step;h.s=s;h.left=5;
+ const exp=[1,2,3,4,5].map(i=>s+step*i);
+ const dis=shuf(step==10?[exp[0]+1,exp[1]+1,exp[2]-1,exp[3]+2,s+1]:[exp[0]+10,exp[1]+10,exp[2]+9,exp[3]+10,s+10]).filter(v=>!exp.includes(v)).slice(0,3);
+ $("#f2").textContent=pals[(h.r+3)%8];$("#rd2").textContent="Round "+(h.r+1)+" of 4 • Count by "+step+"s";
+ say2("Start at "+s+" and count by "+step+"s. Drag each number to the correct wagon!");
+ let html=`<span class="eng">🚂</span><div class="wag">${s}</div>`;
+ exp.forEach((v,i)=>html+=`<div class="slot" data-e="${v}" data-p="${i?exp[i-1]:s}">?</div>`);
+ $("#track").innerHTML=html;
+ $("#pool").innerHTML="";
+ shuf([...exp,...dis]).forEach((v,i)=>{const c=document.createElement("div");c.className="card";c.textContent=v;c.dataset.v=v;c.style.background=cols[i%6];c.addEventListener("pointerdown",e=>drag(e,c));$("#pool").appendChild(c)})}
+function drag(e,c){
+ e.preventDefault();const gh=c.cloneNode(true);gh.classList.add("ghost");document.body.appendChild(gh);
+ const mv=ev=>{gh.style.left=ev.clientX+"px";gh.style.top=ev.clientY+"px"};mv(e);c.style.opacity=.3;
+ const up=ev=>{
+  document.removeEventListener("pointermove",mv);document.removeEventListener("pointerup",up);document.removeEventListener("pointercancel",up);
+  gh.remove();c.style.opacity=1;
+  const el=document.elementFromPoint(ev.clientX,ev.clientY),sl=el&&el.closest(".slot");
+  if(!sl||sl.classList.contains("done"))return;
+  const p=sl.dataset.p;
+  if(sl.dataset.e===c.dataset.v){sl.textContent=c.dataset.v;sl.classList.add("done");c.classList.add("gone");good();h.left--;
+   say2(p+" + "+h.step+" = "+c.dataset.v+(h.step==10?". Only the tens digit changed!":". Only the ones digit changed!"));
+   if(!h.left){star();confetti();setTimeout(()=>{say2("Choo choo! Round complete ⭐");$("#pool").innerHTML='<button class="big" id="nx2">Next round ▶</button>';$("#nx2").onclick=()=>{h.r++;next2()}},900)}}
+  else{badS();c.classList.remove("bad");void c.offsetWidth;c.classList.add("bad");say2("Not yet! What comes after "+p+" when we count by "+h.step+"s?")}};
+ document.addEventListener("pointermove",mv);document.addEventListener("pointerup",up);document.addEventListener("pointercancel",up)}
+start1();start2();
+</script></body></html>

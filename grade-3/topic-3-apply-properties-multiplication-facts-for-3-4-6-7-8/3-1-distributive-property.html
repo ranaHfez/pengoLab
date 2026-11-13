@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Distributive Property – enVision Math Grade 3, Lesson 3-1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@500;600;700;800&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top, 0px);
+  padding-bottom:env(safe-area-inset-bottom, 0px);
+  --ink:#22204f; --ink2:#4b4a85; --bg:#f6f3ff; --card:#ffffff; --line:#ddd6fa; --empty:#ece8ff;
+  --pa:#7a5cff; --pb:#ffb703; --ta:#5a3fe0; --tb:#a86a00;
+  --grape:#6a49f5; --mint:#0f9f82; --sun:#ffc933; --pink:#ff4d6d;
+  --b0:#e7e0ff; --b1:#d3f5ea; --b2:#ffe3cc; --b3:#d9effa;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ink:#f0eeff; --ink2:#c7c4f2; --bg:#14122f; --card:#201e4d; --line:#3a3680; --empty:#2a2766;
+    --ta:#b9a8ff; --tb:#ffc933;
+    --b0:#2b2760; --b1:#143a37; --b2:#3e2a1b; --b3:#162f4a;
+  }
+}
+:root[data-theme="dark"]{
+  --ink:#f0eeff; --ink2:#c7c4f2; --bg:#14122f; --card:#201e4d; --line:#3a3680; --empty:#2a2766;
+  --ta:#b9a8ff; --tb:#ffc933;
+  --b0:#2b2760; --b1:#143a37; --b2:#3e2a1b; --b3:#162f4a;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth; scroll-padding-top:calc(env(safe-area-inset-top, 0px) + 76px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:500 18px/1.55 Nunito, system-ui, -apple-system, "Segoe UI", sans-serif}
+h1,h2,h3{font-family:Lexend, "Trebuchet MS", system-ui, sans-serif;line-height:1.15;margin:0;font-weight:700}
+p{margin:0 0 .8em}
+.wrap{max-width:980px;margin:0 auto;padding:0 20px}
+:focus-visible{outline:4px solid var(--grape);outline-offset:3px}
+.ta{color:var(--ta)} .tb{color:var(--tb)}
+
+.top{position:sticky;top:env(safe-area-inset-top, 0px);z-index:20;background:var(--card);border-bottom:3px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:12px;padding-top:10px;padding-bottom:10px}
+.brand{font:700 1.15rem Lexend, system-ui, sans-serif;white-space:nowrap}
+.nav{display:flex;gap:8px;overflow-x:auto;flex:1;scrollbar-width:none;padding:2px}
+.nav::-webkit-scrollbar{display:none}
+.nav a{white-space:nowrap;text-decoration:none;color:#22204f;font:700 .95rem Nunito, system-ui, sans-serif;padding:7px 14px;border-radius:999px}
+.nav a.n-plan{background:#c9c0ff}.nav a.n-w{background:#ffd95e}.nav a.n-g1{background:#68dcc2}.nav a.n-g2{background:#ffb08a}.nav a.n-g3{background:#86d2f5}
+.tools{display:flex;align-items:center;gap:8px}
+.starbox{font:700 1rem Lexend, system-ui, sans-serif;background:var(--b0);padding:4px 12px;border-radius:999px;white-space:nowrap}
+.mute{border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;font-size:1.1rem;width:40px;height:40px;cursor:pointer}
+
+.hero{padding:44px 0 28px}
+.hero .wrap{display:grid;grid-template-columns:1.1fr 1fr;gap:32px;align-items:center}
+.hero h1{font-size:clamp(2.4rem,8vw,4.4rem);font-weight:800;letter-spacing:-.01em}
+.hero .sub{font-size:1.25rem;color:var(--ink2);max-width:36ch;margin-top:12px}
+.hero .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.tag{background:var(--card);border:2px solid var(--line);border-radius:999px;padding:4px 14px;font-weight:700;font-size:.95rem}
+.heroviz{background:var(--card);border:3px solid var(--line);border-radius:28px;padding:22px;text-align:center}
+.heroviz .eq{font:600 1.35rem Lexend, system-ui, sans-serif;margin-top:12px}
+@media (prefers-reduced-motion: no-preference){
+  .heroviz .arow{animation:popin .45s cubic-bezier(.3,1.5,.5,1) both;animation-delay:calc(var(--i) * 140ms + 300ms)}
+}
+@keyframes popin{from{transform:scale(.2);opacity:0}to{transform:scale(1);opacity:1}}
+
+/* arrays */
+.arr{display:inline-flex;flex-direction:column;gap:4px;align-items:center}
+.arow{display:flex;gap:4px}
+.arow.gapb{margin-top:14px}
+.d{width:24px;height:24px;border-radius:50%;background:var(--pa);display:block}
+.arow.pb .d{background:var(--pb)}
+.arr.sm .d{width:14px;height:14px}
+.arr.sm{gap:3px}.arr.sm .arow{gap:3px}.arr.sm .arow.gapb{margin-top:8px}
+.cut{display:block;width:100%;height:14px;border:0;background:transparent;cursor:pointer;position:relative;padding:0}
+.cut::after{content:"";position:absolute;left:-6px;right:-6px;top:50%;border-top:3px dashed var(--line)}
+.cut:hover::after,.cut:focus-visible::after{border-top-color:var(--pink)}
+.cutarr{display:inline-flex;flex-direction:column;align-items:stretch}
+.bigeq{font:600 1.5rem Lexend, system-ui, sans-serif;margin:8px 0}
+
+.sec-title{font-size:clamp(1.8rem,5.5vw,2.7rem);margin-bottom:6px}
+.sec-lead{color:var(--ink2);max-width:60ch}
+.plan{padding:36px 0 56px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin:24px 0 36px}
+.fact{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:16px 18px}
+.fact h3{font-size:1.15rem;margin-bottom:4px;color:var(--grape)}
+.fact p,.fact ul{margin:0;font-size:1rem}
+.fact ul{padding-left:1.1em}
+.steps{list-style:none;margin:0;padding:0;counter-reset:s}
+.steps>li{counter-increment:s;display:grid;grid-template-columns:52px 1fr;gap:14px;padding-bottom:26px;position:relative}
+.steps>li::before{content:counter(s);width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font:700 1.3rem Lexend, system-ui, sans-serif;color:#22204f;background:var(--sun)}
+.steps>li:nth-child(2)::before{background:#ffb08a}
+.steps>li:nth-child(3)::before{background:#68dcc2}
+.steps>li:nth-child(4)::before{background:#8fb8ff}
+.steps>li:nth-child(5)::before{background:#c9c0ff}
+.steps>li:nth-child(6)::before{background:#ffb26b}
+.steps>li:nth-child(7)::before{background:#b7e35a}
+.steps>li:not(:last-child)::after{content:"";position:absolute;left:22px;top:50px;bottom:4px;width:3px;background:var(--line);border-radius:2px}
+.steps h3{font-size:1.35rem}
+.time{display:inline-block;font:700 .9rem Nunito, system-ui, sans-serif;background:var(--empty);padding:2px 12px;border-radius:999px;margin-left:8px;vertical-align:middle}
+.steps .body{min-width:0}
+.steps ul{margin:.3em 0 .8em;padding-left:1.2em}
+details{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:10px 16px;margin:.5em 0}
+summary{cursor:pointer;font-weight:800}
+details[open] summary{margin-bottom:6px}
+.say{border-left:5px solid var(--grape);padding:4px 0 4px 14px;margin:.5em 0;font-style:italic}
+
+.explorer{background:var(--card);border:3px solid var(--line);border-radius:24px;padding:18px;margin:12px 0}
+.ctl{display:flex;flex-wrap:wrap;gap:6px 18px;margin-bottom:12px;align-items:center}
+.ctl .grp{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.ctl label,.ctl .lab{font-weight:800}
+.pick{width:40px;height:40px;border-radius:12px;border:3px solid var(--line);background:var(--card);color:var(--ink);font:700 1.05rem Lexend, system-ui, sans-serif;cursor:pointer;padding:0}
+.pick[aria-pressed="true"]{background:var(--grape);border-color:var(--grape);color:#fff}
+.range{width:min(100%,320px);accent-color:var(--pink)}
+.exbody{display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center}
+.exbody .bigeq{font-size:1.4rem}
+.chart{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0}
+.chip{background:var(--b0);border-radius:12px;padding:4px 12px;font:700 1rem Nunito, system-ui, sans-serif}
+@media (max-width:640px){.exbody{grid-template-columns:1fr;justify-items:center;text-align:center}.hero .wrap{grid-template-columns:1fr}}
+
+.diff{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin-top:20px}
+.diff .fact:nth-child(1) h3{color:var(--mint)}
+.diff .fact:nth-child(3) h3{color:var(--pink)}
+
+.band{padding:56px 0}
+.band.w{background:var(--b0)}.band.g1{background:var(--b1)}.band.g2{background:var(--b2)}.band.g3{background:var(--b3)}
+.band .meta{margin:10px 0 22px;display:grid;gap:4px;max-width:70ch}
+.band .meta p{margin:0}
+.stage{background:var(--card);border:4px solid var(--ink);border-radius:30px;padding:24px;min-height:360px}
+.stage.intro{display:grid;place-items:center;text-align:center;gap:6px}
+.stage .big{font-size:4rem;line-height:1}
+.btn{font:600 1.1rem Lexend, system-ui, sans-serif;border:0;border-radius:999px;padding:10px 30px;background:var(--grape);color:#fff;cursor:pointer;box-shadow:0 5px 0 rgba(0,0,0,.25);transition:transform .08s}
+.btn:active{transform:translateY(3px);box-shadow:0 2px 0 rgba(0,0,0,.25)}
+.btn.alt{background:var(--mint)}
+.btn.ghost{background:var(--empty);color:var(--ink);box-shadow:0 5px 0 var(--line)}
+.qhead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+.qprog{display:flex;gap:6px;flex-wrap:wrap}
+.pip{width:14px;height:14px;border-radius:50%;background:var(--empty);border:2px solid var(--line)}
+.pip.done{background:var(--mint);border-color:var(--mint)}
+.pip.now{background:var(--sun);border-color:var(--ink)}
+.qcount{font-weight:800}
+.qprompt{font:600 1.3rem/1.35 Lexend, system-ui, sans-serif;margin-bottom:10px}
+.qvisual{text-align:center;margin:8px 0 14px}
+.duo{display:flex;gap:28px;justify-content:center;flex-wrap:wrap;align-items:flex-start}
+.duo figure{margin:0;text-align:center}
+.duo figcaption{font-weight:800;margin-bottom:6px}
+.choices{display:grid;gap:14px;margin:14px 0}
+.choices.cards{grid-template-columns:repeat(auto-fit,minmax(130px,1fr))}
+.choices.eq{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.choice{font:700 1.8rem Lexend, system-ui, sans-serif;color:#22204f;border:3px solid #22204f;border-radius:20px;padding:12px 10px;cursor:pointer;box-shadow:0 5px 0 rgba(0,0,0,.25);min-height:64px}
+.choices.eq .choice{font-size:1.1rem}
+.choice.ch0{background:#ffb08a}.choice.ch1{background:#ffd95e}.choice.ch2{background:#68dcc2}.choice.ch3{background:#8fb8ff}
+.choice:disabled{cursor:default}
+.choice.wrong{background:#cfcfe0 !important;opacity:.6;animation:shake .35s}
+.choice.right{outline:5px solid var(--mint);outline-offset:2px}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.feedback{min-height:3.4em;font-weight:700;font-size:1.1rem}
+.feedback strong{color:var(--mint)}
+.nextrow{display:flex;justify-content:center;gap:12px;margin-top:6px;flex-wrap:wrap}
+.final{text-align:center;padding:20px 0}
+.final .big{font-size:4rem}
+.final .score{font:700 2.2rem Lexend, system-ui, sans-serif}
+
+.confetti{position:fixed;top:-40px;z-index:99;pointer-events:none;animation:fall 3s linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(360deg)}}
+footer{padding:28px 0 40px;text-align:center;color:var(--ink2);font-size:.95rem}
+@media (max-width:520px){.brand{display:none}.stage{padding:16px}.steps>li{grid-template-columns:42px 1fr;gap:10px}.steps>li::before{width:38px;height:38px;font-size:1.1rem}.steps>li:not(:last-child)::after{left:18px;top:42px}.d{width:20px;height:20px}.choices.eq{grid-template-columns:1fr}}
+</style>
+
+<!-- Shared template: colors, fonts, sounds, buttons, mascots. Keep this. -->
+<link rel="stylesheet" href="../../shared/theme.css">
+<script src="../../shared/theme.js" defer></script>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <span class="brand">Distributive Property 🧩</span>
+    <nav class="nav" aria-label="Page sections">
+      <a class="n-plan" href="#plan">Lesson plan</a>
+      <a class="n-w" href="#warmup">Warm-up</a>
+      <a class="n-g1" href="#game1">Game 1</a>
+      <a class="n-g2" href="#game2">Game 2</a>
+      <a class="n-g3" href="#game3">Game 3</a>
+    </nav>
+    <div class="tools">
+      <span class="starbox">⭐ <span id="starCount">0</span></span>
+      <button class="mute" id="muteBtn" aria-pressed="false" aria-label="Sound on" title="Sound on or off">🔊</button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <h1>Break it apart, then multiply</h1>
+      <p class="sub">The Distributive Property lets you split a big array into two small arrays you already know.</p>
+      <div class="tags">
+        <span class="tag">enVision Math · Grade 3</span>
+        <span class="tag">Topic 3</span>
+        <span class="tag">Lesson 3-1</span>
+      </div>
+    </div>
+    <div class="heroviz">
+      <div id="heroArr"></div>
+      <div class="eq"><span class="ta">7 × 4 = (5 × 4)</span> + <span class="tb">(2 × 4)</span></div>
+      <div class="eq">= <span class="ta">20</span> + <span class="tb">8</span> = 28</div>
+    </div>
+  </div>
+</section>
+
+<section class="plan" id="plan">
+  <div class="wrap">
+    <h2 class="sec-title">Lesson plan</h2>
+    <p class="sec-lead">Follow the student book’s Solve &amp; Share, Visual Learning, Guided Practice, Independent Practice and Problem Solving pages alongside this plan. Page numbers and exact problems can differ by edition.</p>
+
+    <div class="facts">
+      <div class="fact"><h3>Learning goal</h3><p>Students use the Distributive Property to break an array into two smaller arrays, find each part with facts they know, and add the two products to find the whole product.</p></div>
+      <div class="fact"><h3>Big question</h3><p>How can I break apart an array to help me multiply?</p></div>
+      <div class="fact"><h3>Vocabulary</h3><p><b>Distributive Property</b>, <b>array</b>, <b>factor</b>, <b>product</b>, <b>break apart</b>, <b>parentheses</b></p></div>
+      <div class="fact"><h3>Materials</h3><ul><li>Grid paper and two colored pencils</li><li>Square tiles or counters</li><li>Scissors (to cut paper arrays)</li><li>Whiteboards and markers</li><li>Student book, tablets or a projector</li></ul></div>
+      <div class="fact"><h3>Standards and practices</h3><p>CCSS 3.OA.B.5 (apply properties of operations) and 3.OA.C.7 (fluently multiply within 100). Math practices: MP3 explain and compare ideas, MP7 look for structure.</p></div>
+      <div class="fact"><h3>Time</h3><p>About 50 minutes. Games can move to math centers or a second session.</p></div>
+    </div>
+
+    <ol class="steps">
+      <li>
+        <div class="body">
+          <h3>Warm-up game <span class="time">5 min</span></h3>
+          <p>Play <a href="#warmup">Array Splitter</a> on the board. Students tap a line to break an array into two arrays, then add the two parts.</p>
+          <details>
+            <summary>Teacher script</summary>
+            <p class="say">“Here is a big array. Where could we cut it so each piece is easier to count? Tap a line and see.”</p>
+            <p>After each round ask: “What are the two small arrays? How did you find the whole?” Let students notice that different cuts give the same total.</p>
+          </details>
+        </div>
+      </li>
+      <li>
+        <div class="body">
+          <h3>Solve &amp; Share <span class="time">7 min</span></h3>
+          <p>Use the book’s opening problem. If you want a backup story:</p>
+          <p class="say">“A bakery tray has 6 rows of 4 muffins. Break the tray into two smaller trays. How many muffins in all?”</p>
+          <ul>
+            <li>Students draw the array on grid paper and color two parts.</li>
+            <li>Pairs share where they broke it apart.</li>
+            <li>Compare splits like 5 + 1 and 3 + 3. Ask: “Why do we get the same total?”</li>
+          </ul>
+        </div>
+      </li>
+      <li>
+        <div class="body">
+          <h3>Visual Learning: the Distributive Property <span class="time">10 min</span></h3>
+          <ul>
+            <li>Break apart one factor into two smaller numbers, like 7 = 5 + 2.</li>
+            <li>Multiply each part by the other factor: 5 × 4 and 2 × 4.</li>
+            <li>Add the two products: 20 + 8 = 28.</li>
+            <li>Parentheses show which part to do first: 7 × 4 = (5 × 4) + (2 × 4).</li>
+            <li>Choose parts that are facts you know, like 2s, 5s and 10s. Any split works.</li>
+            <li>You can break apart either factor.</li>
+          </ul>
+          <p><b>Try the Array Splitter Explorer.</b> Pick the rows and columns, then slide the cut.</p>
+          <div class="explorer">
+            <div class="ctl">
+              <div class="grp" role="group" aria-label="Number of rows"><span class="lab">Rows:</span><span id="exRows" style="display:contents"></span></div>
+              <div class="grp" role="group" aria-label="Number of columns"><span class="lab">Columns:</span><span id="exCols" style="display:contents"></span></div>
+            </div>
+            <div class="ctl"><label for="exCut">Break after row <b id="exCutN"></b></label><input class="range" id="exCut" type="range" min="1" max="6" value="5"></div>
+            <div class="exbody">
+              <div id="exViz"></div>
+              <div>
+                <div class="bigeq" id="exEq" aria-live="polite"></div>
+                <div class="bigeq" id="exNum"></div>
+                <p id="exTip"></p>
+                <button class="btn alt" id="exSpeak" type="button">🔊 Say it</button>
+              </div>
+            </div>
+          </div>
+          <div class="chart" aria-label="Key ideas">
+            <span class="chip">Break apart</span><span class="chip">Multiply each part</span><span class="chip">Add the products</span>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="body">
+          <h3>Guided Practice and Convince Me <span class="time">8 min</span></h3>
+          <ul>
+            <li>Students do the Guided Practice items with a partner. They draw and color the array, then write the equation.</li>
+            <li>Convince Me prompts you can use: “Break 7 × 6 into 5 × 6 and 2 × 6. Why does that give the same answer as 7 × 6?” and “Show a second way to break apart 8 × 4.”</li>
+          </ul>
+          <details>
+            <summary>What to listen for</summary>
+            <p>Strong answers say the two small arrays together make the big array, so the total stays the same. Listen for “the parts add up to the whole.”</p>
+          </details>
+        </div>
+      </li>
+      <li>
+        <div class="body">
+          <h3>Game centers <span class="time">12 min</span></h3>
+          <p>Rotate small groups through the three games, about 4 minutes each.</p>
+          <ul>
+            <li><a href="#game1">Break Apart</a>: match arrays to equations and fill in missing numbers.</li>
+            <li><a href="#game2">Product Race</a>: use two small arrays to find the whole product.</li>
+            <li><a href="#game3">Distributive Detective</a>: word problems, true or false, and “who is right?”</li>
+          </ul>
+        </div>
+      </li>
+      <li>
+        <div class="body">
+          <h3>Independent Practice and Problem Solving <span class="time">5 min</span></h3>
+          <p>Students complete the book’s Independent Practice and Problem Solving items. Circulate and ask: “Which facts did you use?”</p>
+          <p>Higher-order prompt: “Marco says 6 × 7 = (3 × 7) + (3 × 7). Ana says 6 × 7 = (5 × 7) + (1 × 7). Who is right?” (Both. 21 + 21 = 42 and 35 + 7 = 42.)</p>
+        </div>
+      </li>
+      <li>
+        <div class="body">
+          <h3>Exit ticket <span class="time">3 min</span></h3>
+          <ul>
+            <li>Fill in: 8 × 3 = (5 × 3) + (3 × 3) = __ + __ = __</li>
+            <li>Draw a line to break apart a 6 × 4 array. Write an equation.</li>
+            <li>True or false: 7 × 4 = (5 × 4) + (2 × 4).</li>
+          </ul>
+          <details>
+            <summary>Answer key</summary>
+            <p>1) 15 + 9 = 24. 2) Answers vary, such as 6 × 4 = (5 × 4) + (1 × 4) = 24. 3) True: 20 + 8 = 28.</p>
+          </details>
+        </div>
+      </li>
+    </ol>
+
+    <h2 style="font-size:1.8rem;margin-top:20px">Support every learner</h2>
+    <div class="diff">
+      <div class="fact"><h3>Needs support</h3><ul><li>Use grid paper and two colors.</li><li>Start with arrays up to 6 × 4 and break apart at 5.</li><li>Say “break, multiply, add” each time.</li></ul></div>
+      <div class="fact"><h3>On level</h3><ul><li>Work with arrays up to 9 × 6.</li><li>Write the full equation with parentheses.</li></ul></div>
+      <div class="fact"><h3>Ready for more</h3><ul><li>Break apart 8 × 7 in two different ways.</li><li>Challenge: try 9 × 6 as (10 × 6) − (1 × 6).</li></ul></div>
+    </div>
+
+    <div class="diff">
+      <div class="fact"><h3>I can statements</h3><ul><li>I can break an array into two smaller arrays.</li><li>I can use facts I know to find each part.</li><li>I can add the parts to find the product.</li></ul></div>
+      <div class="fact"><h3>Quick check</h3><p>Watch for students who add the factors instead of the products, such as (5 + 4) + (2 + 4). Return to the colored arrays and count each part.</p></div>
+      <div class="fact"><h3>Home connection</h3><p>Use an egg carton or muffin tin as an array. Cover some rows with paper and say the equation for the two parts.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="band w" id="warmup">
+  <div class="wrap">
+    <h2 class="sec-title">Warm-up game: Array Splitter ✂️</h2>
+    <div class="meta">
+      <p><b>Skills:</b> breaking an array into two arrays, writing the broken-apart equation, adding the two products.</p>
+      <p><b>How to use:</b> whole class on the board, or pairs on tablets. 5 rounds. Any cut is allowed.</p>
+    </div>
+    <div class="stage intro" id="splitStage"></div>
+  </div>
+</section>
+
+<section class="band g1" id="game1">
+  <div class="wrap">
+    <h2 class="sec-title">Game 1: Break Apart 🧩</h2>
+    <div class="meta">
+      <p><b>Skills:</b> matching a broken-apart array to its equation, finding a missing number, finding a missing product.</p>
+      <p><b>How to use:</b> 10 questions. Students can try again after a wrong answer, but only first tries earn stars.</p>
+    </div>
+    <div class="stage intro" id="game1Stage"></div>
+  </div>
+</section>
+
+<section class="band g2" id="game2">
+  <div class="wrap">
+    <h2 class="sec-title">Game 2: Product Race 🏁</h2>
+    <div class="meta">
+      <p><b>Skills:</b> using two small arrays and known facts to find a product within 81.</p>
+      <p><b>How to use:</b> 8 problems. Students find each small array first, then add. Splits include 5 + something and equal halves.</p>
+    </div>
+    <div class="stage intro" id="game2Stage"></div>
+  </div>
+</section>
+
+<section class="band g3" id="game3">
+  <div class="wrap">
+    <h2 class="sec-title">Game 3: Distributive Detective 🕵️</h2>
+    <div class="meta">
+      <p><b>Skills:</b> word problems, choosing a helpful expression, true or false splits, breaking apart either factor, knowing that different splits give the same product.</p>
+      <p><b>How to use:</b> 8 mixed questions. Students can try again after a wrong answer, but only first tries earn stars.</p>
+    </div>
+    <div class="stage intro" id="game3Stage"></div>
+  </div>
+</section>
+
+<footer><div class="wrap">enVision Math Grade 3 · Topic 3 · Lesson 3-1 The Distributive Property</div></footer>
+
+<script>
+(function(){
+  var starTotal = 0, muted = false;
+  function $(s, r){ return (r || document).querySelector(s); }
+  function shuffle(a){ a = a.slice(); for (var i = a.length - 1; i > 0; i--){ var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  function rnd(a, b){ return a + Math.floor(Math.random() * (b - a + 1)); }
+  function addStars(n){ starTotal += n; $('#starCount').textContent = starTotal; }
+
+  function beep(kind){
+    if (muted) return;
+    try {
+      var AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
+      beep.ctx = beep.ctx || new AC();
+      var c = beep.ctx, t = c.currentTime;
+      var seq = kind === 'good' ? [660, 880] : kind === 'bad' ? [220] : [523, 659, 784, 1047];
+      seq.forEach(function(f){
+        var o = c.createOscillator(), g = c.createGain();
+        o.type = 'sine'; o.frequency.value = f;
+        g.gain.setValueAtTime(0.12, t); g.gain.exponentialRampToValueAtTime(0.001, t + 0.18);
+        o.connect(g); g.connect(c.destination); o.start(t); o.stop(t + 0.18); t += 0.12;
+      });
+    } catch (e) {}
+  }
+  function speak(text){
+    if (muted) return;
+    try { var u = new SpeechSynthesisUtterance(text); u.lang = 'en-US'; u.rate = 0.85; speechSynthesis.cancel(); speechSynthesis.speak(u); } catch (e) {}
+  }
+  function confetti(){
+    try { if (matchMedia('(prefers-reduced-motion: reduce)').matches) return; } catch (e) {}
+    var em = ['⭐', '🎉', '🧩', '✨', '🏁'];
+    for (var i = 0; i < 24; i++){
+      var s = document.createElement('span');
+      s.className = 'confetti'; s.textContent = em[i % em.length];
+      s.style.left = (Math.random() * 100) + 'vw';
+      s.style.animationDelay = (Math.random() * 0.6) + 's';
+      s.style.fontSize = (18 + Math.random() * 18) + 'px';
+      document.body.appendChild(s);
+      (function(el){ setTimeout(function(){ el.remove(); }, 3800); })(s);
+    }
+  }
+  var muteBtn = $('#muteBtn');
+  muteBtn.addEventListener('click', function(){
+    muted = !muted;
+    muteBtn.textContent = muted ? '🔇' : '🔊';
+    muteBtn.setAttribute('aria-pressed', String(muted));
+    muteBtn.setAttribute('aria-label', muted ? 'Sound off' : 'Sound on');
+  });
+
+  /* arrays: rows × cols; first k rows purple, remaining rows gold */
+  function dotsRow(b){ var s = ''; for (var i = 0; i < b; i++) s += '<i class="d"></i>'; return s; }
+  function arrayViz(a, b, k, small, animate){
+    var h = '<div class="arr' + (small ? ' sm' : '') + '" role="img" aria-label="Array with ' + a + ' rows of ' + b + (k ? ', broken after row ' + k + ' into ' + k + ' rows and ' + (a - k) + ' rows' : '') + '">';
+    for (var r = 0; r < a; r++){
+      var cls = 'arow' + (k && r >= k ? ' pb' : '') + (k && r === k ? ' gapb' : '');
+      h += '<div class="' + cls + '"' + (animate ? ' style="--i:' + r + '"' : '') + '>' + dotsRow(b) + '</div>';
+    }
+    return h + '</div>';
+  }
+  function eqHTML(a, b, x, y){
+    return a + ' × ' + b + ' = <span class="ta">(' + x + ' × ' + b + ')</span> + <span class="tb">(' + y + ' × ' + b + ')</span>';
+  }
+  function eqText(a, b, x, y){ return a + ' × ' + b + ' = (' + x + ' × ' + b + ') + (' + y + ' × ' + b + ')'; }
+  function splitFor(a){
+    var o = [[5, a - 5], [a - 2, 2]];
+    if (a % 2 === 0) o.push([a / 2, a / 2]);
+    return o[rnd(0, o.length - 1)];
+  }
+
+  $('#heroArr').innerHTML = arrayViz(7, 4, 5, false, true);
+
+  /* explorer */
+  var exA = 7, exB = 4, exK = 5;
+  function makePicks(id, kind){
+    var host = $(id);
+    for (var n = 2; n <= 9; n++){
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'pick'; b.textContent = n; b.dataset.n = n; b.dataset.kind = kind;
+      b.setAttribute('aria-pressed', 'false'); b.setAttribute('aria-label', (kind === 'r' ? 'Rows ' : 'Columns ') + n);
+      b.addEventListener('click', function(){
+        if (this.dataset.kind === 'r') exA = +this.dataset.n; else exB = +this.dataset.n;
+        exDraw();
+      });
+      host.appendChild(b);
+    }
+  }
+  makePicks('#exRows', 'r'); makePicks('#exCols', 'c');
+  var range = $('#exCut');
+  range.addEventListener('input', function(){ exK = +range.value; exDraw(); });
+  function exDraw(){
+    var maxK = exA - 1; if (exK > maxK) exK = maxK; if (exK < 1) exK = 1;
+    range.max = maxK; range.value = exK; range.disabled = maxK < 2;
+    $('#exCutN').textContent = exK;
+    document.querySelectorAll('#exRows .pick').forEach(function(p){ p.setAttribute('aria-pressed', String(+p.dataset.n === exA)); });
+    document.querySelectorAll('#exCols .pick').forEach(function(p){ p.setAttribute('aria-pressed', String(+p.dataset.n === exB)); });
+    var y = exA - exK, p1 = exK * exB, p2 = y * exB;
+    $('#exViz').innerHTML = arrayViz(exA, exB, exK);
+    $('#exEq').innerHTML = eqHTML(exA, exB, exK, y);
+    $('#exNum').innerHTML = '= <span class="ta">' + p1 + '</span> + <span class="tb">' + p2 + '</span> = ' + (p1 + p2);
+    $('#exTip').textContent = (exK === 5 || y === 5 || exK === 2 || y === 2) ? 'Nice! One part uses a fact you know well.' : 'Try breaking at 5 rows so you can use your 5s facts.';
+  }
+  $('#exSpeak').addEventListener('click', function(){
+    var y = exA - exK;
+    speak(exA + ' times ' + exB + ' equals ' + exK + ' times ' + exB + ' plus ' + y + ' times ' + exB + '. That is ' + (exK * exB) + ' plus ' + (y * exB) + ', which is ' + (exA * exB) + '.');
+  });
+  exDraw();
+
+  function finish(root, got, total, again){
+    var ratio = got / total;
+    var emoji = ratio >= 0.9 ? '🏆' : ratio >= 0.6 ? '🌟' : '💪';
+    var msg = ratio >= 0.9 ? 'Super multiplier! You can break apart any array.' : ratio >= 0.6 ? 'Great job! You are getting good at breaking apart arrays.' : 'Nice try! Play again to practice.';
+    root.className = 'stage';
+    root.innerHTML = '<div class="final"><div class="big">' + emoji + '</div><div class="score">' + got + ' out of ' + total + ' on the first try</div><p>' + msg + '</p><button class="btn" type="button" id="againBtn">Play again</button></div>';
+    $('#againBtn', root).addEventListener('click', again);
+    beep('win'); if (ratio >= 0.6) confetti();
+  }
+
+  function runQuiz(root, cfg){
+    var Q = cfg.make(), i = 0, got = 0, tries = 0;
+    root.className = 'stage';
+    function render(){
+      var q = Q[i]; tries = 0;
+      var pips = Q.map(function(_, n){ return '<span class="pip ' + (n < i ? 'done' : n === i ? 'now' : '') + '"></span>'; }).join('');
+      var ch = q.choices.map(function(c, n){ return '<button type="button" class="choice ch' + (n % 4) + '" data-k="' + n + '">' + c + '</button>'; }).join('');
+      root.innerHTML = '<div class="qhead"><div class="qprog" aria-hidden="true">' + pips + '</div><span class="qcount">' + (i + 1) + ' / ' + Q.length + '</span></div>' +
+        '<p class="qprompt">' + q.prompt + '</p><div class="qvisual">' + (q.visual || '') + '</div>' +
+        '<div class="choices ' + (q.mode || cfg.mode) + '" role="group" aria-label="Answers">' + ch + '</div>' +
+        '<div class="feedback" role="status" aria-live="polite"></div><div class="nextrow"></div>';
+      root.querySelectorAll('.choice').forEach(function(btn){ btn.addEventListener('click', function(){ pick(btn); }); });
+    }
+    function lockAll(){ root.querySelectorAll('.choice').forEach(function(x){ x.disabled = true; }); }
+    function showNext(){
+      var last = i === Q.length - 1;
+      var nb = document.createElement('button');
+      nb.type = 'button'; nb.className = 'btn'; nb.textContent = last ? 'See my stars' : 'Next question';
+      nb.addEventListener('click', function(){ if (last) finish(root, got, Q.length, function(){ runQuiz(root, cfg); }); else { i++; render(); } });
+      $('.nextrow', root).appendChild(nb); nb.focus();
+    }
+    function pick(btn){
+      var q = Q[i], k = +btn.dataset.k, fb = $('.feedback', root);
+      if (k === q.correct){
+        lockAll(); btn.classList.add('right');
+        if (tries === 0){ got++; addStars(1); }
+        beep('good');
+        fb.innerHTML = '<strong>' + (tries === 0 ? 'Great!' : 'You got it!') + '</strong> ' + q.explain;
+        showNext();
+      } else {
+        tries++; btn.classList.add('wrong'); btn.disabled = true; beep('bad');
+        fb.textContent = 'Not yet. ' + q.hint + ' Try again!';
+      }
+    }
+    render();
+  }
+
+  function numChoices(correct, pool){
+    var opts = pool.filter(function(x, idx){ return x > 0 && x !== correct && pool.indexOf(x) === idx; });
+    var three = shuffle([correct].concat(shuffle(opts).slice(0, 2)));
+    return { choices: three, correct: three.indexOf(correct) };
+  }
+  function textChoices(right, wrongs){
+    var all = shuffle([right].concat(shuffle(wrongs).slice(0, 2)));
+    return { choices: all, correct: all.indexOf(right) };
+  }
+
+  /* Game 1: Break Apart */
+  function makeG1(){
+    var qs = [], A = [6, 7, 8, 9];
+    for (var n = 0; n < 4; n++){
+      var a = A[rnd(0, 3)], b = rnd(3, 7), s = splitFor(a), x = s[0], y = s[1];
+      var t = textChoices(eqText(a, b, x, y), [
+        a + ' × ' + b + ' = (' + x + ' × ' + b + ') × (' + y + ' × ' + b + ')',
+        a + ' × ' + b + ' = (' + x + ' × ' + b + ') + ' + y,
+        a + ' × ' + b + ' = (' + x + ' + ' + y + ') + ' + b
+      ]);
+      qs.push({
+        prompt: 'Which equation matches the broken-apart array?',
+        visual: arrayViz(a, b, x, true),
+        choices: t.choices, correct: t.correct, mode: 'cards eq',
+        hint: 'Count the rows in each color. Each part is rows × columns.',
+        explain: x + ' rows and ' + y + ' rows: ' + eqText(a, b, x, y) + '.'
+      });
+    }
+    for (var m = 0; m < 3; m++){
+      var a2 = A[rnd(0, 3)], b2 = rnd(3, 7), y2 = a2 - 5, c = numChoices(y2, [y2 - 1, y2 + 1, y2 + 2, a2, 5]);
+      qs.push({
+        prompt: 'Find the missing number.',
+        visual: '<div class="bigeq">' + a2 + ' × ' + b2 + ' = (5 × ' + b2 + ') + (? × ' + b2 + ')</div>' + arrayViz(a2, b2, 5, true),
+        choices: c.choices, correct: c.correct, mode: 'cards',
+        hint: 'The two parts must add up to ' + a2 + '.',
+        explain: '5 + ' + y2 + ' = ' + a2 + ', so the missing number is ' + y2 + '.'
+      });
+    }
+    for (var q = 0; q < 3; q++){
+      var a3 = A[rnd(0, 3)], b3 = rnd(3, 7), y3 = a3 - 5, p1 = 5 * b3, p2 = y3 * b3;
+      var c3 = numChoices(p2, [p2 - b3, p2 + b3, y3 + b3, p1]);
+      qs.push({
+        prompt: 'Find the missing product.',
+        visual: '<div class="bigeq">' + a3 + ' × ' + b3 + ' = (5 × ' + b3 + ') + (' + y3 + ' × ' + b3 + ')</div><div class="bigeq">= ' + p1 + ' + ? = ' + (a3 * b3) + '</div>',
+        choices: c3.choices, correct: c3.correct, mode: 'cards',
+        hint: 'Multiply ' + y3 + ' × ' + b3 + '. Or think: ' + (a3 * b3) + ' − ' + p1 + '.',
+        explain: y3 + ' × ' + b3 + ' = ' + p2 + '. ' + p1 + ' + ' + p2 + ' = ' + (a3 * b3) + '.'
+      });
+    }
+    return shuffle(qs);
+  }
+
+  /* Game 2: Product Race */
+  function makeG2(){
+    var combos = [];
+    for (var a = 6; a <= 9; a++) for (var b = 3; b <= 8; b++) combos.push([a, b]);
+    return shuffle(combos).slice(0, 8).map(function(p){
+      var a = p[0], b = p[1], s = splitFor(a), x = s[0], y = s[1], p1 = x * b, p2 = y * b, total = a * b;
+      var c = numChoices(total, [p1, p2, total - b, total + b, total + 10, total - 10]);
+      return {
+        prompt: 'Use the broken-apart array to find ' + a + ' × ' + b + '.',
+        visual: arrayViz(a, b, x, true) + '<div class="bigeq">' + eqHTML(a, b, x, y) + '</div><div class="bigeq">= <span class="ta">' + p1 + '</span> + <span class="tb">' + p2 + '</span> = ?</div>',
+        choices: c.choices, correct: c.correct, mode: 'cards',
+        hint: 'Add the two small products together.',
+        explain: p1 + ' + ' + p2 + ' = ' + total + '. So ' + a + ' × ' + b + ' = ' + total + '.'
+      };
+    });
+  }
+
+  /* Game 3: Distributive Detective */
+  function makeG3(){
+    var qs = [];
+    var T = [
+      { c: 'A bakery tray', per: 'muffins' }, { c: 'A garden', per: 'flowers' },
+      { c: 'A shelf', per: 'books' }, { c: 'A parking lot', per: 'cars' }
+    ];
+    shuffle(T).slice(0, 3).forEach(function(t){
+      var a = rnd(6, 9), b = rnd(3, 7), s = splitFor(a), x = s[0], y = s[1], total = a * b;
+      var c = numChoices(total, [x * b, y * b, total - b, total + b]);
+      qs.push({
+        prompt: t.c + ' has ' + a + ' rows with ' + b + ' ' + t.per + ' in each row. Break it into ' + x + ' rows and ' + y + ' rows. How many ' + t.per + ' in all?',
+        visual: arrayViz(a, b, x, true),
+        choices: c.choices, correct: c.correct, mode: 'cards',
+        hint: 'Find each part first, then add.',
+        explain: '(' + x + ' × ' + b + ') + (' + y + ' × ' + b + ') = ' + (x * b) + ' + ' + (y * b) + ' = ' + total + '.'
+      });
+    });
+    for (var n = 0; n < 2; n++){
+      var a2 = rnd(6, 9), b2 = rnd(3, 7), s2 = splitFor(a2), x2 = s2[0], y2 = s2[1];
+      var right = '(' + x2 + ' × ' + b2 + ') + (' + y2 + ' × ' + b2 + ')';
+      var t2 = textChoices(right, [
+        '(' + x2 + ' × ' + b2 + ') + ' + y2,
+        '(' + x2 + ' + ' + b2 + ') × ' + y2,
+        x2 + ' × ' + b2 + ' × ' + y2
+      ]);
+      qs.push({
+        prompt: 'Which expression helps find ' + a2 + ' × ' + b2 + '?',
+        visual: '',
+        choices: t2.choices, correct: t2.correct, mode: 'cards eq',
+        hint: 'Break apart ' + a2 + ' into ' + x2 + ' and ' + y2 + ', then multiply each part by ' + b2 + '.',
+        explain: 'Break apart ' + a2 + ' into ' + x2 + ' and ' + y2 + '. Multiply each part by ' + b2 + ', then add.'
+      });
+    }
+    var wa = [6, 8][rnd(0, 1)], wb = rnd(4, 7), x1 = 5, y1 = wa - 5, h = wa / 2;
+    qs.push({
+      prompt: 'Ali says ' + wa + ' × ' + wb + ' = (' + x1 + ' × ' + wb + ') + (' + y1 + ' × ' + wb + '). Bea says ' + wa + ' × ' + wb + ' = (' + h + ' × ' + wb + ') + (' + h + ' × ' + wb + '). Who is right?',
+      visual: '<div class="duo"><figure><figcaption>Ali</figcaption>' + arrayViz(wa, wb, x1, true) + '</figure><figure><figcaption>Bea</figcaption>' + arrayViz(wa, wb, h, true) + '</figure></div>',
+      choices: ['Ali', 'Bea', 'Both', 'Neither'], correct: 2, mode: 'cards',
+      hint: 'Check that each pair of parts adds up to ' + wa + '.',
+      explain: 'Both are right! Any way of breaking apart ' + wa + ' gives ' + (wa * wb) + '.'
+    });
+    var ta = rnd(6, 9), tb = rnd(3, 7), tx = 5, valid = Math.random() < 0.5, ty = valid ? ta - 5 : ta - 4;
+    var statement = ta + ' × ' + tb + ' = (' + tx + ' × ' + tb + ') + (' + ty + ' × ' + tb + ')';
+    qs.push({
+      prompt: 'True or false?',
+      visual: '<div class="bigeq">' + statement + '</div>',
+      choices: ['True', 'False'], correct: valid ? 0 : 1, mode: 'cards',
+      hint: 'Do the two parts, ' + tx + ' and ' + ty + ', add up to ' + ta + '?',
+      explain: valid ? tx + ' + ' + ty + ' = ' + ta + ', so the parts add up to the whole. It works!' : tx + ' + ' + ty + ' = ' + (tx + ty) + ', not ' + ta + '. The parts must add up to ' + ta + '.'
+    });
+    var ma = rnd(6, 9), mb = rnd(3, 7), my = ma - 5, c4 = numChoices(my, [my + 1, my - 1, ma, 5]);
+    qs.push({
+      prompt: 'You can break apart either factor. Find the missing number.',
+      visual: '<div class="bigeq">' + mb + ' × ' + ma + ' = (' + mb + ' × 5) + (' + mb + ' × ?)</div>',
+      choices: c4.choices, correct: c4.correct, mode: 'cards',
+      hint: 'The two parts of ' + ma + ' must add up to ' + ma + '.',
+      explain: '5 + ' + my + ' = ' + ma + ', so the missing number is ' + my + '.'
+    });
+    return shuffle(qs);
+  }
+
+  /* Warm-up: Array Splitter */
+  function runSplit(root){
+    var list = shuffle([[6, 4], [7, 3], [8, 4], [9, 3], [7, 5], [6, 6], [8, 3], [9, 4], [6, 5], [7, 4]]).slice(0, 5);
+    var r = 0, got = 0, tries = 0, cut = 0, ch = null;
+    root.className = 'stage';
+    function pips(){ return list.map(function(_, k){ return '<span class="pip ' + (k < r ? 'done' : k === r ? 'now' : '') + '"></span>'; }).join(''); }
+    function head(){ return '<div class="qhead"><div class="qprog" aria-hidden="true">' + pips() + '</div><span class="qcount">' + (r + 1) + ' / ' + list.length + '</span></div>'; }
+    function render(){
+      var a = list[r][0], b = list[r][1];
+      if (!cut){
+        var h = '<div class="cutarr" role="group" aria-label="Array with ' + a + ' rows of ' + b + '. Choose where to break it.">';
+        for (var i = 0; i < a; i++){
+          h += '<div class="arow" style="justify-content:center">' + dotsRow(b) + '</div>';
+          if (i < a - 1) h += '<button type="button" class="cut" data-k="' + (i + 1) + '" aria-label="Break after row ' + (i + 1) + '"></button>';
+        }
+        h += '</div>';
+        root.innerHTML = head() + '<p class="qprompt">Tap a dashed line between two rows to break this ' + a + ' × ' + b + ' array into two smaller arrays.</p><div class="qvisual">' + h + '</div>';
+        root.querySelectorAll('.cut').forEach(function(btn){ btn.addEventListener('click', function(){ cut = +btn.dataset.k; render(); }); });
+      } else {
+        var x = cut, y = a - cut, p1 = x * b, p2 = y * b, total = a * b;
+        ch = numChoices(total, [p1, p2, total - b, total + b]);
+        root.innerHTML = head() +
+          '<p class="qprompt">You made two arrays. Add the two parts to find ' + a + ' × ' + b + '.</p>' +
+          '<div class="qvisual">' + arrayViz(a, b, x) + '<div class="bigeq">' + eqHTML(a, b, x, y) + '</div><div class="bigeq">= <span class="ta">' + p1 + '</span> + <span class="tb">' + p2 + '</span> = ?</div></div>' +
+          '<div class="choices cards" role="group" aria-label="Answers">' + ch.choices.map(function(c, n){ return '<button type="button" class="choice ch' + (n % 4) + '" data-k="' + n + '">' + c + '</button>'; }).join('') + '</div>' +
+          '<div class="feedback" role="status" aria-live="polite"></div><div class="nextrow"><button type="button" class="btn ghost" id="reCut">Change the cut</button></div>';
+        $('#reCut', root).addEventListener('click', function(){ cut = 0; render(); });
+        root.querySelectorAll('.choice').forEach(function(btn){
+          btn.addEventListener('click', function(){
+            var k = +btn.dataset.k, fb = $('.feedback', root);
+            if (k === ch.correct){
+              root.querySelectorAll('.choice').forEach(function(z){ z.disabled = true; });
+              btn.classList.add('right'); beep('good');
+              if (tries === 0){ got++; addStars(1); }
+              var tip = (x === 5 || y === 5) ? '' : ' Tip: breaking off 5 rows gives you a fact you already know.';
+              fb.innerHTML = '<strong>' + (tries === 0 ? 'Great!' : 'You got it!') + '</strong> ' + p1 + ' + ' + p2 + ' = ' + total + '. Any cut works, and the total stays ' + total + '.' + tip;
+              var last = r === list.length - 1;
+              var nb = document.createElement('button');
+              nb.type = 'button'; nb.className = 'btn'; nb.textContent = last ? 'See my stars' : 'Next array';
+              nb.addEventListener('click', function(){ if (last) finish(root, got, list.length, function(){ runSplit(root); }); else { r++; cut = 0; tries = 0; render(); } });
+              $('#reCut', root).remove();
+              $('.nextrow', root).appendChild(nb); nb.focus();
+            } else {
+              tries++; btn.classList.add('wrong'); btn.disabled = true; beep('bad');
+              fb.textContent = 'Not yet. Find ' + x + ' × ' + b + ' and ' + y + ' × ' + b + ', then add them.';
+            }
+          });
+        });
+      }
+    }
+    render();
+  }
+
+  function intro(rootId, big, title, text, start){
+    var root = $(rootId);
+    root.className = 'stage intro';
+    root.innerHTML = '<div class="big" aria-hidden="true">' + big + '</div><h3 style="font-size:1.8rem">' + title + '</h3><p style="max-width:44ch">' + text + '</p><button type="button" class="btn">Start</button>';
+    $('.btn', root).addEventListener('click', function(){ start(root); });
+  }
+  intro('#splitStage', '✂️', 'Array Splitter', 'Cut a big array into two smaller arrays, then add the two parts to find the whole product.', runSplit);
+  intro('#game1Stage', '🧩', 'Break Apart', 'Match each broken-apart array to its equation and find the missing numbers.', function(r){ runQuiz(r, { make: makeG1, mode: 'cards' }); });
+  intro('#game2Stage', '🏁', 'Product Race', 'Use the two small arrays to find the product. Find each part first, then add.', function(r){ runQuiz(r, { make: makeG2, mode: 'cards' }); });
+  intro('#game3Stage', '🕵️', 'Distributive Detective', 'Solve word problems and crack the cases. Remember: any way of breaking apart gives the same product.', function(r){ runQuiz(r, { make: makeG3, mode: 'cards' }); });
+})();
+</script>
+</body>
+</html>

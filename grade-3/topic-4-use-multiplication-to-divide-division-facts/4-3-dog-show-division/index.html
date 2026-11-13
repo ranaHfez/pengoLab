@@ -1,0 +1,754 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+<!-- Shared template: colors, fonts, sounds, buttons, mascots. Keep this. -->
+<link rel="stylesheet" href="../../../shared/theme.css">
+<script src="../../../shared/theme.js" defer></script>
+</head><body>
+<title>Lesson 4-3 Dog Show Division</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@500;700;800&family=Gochi+Hand&display=swap">
+<style>
+/* Layout: sticky ribbon-tab bar over a sky field; each tab is one classroom "station". Side tool rail on board + book. */
+:root{
+  --sky:#e8f3ff; --sky2:#d6e9ff; --ink:#1b2742; --muted:#55627d;
+  --blue:#2160d4; --blue-soft:#dbe7ff; --red:#e2463a; --red-soft:#ffe1de;
+  --sun:#ffbf2e; --sun-soft:#fff1c9; --grass:#2a9657; --grass-soft:#d9f3e3;
+  --card:#ffffff; --line:#c6d7ef; --board:#264f3c; --board2:#2f604a; --wood:#93602f;
+  --display:"Baloo 2","Trebuchet MS",system-ui,sans-serif;
+  --body:"Nunito","Segoe UI",system-ui,sans-serif;
+  --chalk:"Gochi Hand","Comic Sans MS",cursive;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{background:var(--sky);color:var(--ink)}
+body{font-family:var(--body);font-size:17px;line-height:1.5;margin:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--blue)}
+h1,h2,h3{font-family:var(--display);line-height:1.1;text-wrap:balance;margin:0}
+button{font:inherit;cursor:pointer;color:inherit}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* header */
+.hero{background:var(--blue);color:#fff;padding-block:22px 26px;position:relative;overflow:hidden}
+.hero .wrap{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
+.rosette{flex:0 0 auto;width:92px;height:110px}
+.hero-text{flex:1 1 380px;min-width:0}
+.eyebrow{font-weight:800;letter-spacing:.08em;text-transform:uppercase;font-size:13px;color:var(--sun)}
+.hero h1{font-size:clamp(28px,4.4vw,46px);font-weight:800;margin-top:2px}
+.ican{margin-top:8px;font-size:17px;max-width:62ch;opacity:.95}
+.ican b{color:var(--sun)}
+.hero-actions{display:flex;gap:8px;flex-wrap:wrap}
+.chip-btn{border:2px solid rgba(255,255,255,.55);background:rgba(255,255,255,.12);color:#fff;border-radius:999px;padding:6px 14px;font-weight:800;font-size:14px}
+.chip-btn:hover{background:rgba(255,255,255,.25)}
+
+/* tabs */
+.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--card);border-bottom:3px solid var(--line);box-shadow:0 4px 14px rgba(27,39,66,.08)}
+.tabs .wrap{display:flex;gap:6px;overflow-x:auto;padding-block:8px;scrollbar-width:thin}
+.tab{flex:0 0 auto;border:0;background:var(--sky);border-radius:14px;padding:8px 14px;font-family:var(--display);font-weight:700;font-size:17px;display:flex;align-items:center;gap:8px;color:var(--muted)}
+.tab .n{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:#fff;font-size:14px;color:var(--ink)}
+.tab[aria-selected="true"]{background:var(--red);color:#fff}
+.tab[aria-selected="true"] .n{background:var(--sun)}
+
+main{padding-block:24px 60px}
+.view{display:grid;gap:20px}
+.view-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.view-head h2{font-size:clamp(26px,3.4vw,36px);font-weight:800}
+.view-head p{margin:2px 0 0;color:var(--muted);max-width:60ch}
+.card{background:var(--card);border-radius:22px;padding:22px;border:2px solid var(--line);min-width:0}
+.card h3{font-size:24px;font-weight:800;margin-bottom:6px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+.muted{color:var(--muted)}
+.big-eq{font-family:var(--display);font-weight:800;font-size:clamp(30px,4.6vw,48px);letter-spacing:.02em}
+.btn{border:0;border-radius:14px;padding:10px 18px;font-weight:800;background:var(--blue);color:#fff;box-shadow:0 4px 0 #1647a3;transition:transform .08s}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 #1647a3}
+.btn.red{background:var(--red);box-shadow:0 4px 0 #a92d23}
+.btn.sun{background:var(--sun);color:var(--ink);box-shadow:0 4px 0 #c88f0d}
+.btn.ghost{background:var(--sky);color:var(--ink);box-shadow:0 4px 0 var(--line)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:999px;font-weight:800;font-size:14px;background:var(--sun-soft)}
+
+/* options */
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-top:14px}
+.opt{border:3px solid var(--line);background:#fff;border-radius:18px;padding:14px 10px;font-family:var(--display);font-weight:800;font-size:26px;transition:transform .1s,background .2s}
+.opt:hover{transform:translateY(-2px);border-color:var(--blue)}
+.opt.ok{background:var(--grass-soft);border-color:var(--grass);animation:pop .4s}
+.opt.no{background:var(--red-soft);border-color:var(--red);animation:shake .35s}
+@keyframes pop{50%{transform:scale(1.08)}}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.feedback{min-height:32px;font-weight:800;font-size:19px;margin-top:10px}
+.feedback.ok{color:var(--grass)} .feedback.no{color:var(--red)}
+.stars{display:flex;gap:4px;flex-wrap:wrap}
+.star{width:26px;height:26px;fill:var(--line)}
+.star.on{fill:var(--sun);animation:pop .4s}
+
+/* warm-up stage */
+.stage{background:linear-gradient(var(--sun-soft),#fff);border:3px dashed var(--sun);border-radius:18px;min-height:220px;padding:14px;display:grid;gap:8px;align-content:start}
+.dance-row{display:flex;gap:6px;align-items:center;animation:slidein .4s}
+.dance-row .tag{font-weight:800;color:var(--muted);width:62px;font-size:14px}
+.dancer{width:34px;height:42px}
+@keyframes slidein{from{transform:translateX(-30px);opacity:.3}}
+
+/* learn */
+.steps-nav{display:flex;gap:8px;flex-wrap:wrap}
+.sdot{border:0;border-radius:999px;padding:6px 14px;font-weight:800;background:#fff;border:2px solid var(--line);font-size:14px}
+.sdot[aria-current="true"]{background:var(--blue);color:#fff;border-color:var(--blue)}
+.think-write{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:12px}
+.tw{border-radius:16px;padding:12px 16px}
+.tw.think{background:var(--blue-soft)} .tw.write{background:var(--sun-soft)}
+.tw .lab{font-weight:800;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.tw .val{font-family:var(--display);font-weight:800;font-size:28px}
+.hidden-val{filter:blur(9px);transition:filter .4s}
+.yard{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:14px;margin-top:14px}
+@media (max-width:760px){.yard{grid-template-columns:1fr}}
+.lineup,.pens{border-radius:16px;padding:12px;min-height:160px}
+.lineup{background:var(--sky)}
+.pens{background:var(--grass-soft);display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start}
+.lineup .lab,.pens .lab{width:100%;font-weight:800;font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.dogs{display:flex;flex-wrap:wrap;gap:3px}
+.dog{width:26px;height:26px}
+.pen{background:#fff;border:3px solid var(--grass);border-radius:12px;padding:5px;display:flex;flex-wrap:wrap;gap:2px;width:96px;position:relative;animation:pop .35s}
+.pen .dog{width:24px;height:24px}
+.pen .num{position:absolute;top:-12px;left:-10px;background:var(--red);color:#fff;border-radius:50%;width:24px;height:24px;display:grid;place-items:center;font-size:13px;font-weight:800}
+.bar-wrap{margin-top:14px}
+.bar-total{border:3px solid var(--ink);border-radius:8px;padding:8px;text-align:center;font-family:var(--display);font-weight:800;font-size:24px;background:var(--sun-soft)}
+.bar-parts{display:flex;border:3px solid var(--ink);border-top:0;border-radius:0 0 8px 8px;min-height:54px;background:repeating-linear-gradient(45deg,#fff,#fff 8px,var(--sky) 8px,var(--sky) 16px)}
+.bar-part{flex:0 0 calc(100%/6);border-right:3px solid var(--ink);display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:22px;background:var(--blue-soft);animation:grow .35s}
+.bar-part:last-child{border-right:0}
+@keyframes grow{from{transform:scaleX(0)}}
+.flips{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-top:14px}
+.flip{perspective:800px;border:0;background:none;padding:0;height:140px}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.flip .f,.flip .b{position:absolute;inset:0;border-radius:18px;display:grid;place-items:center;backface-visibility:hidden;font-family:var(--display);font-weight:800;padding:8px;text-align:center}
+.flip .f{background:var(--red);color:#fff;font-size:34px}
+.flip .b{background:var(--grass-soft);border:3px solid var(--grass);transform:rotateY(180deg);font-size:21px;line-height:1.25}
+.flip .b small{display:block;font-size:14px;color:var(--muted);font-family:var(--body)}
+
+/* games */
+.game-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.q-box{background:var(--sky);border-radius:18px;padding:18px;text-align:center;margin-top:12px}
+.q-text{font-size:20px;font-weight:700;max-width:60ch;margin:0 auto}
+.q-eq{font-family:var(--display);font-weight:800;font-size:clamp(34px,6vw,58px)}
+.progress{height:14px;border-radius:99px;background:var(--sky2);overflow:hidden}
+.progress i{display:block;height:100%;background:var(--grass);width:0;transition:width .4s}
+.track{position:relative;height:86px;border-radius:18px;background:repeating-linear-gradient(90deg,var(--grass-soft) 0 10%,#c3ebd2 10% 20%);margin-top:6px;overflow:hidden}
+.track .finish{position:absolute;right:6px;top:50%;transform:translateY(-50%);width:54px;height:54px}
+.track .runner{position:absolute;left:4px;top:50%;width:62px;height:62px;transform:translate(0,-50%);transition:left .6s cubic-bezier(.4,1.6,.6,1)}
+.keypad{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;max-width:440px;margin:14px auto 0}
+.key{border:0;border-radius:14px;padding:12px 0;background:#fff;border:2px solid var(--line);font-family:var(--display);font-weight:800;font-size:24px}
+.key:hover{border-color:var(--blue)}
+.answer-slot{display:inline-block;min-width:76px;border-bottom:5px solid var(--blue);color:var(--blue)}
+.hint{margin-top:10px;font-weight:800;color:var(--blue);min-height:26px}
+.end{text-align:center;padding:26px 10px}
+.end .big{font-family:var(--display);font-size:56px;font-weight:800;color:var(--red)}
+
+/* drawing */
+.board-frame{background:var(--wood);border-radius:20px;padding:14px;box-shadow:inset 0 0 0 4px #7a4d23}
+.board{position:relative;background:radial-gradient(ellipse at 30% 20%,var(--board2),var(--board) 70%);border-radius:10px;height:min(72vh,680px);min-height:380px;overflow:hidden}
+.board::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-radial-gradient(circle at 20% 40%,rgba(255,255,255,.025) 0 2px,transparent 2px 7px)}
+.tray{height:12px;background:#7a4d23;border-radius:0 0 8px 8px;margin:10px -4px -6px}
+canvas.ink{position:absolute;inset:0;width:100%;height:100%;touch-action:none;z-index:2}
+.board canvas.ink{cursor:crosshair}
+.page-shell{position:relative;max-width:920px;margin:0 auto;border-radius:10px;overflow:hidden;box-shadow:0 10px 30px rgba(27,39,66,.18);background:#fff}
+.page-shell img{display:block;width:100%;height:auto;user-select:none;-webkit-user-drag:none}
+.page-shell canvas.ink{pointer-events:none}
+body.pen-on .page-shell canvas.ink{pointer-events:auto;cursor:crosshair}
+.page-tabs{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.ptab{border:2px solid var(--line);background:#fff;border-radius:12px;padding:6px 14px;font-weight:800}
+.ptab[aria-current="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.ptab small{display:block;font-size:11px;font-weight:700;opacity:.75}
+.text-in{position:absolute;z-index:5;border:2px dashed var(--sun);background:rgba(255,255,255,.9);font:inherit;padding:2px 6px;border-radius:6px;min-width:120px}
+.board .text-in{background:rgba(0,0,0,.35);color:#fff;font-family:var(--chalk)}
+
+/* side tool rail */
+.rail{position:fixed;z-index:55;right:calc(10px + env(safe-area-inset-right,0px));top:50%;transform:translateY(-50%);width:76px;max-height:calc(100% - 140px);overflow-y:auto;background:var(--ink);border-radius:22px;padding:8px;display:flex;flex-direction:column;gap:6px;box-shadow:0 10px 30px rgba(0,0,0,.25);scrollbar-width:none}
+.rail::-webkit-scrollbar{display:none}
+.rail button{border:0;border-radius:12px;background:rgba(255,255,255,.08);color:#fff;padding:7px 2px;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px;font-weight:800;line-height:1.1}
+.rail button svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.rail button:hover{background:rgba(255,255,255,.18)}
+.rail button[aria-pressed="true"]{background:var(--sun);color:var(--ink)}
+.rail .pen-toggle{background:var(--red)}
+.rail .pen-toggle[aria-pressed="true"]{background:var(--grass);color:#fff}
+.rail .sep{height:2px;background:rgba(255,255,255,.14);border-radius:2px;margin:2px 4px}
+.swatches{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:2px 4px}
+.sw{width:100%;aspect-ratio:1;max-width:100%;border-radius:50% !important;padding:0 !important;border:3px solid rgba(255,255,255,.25) !important}
+.sw[aria-pressed="true"]{border-color:#fff !important;transform:scale(1.12)}
+.sizes{display:flex;flex-direction:column;gap:4px}
+.sizes button{padding:6px 0}
+.sizes i{display:block;border-radius:50%;background:currentColor}
+.stepper{display:flex;align-items:center;justify-content:space-between;color:#fff;font-weight:800;font-size:13px;padding:0 2px}
+.stepper button{padding:2px 8px;font-size:16px}
+.rail-show{position:fixed;z-index:55;right:calc(10px + env(safe-area-inset-right,0px));top:50%;transform:translateY(-50%);border:0;border-radius:16px 0 0 16px;background:var(--ink);color:#fff;padding:12px 10px;display:flex;flex-direction:column;align-items:center;gap:4px;font-weight:800;font-size:12px;box-shadow:0 8px 20px rgba(0,0,0,.25)}
+.rail-show svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+body.has-rail main .wrap{padding-right:max(100px,env(safe-area-inset-right,0px))}
+@media (max-width:560px){body.has-rail main .wrap{padding-right:max(16px,env(safe-area-inset-right,0px))}.rail{width:66px}}
+
+footer{padding-block:20px 30px;text-align:center;color:var(--muted);font-weight:700}
+footer b{font-family:var(--display);color:var(--ink);font-size:18px}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:80}
+@media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="dog" viewBox="0 0 40 40">
+      <ellipse cx="9" cy="15" rx="6" ry="10" fill="#7a4a24" transform="rotate(18 9 15)"/>
+      <ellipse cx="31" cy="15" rx="6" ry="10" fill="#7a4a24" transform="rotate(-18 31 15)"/>
+      <circle cx="20" cy="21" r="13" fill="currentColor"/>
+      <ellipse cx="20" cy="27" rx="7" ry="5.5" fill="#fff7ea"/>
+      <circle cx="15" cy="19" r="2" fill="#1b2742"/><circle cx="25" cy="19" r="2" fill="#1b2742"/>
+      <ellipse cx="20" cy="24.5" rx="2.6" ry="2" fill="#1b2742"/>
+    </symbol>
+    <symbol id="dancer" viewBox="0 0 34 42">
+      <circle cx="17" cy="8" r="6" fill="#f2c39b"/>
+      <path d="M17 4c-6 0-7 4-6 6 1-3 4-4 6-4s5 1 6 4c1-2 0-6-6-6z" fill="#3b2a1c"/>
+      <path d="M17 15l-9 6M17 15l9 6" stroke="#f2c39b" stroke-width="3" stroke-linecap="round"/>
+      <path d="M17 14c-3 0-5 3-5 7l-6 12h22l-6-12c0-4-2-7-5-7z" fill="currentColor"/>
+      <path d="M13 33l-1 8M21 33l1 8" stroke="#f2c39b" stroke-width="3" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="star" viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.7-5.2 4.6 1.5 6.8L12 17l-6.1 3.4 1.5-6.8L2.2 9l6.9-.7z"/></symbol>
+    <symbol id="i-pen" viewBox="0 0 24 24"><path d="M4 20l4-1 11-11-3-3L5 16z"/><path d="M14 6l3 3"/></symbol>
+    <symbol id="i-hl" viewBox="0 0 24 24"><path d="M9 15l-3 5h5l2-3"/><path d="M8 13l7-9 5 4-7 9z"/></symbol>
+    <symbol id="i-eraser" viewBox="0 0 24 24"><path d="M3 16l9-9 7 7-6 6H8z"/><path d="M8 20h12"/></symbol>
+    <symbol id="i-text" viewBox="0 0 24 24"><path d="M5 6V4h14v2M12 4v16M9 20h6"/></symbol>
+    <symbol id="i-bar" viewBox="0 0 24 24"><rect x="2" y="8" width="20" height="8" rx="1"/><path d="M8 8v8M14 8v8"/></symbol>
+    <symbol id="i-groups" viewBox="0 0 24 24"><circle cx="6" cy="12" r="4"/><circle cx="18" cy="12" r="4"/></symbol>
+    <symbol id="i-undo" viewBox="0 0 24 24"><path d="M9 7L4 12l5 5"/><path d="M4 12h10a6 6 0 010 12"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></symbol>
+    <symbol id="i-hide" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></symbol>
+    <symbol id="i-tools" viewBox="0 0 24 24"><path d="M15 6l-6 6M4 20l4-1 11-11-3-3L5 16z"/></symbol>
+  </defs>
+</svg>
+
+<header class="hero">
+  <div class="wrap">
+    <svg class="rosette" viewBox="0 0 92 110" aria-hidden="true">
+      <path d="M30 60l-12 46 16-8 8 12 8-44z" fill="#e2463a"/><path d="M62 60l12 46-16-8-8 12-8-44z" fill="#e2463a"/>
+      <circle cx="46" cy="44" r="40" fill="#ffbf2e"/><circle cx="46" cy="44" r="30" fill="#fff"/>
+      <text x="46" y="40" text-anchor="middle" font-family="Baloo 2, sans-serif" font-weight="800" font-size="15" fill="#2160d4">LESSON</text>
+      <text x="46" y="62" text-anchor="middle" font-family="Baloo 2, sans-serif" font-weight="800" font-size="24" fill="#1b2742">4-3</text>
+    </svg>
+    <div class="hero-text">
+      <div class="eyebrow">enVision Math · Grade 3 · Topic 4 · Lesson 4-3</div>
+      <h1>Use Multiplication to Divide with 6 and 7</h1>
+      <p class="ican"><b>I can</b> divide by 6 and 7 by thinking about how I multiply with those numbers.</p>
+    </div>
+    <div class="hero-actions">
+      <button class="chip-btn" id="soundBtn" aria-pressed="true">Sound: On</button>
+      <button class="chip-btn" id="fsBtn">Full screen</button>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs" aria-label="Lesson parts">
+  <div class="wrap" role="tablist">
+    <button class="tab" role="tab" data-view="warm" aria-selected="true"><span class="n">1</span>Warm-Up</button>
+    <button class="tab" role="tab" data-view="learn" aria-selected="false"><span class="n">2</span>Learn</button>
+    <button class="tab" role="tab" data-view="chalk" aria-selected="false"><span class="n">3</span>Chalkboard</button>
+    <button class="tab" role="tab" data-view="g1" aria-selected="false"><span class="n">4</span>Game: Dog Show Judge</button>
+    <button class="tab" role="tab" data-view="g2" aria-selected="false"><span class="n">5</span>Game: Puppy Race</button>
+    <button class="tab" role="tab" data-view="book" aria-selected="false"><span class="n">6</span>Book Pages</button>
+  </div>
+</nav>
+
+<main>
+<div class="wrap">
+
+<!-- WARM-UP -->
+<section class="view" id="v-warm">
+  <div class="view-head">
+    <div><h2>Warm-Up: Wake Up Your 6s and 7s!</h2><p>Quick facts first, then help the ballet teacher line up the dancers.</p></div>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <div class="row" style="justify-content:space-between"><h3>Fast Facts</h3><div class="stars" id="wStars"></div></div>
+      <p class="muted" style="margin:0">Tap the right product.</p>
+      <div class="q-box"><div class="q-eq" id="wQ">6 × 3 = ?</div></div>
+      <div class="opts" id="wOpts"></div>
+      <div class="feedback" id="wFb"></div>
+      <div class="row" id="wAgainRow" hidden><button class="btn sun" id="wAgain">Play again</button></div>
+    </div>
+    <div class="card">
+      <h3>Solve &amp; Share: The Ballet Class</h3>
+      <p style="margin:0">There are <b>18 children</b> in a ballet class. They stand in <b>rows of 6</b>. How many rows are there?</p>
+      <div class="row" style="margin:12px 0">
+        <button class="btn" id="danceAdd">Add a row of 6</button>
+        <button class="btn ghost" id="danceReset">Start over</button>
+        <span class="pill" id="danceCount">0 of 18 children</span>
+      </div>
+      <div class="stage" id="danceStage" aria-live="polite"></div>
+      <div class="feedback ok" id="danceFb"></div>
+    </div>
+  </div>
+</section>
+
+<!-- LEARN -->
+<section class="view" id="v-learn" hidden>
+  <div class="view-head">
+    <div><h2>Learn: Think Multiplication, Write Division</h2><p>To divide, ask yourself: <b>what number times 6 (or 7) gives me the total?</b></p></div>
+    <nav class="steps-nav" id="stepsNav" aria-label="Learning steps"></nav>
+  </div>
+
+  <div class="card learn-step" data-step="1">
+    <h3>Step 1 · The Dog Show: 48 dogs, 6 in each group</h3>
+    <p style="margin:0">The judge wants <b>6 dogs in each group</b>. How many groups will there be? <b>Find 48 ÷ 6.</b></p>
+    <div class="yard" id="yard1"></div>
+  </div>
+
+  <div class="card learn-step" data-step="2" hidden>
+    <h3>Step 2 · One more dog arrives! 49 dogs, 7 in each group</h3>
+    <p style="margin:0">Now there are <b>49 dogs</b> and <b>7 dogs in each group</b>. <b>Find 49 ÷ 7.</b></p>
+    <div class="yard" id="yard2"></div>
+  </div>
+
+  <div class="card learn-step" data-step="3" hidden>
+    <h3>Step 3 · Draw a bar diagram: 36, 6, and 6</h3>
+    <p style="margin:0">The whole bar is <b>36</b>. Each part is <b>6</b>. Add parts until the bar is full. How many parts?</p>
+    <div class="bar-wrap">
+      <div class="bar-total">36</div>
+      <div class="bar-parts" id="barParts"></div>
+    </div>
+    <div class="row" style="margin-top:12px">
+      <button class="btn" id="barAdd">Add a part of 6</button>
+      <button class="btn ghost" id="barReset">Start over</button>
+      <span class="pill" id="barCount">Parts: 0 · Total so far: 0</span>
+    </div>
+    <div class="think-write">
+      <div class="tw think"><div class="lab">What you think</div><div class="val hidden-val" id="barThink">6 × 6 = 36</div></div>
+      <div class="tw write"><div class="lab">What you write</div><div class="val hidden-val" id="barWrite">36 ÷ 6 = 6</div></div>
+    </div>
+  </div>
+
+  <div class="card learn-step" data-step="4" hidden>
+    <h3>Step 4 · Flip the card: which multiplication fact helps?</h3>
+    <p style="margin:0">Say the helping fact out loud first, then tap the card to check.</p>
+    <div class="flips" id="flips"></div>
+  </div>
+
+  <div class="row" style="justify-content:space-between">
+    <button class="btn ghost" id="stepPrev">Back</button>
+    <button class="btn red" id="stepNext">Next step</button>
+  </div>
+</section>
+
+<!-- CHALKBOARD -->
+<section class="view" id="v-chalk" hidden>
+  <div class="view-head">
+    <div><h2>Chalkboard</h2><p>Explain with chalk. Use the side tools for colors, a bar diagram, equal groups, and typing numbers.</p></div>
+  </div>
+  <div class="board-frame">
+    <div class="board" id="board"><canvas class="ink" id="boardInk"></canvas></div>
+    <div class="tray"></div>
+  </div>
+</section>
+
+<!-- GAME 1 -->
+<section class="view" id="v-g1" hidden>
+  <div class="view-head">
+    <div><h2>Dog Show Judge</h2><p>10 questions. Pick the right answer to win a ribbon.</p></div>
+  </div>
+  <div class="card" id="g1Card"></div>
+</section>
+
+<!-- GAME 2 -->
+<section class="view" id="v-g2" hidden>
+  <div class="view-head">
+    <div><h2>Puppy Race</h2><p>Type the missing number. Every right answer moves the puppy closer to the trophy.</p></div>
+  </div>
+  <div class="card" id="g2Card"></div>
+</section>
+
+<!-- BOOK -->
+<section class="view" id="v-book" hidden>
+  <div class="view-head">
+    <div><h2>Book Pages 125–128</h2><p>Turn the pen on from the side tools to write on the page. Turn it off to scroll.</p></div>
+  </div>
+  <nav class="page-tabs" id="pageTabs" aria-label="Book pages"></nav>
+  <div id="pages"></div>
+</section>
+
+</div>
+</main>
+<footer>Prepared by <b>T.Rana Elsisi</b> · Grade 3 Maths</footer>
+
+<!-- side tool rail -->
+<aside class="rail" id="rail" aria-label="Writing tools" hidden>
+  <button id="tHide" title="Hide tools"><svg><use href="#i-hide"/></svg>Hide</button>
+  <button class="pen-toggle" id="tPen" aria-pressed="false"><svg><use href="#i-pen"/></svg><span id="tPenLab">Pen OFF</span></button>
+  <div id="tBody" style="display:flex;flex-direction:column;gap:6px">
+    <div class="sep"></div>
+    <button data-tool="pen" aria-pressed="true"><svg><use href="#i-pen"/></svg><span class="pen-name">Pen</span></button>
+    <button data-tool="hl" aria-pressed="false" id="tHl"><svg><use href="#i-hl"/></svg>Marker</button>
+    <button data-tool="eraser" aria-pressed="false"><svg><use href="#i-eraser"/></svg>Eraser</button>
+    <button data-tool="text" aria-pressed="false"><svg><use href="#i-text"/></svg>Type</button>
+    <div id="stampTools" style="display:flex;flex-direction:column;gap:6px">
+      <button data-tool="bar" aria-pressed="false"><svg><use href="#i-bar"/></svg>Bar</button>
+      <button data-tool="groups" aria-pressed="false"><svg><use href="#i-groups"/></svg>Groups</button>
+      <div class="stepper"><button id="nMinus" aria-label="Fewer parts">−</button><span id="nVal">6</span><button id="nPlus" aria-label="More parts">+</button></div>
+    </div>
+    <div class="sep"></div>
+    <div class="swatches" id="swatches"></div>
+    <div class="sep"></div>
+    <div class="sizes" id="sizes"></div>
+    <div class="sep"></div>
+    <button id="tUndo"><svg><use href="#i-undo"/></svg>Undo</button>
+    <button id="tClear"><svg><use href="#i-trash"/></svg><span id="tClearLab">Clear</span></button>
+  </div>
+</aside>
+<button class="rail-show" id="railShow" hidden><svg><use href="#i-tools"/></svg>Tools</button>
+
+<canvas id="confetti"></canvas>
+
+<script>
+(function(){
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const rnd=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+
+/* ---------- sound ---------- */
+let soundOn=true, AC=null, noiseBuf=null;
+function ac(){ if(!AC){ try{AC=new (window.AudioContext||window.webkitAudioContext)()}catch(e){return null} } if(AC.state==="suspended")AC.resume(); return AC }
+function tone(f,t,d,type,v){const c=ac();if(!c)return;const o=c.createOscillator(),g=c.createGain();o.type=type||"triangle";o.frequency.value=f;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(v||.2,t+.02);g.gain.exponentialRampToValueAtTime(.001,t+d);o.connect(g).connect(c.destination);o.start(t);o.stop(t+d+.05)}
+function clap(){
+  const c=ac(); if(!c||!soundOn) return;
+  if(!noiseBuf){noiseBuf=c.createBuffer(1,c.sampleRate*.12,c.sampleRate);const d=noiseBuf.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/d.length,3)}
+  const t0=c.currentTime;
+  for(let i=0;i<26;i++){const t=t0+Math.random()*1.3;const s=c.createBufferSource();s.buffer=noiseBuf;const f=c.createBiquadFilter();f.type="bandpass";f.frequency.value=900+Math.random()*1600;f.Q.value=.9;const g=c.createGain();g.gain.value=.35+Math.random()*.4;s.connect(f).connect(g).connect(c.destination);s.start(t)}
+  [523,659,784,1047].forEach((f,i)=>tone(f,t0+i*.09,.35,"triangle",.16));
+  // "hooray" swoop
+  const o=c.createOscillator(),g=c.createGain();o.type="sawtooth";o.frequency.setValueAtTime(420,t0+.35);o.frequency.exponentialRampToValueAtTime(880,t0+.75);g.gain.setValueAtTime(0,t0+.35);g.gain.linearRampToValueAtTime(.05,t0+.45);g.gain.exponentialRampToValueAtTime(.001,t0+.95);const lp=c.createBiquadFilter();lp.frequency.value=1600;o.connect(lp).connect(g).connect(c.destination);o.start(t0+.35);o.stop(t0+1);
+}
+function good(){ if(soundOn){const c=ac();if(c){const t=c.currentTime;tone(660,t,.15,"triangle",.18);tone(880,t+.1,.25,"triangle",.18)}} }
+function bad(){ if(soundOn){const c=ac();if(c){const t=c.currentTime;tone(220,t,.25,"sine",.2);tone(180,t+.15,.3,"sine",.18)}} }
+function fanfare(){ if(!soundOn)return; clap(); const c=ac(); if(!c)return; const t=c.currentTime+.2; [523,523,523,698,880,784,1047].forEach((f,i)=>tone(f,t+i*.14,.3,"square",.06)); setTimeout(clap,900) }
+$("#soundBtn").onclick=e=>{soundOn=!soundOn;e.target.textContent="Sound: "+(soundOn?"On":"Off");e.target.setAttribute("aria-pressed",soundOn)};
+$("#fsBtn").onclick=()=>{try{const p=document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();p&&p.catch&&p.catch(()=>{})}catch(e){}};
+
+/* ---------- confetti ---------- */
+const cf=$("#confetti"), cx=cf.getContext("2d"); let bits=[], cfRun=false;
+function confetti(){
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  cf.width=innerWidth; cf.height=innerHeight;
+  const cols=["#e2463a","#ffbf2e","#2160d4","#2a9657","#ff7ab6"];
+  for(let i=0;i<160;i++) bits.push({x:Math.random()*cf.width,y:-20-Math.random()*cf.height*.5,vx:(Math.random()-.5)*3,vy:2+Math.random()*4,r:Math.random()*6,c:cols[i%5],s:4+Math.random()*6,life:0});
+  if(!cfRun){cfRun=true;requestAnimationFrame(cfTick)}
+}
+function cfTick(){cx.clearRect(0,0,cf.width,cf.height);bits.forEach(b=>{b.x+=b.vx;b.y+=b.vy;b.r+=.1;b.life++;cx.save();cx.translate(b.x,b.y);cx.rotate(b.r);cx.fillStyle=b.c;cx.fillRect(-b.s/2,-b.s/4,b.s,b.s/2);cx.restore()});bits=bits.filter(b=>b.y<cf.height+20&&b.life<400);if(bits.length)requestAnimationFrame(cfTick);else{cfRun=false;cx.clearRect(0,0,cf.width,cf.height)}}
+
+/* ---------- tabs ---------- */
+let current="warm";
+function show(v){
+  current=v;
+  $$(".tab").forEach(t=>t.setAttribute("aria-selected",t.dataset.view===v));
+  $$("main .view").forEach(s=>s.hidden=s.id!=="v-"+v);
+  updateRail();
+  if(v==="chalk") requestAnimationFrame(()=>boardLayer.resize());
+  if(v==="book") requestAnimationFrame(()=>pageLayers.forEach(l=>l.resize()));
+  window.scrollTo({top:0});
+}
+$$(".tab").forEach(t=>t.onclick=()=>show(t.dataset.view));
+
+/* ---------- warm-up ---------- */
+const starsHTML=n=>Array.from({length:n},()=>'<svg class="star"><use href="#star"/></svg>').join("");
+let wQs,wI,wScore,wLock;
+function wStart(){wQs=shuffle([[6,3],[7,4],[6,8],[7,7],[6,6],[7,9],[6,7],[7,5]]).slice(0,6);wI=0;wScore=0;$("#wStars").innerHTML=starsHTML(6);$("#wAgainRow").hidden=true;wShow()}
+function wShow(){
+  wLock=false; const [a,b]=wQs[wI], ans=a*b;
+  $("#wQ").textContent=`${a} × ${b} = ?`; $("#wFb").textContent=""; $("#wFb").className="feedback";
+  const set=new Set([ans]); while(set.size<4){const d=[a,-a,b,-b,1,-1,2][rnd(0,6)];const v=ans+d;if(v>0)set.add(v)}
+  $("#wOpts").innerHTML=""; shuffle([...set]).forEach(v=>{const bt=document.createElement("button");bt.className="opt";bt.textContent=v;bt.onclick=()=>wPick(bt,v===ans,ans);$("#wOpts").appendChild(bt)});
+}
+function wPick(bt,ok,ans){
+  if(wLock)return;
+  if(ok){wLock=true;bt.classList.add("ok");$("#wStars").children[wScore++].classList.add("on");$("#wFb").textContent=["Super!","Yes!","Fantastic!","You got it!"][rnd(0,3)];$("#wFb").className="feedback ok";good();
+    setTimeout(()=>{wI++; if(wI<wQs.length) wShow(); else {$("#wQ").textContent="All 6 facts done!";$("#wOpts").innerHTML="";$("#wFb").textContent="Your 6s and 7s are awake. Ready to divide!";clap();confetti();$("#wAgainRow").hidden=false}},900)}
+  else{bt.classList.add("no");bt.disabled=true;$("#wFb").textContent="Try again. Skip count to help!";$("#wFb").className="feedback no";bad()}
+}
+$("#wAgain").onclick=wStart; wStart();
+
+let rows=0; const dColors=["#e2463a","#2160d4","#2a9657"];
+function danceRender(){
+  $("#danceCount").textContent=`${rows*6} of 18 children`;
+  $("#danceAdd").disabled=rows>=3;
+  $("#danceFb").innerHTML= rows>=3 ? `There are <b>3 rows</b>!&nbsp; Think 3 × 6 = 18, so 18 ÷ 6 = 3.` : "";
+}
+$("#danceAdd").onclick=()=>{
+  if(rows>=3)return; rows++;
+  const r=document.createElement("div");r.className="dance-row";r.innerHTML=`<span class="tag">Row ${rows}</span>`+Array.from({length:6},()=>`<svg class="dancer" style="color:${dColors[rows-1]}"><use href="#dancer"/></svg>`).join("");
+  $("#danceStage").appendChild(r); good(); if(rows===3){setTimeout(clap,300)} danceRender();
+};
+$("#danceReset").onclick=()=>{rows=0;$("#danceStage").innerHTML="";danceRender()}; danceRender();
+
+/* ---------- learn ---------- */
+const dogColors=["#f3b562","#e9d3a8","#c98c4f","#f6dcb2","#d9a066","#fff0d6"];
+function yard(el,total,size){
+  let groups=0;
+  el.innerHTML=`
+   <div class="lineup"><div class="lab">Dogs waiting: <span class="left">${total}</span></div><div class="dogs"></div></div>
+   <div class="pens"><div class="lab">Groups of ${size}: <span class="gc">0</span></div></div>
+   <div style="grid-column:1/-1" class="row">
+     <button class="btn mk">Make a group of ${size}</button><button class="btn sun all">Group them all</button><button class="btn ghost rs">Start over</button>
+   </div>
+   <div style="grid-column:1/-1" class="think-write">
+     <div class="tw think"><div class="lab">What you think</div><div>What number times ${size} is ${total}?</div><div class="val hidden-val th">${total/size} × ${size} = ${total}</div></div>
+     <div class="tw write"><div class="lab">What you write</div><div class="val hidden-val wr">${total} ÷ ${size} = ${total/size}</div><div class="hidden-val wr2" style="font-weight:800">There will be ${total/size} groups.</div></div>
+   </div>`;
+  const dogs=el.querySelector(".dogs"), pens=el.querySelector(".pens");
+  function fill(){dogs.innerHTML=Array.from({length:total-groups*size},(_,i)=>`<svg class="dog" style="color:${dogColors[i%6]}"><use href="#dog"/></svg>`).join("")}
+  function upd(){el.querySelector(".left").textContent=total-groups*size;el.querySelector(".gc").textContent=groups;const done=groups*size===total;el.querySelector(".mk").disabled=done;el.querySelector(".all").disabled=done;el.querySelectorAll(".hidden-val").forEach(v=>v.style.filter=done?"none":"")}
+  function make(silent){ if(groups*size>=total)return; groups++; const p=document.createElement("div");p.className="pen";p.innerHTML=`<span class="num">${groups}</span>`+Array.from({length:size},(_,i)=>`<svg class="dog" style="color:${dogColors[(groups+i)%6]}"><use href="#dog"/></svg>`).join("");pens.appendChild(p);fill();upd();if(!silent)good();if(groups*size===total)setTimeout(clap,250)}
+  el.querySelector(".mk").onclick=()=>make();
+  el.querySelector(".all").onclick=()=>{let k=0;const iv=setInterval(()=>{if(groups*size>=total){clearInterval(iv);return}make(true);k++},180)};
+  el.querySelector(".rs").onclick=()=>{groups=0;pens.querySelectorAll(".pen").forEach(p=>p.remove());fill();upd()};
+  fill();upd();
+}
+yard($("#yard1"),48,6); yard($("#yard2"),49,7);
+
+let parts=0;
+function barRender(){
+  $("#barParts").innerHTML=Array.from({length:parts},()=>'<div class="bar-part">6</div>').join("");
+  $("#barCount").textContent=`Parts: ${parts} · Total so far: ${parts*6}`;
+  $("#barAdd").disabled=parts>=6;
+  ["#barThink","#barWrite"].forEach(s=>$(s).style.filter=parts>=6?"none":"");
+}
+$("#barAdd").onclick=()=>{if(parts<6){parts++;barRender();good();if(parts===6)setTimeout(clap,250)}};
+$("#barReset").onclick=()=>{parts=0;barRender()}; barRender();
+
+[[42,7],[54,6],[35,7],[24,6],[56,7],[60,6],[63,7],[36,6]].forEach(([a,d])=>{
+  const q=a/d, b=document.createElement("button"); b.className="flip";
+  b.innerHTML=`<div class="in"><div class="f">${a} ÷ ${d}</div><div class="b"><span><small>Think</small>${q} × ${d} = ${a}<small>so</small>${a} ÷ ${d} = ${q}</span></div></div>`;
+  b.onclick=()=>{b.classList.toggle("on");if(b.classList.contains("on"))good()}; $("#flips").appendChild(b);
+});
+
+const steps=$$(".learn-step"); let step=0;
+const stepNames=["Dogs ÷ 6","Dogs ÷ 7","Bar diagram","Flip cards"];
+$("#stepsNav").innerHTML=stepNames.map((n,i)=>`<button class="sdot" data-i="${i}">${i+1}. ${n}</button>`).join("");
+function goStep(i){step=Math.max(0,Math.min(steps.length-1,i));steps.forEach((s,k)=>s.hidden=k!==step);$$(".sdot").forEach((d,k)=>d.setAttribute("aria-current",k===step));$("#stepPrev").disabled=step===0;$("#stepNext").textContent=step===steps.length-1?"Go to the chalkboard":"Next step"}
+$$(".sdot").forEach(d=>d.onclick=()=>goStep(+d.dataset.i));
+$("#stepPrev").onclick=()=>goStep(step-1);
+$("#stepNext").onclick=()=>{if(step===steps.length-1)show("chalk");else goStep(step+1)};
+goStep(0);
+
+/* ---------- game 1 ---------- */
+const g1Pool=[
+ {q:"42 ÷ 6 = ?",a:"7",o:["6","8","36"]},
+ {q:"63 ÷ 7 = ?",a:"9",o:["8","7","56"]},
+ {q:"Which fact helps you solve 42 ÷ 7?",a:"6 × 7 = 42",o:["5 × 7 = 35","7 × 7 = 49","8 × 7 = 56"],small:true},
+ {q:"There are 48 dogs at the show. The judge puts 6 dogs in each group. How many groups?",a:"8",o:["7","6","9"],word:true},
+ {q:"Gloria mowed 7 lawns and earned $56. She got the same for each lawn. How much for each lawn?",a:"$8",o:["$7","$9","$6"],word:true},
+ {q:"30 ÷ 6 = ?",a:"5",o:["6","4","24"]},
+ {q:"Which fact helps you solve 54 ÷ 6?",a:"9 × 6 = 54",o:["8 × 6 = 48","7 × 6 = 42","6 × 6 = 36"],small:true},
+ {q:"Andy bought 35 red beads. Each package has 7 beads. How many packages?",a:"5",o:["6","4","7"],word:true},
+ {q:"36 ÷ 6 = ?",a:"6",o:["7","5","30"]},
+ {q:"28 ÷ 7 = ?",a:"4",o:["3","5","21"]},
+ {q:"49 ÷ 7 = ?",a:"7",o:["6","8","42"]},
+ {q:"Jake has 18 boats to share equally with 6 friends. How many boats does each friend get?",a:"3",o:["4","2","12"],word:true},
+ {q:"70 ÷ 7 = ?",a:"10",o:["7","9","63"]},
+ {q:"Cassidy bought 48 green beads. Each package has 6 beads. How many packages?",a:"8",o:["6","7","9"],word:true},
+ {q:"What number times 7 is 35?",a:"5",o:["6","4","7"]}
+];
+let g1Q,g1I,g1S,g1Lock;
+function g1Start(){g1Q=shuffle(g1Pool).slice(0,10);g1I=0;g1S=0;g1Show()}
+function g1Show(){
+  g1Lock=false; const it=g1Q[g1I], c=$("#g1Card");
+  c.innerHTML=`<div class="game-top"><span class="pill">Question ${g1I+1} of 10</span><div class="stars">${Array.from({length:10},(_,i)=>`<svg class="star ${i<g1S?"on":""}"><use href="#star"/></svg>`).join("")}</div></div>
+   <div class="progress" style="margin-top:10px"><i style="width:${g1I*10}%"></i></div>
+   <div class="q-box">${it.word?`<p class="q-text">${it.q}</p>`:`<div class="q-eq" style="${it.small?"font-size:clamp(24px,4vw,36px)":""}">${it.q}</div>`}</div>
+   <div class="opts" id="g1Opts"></div><div class="feedback" id="g1Fb"></div>`;
+  shuffle([it.a,...it.o]).forEach(v=>{const b=document.createElement("button");b.className="opt";b.textContent=v;if(it.small)b.style.fontSize="21px";b.onclick=()=>g1Pick(b,v===it.a);$("#g1Opts").appendChild(b)});
+}
+let g1Miss=false;
+function g1Pick(b,ok){
+  if(g1Lock)return; const fb=$("#g1Fb");
+  if(ok){g1Lock=true;b.classList.add("ok");if(!g1Miss)g1S++;g1Miss=false;fb.textContent=["Blue ribbon answer!","Well done, judge!","Brilliant!","Correct!"][rnd(0,3)];fb.className="feedback ok";clap();
+    setTimeout(()=>{g1I++;g1I<10?g1Show():g1End()},1500)}
+  else{g1Miss=true;b.classList.add("no");b.disabled=true;fb.textContent="Not yet. Think: what number times the divisor makes the total?";fb.className="feedback no";bad()}
+}
+function g1End(){
+  $("#g1Card").innerHTML=`<div class="end"><div class="big">${g1S} / 10</div><h3>${g1S>=8?"Top Judge of the Dog Show!":g1S>=5?"Great judging!":"Good try, judge!"}</h3><p class="muted">Stars are for answers right on the first try.</p><button class="btn red" id="g1Again">Play again</button></div>`;
+  $("#g1Again").onclick=g1Start; fanfare(); confetti();
+}
+g1Start();
+
+/* ---------- game 2 ---------- */
+let g2Q,g2I,g2Ans,g2In,g2Lock,g2S,g2Tries;
+function g2Make(){
+  const out=[],seen=new Set();
+  while(out.length<10){
+    const d=[6,7][rnd(0,1)], q=rnd(1,10), a=d*q, f=[0,0,0,1,1,2,3][rnd(0,6)], key=d+"-"+q+"-"+f;
+    if(seen.has(key))continue; seen.add(key);
+    if(f===0) out.push({parts:[`${a} ÷ ${d} = `,null],ans:q,hint:`Think: ? × ${d} = ${a}`});
+    if(f===1) out.push({parts:[`${d} × `,null,` = ${a}`],ans:q,hint:`Count by ${d}s until you reach ${a}`});
+    if(f===2) out.push({parts:[null,` ÷ ${d} = ${q}`],ans:a,hint:`Think: ${q} × ${d} = ?`});
+    if(f===3) out.push({parts:[`${a} ÷ `,null,` = ${q}`],ans:d,hint:`Think: ${q} × ? = ${a}`});
+  }
+  return out;
+}
+function g2Start(){g2Q=g2Make();g2I=0;g2S=0;g2Show()}
+const puppySVG=`<svg viewBox="0 0 40 40"><use href="#dog" style="color:#f3b562"/></svg>`;
+const trophySVG=`<svg viewBox="0 0 40 40"><path d="M10 6h20v8a10 10 0 01-20 0z" fill="#ffbf2e"/><path d="M10 9H5a5 5 0 005 7M30 9h5a5 5 0 01-5 7" stroke="#ffbf2e" stroke-width="3" fill="none"/><rect x="17" y="24" width="6" height="6" fill="#c88f0d"/><rect x="11" y="30" width="18" height="5" rx="2" fill="#93602f"/></svg>`;
+function g2Show(){
+  g2Lock=false;g2In="";g2Tries=0; const it=g2Q[g2I];
+  $("#g2Card").innerHTML=`<div class="game-top"><span class="pill">Question ${g2I+1} of 10</span><span class="pill" style="background:var(--grass-soft)">Score: ${g2S}</span></div>
+   <div class="track"><div class="finish">${trophySVG}</div><div class="runner" id="runner" style="left:calc(${g2I*8.4}% + 4px)">${puppySVG}</div></div>
+   <div class="q-box"><div class="q-eq">${it.parts.map(p=>p===null?'<span class="answer-slot" id="slot">&nbsp;</span>':p).join("")}</div><div class="hint" id="g2Hint"></div></div>
+   <div class="keypad" id="kp"></div>
+   <div class="row" style="justify-content:center;margin-top:12px"><button class="btn ghost" id="g2HintBtn">Hint</button><button class="btn red" id="g2Check">Check</button></div>
+   <div class="feedback" id="g2Fb" style="text-align:center"></div>`;
+  const kp=$("#kp"); [1,2,3,4,5,6,7,8,9,0].forEach(n=>{const b=document.createElement("button");b.className="key";b.textContent=n;b.onclick=()=>{if(g2Lock||g2In.length>=2)return;g2In+=n;slot()};kp.appendChild(b)});
+  const del=document.createElement("button");del.className="key";del.textContent="⌫";del.setAttribute("aria-label","Delete");del.style.gridColumn="span 5";del.onclick=()=>{g2In=g2In.slice(0,-1);slot()};kp.appendChild(del);
+  $("#g2HintBtn").onclick=()=>{$("#g2Hint").textContent=it.hint};
+  $("#g2Check").onclick=g2Check;
+}
+function slot(){$("#slot").innerHTML=g2In||"&nbsp;"}
+function g2Check(){
+  if(g2Lock||!g2In)return; const it=g2Q[g2I], fb=$("#g2Fb");
+  if(+g2In===it.ans){g2Lock=true;g2S++;fb.textContent=["Woof! Correct!","Zoom! Great job!","Yes! Keep running!"][rnd(0,2)];fb.className="feedback ok";$("#runner").style.left=`calc(${(g2I+1)*8.4}% + 4px)`;clap();
+    setTimeout(()=>{g2I++;g2I<10?g2Show():g2End()},1500)}
+  else{g2Tries++;bad();fb.className="feedback no";
+    if(g2Tries>=2){g2Lock=true;fb.textContent=`The answer is ${it.ans}. ${it.hint.replace("Think: ","")}`;$("#slot").textContent=it.ans;setTimeout(()=>{g2I++;g2I<10?g2Show():g2End()},2600)}
+    else{fb.textContent="Almost! Try once more, or tap Hint.";g2In="";slot()}}
+}
+function g2End(){
+  $("#g2Card").innerHTML=`<div class="track"><div class="finish">${trophySVG}</div><div class="runner" style="left:calc(84% - 10px)">${puppySVG}</div></div>
+   <div class="end"><div class="big">${g2S} / 10</div><h3>${g2S>=8?"Puppy wins the gold trophy!":g2S>=5?"What a race!":"Good running! Race again?"}</h3><button class="btn red" id="g2Again">Race again</button></div>`;
+  $("#g2Again").onclick=g2Start; fanfare(); confetti();
+}
+document.addEventListener("keydown",e=>{
+  if(current!=="g2"||g2Lock||!$("#slot")||e.target.tagName==="INPUT")return;
+  if(/^\d$/.test(e.key)&&g2In.length<2){g2In+=e.key;slot()} else if(e.key==="Backspace"){g2In=g2In.slice(0,-1);slot()} else if(e.key==="Enter")g2Check();
+});
+g2Start();
+
+/* ---------- drawing layers ---------- */
+const T={tool:"pen",color:"#1b2742",size:1,penOn:false,n:6,hidden:false};
+const PALETTE={book:["#1b2742","#e2463a","#2160d4","#2a9657","#ff8a00","#9b3fd1"],chalk:["#ffffff","#ffe066","#ff9ec7","#8fd3ff","#a8f0a0","#ffb36b"]};
+const SIZES={pen:[2.5,5,10],hl:[14,22,32],eraser:[16,32,60],text:[20,30,44]};
+const hist={book:[],chalk:[]};
+
+class Layer{
+  constructor(canvas,kind){this.c=canvas;this.x=canvas.getContext("2d");this.kind=kind;this.items=[];this.cur=null;this.w=1;this.h=1;this.bind()}
+  resize(){const r=this.c.getBoundingClientRect();if(!r.width)return;const dpr=Math.min(2,window.devicePixelRatio||1);this.c.width=Math.round(r.width*dpr);this.c.height=Math.round(r.height*dpr);this.w=r.width;this.h=r.height;this.x.setTransform(dpr,0,0,dpr,0,0);this.redraw()}
+  redraw(){this.x.clearRect(0,0,this.w,this.h);this.items.forEach(it=>this.draw(it));if(this.cur)this.draw(this.cur)}
+  draw(it){
+    const x=this.x,W=this.w,H=this.h,chalk=this.kind==="chalk";
+    x.save();
+    if(it.type==="stroke"){
+      x.lineCap="round";x.lineJoin="round";x.lineWidth=it.s*W;
+      if(it.tool==="eraser"){x.globalCompositeOperation="destination-out";x.strokeStyle="#000"}
+      else{x.strokeStyle=it.color;if(it.tool==="hl")x.globalAlpha=.35;else if(chalk){x.globalAlpha=.92;x.shadowColor=it.color;x.shadowBlur=2}}
+      const p=it.p;x.beginPath();x.moveTo(p[0][0]*W,p[0][1]*H);
+      if(p.length===1)x.lineTo(p[0][0]*W+.1,p[0][1]*H);
+      for(let i=1;i<p.length-1;i++){const mx=(p[i][0]+p[i+1][0])/2*W,my=(p[i][1]+p[i+1][1])/2*H;x.quadraticCurveTo(p[i][0]*W,p[i][1]*H,mx,my)}
+      if(p.length>1){const l=p[p.length-1];x.lineTo(l[0]*W,l[1]*H)}
+      x.stroke();
+    } else if(it.type==="text"){
+      x.fillStyle=it.color;x.textBaseline="middle";x.font=`700 ${it.s*W}px ${chalk?'"Gochi Hand",cursive':'"Nunito",sans-serif'}`;x.fillText(it.t,it.x*W,it.y*H);
+    } else if(it.type==="bar"){
+      const bw=Math.min(W*.6,W-20),bh=Math.max(36,W*.06),x0=it.x*W-bw/2,y0=it.y*H-bh/2;
+      x.strokeStyle=it.color;x.lineWidth=3;x.globalAlpha=.95;x.strokeRect(x0,y0-bh*.9,bw,bh*.9);x.strokeRect(x0,y0,bw,bh);
+      for(let i=1;i<it.n;i++){x.beginPath();x.moveTo(x0+bw*i/it.n,y0);x.lineTo(x0+bw*i/it.n,y0+bh);x.stroke()}
+    } else if(it.type==="groups"){
+      const r=Math.min(W*.045,46),gap=r*.6,tot=it.n*2*r+(it.n-1)*gap,x0=it.x*W-tot/2+r;
+      x.strokeStyle=it.color;x.lineWidth=3;x.globalAlpha=.95;
+      for(let i=0;i<it.n;i++){x.beginPath();x.arc(x0+i*(2*r+gap),it.y*H,r,0,Math.PI*2);x.stroke()}
+    }
+    x.restore();
+  }
+  pt(e){const r=this.c.getBoundingClientRect();return[(e.clientX-r.left)/r.width,(e.clientY-r.top)/r.height]}
+  active(){return this.kind==="chalk"||T.penOn}
+  commit(it){this.items.push(it);hist[this.kind].push(this)}
+  bind(){
+    const c=this.c;
+    c.addEventListener("pointerdown",e=>{
+      if(!this.active())return; e.preventDefault(); const p=this.pt(e);
+      if(T.tool==="text"){this.textAt(p);return}
+      if(T.tool==="bar"||T.tool==="groups"){this.commit({type:T.tool,x:p[0],y:p[1],n:T.n,color:T.color});this.redraw();return}
+      const px=SIZES[T.tool][T.size];
+      this.cur={type:"stroke",tool:T.tool,color:T.color,s:px/this.w,p:[p]};
+      try{c.setPointerCapture(e.pointerId)}catch(_){}
+      this.redraw();
+    });
+    c.addEventListener("pointermove",e=>{if(!this.cur)return;e.preventDefault();const ev=e.getCoalescedEvents?e.getCoalescedEvents():[e];ev.forEach(k=>this.cur.p.push(this.pt(k)));this.redraw()});
+    const end=()=>{if(!this.cur)return;this.commit(this.cur);this.cur=null;this.redraw()};
+    c.addEventListener("pointerup",end);c.addEventListener("pointercancel",end);
+  }
+  textAt(p){
+    const host=this.c.parentElement, inp=document.createElement("input"), fs=SIZES.text[T.size];
+    inp.className="text-in";inp.style.left=(p[0]*this.w)+"px";inp.style.top=(p[1]*this.h-fs*.7)+"px";inp.style.fontSize=fs+"px";inp.style.color=T.color;inp.placeholder="Type…";inp.id="txt"+Date.now();
+    host.appendChild(inp); setTimeout(()=>inp.focus(),0);
+    let done=false; const color=T.color;
+    const fin=()=>{if(done)return;done=true;const t=inp.value.trim();inp.remove();if(t){this.commit({type:"text",x:p[0],y:p[1],t,s:fs/this.w,color});this.redraw()}};
+    inp.addEventListener("keydown",e=>{if(e.key==="Enter")fin();if(e.key==="Escape"){inp.value="";fin()}});
+    inp.addEventListener("blur",fin);
+  }
+}
+
+const boardLayer=new Layer($("#boardInk"),"chalk");
+
+/* book pages */
+const PAGES=[{n:125,f:"pages/p-09.jpg",t:"Solve & Share"},{n:126,f:"pages/p-10.jpg",t:"Visual Learning"},{n:127,f:"pages/p-11.jpg",t:"Practice"},{n:128,f:"pages/p-12.jpg",t:"Problem Solving"}];
+const pageLayers=[]; let curPage=0;
+PAGES.forEach((pg,i)=>{
+  const sh=document.createElement("div");sh.className="page-shell";sh.hidden=i!==0;
+  sh.innerHTML=`<img src="${pg.f}" alt="Book page ${pg.n}, Lesson 4-3" draggable="false"><canvas class="ink"></canvas>`;
+  $("#pages").appendChild(sh);
+  const L=new Layer(sh.querySelector("canvas"),"book");pageLayers.push(L);
+  sh.querySelector("img").addEventListener("load",()=>L.resize());
+  const b=document.createElement("button");b.className="ptab";b.innerHTML=`Page ${pg.n}<small>${pg.t}</small>`;b.onclick=()=>goPage(i);$("#pageTabs").appendChild(b);
+});
+function goPage(i){curPage=i;$$(".page-shell").forEach((s,k)=>s.hidden=k!==i);$$(".ptab").forEach((b,k)=>b.setAttribute("aria-current",k===i));requestAnimationFrame(()=>pageLayers[i].resize())}
+goPage(0);
+let rz;window.addEventListener("resize",()=>{clearTimeout(rz);rz=setTimeout(()=>{if(current==="chalk")boardLayer.resize();if(current==="book")pageLayers[curPage].resize()},120)});
+
+/* rail */
+const surface=()=>current==="chalk"?"chalk":current==="book"?"book":null;
+function renderSwatches(){
+  const s=surface(); if(!s)return; const pal=PALETTE[s];
+  if(!pal.includes(T.color))T.color=pal[0];
+  $("#swatches").innerHTML=pal.map(c=>`<button class="sw" style="background:${c}" data-c="${c}" aria-label="Color" aria-pressed="${c===T.color}"></button>`).join("");
+  $$("#swatches .sw").forEach(b=>b.onclick=()=>{T.color=b.dataset.c;if(T.tool==="eraser")setTool(s==="chalk"?"pen":"pen");renderSwatches()});
+}
+function renderSizes(){
+  const k=SIZES[T.tool]?T.tool:"pen";
+  $("#sizes").innerHTML=[0,1,2].map(i=>{const d=[8,13,20][i];return`<button data-s="${i}" aria-label="Size ${i+1}" aria-pressed="${i===T.size}"><i style="width:${d}px;height:${d}px"></i></button>`}).join("");
+  $$("#sizes button").forEach(b=>b.onclick=()=>{T.size=+b.dataset.s;renderSizes()});
+  $("#sizes").style.display=SIZES[T.tool]?"flex":"none";
+}
+function setTool(t){T.tool=t;$$("#rail [data-tool]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.tool===t));renderSizes()}
+$$("#rail [data-tool]").forEach(b=>b.onclick=()=>setTool(b.dataset.tool));
+function updateRail(){
+  const s=surface();
+  document.body.classList.toggle("has-rail",!!s&&!T.hidden);
+  $("#rail").hidden=!s||T.hidden; $("#railShow").hidden=!s||!T.hidden;
+  if(!s)return;
+  const chalk=s==="chalk";
+  $("#tPen").hidden=chalk;
+  $("#tBody").style.display=(chalk||T.penOn)?"flex":"none";
+  $("#stampTools").style.display=chalk?"flex":"none";
+  $("#tHl").hidden=chalk;
+  $$(".pen-name").forEach(n=>n.textContent=chalk?"Chalk":"Pen");
+  if(chalk&&T.tool==="hl")setTool("pen");
+  if(!chalk&&(T.tool==="bar"||T.tool==="groups"))setTool("pen");
+  document.body.classList.toggle("pen-on",T.penOn);
+  renderSwatches();renderSizes();resetClear();
+}
+$("#tPen").onclick=()=>{T.penOn=!T.penOn;$("#tPen").setAttribute("aria-pressed",T.penOn);$("#tPenLab").textContent=T.penOn?"Pen ON":"Pen OFF";updateRail()};
+$("#tHide").onclick=()=>{T.hidden=true;updateRail()};
+$("#railShow").onclick=()=>{T.hidden=false;updateRail()};
+$("#nMinus").onclick=()=>{T.n=Math.max(2,T.n-1);$("#nVal").textContent=T.n};
+$("#nPlus").onclick=()=>{T.n=Math.min(10,T.n+1);$("#nVal").textContent=T.n};
+$("#tUndo").onclick=()=>{const s=surface();if(!s)return;const L=hist[s].pop();if(L){L.items.pop();L.redraw()}};
+let clearArm=false,clearT;
+function resetClear(){clearArm=false;$("#tClearLab").textContent=current==="book"?"Clear page":"Clear";$("#tClear").style.background=""}
+$("#tClear").onclick=()=>{
+  const s=surface(); if(!s)return;
+  if(!clearArm){clearArm=true;$("#tClearLab").textContent="Tap again";$("#tClear").style.background="var(--red)";clearTimeout(clearT);clearT=setTimeout(resetClear,2500);return}
+  const L=s==="chalk"?boardLayer:pageLayers[curPage]; L.items=[]; hist[s]=hist[s].filter(x=>x!==L); L.redraw(); resetClear();
+};
+setTool("pen"); updateRail();
+})();
+</script>
+
+</body></html>

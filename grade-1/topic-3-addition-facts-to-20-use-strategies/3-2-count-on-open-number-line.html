@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Grade 1 · Topic 3 · Lesson 3-2 · Count On Using an Open Number Line</title>
+<style>
+:root{--bg:#fff8e7;--card:#fff;--ink:#2b2d42;--p:#ff6b6b;--b:#4dabf7;--g:#40c057;--y:#ffd43b;--o:#ff922b;--line:#e9ecef;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1d2030;--card:#2a2e45;--ink:#f1f3f5;--line:#444a6b}}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;font-family:"Comic Sans MS","Trebuchet MS",system-ui,sans-serif;background:var(--bg);color:var(--ink)}
+.wrap{max-width:720px;margin:auto;padding:12px}
+h1{font-size:1.4rem;text-align:center;margin:6px 0}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:8px 0}
+.tab{border:0;border-radius:20px;padding:8px 14px;font:inherit;font-weight:bold;background:var(--line);color:var(--ink);cursor:pointer}
+.tab.on{background:var(--b);color:#fff}
+.card{background:var(--card);border-radius:22px;padding:16px;box-shadow:0 4px 0 rgba(0,0,0,.12);margin:10px 0}
+.big{font-size:2.2rem;text-align:center;font-weight:bold;margin:8px 0}
+.btn{border:0;border-radius:16px;padding:12px 18px;font:inherit;font-weight:bold;font-size:1.05rem;color:#fff;background:var(--g);cursor:pointer;box-shadow:0 4px 0 rgba(0,0,0,.2)}
+.btn.o{background:var(--o)}.btn.b{background:var(--b)}.btn.p{background:var(--p)}
+.row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:10px 0}
+.opt{min-width:80px;font-size:1.8rem;padding:12px 18px;background:var(--y);color:#333}
+.opt.ok{background:var(--g);color:#fff}.opt.no{background:var(--p);color:#fff;animation:sh .3s}
+@keyframes sh{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.bar{height:14px;background:var(--line);border-radius:9px;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--o),var(--g));width:0;transition:.3s}
+.fb{min-height:48px;text-align:center;font-size:1.1rem;font-weight:bold;margin:6px 0}
+svg{width:100%;height:auto;display:block}
+svg text{fill:var(--ink);font-family:inherit}
+.wb{display:none;border:3px dashed var(--b);border-radius:16px;padding:8px;margin-top:10px;background:var(--card)}
+.wb.on{display:block}
+canvas{width:100%;height:220px;background:#fff;border-radius:12px;touch-action:none;display:block}
+.sw{width:30px;height:30px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 2px #adb5bd;cursor:pointer}
+input.num{font:inherit;font-size:1.8rem;width:110px;text-align:center;border:3px solid var(--b);border-radius:14px;padding:8px;background:var(--card);color:var(--ink)}
+.slot{width:110px;height:80px;border:4px dashed var(--b);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:2.2rem;font-weight:bold;background:var(--card)}.slot.over{background:var(--y)}.tile{touch-action:none;cursor:grab;user-select:none}.hide{display:none}.step{font-size:1.15rem;line-height:1.5}
+.pill{display:inline-block;background:var(--y);color:#333;border-radius:14px;padding:2px 10px;font-weight:bold}
+</style>
+<!-- Shared template: colors, fonts, sounds, buttons, mascots. Keep this. -->
+<link rel="stylesheet" href="../../shared/theme.css">
+<script src="../../shared/theme.js" defer></script>
+</head><body><div class="wrap">
+<h1>🐸 Count On Using an Open Number Line</h1>
+<div style="text-align:center;font-size:.9rem">enVision Math · Grade 1 · Volume 1 · Topic 3 · Lesson 3-2</div>
+<div class="tabs" id="tabs"></div>
+<div id="stage"></div>
+</div>
+<script>
+const $=s=>document.querySelector(s);
+const r=(n,m)=>Math.floor(Math.random()*(m-n+1))+n;
+const shuf=a=>a.map(x=>[Math.random(),x]).sort((x,y)=>x[0]-y[0]).map(x=>x[1]);
+const names=["Sam","Mia","Omar","Lina","Ali","Nora","Zain","Huda"],items=["stickers","balloons","apples","toy cars","stars","books"];
+const PAGES=[["learn","📘 Learn"],["warm","🔥 Warm-up"],["g1","🎮 Game 1"],["g2","🚀 Game 2"]];
+let page="learn",stars=0;
+$("#tabs").innerHTML=PAGES.map(p=>`<button class="tab" data-p="${p[0]}">${p[1]}</button>`).join("");
+document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>go(t.dataset.p));
+function go(p){page=p;document.querySelectorAll(".tab").forEach(t=>t.classList.toggle("on",t.dataset.p==p));
+ ({learn:learn,warm:()=>quiz("🔥 Warm-up",warmQs()),g1:()=>quiz("🎮 Game 1: Hop Along",g1Qs()),g2:()=>quiz("🚀 Game 2: Super Jumper",g2Qs())})[p]();window.scrollTo(0,0)}
+
+/* open number line: a start, b hops, h = hops revealed, all = draw every arc */
+function nl(a,b,h,all,e,m){const W=340,x0=30,gap=(W-60)/b;let s=`<svg viewBox="0 0 ${W} 100"><line x1="10" y1="70" x2="${W-10}" y2="70" stroke="#868e96" stroke-width="4"/><polygon points="${W-4},70 ${W-14},64 ${W-14},76" fill="#868e96"/>`;
+ for(let i=0;i<=b;i++){const x=x0+i*gap;if(e!==undefined&&i>h&&i<b)continue;s+=`<line x1="${x}" y1="62" x2="${x}" y2="78" stroke="#495057" stroke-width="3"/>`;
+  let lab=i<=h?a+i:(i==b?(e!==undefined?e:"?"):"");if(i==0)lab=a;if(m&&i==b&&e===undefined)lab="?";
+  s+=`<text x="${x}" y="96" text-anchor="middle" font-size="18" font-weight="bold" ${lab=="?"?'fill="#f03e3e"':''}>${lab}</text>`;
+  if(i<b&&(all||i<h)){const nx=x+gap,mx=(x+nx)/2;s+=`<path d="M${x} 66 Q${mx} 8 ${nx} 66" fill="none" stroke="#ff6b6b" stroke-width="4"/><text x="${mx}" y="22" text-anchor="middle" font-size="16" font-weight="bold" fill="#e8590c">+1</text>`}}
+ if(h>=0&&h<=b){const x=x0+h*gap;s+=`<text x="${x}" y="44" text-anchor="middle" font-size="26">🐸</text>`}
+ return s+"</svg>"}
+
+/* LEARN */
+function learn(){let a=6,b=2,h=0;const steps=["An <b>open number line</b> is a line with no numbers written on it yet. We write only the numbers we need!","To <b>count on</b>, start with the <b>bigger number</b> and hop forward. Each hop is +1.","Say the numbers as you hop: <span class='pill'>6</span> → 7 → 8. The number where you land is the <b>sum</b>!"];let si=0;
+ function draw(){$("#stage").innerHTML=`<div class="card"><div class="step">Step ${si+1} of 3</div><div class="step" id="st">${steps[si]}</div>
+ <div class="row"><button class="btn o" id="bk">⬅ Back</button><button class="btn b" id="nx">Next ➡</button></div></div>
+ <div class="card"><div class="big">${a} + ${b} = ${h==b?a+b:"?"}</div><div id="nlb">${nl(a,b,h,false)}</div>
+ <div class="row"><button class="btn p" id="hop">🐸 Hop!</button><button class="btn o" id="rs">↺ Again</button></div>
+ <div class="row">Start: <button class="btn b" id="am">−</button><button class="btn b" id="ap">+</button> Hops: <button class="btn b" id="bm">−</button><button class="btn b" id="bp">+</button></div>
+ <div class="fb">${h==b?`Great! ${a} + ${b} = ${a+b} 🎉`:"Press Hop! to count on."}</div>
+ ${wbHTML()}</div><div class="row"><button class="btn" id="go">Start the Warm-up ➡</button></div>`;
+ $("#bk").onclick=()=>{si=Math.max(0,si-1);draw()};$("#nx").onclick=()=>{si=Math.min(2,si+1);draw()};
+ $("#hop").onclick=()=>{if(h<b)h++;draw()};$("#rs").onclick=()=>{h=0;draw()};
+ $("#am").onclick=()=>{a=Math.max(1,a-1);h=0;draw()};$("#ap").onclick=()=>{a=Math.min(17,a+1);h=0;draw()};
+ $("#bm").onclick=()=>{b=Math.max(1,b-1);h=0;draw()};$("#bp").onclick=()=>{b=Math.min(3,b+1);h=0;draw()};
+ $("#go").onclick=()=>go("warm");initWB()}
+ draw()}
+
+/* WHITEBOARD */
+function wbHTML(){return `<div class="row"><button class="btn b" id="wbt">✏️ Whiteboard</button></div><div class="wb" id="wb"><canvas id="cv"></canvas><div class="row" style="align-items:center"><span class="sw" style="background:#222" data-c="#222"></span><span class="sw" style="background:#e03131" data-c="#e03131"></span><span class="sw" style="background:#1c7ed6" data-c="#1c7ed6"></span><span class="sw" style="background:#2f9e44" data-c="#2f9e44"></span><button class="btn o" id="er">🧽 Eraser</button><button class="btn p" id="cl">🗑 Clear</button><button class="btn" id="ln">➖ Number line</button><button class="btn b" id="cx">✖ Close</button></div></div>`}
+function initWB(){const wb=$("#wb"),cv=$("#cv");if(!cv)return;let col="#222",w=4,d=false,ctx;
+ const size=()=>{const R=cv.getBoundingClientRect(),dp=window.devicePixelRatio||1;cv.width=R.width*dp;cv.height=R.height*dp;ctx=cv.getContext("2d");ctx.scale(dp,dp);ctx.lineCap="round";ctx.lineJoin="round"};
+ const pos=e=>{const R=cv.getBoundingClientRect();return[e.clientX-R.left,e.clientY-R.top]};
+ $("#wbt").onclick=()=>{wb.classList.toggle("on");if(wb.classList.contains("on"))size()};
+ $("#cx").onclick=()=>wb.classList.remove("on");
+ $("#cl").onclick=()=>size();
+ $("#er").onclick=()=>{col="#fff";w=22};
+ $("#ln").onclick=()=>{const R=cv.getBoundingClientRect();ctx.strokeStyle="#868e96";ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(15,R.height/2+30);ctx.lineTo(R.width-15,R.height/2+30);ctx.stroke()};
+ document.querySelectorAll(".sw").forEach(s=>s.onclick=()=>{col=s.dataset.c;w=4});
+ cv.onpointerdown=e=>{d=true;cv.setPointerCapture(e.pointerId);const[x,y]=pos(e);ctx.strokeStyle=col;ctx.lineWidth=w;ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+.1,y+.1);ctx.stroke()};
+ cv.onpointermove=e=>{if(!d)return;const[x,y]=pos(e);ctx.lineTo(x,y);ctx.stroke()};
+ cv.onpointerup=cv.onpointercancel=()=>d=false}
+
+/* QUESTIONS */
+function mc(ans,extra){let s=new Set([ans]);[ans-1,ans+1,ans+2,ans-2].forEach(v=>{if(v>0&&s.size<3)s.add(v)});return shuf([...s])}
+function warmQs(){return [[4,1],[6,2],[9,1],[7,2],[8,3]].map(([a,b])=>({q:`Start at <b>${a}</b>. Hop <b>${b}</b>. Where do you land?<div class="big">${a} + ${b} = ?</div>`,a:a+b,o:mc(a+b),line:[a,b],hint:`Start at ${a}, then count on: ${Array.from({length:b},(_,i)=>a+i+1).join(", ")}.`}))}
+function g1Qs(){return Array.from({length:15},(_,i)=>{const b=i<5?1:i<10?2:3,a=r(4,20-b-2);return{q:`Count on with the number line!<div class="big">${a} + ${b} = ?</div>`,a:a+b,o:mc(a+b),line:[a,b],hint:`Start at ${a}. Hop ${b}: ${Array.from({length:b},(_,k)=>a+k+1).join(" → ")}.`}})}
+function g2Qs(){return Array.from({length:15},(_,i)=>{
+ if(i<5){const b=r(1,3),a=r(6,17-b),n=names[r(0,7)],it=items[r(0,5)];return{q:`<b>${n}</b> has ${a} ${it}. ${n} gets ${b} more. How many ${it} now?<div class="big">${a} + ${b} = ?</div>`,a:a+b,o:mc(a+b),line:[a,b],hint:`Start at the bigger number, ${a}, and hop ${b} time${b>1?"s":""}.`}}
+ if(i<10){const b=r(1,3),a=r(5,17-b);return{q:`The frog started at <b>${a}</b> and landed on <b>${a+b}</b>. How many hops?<div class="big">${a} + ? = ${a+b}</div>`,a:b,o:[1,2,3,4].filter(x=>x!=(b==4?1:b+1)||true).slice(0,4),line:[a,b],hidehops:true,hint:`Count the hops from ${a} to ${a+b}.`}}
+ const b=r(2,4),a=r(7,20-b-1);return{q:`Hop on the number line, then drag the answer into the box!<div class="big">${a} + ${b} = ?</div>`,a:a+b,o:mc(a+b),input:true,line:[a,b],noline:true,hint:`Start at ${a} and hop ${b}: ${Array.from({length:b},(_,k)=>a+k+1).join(" → ")}.`}})}
+
+/* QUIZ ENGINE */
+function quiz(title,qs){let i=0,sc=0,tries=0;
+ function show(){if(i>=qs.length){const pct=Math.round(sc/qs.length*100);$("#stage").innerHTML=`<div class="card"><div class="big">🏆 ${title} finished!</div><div class="big">${sc} / ${qs.length} ${"⭐".repeat(pct>=90?3:pct>=60?2:1)}</div><div class="fb">${pct>=80?"Amazing counting on! 🎉":"Good try! Play again to get more stars."}</div><div class="row"><button class="btn o" id="ag">↺ Play again</button><button class="btn" id="nx2">Next ➡</button></div></div>`;$("#ag").onclick=()=>go(page);$("#nx2").onclick=()=>go({warm:"g1",g1:"g2",g2:"learn"}[page]);return}
+ const q=qs[i];tries=0;let h=0;
+ $("#stage").innerHTML=`<div class="card"><div style="display:flex;justify-content:space-between"><b>${title}</b><b>⭐ ${sc}</b></div><div class="bar"><i style="width:${i/qs.length*100}%"></i></div><div style="text-align:center;margin-top:6px">Question ${i+1} of ${qs.length}</div>
+ <div class="step" style="text-align:center">${q.q}</div>
+ <div style="text-align:center;font-size:.95rem">👇 Press <b>🐸 Hop!</b> to draw each jump yourself.</div><div id="nlb">${drawL(q,0)}</div><div class="row"><button class="btn p" id="hp">🐸 Hop!</button><button class="btn o" id="rh">↺ Start over</button></div>
+ ${q.input?'<div class="row"><div class="slot" id="slot">❓</div></div><div style="text-align:center">👆 Drag the correct number into the box!</div>':""}<div class="row" id="ops">${q.input?q.o.map(o=>`<button class="btn opt tile" data-v="${o}">${o}</button>`).join(""):q.o.map(o=>`<button class="btn opt" data-v="${o}">${o}</button>`).join("")}</div>
+ <div class="fb" id="fb"></div>
+ <div class="row"><button class="btn o" id="hn">💡 Hint</button><button class="btn o" id="nq">⏭ Skip</button></div>
+ ${wbHTML()}</div>`;
+ initWB();
+ $("#hn").onclick=()=>$("#fb").textContent="💡 "+q.hint;$("#nq").onclick=()=>{i++;show()};$("#hp").onclick=()=>{if(h<q.line[1]){h++;$("#nlb").innerHTML=drawL(q,h)}};$("#rh").onclick=()=>{h=0;$("#nlb").innerHTML=drawL(q,0)};
+ const done=()=>{if(tries==0){sc++}$("#nq").textContent="Next ➡";$("#nq").className="btn";$("#nq").style.fontSize="1.4rem";$("#nq").scrollIntoView({behavior:"smooth",block:"center"});$("#ops").querySelectorAll("button,input").forEach(x=>x.disabled=true);$("#nlb").innerHTML=drawL(q,q.line[1],true);$("#fb").innerHTML=`🎉 Yes! ${q.line[0]} + ${q.line[1]} = ${q.line[0]+q.line[1]}. ${q.hint}`;$("#nq").onclick=()=>{i++;show()}};
+ const wrong=()=>{tries++;$("#fb").textContent="Not quite. Try again! Use 💡 or ✏️ Whiteboard.";};
+ if(q.input){dragInit(q,done,wrong)}
+ else document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{if(+b.dataset.v==q.a){b.classList.add("ok");done()}else{b.classList.add("no");wrong()}})}
+ show()}
+function dragInit(q,done,wrong){const slot=$("#slot");
+document.querySelectorAll(".tile").forEach(t=>{t.onpointerdown=e=>{if(t.disabled)return;e.preventDefault();const v=+t.dataset.v,sx=e.clientX,sy=e.clientY;const g=t.cloneNode(true);g.style.cssText="position:fixed;z-index:99;pointer-events:none;left:"+(e.clientX-40)+"px;top:"+(e.clientY-30)+"px";document.body.appendChild(g);t.setPointerCapture(e.pointerId);
+const hit=(x,y)=>{const R=slot.getBoundingClientRect();return x>R.left-20&&x<R.right+20&&y>R.top-20&&y<R.bottom+20};
+t.onpointermove=m=>{g.style.left=(m.clientX-40)+"px";g.style.top=(m.clientY-30)+"px";slot.classList.toggle("over",hit(m.clientX,m.clientY))};
+t.onpointercancel=()=>{g.remove();slot.classList.remove("over")};
+t.onpointerup=u=>{g.remove();slot.classList.remove("over");t.onpointermove=t.onpointerup=null;const tap=Math.hypot(u.clientX-sx,u.clientY-sy)<8;if(tap||hit(u.clientX,u.clientY)){if(v==q.a){slot.textContent=v;done()}else{t.classList.add("no");wrong();setTimeout(()=>t.classList.remove("no"),500)}}}}})}
+function drawL(q,h,rev){const[a,b]=q.line;return q.hidehops?nl(a,b,h,false,a+b):nl(a,b,h,false,undefined,!rev)}
+function nlHidden(a,b){return nl(a,b,0,true).replace(/<text x="[\d.]+" y="96"[^>]*>\d+<\/text>/g,m=>m).replace(">?</text>",">"+(a+b)+"</text>").replace(/ fill="#f03e3e"/,"")}
+go("learn");
+</script></body></html>

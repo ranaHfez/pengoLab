@@ -1,0 +1,180 @@
+/* ==========================================================================
+   Rana's Maths Lessons — shared design template
+   --------------------------------------------------------------------------
+   Every lesson links this file. It only styles things whose class starts
+   with "rm-", so older lessons keep their own look. New lessons should build
+   with these tokens and classes (see CLAUDE.md and shared/template.html).
+   ========================================================================== */
+@import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;700;800&display=swap");
+
+:root {
+  /* Fonts */
+  --rm-font-title: "Fredoka", "Baloo 2", "Trebuchet MS", system-ui, sans-serif;
+  --rm-font-body: "Nunito", "Segoe UI", system-ui, sans-serif;
+
+  /* Grade colors (also used on the home page) */
+  /* These match Pengo's grade pictures in shared/img/ */
+  --rm-g1: #25a244;   /* Grade 1 — green  */
+  --rm-g2: #1e88e5;   /* Grade 2 — blue   */
+  --rm-g3: #7a3fe0;   /* Grade 3 — purple */
+  --rm-games: #ff8a3d;/* Games   — orange */
+
+  /* Feedback + accents */
+  --rm-correct: #2bb673;
+  --rm-wrong: #ef4f5f;
+  --rm-star: #ffc83d;
+  --rm-pink: #ff6fb1;
+
+  /* Surfaces */
+  --rm-bg: #fffaf0;
+  --rm-surface: #ffffff;
+  --rm-ink: #2a2440;
+  --rm-ink-soft: #6b6585;
+  --rm-line: #ece4d6;
+
+  /* The lesson's own color — set data-grade="1|2|3" on <body> to change it */
+  --rm-accent: var(--rm-g1);
+
+  --rm-radius: 18px;
+  --rm-shadow: 0 6px 0 rgba(42, 36, 64, 0.12);
+}
+body[data-grade="2"] { --rm-accent: var(--rm-g2); }
+body[data-grade="3"] { --rm-accent: var(--rm-g3); }
+body[data-grade="games"] { --rm-accent: var(--rm-games); }
+body[data-grade="tools"] { --rm-accent: var(--rm-pink); }
+
+/* ---------- Page shell (opt-in: add class "rm-page" to <body>) ---------- */
+.rm-page {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--rm-bg);
+  color: var(--rm-ink);
+  font-family: var(--rm-font-body);
+  font-size: 20px;
+  line-height: 1.45;
+}
+.rm-page h1, .rm-page h2, .rm-page h3, .rm-title {
+  font-family: var(--rm-font-title);
+  line-height: 1.15;
+  margin: 0 0 0.4em;
+}
+.rm-header {
+  background: var(--rm-accent);
+  color: #fff;
+  padding: 18px 20px 22px;
+  text-align: center;
+  border-radius: 0 0 28px 28px;
+}
+.rm-header .rm-kicker { font-weight: 800; opacity: 0.9; font-size: 0.85em; letter-spacing: 0.02em; }
+.rm-header h1 { font-size: clamp(1.8rem, 5vw, 2.8rem); margin: 4px 0 0; }
+.rm-main { max-width: 1000px; margin: 0 auto; padding: 20px 16px 96px; }
+
+/* ---------- Cards ---------- */
+.rm-card {
+  background: var(--rm-surface);
+  border: 3px solid var(--rm-line);
+  border-radius: var(--rm-radius);
+  padding: 20px;
+  box-shadow: var(--rm-shadow);
+  margin-bottom: 18px;
+}
+
+/* ---------- Buttons ---------- */
+.rm-btn {
+  appearance: none;
+  border: 0;
+  cursor: pointer;
+  font-family: var(--rm-font-title);
+  font-weight: 600;
+  font-size: 1.15rem;
+  line-height: 1;
+  padding: 14px 24px;
+  min-height: 52px;          /* big enough for small fingers */
+  border-radius: 999px;
+  background: var(--rm-accent);
+  color: #fff;
+  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.18);
+  transition: transform 0.08s, box-shadow 0.08s, filter 0.15s;
+  display: inline-flex; align-items: center; gap: 8px;
+  text-decoration: none;
+}
+.rm-btn:hover { filter: brightness(1.06); }
+.rm-btn:active { transform: translateY(4px); box-shadow: 0 1px 0 rgba(0, 0, 0, 0.18); }
+.rm-btn:focus-visible { outline: 4px solid var(--rm-star); outline-offset: 3px; }
+.rm-btn[disabled] { opacity: 0.5; cursor: not-allowed; }
+.rm-btn--ghost { background: var(--rm-surface); color: var(--rm-ink); border: 3px solid var(--rm-line); box-shadow: 0 4px 0 var(--rm-line); }
+.rm-btn--correct { background: var(--rm-correct); }
+.rm-btn--wrong { background: var(--rm-wrong); }
+.rm-btn--star { background: var(--rm-star); color: var(--rm-ink); }
+.rm-btn--big { font-size: 1.5rem; padding: 18px 34px; min-height: 64px; }
+
+/* Answer choice tiles */
+.rm-choices { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+.rm-choice {
+  font-family: var(--rm-font-title); font-size: 1.8rem; font-weight: 700;
+  min-width: 84px; min-height: 84px; padding: 10px 16px;
+  border-radius: 20px; border: 3px solid var(--rm-line);
+  background: var(--rm-surface); color: var(--rm-ink);
+  box-shadow: 0 5px 0 var(--rm-line); cursor: pointer;
+  transition: transform 0.08s;
+}
+.rm-choice:active { transform: translateY(3px); }
+.rm-choice.is-correct { background: var(--rm-correct); border-color: var(--rm-correct); color: #fff; animation: rm-pop 0.35s; }
+.rm-choice.is-wrong { background: var(--rm-wrong); border-color: var(--rm-wrong); color: #fff; animation: rm-shake 0.35s; }
+
+/* ---------- Mascot + speech bubble ---------- */
+.rm-mascot { display: inline-block; width: 120px; height: 120px; flex: none; }
+.rm-mascot svg { width: 100%; height: 100%; display: block; }
+.rm-mascot.is-happy { animation: rm-bounce 0.6s; }
+.rm-guide { display: flex; align-items: flex-end; gap: 12px; }
+.rm-bubble {
+  position: relative; background: var(--rm-surface); border: 3px solid var(--rm-line);
+  border-radius: 22px; padding: 14px 18px; font-weight: 700; max-width: 520px;
+}
+.rm-bubble::before {
+  content: ""; position: absolute; left: -14px; bottom: 18px;
+  border: 10px solid transparent; border-right-color: var(--rm-line);
+}
+
+/* ---------- Stars / score ---------- */
+.rm-stars { font-family: var(--rm-font-title); font-weight: 700; font-size: 1.3rem; color: var(--rm-ink); }
+.rm-stars::before { content: "\2B50 "; }
+
+/* ---------- Feedback banner ---------- */
+.rm-feedback { font-family: var(--rm-font-title); font-size: 1.5rem; font-weight: 700; text-align: center; min-height: 1.6em; }
+.rm-feedback.is-correct { color: var(--rm-correct); }
+.rm-feedback.is-wrong { color: var(--rm-wrong); }
+
+/* ---------- Floating Home / sound buttons (added by theme.js) ---------- */
+.rm-dock {
+  position: fixed; left: 12px; bottom: 12px; z-index: 2147483000;
+  display: flex; gap: 8px; font-family: "Fredoka", "Segoe UI", system-ui, sans-serif;
+}
+.rm-dock a, .rm-dock button {
+  all: unset; box-sizing: border-box; cursor: pointer;
+  width: 48px; height: 48px; border-radius: 50%;
+  display: grid; place-items: center; font-size: 24px; line-height: 1;
+  background: #fff; border: 3px solid #ece4d6; box-shadow: 0 4px 0 rgba(42, 36, 64, 0.15);
+  opacity: 0.85; transition: opacity 0.15s, transform 0.1s;
+}
+.rm-dock a:hover, .rm-dock button:hover { opacity: 1; transform: translateY(-2px); }
+.rm-dock a:focus-visible, .rm-dock button:focus-visible { outline: 4px solid #ffc83d; outline-offset: 2px; }
+
+/* ---------- Confetti ---------- */
+.rm-confetti { position: fixed; inset: 0; pointer-events: none; z-index: 2147483001; overflow: hidden; }
+.rm-confetti i {
+  position: absolute; top: -20px; width: 12px; height: 16px; border-radius: 3px;
+  animation: rm-fall linear forwards;
+}
+
+/* ---------- Animations ---------- */
+@keyframes rm-pop { 0% { transform: scale(1); } 50% { transform: scale(1.15); } 100% { transform: scale(1); } }
+@keyframes rm-shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }
+@keyframes rm-bounce { 0%, 100% { transform: translateY(0); } 40% { transform: translateY(-18px); } 70% { transform: translateY(-6px); } }
+@keyframes rm-fall { to { transform: translateY(110vh) rotate(720deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .rm-choice.is-correct, .rm-choice.is-wrong, .rm-mascot.is-happy { animation: none; }
+  .rm-confetti { display: none; }
+}
+@media print { .rm-dock, .rm-confetti { display: none !important; } }

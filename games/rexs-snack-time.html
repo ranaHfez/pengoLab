@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Rex's Snack Time - Subtraction Fun</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg1:#FFF3C4; --bg2:#CFF3FF;
+  --card:#ffffffdd;
+  --pink:#FF7AA8; --pink-dark:#E1517F;
+  --green:#5FCB8E; --green-dark:#379A63;
+  --purple:#8E6BFF; --purple-dark:#6A47E8;
+  --orange:#FFA94D; --orange-dark:#E5822A;
+  --ink:#3F2E52; --ink-soft:#6E5C82;
+  --ring:#FFD86B;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg1:#2B2340; --bg2:#1D3A3A;
+    --card:#241C36dd;
+    --ink:#F4EEFF; --ink-soft:#C9BEE0;
+  }
+}
+:root[data-theme="dark"]{
+  --bg1:#2B2340; --bg2:#1D3A3A;
+  --card:#241C36dd;
+  --ink:#F4EEFF; --ink-soft:#C9BEE0;
+}
+*{box-sizing:border-box;}
+html{height:100%; scroll-padding-top:env(safe-area-inset-top,0px);}
+body{
+  margin:0; min-height:100%;
+  font-family:'Quicksand',system-ui,sans-serif;
+  color:var(--ink);
+  background:radial-gradient(120% 70% at 50% 0%, var(--bg2) 0%, var(--bg1) 65%, #ffe2a8 100%);
+  display:flex; flex-direction:column; align-items:center;
+  padding:18px 14px calc(20px + env(safe-area-inset-bottom,0px));
+}
+h1{ font-family:'Baloo 2',sans-serif; font-weight:800; font-size:clamp(24px,6vw,34px); margin:4px 0 2px; text-align:center;}
+.sub{ color:var(--ink-soft); font-size:15px; margin:0 0 14px; text-align:center; font-weight:600;}
+
+.topbar{ width:100%; max-width:620px; display:flex; justify-content:center; gap:10px; margin-bottom:14px;}
+.badge{
+  background:var(--card); border:2px solid var(--ring); border-radius:14px;
+  padding:6px 14px; font-weight:700; font-size:15px; display:flex; align-items:center; gap:6px;
+}
+
+.card{
+  width:100%; max-width:620px; background:var(--card); border:3px solid var(--ring);
+  border-radius:26px; padding:20px 16px 24px; display:flex; flex-direction:column; align-items:center; gap:14px;
+  position:relative;
+}
+
+.prompt{ font-family:'Baloo 2',sans-serif; font-weight:700; font-size:clamp(18px,4.6vw,24px); text-align:center; color:var(--purple-dark);}
+
+.stage{ width:100%; display:flex; flex-direction:column; align-items:center; gap:10px; }
+
+.icons{
+  display:flex; flex-wrap:wrap; justify-content:center; gap:10px; max-width:480px;
+  min-height:64px;
+}
+.icon{
+  width:52px; height:52px; border:none; background:#ffffffb0; border-radius:16px;
+  font-size:30px; display:flex; align-items:center; justify-content:center; cursor:pointer;
+  box-shadow:0 3px 0 #e9d8b0; transition:transform .12s;
+}
+.icon:active{ transform:translateY(2px); }
+.icon.done{ pointer-events:none; }
+.icon.flying{
+  transition:transform .5s cubic-bezier(.4,.4,1,1), opacity .5s ease-in;
+  transform:translate(var(--dx),var(--dy)) scale(.15) rotate(25deg);
+  opacity:0;
+}
+.icon.locked{ opacity:.35; pointer-events:none; box-shadow:none; }
+
+.rexrow{ display:flex; align-items:center; gap:14px; }
+#rex{
+  font-size:64px; filter:drop-shadow(0 4px 4px rgba(0,0,0,.2)); transition:transform .18s;
+}
+#rex.chomp{ animation:chomp .35s ease; }
+@keyframes chomp{ 0%{transform:scale(1);} 40%{transform:scale(1.28) rotate(-6deg);} 100%{transform:scale(1);} }
+
+.fedcount{
+  font-family:'Baloo 2',sans-serif; font-weight:700; font-size:15px;
+  background:#ffffffb0; border:2px dashed var(--pink); border-radius:12px; padding:5px 12px;
+}
+
+.question{
+  width:100%; display:flex; flex-direction:column; align-items:center; gap:14px;
+  max-height:0; overflow:hidden; opacity:0; transition:max-height .4s ease, opacity .4s ease;
+}
+.question.show{ max-height:260px; opacity:1; }
+
+.equation{ font-family:'Baloo 2',sans-serif; font-weight:800; font-size:clamp(26px,7vw,36px); color:var(--ink); }
+.equation .q{ color:var(--pink-dark); }
+.equation-line{ font-size:15px; color:var(--ink-soft); font-weight:600; }
+
+.choices{ display:flex; gap:12px; flex-wrap:wrap; justify-content:center; }
+.choice{
+  width:58px; height:58px; border-radius:50%; border:none; cursor:pointer;
+  font-family:'Baloo 2',sans-serif; font-weight:800; font-size:24px; color:#fff;
+  background:var(--purple); box-shadow:0 4px 0 var(--purple-dark);
+  transition:transform .08s, box-shadow .08s, background .2s;
+}
+.choice:active{ transform:translateY(3px); box-shadow:0 1px 0 var(--purple-dark); }
+.choice.wrong{ animation:shake .4s ease; background:var(--pink); box-shadow:0 4px 0 var(--pink-dark); }
+.choice.correct{ background:var(--green); box-shadow:0 4px 0 var(--green-dark); }
+@keyframes shake{ 0%,100%{transform:translateX(0);} 25%{transform:translateX(-8px);} 75%{transform:translateX(8px);} }
+
+.feedback{
+  min-height:28px; font-family:'Baloo 2',sans-serif; font-weight:700; font-size:17px;
+  color:var(--green-dark); text-align:center;
+}
+.feedback.pop{ animation:pop .35s ease; }
+@keyframes pop{ 0%{transform:scale(.7);opacity:0;} 60%{transform:scale(1.08);} 100%{transform:scale(1);opacity:1;} }
+
+.newbtn{
+  border:none; background:none; color:var(--ink-soft); font-weight:700; font-size:13px;
+  text-decoration:underline; cursor:pointer;
+}
+
+.confetti{ position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:5;}
+.confetti span{ position:absolute; top:-20px; font-size:20px; animation:fall linear forwards; }
+@keyframes fall{ to{ transform:translateY(105vh) rotate(300deg); opacity:.2; } }
+
+@media (max-width:400px){
+  .icon{ width:46px; height:46px; font-size:26px; }
+  .choice{ width:52px; height:52px; font-size:21px; }
+  #rex{ font-size:54px; }
+}
+</style>
+
+<!-- Shared template: colors, fonts, sounds, buttons, mascots. Keep this. -->
+<link rel="stylesheet" href="../shared/theme.css">
+<script src="../shared/theme.js" defer></script>
+</head>
+<body>
+
+<h1>🦖 Rex's Snack Time</h1>
+<p class="sub">Feed Rex some treats, then count what's left!</p>
+
+<div class="topbar">
+  <div class="badge">⭐ Stars: <span id="stars">0</span></div>
+  <div class="badge">🎯 Round: <span id="round">1</span></div>
+</div>
+
+<div class="card">
+  <div class="prompt" id="prompt">Feed Rex <span id="promptNum">3</span> treats!</div>
+
+  <div class="stage">
+    <div class="icons" id="icons"></div>
+    <div class="rexrow">
+      <span id="rex">🦖</span>
+      <div class="fedcount">Fed: <span id="fed">0</span> / <span id="need">0</span></div>
+    </div>
+  </div>
+
+  <div class="question" id="question">
+    <div>
+      <div class="equation-line">How many treats are left?</div>
+      <div class="equation"><span id="eqA">7</span> − <span id="eqB">3</span> = <span class="q">?</span></div>
+    </div>
+    <div class="choices" id="choices"></div>
+  </div>
+
+  <div class="feedback" id="feedback"></div>
+  <button class="newbtn" onclick="newRound()">New treats 🔄</button>
+</div>
+
+<script>
+const OBJECTS = ['🍎','🍓','🧁','🍪','🍩','🍇','🍭','🍉','🍌','🍒'];
+let stars=0, round=1;
+try{ stars = parseInt(localStorage.getItem('rexStars')||'0',10)||0; }catch(e){}
+document.getElementById('stars').textContent = stars;
+
+let total=0, subAmt=0, answer=0, fedCount=0, emoji='🍎', locked=false;
+
+function rand(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+
+function newRound(){
+  locked = false;
+  document.getElementById('feedback').textContent='';
+  document.getElementById('question').classList.remove('show');
+
+  emoji = OBJECTS[rand(0,OBJECTS.length-1)];
+  total = rand(4,10);
+  subAmt = rand(1,total);
+  answer = total-subAmt;
+  fedCount = 0;
+
+  document.getElementById('promptNum').textContent = subAmt;
+  document.getElementById('fed').textContent = 0;
+  document.getElementById('need').textContent = subAmt;
+  document.getElementById('eqA').textContent = total;
+  document.getElementById('eqB').textContent = subAmt;
+  document.getElementById('round').textContent = round;
+
+  const box = document.getElementById('icons');
+  box.innerHTML='';
+  for(let i=0;i<total;i++){
+    const b = document.createElement('button');
+    b.className='icon'; b.textContent=emoji;
+    b.onclick=()=>feedRex(b);
+    box.appendChild(b);
+  }
+}
+
+function feedRex(el){
+  if(locked || el.classList.contains('done')) return;
+  const rex = document.getElementById('rex');
+  const r1 = el.getBoundingClientRect(), r2 = rex.getBoundingClientRect();
+  const dx = (r2.left+r2.width/2)-(r1.left+r1.width/2);
+  const dy = (r2.top+r2.height/2)-(r1.top+r1.height/2);
+  el.style.setProperty('--dx', dx+'px');
+  el.style.setProperty('--dy', dy+'px');
+  el.classList.add('flying','done');
+  rex.classList.remove('chomp'); void rex.offsetWidth; rex.classList.add('chomp');
+
+  fedCount++;
+  document.getElementById('fed').textContent = fedCount;
+
+  if(fedCount>=subAmt){
+    locked = true;
+    document.querySelectorAll('.icon:not(.done)').forEach(i=>i.classList.add('locked'));
+    setTimeout(showQuestion, 550);
+  }
+}
+
+function showQuestion(){
+  document.getElementById('question').classList.add('show');
+  buildChoices();
+}
+
+function buildChoices(){
+  const set = new Set([answer]);
+  set.add(Math.max(0, answer-1));
+  set.add(Math.min(10, answer+1));
+  while(set.size<4) set.add(rand(0,10));
+  const arr = Array.from(set).slice(0,4).sort(()=>Math.random()-.5);
+  const box = document.getElementById('choices');
+  box.innerHTML='';
+  arr.forEach(v=>{
+    const b = document.createElement('button');
+    b.className='choice'; b.textContent=v;
+    b.onclick=()=>pick(v,b);
+    box.appendChild(b);
+  });
+}
+
+const praises=['Great job! 🎉','Yay! 🌟','Awesome! 👏','You got it! 🦖','Super! 🎊'];
+
+function pick(v, btn){
+  if(btn.classList.contains('correct')) return;
+  if(v===answer){
+    btn.classList.add('correct');
+    document.querySelectorAll('.choice').forEach(c=>c.onclick=null);
+    const fb = document.getElementById('feedback');
+    fb.textContent = praises[rand(0,praises.length-1)]+'  '+total+' − '+subAmt+' = '+answer;
+    fb.classList.remove('pop'); void fb.offsetWidth; fb.classList.add('pop');
+    confettiBurst();
+    stars++; round++;
+    document.getElementById('stars').textContent = stars;
+    try{ localStorage.setItem('rexStars', String(stars)); }catch(e){}
+    setTimeout(newRound, 1700);
+  } else {
+    btn.classList.remove('wrong'); void btn.offsetWidth; btn.classList.add('wrong');
+    document.getElementById('feedback').textContent = 'Try again! Count the treats left. 🤗';
+  }
+}
+
+function confettiBurst(){
+  const wrap=document.createElement('div'); wrap.className='confetti';
+  const bits=['⭐','🎉','✨','🍬','🦖'];
+  for(let i=0;i<16;i++){
+    const s=document.createElement('span');
+    s.textContent=bits[rand(0,bits.length-1)];
+    s.style.left=rand(2,98)+'%';
+    s.style.animationDuration=(1+Math.random()*1.2)+'s';
+    s.style.fontSize=(14+Math.random()*14)+'px';
+    wrap.appendChild(s);
+  }
+  document.body.appendChild(wrap);
+  setTimeout(()=>wrap.remove(),2400);
+}
+
+newRound();
+</script>
+</body>
+</html>

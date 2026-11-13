@@ -1,0 +1,80 @@
+<!doctype html>
+<!--
+  STARTER FILE FOR A NEW LESSON
+  1. Copy this file into the right topic folder, e.g.
+       grade-1/topic-2-fluently-add-and-subtract-within-10/2-3-near-doubles.html
+  2. Change the title, the kicker line, data-grade and the questions.
+  3. Add the lesson to shared/catalog.js so it shows on the home page.
+  The ../../shared/ paths below are correct once the file sits inside a topic folder.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Near Doubles</title>
+<!-- Shared template: colors, fonts, sounds, buttons, mascots. Keep this. -->
+<link rel="stylesheet" href="../../shared/theme.css">
+<script src="../../shared/theme.js" defer></script>
+<style>
+  /* Lesson-only styles go here. Use the --rm-* colors from theme.css. */
+  .question { font-family: var(--rm-font-title); font-size: 3rem; text-align: center; margin: 10px 0 18px; }
+</style>
+</head>
+<body class="rm-page" data-grade="1" data-rm-sound>
+
+<header class="rm-header">
+  <div class="rm-kicker">enVision Math · Grade 1 · Topic 2 · Lesson 2-3</div>
+  <h1>Near Doubles</h1>
+</header>
+
+<main class="rm-main">
+  <section class="rm-card">
+    <div class="rm-guide">
+      <span data-mascot="owl" id="guide"></span>
+      <p class="rm-bubble" id="talk">Hi friend! A near double is a double plus one more. Let's try!</p>
+    </div>
+  </section>
+
+  <section class="rm-card">
+    <span class="rm-stars" id="stars">0</span>
+    <p class="question" id="q">3 + 4 = ?</p>
+    <div class="rm-choices" id="choices"></div>
+    <p class="rm-feedback" id="fb" aria-live="polite"></p>
+    <p style="text-align:center"><button class="rm-btn rm-btn--big" id="next">Next ▶</button></p>
+  </section>
+</main>
+
+<script>
+  var stars = 0;
+  var items = [[3, 4], [5, 6], [2, 3], [6, 7], [4, 5]], i = 0;
+
+  function show() {
+    var a = items[i][0], b = items[i][1], right = a + b;
+    document.getElementById("q").textContent = a + " + " + b + " = ?";
+    document.getElementById("fb").textContent = "";
+    var opts = [right - 1, right, right + 1].sort(function () { return Math.random() - 0.5; });
+    var box = document.getElementById("choices");
+    box.innerHTML = "";
+    opts.forEach(function (n) {
+      var btn = document.createElement("button");
+      btn.className = "rm-choice"; btn.textContent = n;
+      btn.onclick = function () {
+        var ok = RM.check(btn, n === right);
+        var fb = document.getElementById("fb");
+        fb.className = "rm-feedback " + (ok ? "is-correct" : "is-wrong");
+        fb.textContent = ok ? "Yes! " + a + " + " + a + " = " + (a + a) + ", and 1 more is " + right + "!" : "Try again! Think of the double first.";
+        if (ok) { stars++; document.getElementById("stars").textContent = stars; RM.cheer("#guide"); }
+      };
+      box.appendChild(btn);
+    });
+  }
+  document.getElementById("next").onclick = function () {
+    RM.sound.click();
+    i++;
+    if (i >= items.length) { RM.sound.win(); RM.confetti(); RM.say("You did it! Super star!"); i = 0; }
+    show();
+  };
+  show();
+</script>
+</body>
+</html>

@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Take-From Games · enVision G1 Topic 1 Lesson 4</title>
+<style>
+  :root {
+    --bg: #fbf7f0;
+    --card-bg: #ffffff;
+    --ink: #2b2420;
+    --ink-soft: #5c5148;
+    --accent: #d15f3e;
+    --accent-2: #2f7a5c;
+    --accent-3: #3a6ea5;
+    --accent-soft: #f3ded4;
+    --line: #e7ddd0;
+    --good: #2f9e58;
+    --bad: #d1483e;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1c1815; --card-bg: #262019; --ink: #f2ece2; --ink-soft: #c9bfae;
+      --accent: #e58a68; --accent-2: #6fbf9c; --accent-3: #7fb0e0; --accent-soft: #3a2c24; --line: #3a3128;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1c1815; --card-bg: #262019; --ink: #f2ece2; --ink-soft: #c9bfae;
+    --accent: #e58a68; --accent-2: #6fbf9c; --accent-3: #7fb0e0; --accent-soft: #3a2c24; --line: #3a3128;
+  }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  * { box-sizing: border-box; }
+  body {
+    background: var(--bg); color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    margin: 0; padding: 20px 14px 48px; line-height: 1.5;
+  }
+  .wrap { max-width: 780px; margin: 0 auto; }
+  header.hero {
+    background: linear-gradient(135deg, var(--accent), var(--accent-3));
+    color: #fff; border-radius: 18px; padding: 22px 22px; margin-bottom: 18px;
+  }
+  header.hero .eyebrow { text-transform: uppercase; letter-spacing: 0.08em; font-size: 12px; opacity: 0.9; margin: 0 0 6px; }
+  header.hero h1 { margin: 0 0 6px; font-size: clamp(20px, 4.5vw, 26px); }
+  header.hero p { margin: 0; opacity: 0.95; font-size: 14.5px; }
+
+  .tabs { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+  .tab-btn {
+    flex: 1; min-width: 100px; border: 1px solid var(--line); background: var(--card-bg); color: var(--ink);
+    padding: 10px 8px; border-radius: 12px; font-weight: 700; font-size: 13.5px; cursor: pointer;
+  }
+  .tab-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  .game-panel { display: none; }
+  .game-panel.active { display: block; }
+
+  .card {
+    background: var(--card-bg); border: 1px solid var(--line); border-radius: 16px;
+    padding: 18px 18px; margin-bottom: 16px;
+  }
+  .card h2 { margin: 0 0 6px; font-size: 18px; }
+  .card .sub { color: var(--ink-soft); font-size: 13.5px; margin: 0 0 14px; }
+
+  /* Ten frame */
+  .ten-frame {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px;
+    max-width: 340px; margin: 0 auto 14px;
+  }
+  .cell {
+    aspect-ratio: 1; border: 2px solid var(--line); border-radius: 10px;
+    display: flex; align-items: center; justify-content: center; background: var(--bg);
+  }
+  .bug {
+    width: 78%; height: 78%; border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #ffb37a, var(--accent));
+    cursor: pointer; border: none; font-size: 0; transition: transform 0.15s ease, opacity 0.2s ease;
+  }
+  .bug:active { transform: scale(0.9); }
+  .cell.empty { background: var(--card-bg); }
+
+  .equation-line {
+    text-align: center; font-size: clamp(28px, 7vw, 40px); font-weight: 800; margin: 14px 0 6px;
+    letter-spacing: 0.02em;
+  }
+  .equation-line span.blank { color: var(--accent); }
+  .story-text {
+    text-align: center; font-size: 16px; color: var(--ink-soft); margin-bottom: 10px; min-height: 44px;
+  }
+  .story-photo {
+    text-align: center; font-size: clamp(52px, 14vw, 78px); line-height: 1;
+    margin-bottom: 6px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.15));
+  }
+
+  .controls { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+  button.action {
+    background: var(--accent-2); color: #fff; border: none; border-radius: 12px;
+    padding: 10px 18px; font-size: 15px; font-weight: 700; cursor: pointer;
+  }
+  button.action.secondary { background: var(--accent-3); }
+  button.action.ghost { background: transparent; color: var(--accent); border: 2px solid var(--accent); }
+  button.action:active { transform: scale(0.97); }
+
+  .feedback { text-align: center; font-weight: 700; font-size: 15px; min-height: 24px; margin-top: 8px; }
+  .feedback.good { color: var(--good); }
+  .feedback.bad { color: var(--bad); }
+
+  .score-row {
+    display: flex; justify-content: center; gap: 18px; margin-bottom: 10px; font-size: 14px; color: var(--ink-soft);
+  }
+  .score-row strong { color: var(--ink); }
+
+  /* Dice */
+  .dice-wrap { text-align: center; margin: 6px 0 14px; }
+  .die {
+    width: 72px; height: 72px; margin: 0 auto; border-radius: 16px;
+    background: var(--card-bg); border: 3px solid var(--accent);
+    display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr);
+    padding: 10px; gap: 4px;
+  }
+  .die .pip { border-radius: 50%; background: transparent; }
+  .die .pip.on { background: var(--accent); }
+
+  /* Multiple choice */
+  .choice-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin-top: 12px; }
+  .choice-btn {
+    background: var(--bg); border: 2px solid var(--line); border-radius: 12px;
+    padding: 14px 8px; font-size: 20px; font-weight: 800; cursor: pointer; color: var(--ink);
+  }
+  .choice-btn.correct { border-color: var(--good); background: #dff5e6; color: #1e6b3a; }
+  .choice-btn.wrong { border-color: var(--bad); background: #fbe2df; color: #9c2c24; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .choice-btn.correct { background: #17331f; color: #8adba0; }
+    :root:not([data-theme="light"]) .choice-btn.wrong { background: #33201d; color: #f0a29a; }
+  }
+
+  footer { text-align: center; color: var(--ink-soft); font-size: 12.5px; margin-top: 10px; }
+</style>
+
+<!-- Shared template: colors, fonts, sounds, buttons, mascots. Keep this. -->
+<link rel="stylesheet" href="../../shared/theme.css">
+<script src="../../shared/theme.js" defer></script>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <p class="eyebrow">enVision Mathematics · Grade 1 · Topic 1 · Lesson 4</p>
+    <h1>🐞 Take-From Games</h1>
+    <p>Three playable games for "take from" subtraction stories within 10. Tap through them in class, on a projector, or hand a device to a pair of students.</p>
+  </header>
+
+  <div class="tabs">
+    <button class="tab-btn active" data-panel="game1">🐞 Ten-Frame Take Away</button>
+    <button class="tab-btn" data-panel="game2">🎲 Roll &amp; Subtract</button>
+    <button class="tab-btn" data-panel="game3">📖 Story Match</button>
+  </div>
+
+  <!-- GAME 1: Ten-Frame Take Away -->
+  <div class="game-panel active" id="game1">
+    <div class="card">
+      <h2>Ten-Frame Take Away</h2>
+      <p class="sub">Tap a new story, then tap the bugs to make them "fly away" until the story is solved.</p>
+      <div class="story-text" id="g1-story">Tap "New Story" to begin!</div>
+      <div class="ten-frame" id="g1-frame"></div>
+      <div class="equation-line" id="g1-equation">— – — = —</div>
+      <div class="feedback" id="g1-feedback"></div>
+      <div class="controls">
+        <button class="action" id="g1-new">🔄 New Story</button>
+        <button class="action secondary" id="g1-reset">↩️ Reset Bugs</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- GAME 2: Roll and Subtract -->
+  <div class="game-panel" id="game2">
+    <div class="card">
+      <h2>Roll &amp; Subtract</h2>
+      <p class="sub">Start with 10 counters. Roll the die, take that many away, and see how many are left.</p>
+      <div class="score-row">Counters left: <strong id="g2-count">10</strong></div>
+      <div class="ten-frame" id="g2-frame"></div>
+      <div class="dice-wrap">
+        <div class="die" id="g2-die">
+          <div class="pip"></div><div class="pip"></div><div class="pip"></div>
+          <div class="pip"></div><div class="pip"></div><div class="pip"></div>
+          <div class="pip"></div><div class="pip"></div><div class="pip"></div>
+        </div>
+      </div>
+      <div class="equation-line" id="g2-equation">10 – ? = ?</div>
+      <div class="feedback" id="g2-feedback"></div>
+      <div class="controls">
+        <button class="action" id="g2-roll">🎲 Roll the Die</button>
+        <button class="action secondary" id="g2-restart">🔄 Start Over (10)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- GAME 3: Story Match -->
+  <div class="game-panel" id="game3">
+    <div class="card">
+      <h2>Story Match</h2>
+      <p class="sub">Read the story. Tap the number that shows how many are left.</p>
+      <div class="score-row">Score: <strong id="g3-score">0</strong> / <strong id="g3-total">0</strong></div>
+      <div class="story-photo" id="g3-photo">🐞</div>
+      <div class="story-text" id="g3-story">Tap "New Story" to begin!</div>
+      <div class="choice-grid" id="g3-choices"></div>
+      <div class="feedback" id="g3-feedback"></div>
+      <div class="controls">
+        <button class="action" id="g3-new">🔄 New Story</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>enVision Mathematics · Grade 1 · Volume 1 · Topic 1 · Lesson 4 — Solve Problems: Take From</footer>
+</div>
+
+<script>
+  // ---------- Tabs ----------
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const panels = document.querySelectorAll('.game-panel');
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabBtns.forEach(b => b.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.panel).classList.add('active');
+    });
+  });
+
+  const nouns = ["bugs", "apples", "birds", "balloons", "cookies", "fish", "leaves", "stars", "flowers", "blocks"];
+  const verbs = ["flew away", "were eaten", "flew off", "popped", "were given away", "swam away", "blew away", "faded away", "were picked", "fell down"];
+
+  function randInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+
+  // ---------- GAME 1: Ten-Frame Take Away ----------
+  let g1Start = 0, g1Take = 0, g1RemovedCount = 0;
+
+  function g1BuildFrame() {
+    const frame = document.getElementById('g1-frame');
+    frame.innerHTML = '';
+    for (let i = 0; i < 10; i++) {
+      const cell = document.createElement('div');
+      cell.className = 'cell';
+      if (i < g1Start) {
+        const bug = document.createElement('button');
+        bug.className = 'bug';
+        bug.dataset.index = i;
+        bug.addEventListener('click', g1TapBug);
+        cell.appendChild(bug);
+      } else {
+        cell.classList.add('empty');
+      }
+      frame.appendChild(cell);
+    }
+  }
+
+  function g1TapBug(e) {
+    if (g1RemovedCount >= g1Take) return;
+    const bug = e.currentTarget;
+    if (bug.dataset.removed === "1") return;
+    bug.style.opacity = "0";
+    bug.style.transform = "scale(0.2) translateY(-14px)";
+    bug.dataset.removed = "1";
+    g1RemovedCount++;
+    g1UpdateEquation();
+    if (g1RemovedCount === g1Take) {
+      const fb = document.getElementById('g1-feedback');
+      fb.textContent = `Great job! ${g1Start} – ${g1Take} = ${g1Start - g1Take}`;
+      fb.className = 'feedback good';
+    }
+  }
+
+  function g1UpdateEquation() {
+    const left = g1Start - g1RemovedCount;
+    const eq = document.getElementById('g1-equation');
+    if (g1RemovedCount === 0) {
+      eq.innerHTML = `${g1Start} – ${g1Take} = <span class="blank">?</span>`;
+    } else if (g1RemovedCount < g1Take) {
+      eq.innerHTML = `${g1Start} – ${g1Take} = <span class="blank">?</span> &nbsp; (${left} left so far)`;
+    } else {
+      eq.innerHTML = `${g1Start} – ${g1Take} = ${left}`;
+    }
+  }
+
+  function g1NewStory() {
+    g1Start = randInt(6, 10);
+    g1Take = randInt(2, g1Start - 1);
+    g1RemovedCount = 0;
+    const noun = nouns[randInt(0, nouns.length - 1)];
+    const verb = verbs[randInt(0, verbs.length - 1)];
+    document.getElementById('g1-story').textContent =
+      `There were ${g1Start} ${noun}. ${g1Take} ${verb}. Tap ${g1Take} ${noun} to make them go!`;
+    document.getElementById('g1-feedback').textContent = '';
+    document.getElementById('g1-feedback').className = 'feedback';
+    g1BuildFrame();
+    g1UpdateEquation();
+  }
+
+  document.getElementById('g1-new').addEventListener('click', g1NewStory);
+  document.getElementById('g1-reset').addEventListener('click', () => {
+    g1RemovedCount = 0;
+    document.getElementById('g1-feedback').textContent = '';
+    document.getElementById('g1-feedback').className = 'feedback';
+    g1BuildFrame();
+    g1UpdateEquation();
+  });
+  g1NewStory();
+
+  // ---------- GAME 2: Roll and Subtract ----------
+  let g2Count = 10;
+
+  function g2BuildFrame() {
+    const frame = document.getElementById('g2-frame');
+    frame.innerHTML = '';
+    for (let i = 0; i < 10; i++) {
+      const cell = document.createElement('div');
+      cell.className = 'cell';
+      if (i < g2Count) {
+        const bug = document.createElement('div');
+        bug.className = 'bug';
+        bug.style.pointerEvents = 'none';
+        cell.appendChild(bug);
+      } else {
+        cell.classList.add('empty');
+      }
+      frame.appendChild(cell);
+    }
+    document.getElementById('g2-count').textContent = g2Count;
+  }
+
+  const DIE_FACES = {
+    1: [4],
+    2: [0, 8],
+    3: [0, 4, 8],
+    4: [0, 2, 6, 8],
+    5: [0, 2, 4, 6, 8],
+    6: [0, 2, 3, 5, 6, 8]
+  };
+
+  function g2ShowDie(n) {
+    const die = document.getElementById('g2-die');
+    const pips = die.querySelectorAll('.pip');
+    pips.forEach(p => p.classList.remove('on'));
+    DIE_FACES[n].forEach(idx => pips[idx].classList.add('on'));
+  }
+
+  function g2Roll() {
+    const fb = document.getElementById('g2-feedback');
+    if (g2Count <= 0) {
+      fb.textContent = "All gone! Tap Start Over to play again.";
+      fb.className = 'feedback bad';
+      return;
+    }
+    const roll = randInt(1, 6);
+    g2ShowDie(roll);
+    const before = g2Count;
+    const taken = Math.min(roll, g2Count);
+    g2Count -= taken;
+    document.getElementById('g2-equation').textContent = `${before} – ${taken} = ${g2Count}`;
+    g2BuildFrame();
+    fb.textContent = `Rolled a ${roll}! ${before} – ${taken} = ${g2Count} left.`;
+    fb.className = 'feedback good';
+  }
+
+  document.getElementById('g2-roll').addEventListener('click', g2Roll);
+  document.getElementById('g2-restart').addEventListener('click', () => {
+    g2Count = 10;
+    document.getElementById('g2-equation').textContent = '10 – ? = ?';
+    document.getElementById('g2-feedback').textContent = '';
+    document.getElementById('g2-feedback').className = 'feedback';
+    g2ShowDie(1);
+    g2BuildFrame();
+  });
+  g2ShowDie(1);
+  g2BuildFrame();
+
+  // ---------- GAME 3: Story Match ----------
+  let g3Score = 0, g3Total = 0, g3Answer = 0, g3Locked = false;
+
+  // Silly characters (emoji) with funny take-from verb phrases matched to each
+  const g3Items = [
+    { noun: "clumsy clowns", emoji: "🤡", verbs: ["tripped over their giant shoes and rolled away", "sneezed so hard they blew themselves off the stage", "got chased off by a runaway pie"] },
+    { noun: "dancing dinosaurs", emoji: "🦖", verbs: ["did the wiggle dance right out the door", "stepped on their own tails and tumbled away", "went to find more spicy tacos"] },
+    { noun: "silly penguins", emoji: "🐧", verbs: ["slipped on a banana peel and slid away", "waddled off to look for ice cream", "got tickled and ran away giggling"] },
+    { noun: "giggly monkeys", emoji: "🐵", verbs: ["swung away on a wobbly vine", "ran off after a flying banana", "got the hiccups and bounced away"] },
+    { noun: "sleepy sloths", emoji: "🦥", verbs: ["s-l-o-w-l-y snuck away for a nap", "floated off on a lazy river", "wandered off looking for a comfy branch"] },
+    { noun: "hungry hippos", emoji: "🦛", verbs: ["waddled off to a burping contest", "chased a floating donut downstream", "went home for second breakfast"] },
+    { noun: "wobbly robots", emoji: "🤖", verbs: ["beeped, boop, and rolled away", "short-circuited and zoomed off sideways", "went to go recharge with a nap"] },
+    { noun: "spooky ghosts", emoji: "👻", verbs: ["floated off to scare a pumpkin", "got the giggles and boo'd away", "vanished to look for spooky snacks"] },
+    { noun: "sneaky raccoons", emoji: "🦝", verbs: ["snuck off with a bag of chips", "tiptoed away wearing tiny sunglasses", "scurried off to wash their cookies"] },
+    { noun: "silly unicorns", emoji: "🦄", verbs: ["pranced off leaving a rainbow trail", "sneezed glitter and trotted away", "galloped off chasing a shooting star"] }
+  ];
+
+  function g3NewStory() {
+    g3Locked = false;
+    const start = randInt(4, 10);
+    const take = randInt(1, start - 1);
+    g3Answer = start - take;
+    const item = g3Items[randInt(0, g3Items.length - 1)];
+    const verb = item.verbs[randInt(0, item.verbs.length - 1)];
+    document.getElementById('g3-photo').textContent = item.emoji.repeat(Math.min(start, 6));
+    document.getElementById('g3-story').textContent =
+      `${start} ${item.noun} were having a party. ${take} of them ${verb}! How many ${item.noun} are left at the party?`;
+    document.getElementById('g3-feedback').textContent = '';
+    document.getElementById('g3-feedback').className = 'feedback';
+
+    // build choices: correct + 2 distractors
+    const choices = new Set([g3Answer]);
+    while (choices.size < 3) {
+      const d = randInt(Math.max(0, g3Answer - 3), Math.min(10, g3Answer + 3));
+      choices.add(d);
+    }
+    const arr = Array.from(choices).sort(() => Math.random() - 0.5);
+    const grid = document.getElementById('g3-choices');
+    grid.innerHTML = '';
+    arr.forEach(val => {
+      const btn = document.createElement('button');
+      btn.className = 'choice-btn';
+      btn.textContent = val;
+      btn.addEventListener('click', () => g3Check(val, btn));
+      grid.appendChild(btn);
+    });
+  }
+
+  function g3Check(val, btn) {
+    if (g3Locked) return;
+    g3Locked = true;
+    g3Total++;
+    const fb = document.getElementById('g3-feedback');
+    if (val === g3Answer) {
+      g3Score++;
+      btn.classList.add('correct');
+      fb.textContent = "Correct! 🎉";
+      fb.className = 'feedback good';
+    } else {
+      btn.classList.add('wrong');
+      fb.textContent = `Not quite — the answer was ${g3Answer}.`;
+      fb.className = 'feedback bad';
+      document.querySelectorAll('#g3-choices .choice-btn').forEach(b => {
+        if (parseInt(b.textContent) === g3Answer) b.classList.add('correct');
+      });
+    }
+    document.getElementById('g3-score').textContent = g3Score;
+    document.getElementById('g3-total').textContent = g3Total;
+  }
+
+  document.getElementById('g3-new').addEventListener('click', g3NewStory);
+  g3NewStory();
+</script>
+</body>
+</html>

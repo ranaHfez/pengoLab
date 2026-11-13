@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Grade 1 · Lesson 2-6 · Count Back to Subtract</title>
+<style>
+:root{--bg:#fff7e6;--card:#fff;--ink:#2b2d42;--mut:#6b6f85;--a:#ff6b6b;--b:#4dabf7;--c:#51cf66;--d:#ffa94d;--e:#9775fa;--line:#ffd8a8;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1d1f2b;--card:#2a2d3e;--ink:#f1f3f9;--mut:#a9aec6;--line:#46495f}}
+:root[data-theme="dark"]{--bg:#1d1f2b;--card:#2a2d3e;--ink:#f1f3f9;--mut:#a9aec6;--line:#46495f}
+*{box-sizing:border-box}body{margin:0;font-family:"Comic Sans MS","Trebuchet MS",system-ui,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:linear-gradient(90deg,var(--a),var(--d),var(--c),var(--b),var(--e));color:#fff;text-align:center;padding:16px 10px;text-shadow:0 2px 3px #0004}
+h1{margin:0;font-size:clamp(20px,5vw,32px)}header p{margin:4px 0 0}
+nav{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;padding:10px;position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);z-index:5}
+nav button,.btn{font:inherit;font-weight:bold;border:0;border-radius:20px;padding:9px 14px;background:var(--card);color:var(--ink);box-shadow:0 2px 0 var(--line);cursor:pointer;border:2px solid var(--line)}
+nav button.on,.btn.pri{background:var(--b);color:#fff;border-color:var(--b)}
+main{max-width:980px;margin:0 auto;padding:10px 12px 40px}
+section{display:none;background:var(--card);border-radius:22px;padding:16px;border:3px solid var(--line)}section.on{display:block}
+h2{margin-top:0}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.box{border-radius:16px;padding:12px;border:2px dashed var(--line)}.box h3{margin:0 0 6px}
+table{width:100%;border-collapse:collapse}td,th{border:2px solid var(--line);padding:6px;text-align:left}th{background:var(--line);color:#2b2d42}
+.tag{display:inline-block;background:var(--e);color:#fff;border-radius:10px;padding:2px 8px;margin:2px;font-size:.9em}
+.line{display:flex;gap:3px;justify-content:center;margin:10px 0;flex-wrap:nowrap}
+.cell{flex:1;max-width:54px;min-width:22px;height:46px;border:2px solid var(--line);border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:bold;font-size:clamp(12px,3vw,18px);position:relative}
+.cell.f{background:#c0eb75;color:#2b2d42;border-color:var(--c)}.cell.s{background:#ffe066;color:#2b2d42}
+.big{font-size:clamp(28px,8vw,50px);text-align:center;margin:8px 0;font-weight:bold}
+.ch{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:12px 0}
+.ch button{font:inherit;font-size:clamp(22px,6vw,34px);font-weight:bold;min-width:80px;padding:12px 18px;border-radius:18px;border:3px solid var(--b);background:var(--card);color:var(--ink);cursor:pointer}
+.ch button.ok{background:var(--c);color:#fff;border-color:var(--c)}.ch button.no{background:var(--a);color:#fff;border-color:var(--a);animation:sh .3s}
+@keyframes sh{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.hud{display:flex;justify-content:space-between;font-weight:bold;flex-wrap:wrap;gap:6px}
+.msg{text-align:center;min-height:28px;font-size:1.2em;font-weight:bold}
+.balloons button{border-radius:50% 50% 50% 50%/45% 45% 55% 55%;width:96px;height:112px;color:#fff;border:0;animation:bob 2s ease-in-out infinite;text-shadow:0 2px 2px #0005}
+.balloons button:nth-child(odd){animation-delay:-1s}@keyframes bob{50%{transform:translateY(-12px)}}
+.mem{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;max-width:520px;margin:10px auto}
+.mem button{height:78px;font:inherit;font-weight:bold;font-size:clamp(16px,4.5vw,24px);border-radius:14px;border:3px solid var(--e);background:var(--e);color:#fff;cursor:pointer}
+.mem button.up{background:var(--card);color:var(--ink)}.mem button.done{background:var(--c);border-color:var(--c);color:#fff}
+.wb{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+.wb input[type=color]{width:38px;height:36px;border:0;padding:0;background:none}.wb select{font:inherit;padding:6px;border-radius:10px}
+.wb .btn{padding:6px 10px}.btn.sel{background:var(--d);color:#fff;border-color:var(--d)}
+.cv{position:relative;border:3px solid var(--line);border-radius:14px;overflow:hidden;background:#fff;touch-action:none}
+.cv canvas{display:block;width:100%;height:auto;position:relative}
+.cv .bg{position:absolute;inset:0;pointer-events:none}.g-grid{background-image:linear-gradient(#74c0fc66 1px,transparent 1px),linear-gradient(90deg,#74c0fc66 1px,transparent 1px);background-size:30px 30px}
+.g-nl{display:flex;align-items:center;padding:0 10px}.g-nl span{flex:1;text-align:center;font-weight:bold;color:#2b2d42;border-left:3px solid #2b2d42;padding-top:16px;height:36px;font-size:clamp(11px,2.5vw,18px)}.g-nl{border-top:0}
+.g-nl::before{content:"";position:absolute;left:10px;right:10px;top:50%;height:3px;background:#2b2d42}
+.g-tf{background-image:linear-gradient(90deg,transparent 49.7%,#ff6b6b 50%,transparent 50.3%)}
+.cks{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;font-size:clamp(30px,9vw,46px);margin:8px 0}.cks span{cursor:pointer;transition:transform .25s,opacity .25s;user-select:none}.cks span.gone{transform:scale(0) rotate(180deg);opacity:0;pointer-events:none}
+footer{text-align:center;color:var(--mut);padding:10px}
+</style>
+<!-- Shared template: colors, fonts, sounds, buttons, mascots. Keep this. -->
+<link rel="stylesheet" href="../../shared/theme.css">
+<script src="../../shared/theme.js" defer></script>
+</head><body>
+<header><h1>🐸 Count Back to Subtract 🚀</h1><p>enVision Math · Grade 1 · Volume 1 · Topic 2: Fluently Add and Subtract Within 10 · Lesson 2-6</p></header>
+<nav id="nav"></nav>
+<main>
+<section id="plan" class="on"><h2>📋 Lesson Plan</h2>
+<div class="grid">
+<div class="box"><h3>🎯 Objective</h3>Students use <b>counting back</b> to subtract 1, 2 or 3 from numbers within 10, using number lines, counters and equations.<p><b>Time:</b> about 45 minutes</p></div>
+<div class="box"><h3>🔤 Vocabulary</h3><span class="tag">count back</span><span class="tag">subtract</span><span class="tag">minus (−)</span><span class="tag">equals (=)</span><span class="tag">difference</span><span class="tag">number line</span></div>
+<div class="box"><h3>🧰 Materials</h3>Number line 0–10, counters, mini whiteboards, a frog toy or picture, this page on the board.</div>
+<div class="box"><h3>💬 Key Question</h3>How can counting back help me find 8 − 3?</div></div>
+<h3>⏱️ Steps</h3>
+<table><tr><th>Time</th><th>Part</th><th>What to do</th></tr>
+<tr><td>5 min</td><td>Warm-Up</td><td>Play “Count Back Warm-Up”. Count backward aloud together from 10 to 0.</td></tr>
+<tr><td>10 min</td><td>Explore (Whiteboard)</td><td>Pose: “Frog is on 8 and hops back 3. Where does it land?” Students act it out on the whiteboard number line, then with counters.</td></tr>
+<tr><td>10 min</td><td>Teach</td><td>Model 8 − 3: start at 8 and say <i>“7, 6, 5”</i> while holding up 3 fingers. The last number said is the answer. Write 8 − 3 = 5. Stress: <b>do not count the starting number</b>.</td></tr>
+<tr><td>5 min</td><td>Guided Practice</td><td>Students solve 6 − 1, 9 − 2, 7 − 3 on mini whiteboards and show answers together.</td></tr>
+<tr><td>12 min</td><td>Games</td><td>Games 1–4 in pairs, groups or whole class.</td></tr>
+<tr><td>3 min</td><td>Exit Ticket</td><td>Solve 10 − 2 and tell how you counted back.</td></tr></table>
+<div class="grid" style="margin-top:12px">
+<div class="box"><h3>🌱 Support</h3>Use a physical number line and move a finger back. Start with “1 less”.</div>
+<div class="box"><h3>🚀 Challenge</h3>Ask “9 − ? = 6”, and ask why counting up might be easier for bigger jumps.</div>
+<div class="box"><h3>✅ Check for Understanding</h3>Can the student start at the right number, hop back the correct number of times, and say the answer?</div></div>
+</section>
+
+<section id="wu"><h2>🔥 Warm-Up: Count Back Warm-Up</h2><p>Look at the counting-back pattern. What number comes next?</p><div id="g0"></div></section>
+
+<section id="wbs"><h2>🖍️ Whiteboard</h2>
+<div class="wb" id="tools"></div>
+<div class="wb"><label>Color <input type="color" id="col" value="#e03131"></label><label>Size <select id="sz"><option>3</option><option selected>6</option><option>12</option><option>20</option></select></label>
+<label>Background <select id="bgs"><option value="">Plain</option><option value="grid">Grid</option><option value="nl">Number line 0–10</option></select></label>
+<button class="btn" id="undo">↩️ Undo</button><button class="btn" id="clr">🗑️ Clear</button><button class="btn" id="sv">💾 Save</button></div>
+<div class="cv" id="cv"><div class="bg" id="bg"></div><canvas id="c" width="960" height="460"></canvas></div></section>
+
+<section id="g1"><h2>🐸 Game 1: Frog Hop</h2><p>Press the frog to hop back, then choose where it lands!</p><div id="q1"></div></section>
+<section id="g2"><h2>🤖 Game 2: Silly Robot Checker</h2><p>Silly Robot counted back, but he sometimes makes mistakes! Is he right or wrong?</p><div id="q2"></div></section>
+<section id="g3"><h2>👾 Game 3: Monster Munch</h2><p>Feed the hungry monster cookies, count back, and tell how many are left!</p><div id="q3"></div></section>
+<section id="g4"><h2>🎈 Game 4: Balloon Pop</h2><p>Pop the balloon with the correct answer!</p><div id="q4"></div></section>
+</main>
+<footer>Made for Grade 1 · enVision Math Lesson 2-6</footer>
+<script>
+const $=s=>document.querySelector(s),R=n=>Math.floor(Math.random()*n),sh=a=>a.sort(()=>Math.random()-.5);
+const tabs=[["plan","📋 Plan"],["wu","🔥 Warm-Up"],["wbs","🖍️ Whiteboard"],["g1","🐸 Game 1"],["g2","🤖 Game 2"],["g3","👾 Game 3"],["g4","🎈 Game 4"]];
+$("#nav").innerHTML=tabs.map(t=>`<button data-t="${t[0]}">${t[1]}</button>`).join("");
+function show(id){document.querySelectorAll("section").forEach(s=>s.classList.toggle("on",s.id==id));document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.t==id));scrollTo(0,0)}
+$("#nav").insertAdjacentHTML("beforeend",'<button id="mute">🔊 Sound on</button>');$("#mute").onclick=e=>{snd=!snd;if(!snd)speechSynthesis.cancel();e.target.textContent=snd?"🔊 Sound on":"🔇 Sound off";if(snd)sfx("pop")};
+$("#nav").onclick=e=>{if(e.target.dataset.t)show(e.target.dataset.t)};show("plan");
+let snd=true,AC;
+function say(t){if(!snd||!('speechSynthesis' in window))return;try{const u=new SpeechSynthesisUtterance(t);u.pitch=1.7;u.rate=1.05;u.lang='en-US';speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}}
+function sfx(k){if(!snd)return;try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();const n=AC.currentTime;
+const T=(f,s,d,ty,g,f2)=>{const o=AC.createOscillator(),a=AC.createGain();o.type=ty||'sine';o.frequency.setValueAtTime(f,n+s);if(f2)o.frequency.exponentialRampToValueAtTime(f2,n+s+d);a.gain.setValueAtTime(g||.2,n+s);a.gain.exponentialRampToValueAtTime(.001,n+s+d);o.connect(a);a.connect(AC.destination);o.start(n+s);o.stop(n+s+d)};
+if(k=='yay'){[523,659,784,1047].forEach((f,i)=>T(f,i*.09,.18,'triangle',.22));say(['Great job!','Awesome!','Super!','You did it!','Hooray!','Wow, so smart!'][R(6)])}
+else if(k=='oops'){T(380,0,.25,'sawtooth',.12,170);T(300,.25,.3,'sawtooth',.12,120);say('Oops! Try again!')}
+else if(k=='nom'){T(260,0,.12,'square',.2,90);T(200,.1,.12,'square',.2,80)}
+else if(k=='boing'){T(180,0,.3,'sine',.3,700)}
+else if(k=='pop'){T(900,0,.12,'square',.15,150)}
+else if(k=='flip'){T(600,0,.07,'triangle',.18,900)}
+else if(k=='win'){[523,659,784,659,784,1047,1319].forEach((f,i)=>T(f,i*.12,.25,'triangle',.25));T(150,0,.5,'sine',.2,60);say('You are a superstar!')}}catch(e){}}
+function nl(pos,lo){let h='<div class="line">';for(let i=0;i<=10;i++)h+=`<div class="cell ${i==pos?"f":i==lo?"s":""}">${i}${i==pos?'<span>🐸</span>':''}</div>`;return h+'</div>'}
+function choices(a,max=10){let s=new Set([a]);while(s.size<3){let x=Math.max(0,Math.min(max,a+R(5)-2));s.add(x)}return sh([...s])}
+function sub(){let n=6+R(5),k=2+R(2);if(R(5)==0)k=1;return{n,k,a:n-k}}
+function quiz(box,gen,total,bal){let i=0,sc=0,mis=0;const el=$(box);
+function next(){if(i>=total){sfx("win");el.innerHTML=`<div class="big">${"⭐".repeat(Math.max(1,sc-0))}<br>You got ${sc} of ${total}!</div><div class="msg">${sc>=total-1?"Superstar! 🏆":"Great practice! Try again! 💪"}</div><div class="ch"><button id="re" style="font-size:20px">🔁 Play again</button></div>`;$(box+" #re").onclick=()=>{i=0;sc=0;next()};return}
+const q=gen();mis=0;el.innerHTML=`<div class="hud"><span>Question ${i+1}/${total}</span><span>⭐ ${sc}</span></div><div class="big">${q.q}</div><div id="vis">${q.vis||""}</div><div class="ch ${bal?"balloons":""}" id="ch"></div><div class="msg" id="m"></div>`;
+const cols=["#ff6b6b","#4dabf7","#51cf66","#ffa94d","#9775fa"];
+q.ch.forEach((c,j)=>{const b=document.createElement("button");b.textContent=c;if(bal)b.style.background=cols[(j+i)%5];b.onclick=()=>{if(b.classList.contains("ok"))return;if(c==q.a){b.classList.add("ok");sfx(bal?"pop":"yay");if(bal)b.textContent="💥";if(!mis)sc++;$(box+" #m").textContent=["🎉 Yes!","👏 Super!","🌟 Correct!"][R(3)]+(q.exp?" "+q.exp:"");$(box+" #ch").querySelectorAll("button").forEach(x=>x.onclick=null);i++;setTimeout(next,1300)}else{mis=1;sfx("oops");b.classList.add("no");$(box+" #m").textContent="Try again! Count back slowly 🤔"}};$(box+" #ch").appendChild(b)});
+if(q.after)q.after($(box))}
+next()}
+quiz("#g0",()=>{let n=7+R(4),a=n-3;return{q:`${n}, ${n-1}, ${n-2}, <span style="color:var(--a)">?</span>`,a,ch:choices(a),exp:`Counting back: ${n}, ${n-1}, ${n-2}, ${a}`}},8);
+quiz("#q1",()=>{let{n,k,a}=sub(),pos=n;return{q:`${n} − ${k} = ?`,a,ch:choices(a),vis:`<div id="nlv">${nl(n)}</div><div class="ch"><button class="btn pri" id="hop" style="font-size:18px;min-width:0">🐸 Hop back 1</button></div>`,after(e){e.querySelector("#hop").onclick=()=>{if(pos>0){pos--;sfx("boing");e.querySelector("#nlv").innerHTML=nl(pos,n)}}},exp:`${n} − ${k} = ${a}`}},8);
+quiz("#q2",()=>{let{n,k,a}=sub(),ok=R(2)==0,c=a;if(!ok){do{c=Math.max(0,Math.min(10,a+(R(2)?1:-1)*(1+R(2))))}while(c==a)}return{q:`${n} − ${k} = ${c}`,a:ok?"✅ Yes":"❌ No",ch:["✅ Yes","❌ No"],vis:`<div class="big">🤖</div><div class="msg">Silly Robot did a count back. Is he right?</div>`,exp:`${n} − ${k} = ${a}`}},8);
+quiz("#q4",()=>{let{n,k,a}=sub();return{q:`${n} − ${k} = ?`,a,ch:choices(a),exp:`Count back ${k} from ${n}!`}},10,true);
+quiz("#q3",()=>{let{n,k,a}=sub(),eaten=0;let ck="";for(let i=0;i<n;i++)ck+=`<span data-i="${i}">🍪</span>`;
+return{q:`${n} − ${k} = ?`,a,ch:choices(a),vis:`<div class="msg" id="ins">Tap ${k} cookie${k>1?"s":""} to feed the monster! Count back out loud!</div><div class="cks">${ck}</div><div class="big" id="mon">👾</div>`,
+after(e){e.querySelectorAll(".cks span").forEach(c=>c.onclick=()=>{if(eaten>=k||c.classList.contains("gone"))return;c.classList.add("gone");eaten++;sfx("nom");say(String(n-eaten));const m=e.querySelector("#mon");m.textContent="😋";setTimeout(()=>m.textContent=eaten>=k?"🥳":"👾",500);if(eaten>=k)e.querySelector("#ins").textContent="Yum! How many cookies are left?"})},exp:`${n} − ${k} = ${a}`}},8);
+/* whiteboard */
+(function(){const cv=$("#c"),x=cv.getContext("2d"),tools=[["pen","✏️ Pen"],["mark","🖍️ Marker"],["erase","🧽 Eraser"],["line","📏 Line"],["rect","⬜ Box"],["circ","⭕ Circle"],["dot","🔴 Counter"],["frog","🐸 Frog"],["x","❌ Cross out"]];
+let tool="pen",st=[],down=0,sx,sy,snap;
+$("#tools").innerHTML=tools.map(t=>`<button class="btn ${t[0]==tool?"sel":""}" data-k="${t[0]}">${t[1]}</button>`).join("");
+$("#tools").onclick=e=>{if(!e.target.dataset.k)return;tool=e.target.dataset.k;document.querySelectorAll("#tools .btn").forEach(b=>b.classList.toggle("sel",b.dataset.k==tool))};
+function pos(e){const r=cv.getBoundingClientRect();return[(e.clientX-r.left)*cv.width/r.width,(e.clientY-r.top)*cv.height/r.height]}
+function save(){st.push(x.getImageData(0,0,cv.width,cv.height));if(st.length>25)st.shift()}
+function style(){const s=+$("#sz").value;x.lineCap=x.lineJoin="round";x.strokeStyle=x.fillStyle=$("#col").value;x.globalAlpha=1;x.globalCompositeOperation="source-over";x.lineWidth=s;
+if(tool=="mark"){x.globalAlpha=.35;x.lineWidth=s*3}if(tool=="erase"){x.globalCompositeOperation="destination-out";x.lineWidth=s*4}}
+cv.onpointerdown=e=>{cv.setPointerCapture(e.pointerId);save();[sx,sy]=pos(e);down=1;style();
+if(tool=="dot"||tool=="frog"||tool=="x"){const s=+$("#sz").value;x.font=`${s*6+20}px serif`;x.textAlign="center";x.textBaseline="middle";if(tool=="dot"){x.beginPath();x.arc(sx,sy,s*2+8,0,7);x.fill()}else x.fillText(tool=="frog"?"🐸":"❌",sx,sy);sfx("pop");down=0;return}
+snap=x.getImageData(0,0,cv.width,cv.height);x.beginPath();x.moveTo(sx,sy);x.lineTo(sx+.1,sy+.1);x.stroke()};
+cv.onpointermove=e=>{if(!down)return;const[px,py]=pos(e);style();
+if(tool=="pen"||tool=="mark"||tool=="erase"){x.beginPath();x.moveTo(sx,sy);x.lineTo(px,py);x.stroke();sx=px;sy=py;return}
+x.putImageData(snap,0,0);x.beginPath();if(tool=="line"){x.moveTo(sx,sy);x.lineTo(px,py)}else if(tool=="rect")x.rect(sx,sy,px-sx,py-sy);else x.ellipse((sx+px)/2,(sy+py)/2,Math.abs(px-sx)/2,Math.abs(py-sy)/2,0,0,7);x.stroke()};
+cv.onpointerup=cv.onpointercancel=()=>{down=0};
+$("#undo").onclick=()=>{const s=st.pop();if(s)x.putImageData(s,0,0)};
+$("#clr").onclick=()=>{save();x.clearRect(0,0,cv.width,cv.height)};
+$("#sv").onclick=()=>{const t=document.createElement("canvas");t.width=cv.width;t.height=cv.height;const y=t.getContext("2d");y.fillStyle="#fff";y.fillRect(0,0,t.width,t.height);y.drawImage(cv,0,0);const a=document.createElement("a");a.download="whiteboard.png";a.href=t.toDataURL();a.click()};
+$("#bgs").onchange=e=>{const b=$("#bg");b.className="bg";b.innerHTML="";if(e.target.value=="grid")b.classList.add("g-grid");if(e.target.value=="nl"){b.classList.add("g-nl");for(let i=0;i<=10;i++)b.innerHTML+=`<span>${i}</span>`}}})();
+</script></body></html>

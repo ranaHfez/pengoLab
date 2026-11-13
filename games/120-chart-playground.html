@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>120 Chart Playground</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#fff8e7;--card:#fff;--ink:#2b2d42;--line:#e3d9c0;--accent:#ff5c8a;--hi:#ffd60a;--path:#06d6a0}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1b1b2f;--card:#26264a;--ink:#f4f1ff;--line:#44447a}}
+:root[data-theme="dark"]{--bg:#1b1b2f;--card:#26264a;--ink:#f4f1ff;--line:#44447a}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Comic Sans MS","Chalkboard SE","Trebuchet MS",system-ui,sans-serif;padding:10px}
+h1{margin:4px 0 10px;text-align:center;font-size:clamp(20px,4vw,32px)}
+.wrap{display:flex;flex-wrap:wrap;gap:12px;max-width:1200px;margin:auto}
+.chart{flex:1 1 440px;min-width:0}
+.panel{flex:1 1 300px;display:flex;flex-direction:column;gap:10px}
+.card{background:var(--card);border:3px solid var(--line);border-radius:18px;padding:10px}
+#grid{display:grid;grid-template-columns:repeat(10,1fr);gap:var(--gap,3px)}
+.c{position:relative;aspect-ratio:1;border:0;border-radius:10px;font:inherit;font-weight:700;font-size:var(--fs,18px);color:#222;cursor:pointer;transition:transform .15s;padding:0}
+.c:hover{transform:scale(1.12);z-index:2}
+.c.trail{outline:4px solid var(--path);outline-offset:-4px}
+.c.start{box-shadow:0 0 0 3px var(--ink) inset}
+.c.me{background:var(--hi)!important;transform:scale(1.18);z-index:3;animation:pop .35s}
+.c.me b{position:absolute;top:-8px;right:-4px;font-size:1.3em;animation:bob .8s infinite}
+.c.hid span{opacity:0}
+.c.hid::before{content:"?";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:.5}
+.c.wob{animation:wob .4s}
+@keyframes pop{50%{transform:scale(1.5)}}
+@keyframes bob{50%{transform:translateY(-4px) rotate(12deg)}}
+@keyframes wob{25%{transform:rotate(-12deg)}75%{transform:rotate(12deg)}}
+.big{font-size:clamp(22px,4vw,34px);text-align:center;font-weight:800;margin:4px 0}
+.msg{text-align:center;min-height:2.6em;font-size:17px}
+.row{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:6px 0}
+button.b{font:inherit;font-weight:700;font-size:16px;border:0;border-radius:14px;padding:10px 12px;color:#fff;background:var(--accent);cursor:pointer;box-shadow:0 4px 0 rgba(0,0,0,.25)}
+button.b:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.25)}
+button.g{background:#2ec4b6}button.o{background:#ff9f1c}button.p{background:#7b2cbf}button.bl{background:#3a86ff}
+button.tab{background:var(--line);color:var(--ink);box-shadow:none}button.tab.on{background:var(--accent);color:#fff}
+label{display:flex;align-items:center;gap:6px;font-size:14px;flex-wrap:wrap}
+select,input[type=number]{font:inherit;border-radius:8px;border:2px solid var(--line);padding:3px;background:var(--card);color:var(--ink)}
+input[type=number]{width:60px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:6px 10px}
+#log{font-size:14px;word-break:break-word;min-height:1.4em;text-align:center}
+.score{display:flex;justify-content:space-around;font-weight:800}
+.fx{position:fixed;font-size:28px;pointer-events:none;z-index:99;animation:fly 1.4s ease-out forwards}
+@keyframes fly{to{transform:translate(var(--dx),var(--dy)) rotate(360deg);opacity:0}}
+</style>
+<!-- Shared template: colors, fonts, sounds, buttons, mascots. Keep this. -->
+<link rel="stylesheet" href="../shared/theme.css">
+<script src="../shared/theme.js" defer></script>
+</head><body>
+<h1>🔢 120 Chart Playground 🎉</h1>
+<div class="wrap">
+ <div class="chart card"><div id="grid"></div></div>
+ <div class="panel">
+  <div class="card">
+   <div class="row"><button class="b tab on" id="tFree">🎈 Explore</button><button class="b tab" id="tPrac">🎯 Practice</button></div>
+   <div class="big" id="q">Tap any number!</div>
+   <div class="msg" id="msg">Use the jump buttons to hop around the chart.</div>
+   <div id="log"></div>
+   <div class="score"><span>⭐ <b id="sc">0</b></span><span>🔥 <b id="st">0</b></span><span>✅ <b id="ok">0</b>/<b id="tot">0</b></span></div>
+  </div>
+  <div class="card">
+   <div class="row">
+    <button class="b o" data-j="-10">⬆️ −10</button><button class="b g" data-j="10">⬇️ +10</button>
+    <button class="b o" data-j="-1">⬅️ −1</button><button class="b g" data-j="1">➡️ +1</button>
+   </div>
+   <div class="row">
+    <label>Custom jump <input type="number" id="cj" value="5" min="1" max="119"></label>
+    <button class="b o" id="cm">− jump</button><button class="b g" id="cp">+ jump</button>
+   </div>
+   <div class="row" id="pracBtns" style="display:none">
+    <button class="b bl" id="check">✅ Check</button><button class="b p" id="hint">💡 Show me</button><button class="b" id="next">🎲 New</button><button class="b o" id="back">↩️ Restart</button>
+   </div>
+   <div class="row" id="freeBtns"><button class="b p" id="clr">🧹 Clear path</button><button class="b bl" id="rnd">🎲 Random spot</button></div>
+  </div>
+  <div class="card"><div class="grid2">
+   <label>Colors <select id="theme"><option value="rows">🌈 Rainbow rows</option><option value="cols">🎨 Tens columns</option><option value="ones">🍭 Ones digit</option><option value="pastel">🧁 Pastel</option><option value="sunset">🌅 Sunset</option><option value="ocean">🌊 Ocean</option><option value="mono">⬜ Plain</option></select></label>
+   <label>Hero <select id="hero"><option>🐸</option><option>🦄</option><option>🐙</option><option>🚀</option><option>🐱</option><option>🦖</option><option>🐼</option><option>👽</option></select></label>
+   <label>Hero cell <input type="color" id="chi" value="#ffd60a"></label>
+   <label>Path <input type="color" id="cpath" value="#06d6a0"></label>
+   <label>Numbers <select id="show"><option value="all">Show all</option><option value="tens">Only tens</option><option value="none">Hide all</option></select></label>
+   <label>Size <input type="range" id="fs" min="10" max="34" value="18"></label>
+   <label>Gaps <input type="range" id="gap" min="0" max="10" value="3"></label>
+   <label>Level <select id="lvl"><option value="20">Easy: to 20</option><option value="100" selected>Medium: to 100</option><option value="120">Super: to 120</option></select></label>
+   <label>Problems <select id="op"><option value="+">Addition ➕</option><option value="-">Subtraction ➖</option><option value="m">Mixed 🔀</option></select></label>
+   <label><input type="checkbox" id="snd" checked> 🔊 Sounds</label>
+   <label><input type="checkbox" id="dk"> 🌙 Night page</label>
+  </div></div>
+ </div>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+const grid=$('grid'),cells=[];
+let pos=1,startN=1,trail=[1],mode='free',prob=null,score=0,streak=0,ok=0,tot=0,busy=false;
+for(let n=1;n<=120;n++){const b=document.createElement('button');b.className='c';b.innerHTML='<span>'+n+'</span>';b.onclick=()=>go(n);grid.appendChild(b);cells[n]=b}
+const themes={
+rows:n=>`hsl(${Math.floor((n-1)/10)*30} 85% 80%)`,
+cols:n=>`hsl(${((n-1)%10)*36} 85% 80%)`,
+ones:n=>`hsl(${(n%10)*36} 90% 78%)`,
+pastel:n=>`hsl(${(n*47)%360} 70% 88%)`,
+sunset:n=>`hsl(${10+Math.floor((n-1)/10)*5} 90% ${88-Math.floor((n-1)/10)*3}%)`,
+ocean:n=>`hsl(${180+Math.floor((n-1)/10)*7} 80% ${90-Math.floor((n-1)/10)*3}%)`,
+mono:n=>n%10==0?'#cfd8dc':'#f5f5f5'};
+function paint(){
+ const th=themes[$('theme').value],sh=$('show').value,h=$('hero').value;
+ for(let n=1;n<=120;n++){
+  const c=cells[n];c.style.background=th(n);
+  const showIt=sh=='all'||(sh=='tens'&&n%10==0)||trail.includes(n);
+  c.className='c'+(trail.includes(n)?' trail':'')+(n==startN&&mode=='prac'?' start':'')+(n==pos?' me':'')+(showIt?'':' hid');
+  const old=c.querySelector('b');if(old)old.remove();
+  if(n==pos){const e=document.createElement('b');e.textContent=h;c.appendChild(e)}
+ }
+ $('log').textContent=trail.length>1?'🐾 '+trail.join(' → '):'';
+ $('sc').textContent=score;$('st').textContent=streak;$('ok').textContent=ok;$('tot').textContent=tot;
+}
+const say=t=>$('msg').textContent=t;
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+let ac;
+function tone(f,d,t='sine',s=0){if(!$('snd').checked)return;try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();const o=ac.createOscillator(),g=ac.createGain();o.type=t;o.frequency.value=f;g.gain.value=.15;g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+s+d);o.connect(g);g.connect(ac.destination);o.start(ac.currentTime+s);o.stop(ac.currentTime+s+d)}catch(e){}}
+const hop=()=>tone(400+pos*3,.12,'triangle');
+const win=()=>[523,659,784,1046].forEach((f,i)=>tone(f,.2,'square',i*.1));
+const boing=()=>{tone(300,.3,'sawtooth');tone(150,.4,'sawtooth',.15)};
+function confetti(){const em=['🎉','⭐','🎈','🍭','🌈','✨','🦄'];for(let i=0;i<28;i++){const e=document.createElement('div');e.className='fx';e.textContent=pick(em);e.style.left='50%';e.style.top='45%';e.style.setProperty('--dx',(Math.random()*700-350)+'px');e.style.setProperty('--dy',(Math.random()*600-400)+'px');document.body.appendChild(e);setTimeout(()=>e.remove(),1500)}}
+function wob(n){cells[n].classList.add('wob');setTimeout(()=>cells[n].classList.remove('wob'),400)}
+function go(n,quiet){
+ if(n<1||n>120){boing();say(pick(['Oops! You fell off the chart! 🙈','Whoa, there is no number there! 🚧','Hee hee, out of the chart! 😜']));wob(pos);return false}
+ pos=n;trail.push(n);hop();paint();
+ if(!quiet&&mode=='free')say(pick(['Hop hop! 🐰','Wheee! 🎢','You are at '+n+'! 😎','Nice jump! 👍','Boing! 🦘']));
+ return true}
+document.querySelectorAll('[data-j]').forEach(b=>b.onclick=()=>{if(!busy)go(pos+ +b.dataset.j)});
+$('cp').onclick=()=>{if(!busy)go(pos+Math.max(1,+$('cj').value||1))};
+$('cm').onclick=()=>{if(!busy)go(pos-Math.max(1,+$('cj').value||1))};
+$('clr').onclick=()=>{trail=[pos];say('Path cleaned! 🧼');paint()};
+$('rnd').onclick=()=>{pos=startN=1+Math.floor(Math.random()*120);trail=[pos];say('Teleport! 🛸 Now at '+pos);paint()};
+function newProb(){
+ const M=+$('lvl').value;let op=$('op').value;if(op=='m')op=pick(['+','-']);
+ let a,b;const mb=M==20?9:50;
+ if(op=='+'){a=1+Math.floor(Math.random()*(M-2));b=1+Math.floor(Math.random()*Math.min(M-a,mb))}
+ else{a=3+Math.floor(Math.random()*(M-2));b=1+Math.floor(Math.random()*Math.min(a-1,mb))}
+ prob={a,b,op,ans:op=='+'?a+b:a-b};pos=startN=a;trail=[a];
+ $('q').textContent=a+' '+(op=='+'?'+':'−')+' '+b+' = ?';
+ say('Start on '+a+'. Jump to find the answer, then press Check! 🧭');paint()}
+function setMode(m){mode=m;$('tFree').classList.toggle('on',m=='free');$('tPrac').classList.toggle('on',m=='prac');
+ $('pracBtns').style.display=m=='prac'?'flex':'none';$('freeBtns').style.display=m=='free'?'flex':'none';
+ if(m=='prac')newProb();else{prob=null;$('q').textContent='Tap any number!';say('Use the jump buttons to hop around the chart.');trail=[pos];paint()}}
+$('tFree').onclick=()=>setMode('free');$('tPrac').onclick=()=>setMode('prac');
+$('next').onclick=newProb;
+$('back').onclick=()=>{pos=startN;trail=[pos];say('Back to the start! 🔁');paint()};
+$('check').onclick=()=>{if(!prob||busy)return;tot++;
+ if(pos==prob.ans){ok++;streak++;score+=10+Math.min(streak,10);win();confetti();say(pick(['🎉 YES! Amazing job!','🦄 Brilliant! You are a math star!','🚀 Correct! Zoom zoom!','🍭 Sweet! That is right!'])+' (+'+(10+Math.min(streak,10))+')');paint();setTimeout(newProb,2200)}
+ else{streak=0;boing();say(pick(['😅 Not yet! Try again, you can do it!','🤔 Hmm, count your jumps again!','🙈 Oopsie! Use +10 / −10 for tens first!']));wob(pos);paint()}};
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+$('hint').onclick=async()=>{if(!prob||busy)return;busy=true;pos=startN;trail=[pos];paint();
+ const s=prob.op=='+'?1:-1,t=Math.floor(prob.b/10),o=prob.b%10;
+ say('Watch! First '+t+' jump(s) of 10, then '+o+' jump(s) of 1 👀');
+ for(let i=0;i<t;i++){await sleep(650);go(pos+s*10,true)}
+ for(let i=0;i<o;i++){await sleep(550);go(pos+s,true)}
+ await sleep(400);say('Now you know! It lands on '+prob.ans+' ✨');busy=false};
+['theme','show','hero'].forEach(i=>$(i).onchange=paint);
+$('op').onchange=$('lvl').onchange=()=>{if(mode=='prac')newProb()};
+$('chi').oninput=e=>{document.documentElement.style.setProperty('--hi',e.target.value)};
+$('cpath').oninput=e=>{document.documentElement.style.setProperty('--path',e.target.value)};
+$('fs').oninput=e=>grid.style.setProperty('--fs',e.target.value+'px');
+$('gap').oninput=e=>grid.style.setProperty('--gap',e.target.value+'px');
+$('dk').onchange=e=>document.documentElement.setAttribute('data-theme',e.target.checked?'dark':'light');
+paint();
+</script></body></html>

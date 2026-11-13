@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>enVision Grade 2 · Lesson 3-1 · Add Tens and Ones on a Hundred Chart</title>
+<style>
+:root{--bg:#fff8ec;--card:#fff;--ink:#2b2350;--mut:#6b6490;--p:#6c4cf1;--a:#ff8a3d;--g:#22b573;--r:#ef4b5f;--y:#ffd23f;--line:#e6dcc8;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1b1736;--card:#27214a;--ink:#f5f1ff;--mut:#b4acd8;--line:#3d3668}}
+:root[data-theme="dark"]{--bg:#1b1736;--card:#27214a;--ink:#f5f1ff;--mut:#b4acd8;--line:#3d3668}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:radial-gradient(circle at 12px 12px,rgba(255,138,61,.22) 4px,transparent 5px) 0 0/40px 40px,radial-gradient(circle at 32px 32px,rgba(108,76,241,.18) 4px,transparent 5px) 0 0/40px 40px,var(--bg);color:var(--ink);font-family:"Comic Sans MS","Chalkboard SE","Trebuchet MS",system-ui,sans-serif;line-height:1.5}
+header{background:linear-gradient(120deg,#6c4cf1,#e0449a,#ff8a3d,#f0c000,#22b573,#22a6b5,#6c4cf1);background-size:300% 100%;animation:slide 8s linear infinite;color:#fff;padding:18px 16px;text-align:center;border-radius:0 0 34px 34px;text-shadow:0 2px 0 rgba(0,0,0,.25)}header h1{animation:bob 2s ease-in-out infinite}@keyframes slide{to{background-position:300% 0}}@keyframes bob{50%{transform:translateY(-6px) rotate(-1deg)}}@keyframes pop{0%{transform:scale(.3)}60%{transform:scale(1.25)}100%{transform:scale(1)}}@keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}@keyframes fall{to{transform:translateY(110vh) rotate(360deg)}}@keyframes wig{50%{transform:rotate(-3deg) scale(1.05)}}
+header h1{margin:0;font-size:clamp(20px,4vw,32px)}header p{margin:4px 0 0;opacity:.95}
+nav{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;padding:10px;position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);z-index:5;border-bottom:2px solid var(--line)}
+nav button{border:0;border-radius:22px;padding:9px 14px;font:inherit;font-weight:800;background:#6c4cf1;color:#fff;cursor:pointer;box-shadow:0 4px 0 rgba(0,0,0,.25);transition:transform .15s}nav button:nth-child(8n+1){background:#e0449a}nav button:nth-child(8n+2){background:#ff8a3d}nav button:nth-child(8n+3){background:#22b573}nav button:nth-child(8n+4){background:#22a6b5}nav button:nth-child(8n+5){background:#8a4cf1}nav button:nth-child(8n+6){background:#f0a500}nav button:nth-child(8n+7){background:#ef4b5f}nav button:hover{transform:translateY(-3px) rotate(-2deg)}
+nav button.on{transform:scale(1.1) rotate(-3deg);outline:4px solid var(--y)}
+main{max-width:980px;margin:0 auto;padding:14px}
+.panel{display:none}.panel.on{display:block}
+.card{background:var(--card);border-radius:28px;padding:16px;margin-bottom:14px;border:4px dashed #ffb703;box-shadow:0 6px 0 #ff5fa2}
+h2{margin:.2em 0 .5em;color:var(--p);background:linear-gradient(90deg,#6c4cf1,#e0449a,#ff8a3d);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}h3{margin:.4em 0}
+.tag{display:inline-block;background:var(--y);color:#3a2b00;border-radius:12px;padding:2px 10px;font-weight:700;font-size:13px}
+.step{border-left:6px solid var(--a);padding:4px 12px;margin:10px 0}
+ul{margin:.3em 0;padding-left:22px}
+table.hc{border-collapse:collapse;margin:8px auto}
+.hc td{width:clamp(26px,7.5vw,48px);height:clamp(26px,7.5vw,48px);text-align:center;border:1px solid var(--line);font-weight:700;font-size:clamp(11px,3vw,18px);background:var(--card);cursor:default;user-select:none}
+.hc td.go{cursor:pointer}.hc td.go:hover{background:var(--y);color:#3a2b00}
+.hc td.st{background:var(--g);color:#fff}.hc td.ok{background:var(--g);color:#fff}.hc td.bad{background:var(--r);color:#fff}.hc td.q{background:var(--a);color:#fff}
+.q-text{font-size:clamp(18px,3.6vw,26px);font-weight:700;text-align:center;margin:8px 0}
+.ch{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:10px 0}
+.ch button{font:inherit;font-weight:800;font-size:clamp(18px,4vw,26px);padding:14px 8px;border:0;border-radius:16px;color:#fff;cursor:pointer;box-shadow:0 4px 0 rgba(0,0,0,.2)}
+.ch button:nth-child(1){background:#6c4cf1}.ch button:nth-child(2){background:#ff8a3d}.ch button:nth-child(3){background:#22a6b5}.ch button:nth-child(4){background:#e0449a}
+.ch button:hover{transform:scale(1.06) rotate(-1.5deg)}.ch button.ok{background:var(--g)!important;animation:pop .5s}.ch button.bad{background:var(--r)!important}
+.bar{height:12px;background:var(--line);border-radius:8px;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--g),var(--y));width:0;transition:width .3s}
+.top{display:flex;justify-content:space-between;font-weight:700;color:var(--mut);margin-bottom:6px}
+.fb{min-height:44px;text-align:center;font-size:26px;font-weight:800}.fb.pop{animation:pop .5s}.fb.shake{animation:shake .4s}
+.big{border:0;border-radius:24px;padding:14px 26px;font:inherit;font-weight:800;font-size:20px;background:linear-gradient(90deg,#ff5fa2,#ff8a3d);color:#fff;cursor:pointer;box-shadow:0 5px 0 rgba(0,0,0,.25);animation:wig 1.4s ease-in-out infinite}
+.center{text-align:center}.stars{font-size:56px;animation:bob 1s ease-in-out infinite}.bl{display:flex;gap:34px;justify-content:center;align-items:flex-end;flex-wrap:wrap;margin:8px 0}.bg2{display:flex;gap:6px;align-items:flex-end;justify-content:center;flex-wrap:wrap;min-height:30px}.ten{width:20px;height:110px;border-radius:5px;border:2px solid #1b4fd8;background:repeating-linear-gradient(#3b82f6 0 9px,#1b4fd8 9px 11px);box-shadow:0 3px 0 rgba(0,0,0,.25)}.one{width:20px;height:20px;border-radius:4px;border:2px solid #d99a00;background:#ffd23f;box-shadow:0 2px 0 rgba(0,0,0,.25)}.bl small{display:block;margin-top:6px;font-weight:700}.wk{display:grid;grid-template-columns:repeat(10,1fr);max-width:580px;margin:6px auto}.wk div{aspect-ratio:2/1;display:flex;align-items:center;justify-content:center;border:1px solid #c9bfa8;color:#2b2350;font-weight:800;font-size:clamp(9px,2.4vw,15px);cursor:pointer;position:relative;user-select:none}.wk div.tr{background:#ffe066!important}.wk div.st{background:#22b573!important;color:#fff}.wk div.cu{background:#ff8a3d!important;color:#fff;outline:3px solid #6c4cf1;z-index:1}.wk div.cu::after{content:"🐸";position:absolute;top:-8px;right:-3px;font-size:16px}
+.tools{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+.tools button,.tools select{font:inherit;font-weight:700;border:2px solid var(--line);border-radius:12px;padding:6px 10px;background:var(--card);color:var(--ink);cursor:pointer}
+.tools button.on{background:var(--p);color:#fff;border-color:var(--p)}
+.sw{width:30px;height:30px;border-radius:50%;padding:0!important;border:3px solid var(--line)!important}.sw.on{border-color:var(--ink)!important}
+.wb{position:relative;width:100%;aspect-ratio:900/520;border-radius:14px;overflow:hidden;border:3px solid var(--line);background:#fff}
+.wb canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none}#hc120{position:absolute;inset:0;display:grid;grid-template-columns:repeat(10,1fr);grid-template-rows:repeat(12,1fr)}#hc120 div{display:flex;align-items:center;justify-content:center;border:1px solid #c9bfa8;color:#2b2350;font-weight:800;font-size:clamp(9px,2.2vw,20px);cursor:pointer;position:relative;user-select:none}#hc120 div:hover{filter:brightness(.93)}#hc120 div.tr{background:#ffe066!important}#hc120 div.st{background:#22b573!important;color:#fff}#hc120 div.cu{background:#ff8a3d!important;color:#fff;outline:3px solid #6c4cf1;z-index:1}#hc120 div.cu::after{content:"🐸";position:absolute;top:-6px;right:-2px;font-size:clamp(10px,2.4vw,22px)}
+</style>
+<!-- Shared template: colors, fonts, sounds, buttons, mascots. Keep this. -->
+<link rel="stylesheet" href="../../shared/theme.css">
+<script src="../../shared/theme.js" defer></script>
+</head><body>
+<header><h1>🦄 Add Tens and Ones on a Hundred Chart 🌈</h1><p>enVision Math · Grade 2 · Volume 1 · Topic 3: Add Within 100 Using Strategies · Lesson 3-1</p></header>
+<nav id="nav"></nav>
+<main>
+
+<section class="panel" id="plan">
+<div class="card"><h2>🎯 Lesson Overview</h2>
+<p><span class="tag">Time</span> about 45 minutes &nbsp; <span class="tag">Standard</span> 2.NBT.B.5, 2.NBT.B.9</p>
+<p><b>Learning goal:</b> Students add two-digit numbers by moving on a hundred chart: <b>down</b> for tens, <b>right</b> for ones.</p>
+<p><b>Essential question:</b> How can a hundred chart help me add tens and ones?</p>
+<p><b>Vocabulary:</b> tens, ones, hundred chart, add, sum, row, column.</p>
+<p><b>Materials:</b> large hundred chart, counters, markers, devices for the games, mini whiteboards.</p></div>
+<div class="card"><h2>📋 Step by Step</h2>
+<div class="step"><b>1. Warm-up (7 min)</b> → Play <i>Tens and Ones</i> first so students remember to count the tens, then the ones. Then play <i>Ten More, Ten Less</i>. Ask: "What happens to the tens digit? The ones digit?"</div>
+<div class="step"><b>2. Explore (8 min)</b> → Show 24 + 13 on the Whiteboard (hundred chart background). Start at 24. Move <b>down 1 row</b> (+10) to 34, then <b>right 3</b> (+3) to 37. Students predict first, then check.</div>
+<div class="step"><b>3. Teach (10 min)</b> → Model 36 + 25: down 2 rows = 56, right 5 = 61 (the chart wraps to the next row). Write <b>36 + 20 = 56, 56 + 5 = 61</b>. Students copy on mini whiteboards.</div>
+<div class="step"><b>4. Guided practice (5 min)</b> → Give 3 problems: 18 + 30, 42 + 16, 57 + 24. Partners explain "down for tens, right for ones."</div>
+<div class="step"><b>5. Games (15 min)</b> → Groups rotate through Games 1 to 4.</div>
+<div class="step"><b>6. Exit ticket (2 min)</b> → "Show 45 + 32 on a hundred chart. Where do you land?" (Answer: 77)</div></div>
+<div class="card"><h2>💬 Questions to Ask</h2><ul>
+<li>Which way do you move to add tens? Why?</li><li>What happens when the ones go past the end of the row?</li>
+<li>Could you add the ones first? Do you get the same answer?</li><li>How can you check your answer another way?</li></ul>
+<p><b>Differentiation:</b> Support: use only tens first (23 + 30). Challenge: add three numbers (14 + 20 + 25).</p></div>
+</section>
+
+<section class="panel" id="board">
+<div class="card"><h2>✏️ Whiteboard</h2>
+<div class="tools" id="tl">
+<button data-t="mv" class="on">👆 Move</button><button data-t="pen">🖊️ Pen</button><button data-t="hl">🖍️ Highlighter</button><button data-t="er">🧽 Eraser</button>
+<span id="sws"></span>
+<select id="sz"><option value="3">Thin</option><option value="6" selected>Medium</option><option value="12">Thick</option><option value="22">Extra thick</option></select>
+<select id="bgs"><option value="c120" selected>120 chart (clickable)</option><option value="chart">100 chart (draw on)</option><option value="blank">Blank</option><option value="grid">Grid</option><option value="lines">Lines</option><option value="tens">Ten-frames rows</option></select>
+<button id="un">↩️ Undo</button><button id="cl">🗑️ Clear</button>
+</div>
+<div class="tools" id="hcc"><button data-m="10">⬇️ +10</button><button data-m="1">➡️ +1</button><button data-m="-10">⬆️ −10</button><button data-m="-1">⬅️ −1</button><button data-m="0">🔄 Reset</button><b id="hcs" style="margin-left:6px"></b></div><div class="wb"><canvas id="bg" width="900" height="520"></canvas><div id="hc120"></div><canvas id="dr" width="900" height="520"></canvas></div>
+<p style="color:var(--mut)">Tip: with 👆 Move, tap any number to place the frog, then tap another number to hop, or use ⬇️ +10 for tens and ➡️ +1 for ones. Switch to 🖊️ Pen to draw arrows on top.</p></div>
+</section>
+
+<section class="panel" id="warm2"><div class="card" id="g5"></div></section>
+<section class="panel" id="warm"><div class="card" id="g0"></div></section>
+<section class="panel" id="g1p"><div class="card" id="g1"></div></section>
+<section class="panel" id="g2p"><div class="card" id="g2"></div></section>
+<section class="panel" id="g3p"><div class="card" id="g3"></div></section>
+<section class="panel" id="g4p"><div class="card" id="g4"></div></section>
+</main>
+<script>
+const $=s=>document.querySelector(s),R=(a,b)=>Math.floor(Math.random()*(b-a+1))+a,sh=a=>a.sort(()=>Math.random()-.5);
+const tabs=[["plan","📋 Plan"],["board","✏️ Whiteboard"],["warm2","🧱 Warm-up 1"],["warm","🔥 Warm-up 2"],["g1p","🎯 Game 1"],["g2p","🧭 Game 2"],["g3p","🔍 Game 3"],["g4p","🚀 Game 4"]];
+$("#nav").innerHTML=tabs.map(t=>`<button data-p="${t[0]}">${t[1]}</button>`).join("");
+$("#nav").onclick=e=>{const p=e.target.dataset.p;if(!p)return;document.querySelectorAll(".panel").forEach(x=>x.classList.toggle("on",x.id==p));document.querySelectorAll("#nav button").forEach(b=>b.classList.toggle("on",b.dataset.p==p));window.scrollTo(0,0)};
+$('[data-p="plan"]').click();
+/* sound */
+let AC;function tone(f,d,t,s){try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain();o.type=t||"sine";o.frequency.value=f;g.gain.setValueAtTime(.15,AC.currentTime+s);g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+s+d);o.connect(g);g.connect(AC.destination);o.start(AC.currentTime+s);o.stop(AC.currentTime+s+d)}catch(e){}}
+const okS=()=>[523,659,784,1047].forEach((f,i)=>tone(f,.18,"triangle",i*.09)),noS=()=>{tone(300,.2,"sine",0);tone(250,.25,"sine",.15)};
+const PR=["Boom! Math wizard! 🧙‍♂️","Woohoo! Banana-tastic! 🍌","Pizza-perfect! 🍕","Roar! Dino-mite! 🦖","Zoom! Rocket brain! 🚀","Hooray! Cool as ice cream! 🍦"],TR=["Oopsie-daisy! 🌼 Look again","Whoops! The chart giggled 🤭","Almost, silly goose! 🦆"];
+function confetti(){const e=["🎉","⭐","🌈","🎈","🍭","✨","🦄"];for(let i=0;i<22;i++){const s=document.createElement("span");s.textContent=e[R(0,6)];s.style.cssText=`position:fixed;top:-30px;left:${R(0,100)}vw;font-size:${R(20,36)}px;z-index:99;pointer-events:none;animation:fall ${R(12,22)/10}s linear forwards`;document.body.appendChild(s);setTimeout(()=>s.remove(),2400)}}
+/* helpers */
+function opts(ans,ds){const s=new Set([ans]);ds.forEach(d=>{if(d>0&&d<=100)s.add(d)});while(s.size<4)s.add(R(Math.max(1,ans-12),Math.min(100,ans+12)));return sh([...s].slice(0,1).concat([...s].slice(1,4)))}
+function prob(){const t=R(1,5),o=R(1,9),s=R(1,100-10*t-o);return{s,t,o,a:s+10*t+o}}
+function chart(st,click){let h='<table class="hc">';for(let r=0;r<10;r++){h+="<tr>";for(let c=1;c<=10;c++){const n=r*10+c;h+=`<td data-n="${n}" class="${n==st?"st":""} ${click?"go":""}">${n}</td>`}h+="</tr>"}return h+"</table>"}
+function mini(r0,c0,blank){let h='<table class="hc">';for(let r=r0;r<r0+4;r++){h+="<tr>";for(let c=c0;c<c0+5;c++){const n=r*10+c+1;h+=`<td class="${n==blank?"q":""}">${n==blank?"?":n}</td>`}h+="</tr>"}return h+"</table>"}
+function piece(r0,nr,c0,nc,hi,blank){let h='<table class="hc">';for(let r=r0;r<r0+nr;r++){h+="<tr>";for(let c=c0;c<c0+nc;c++){const n=r*10+c+1;h+=n<1||n>100?'<td style="visibility:hidden"></td>':`<td class="${n==blank?"q":n==hi?"st":""}">${n==blank?"?":n}</td>`}h+="</tr>"}return h+"</table>"}
+function wk(b,s){const g=b.querySelector("#wk"),st=b.querySelector("#wks");let cur=s,tr=[s];g.innerHTML=Array.from({length:120},(_,i)=>`<div data-n="${i+1}" style="background:${pal[Math.floor(i/10)%6]}">${i+1}</div>`).join("");const r=()=>{g.querySelectorAll("div").forEach(d=>{const n=+d.dataset.n;d.className=(tr.includes(n)?"tr ":"")+(n==s?"st ":"")+(n==cur?"cu":"")});const d=cur-s,a=Math.abs(d);st.textContent=`Start ${s} · Now ${cur} · ${d<0?"−":"+"}${a}`};const mv=n=>{if(n<1||n>120)return;cur=n;tr.push(n);tone(440+n*4,.1,"triangle",0);r()};g.onclick=e=>{const n=+e.target.dataset.n;if(n)mv(n)};b.querySelectorAll(".tools button").forEach(x=>x.onclick=()=>{const m=x.dataset.m;if(m=="r"){cur=s;tr=[s];r()}else mv(cur+ +m)});r()}
+/* games: each q() returns {text,vis,ch:[..]|null,ans,click:bool} */
+const G={
+0:{name:"🔥 Warm-up 2: Ten More, Ten Less",n:6,q(){const s=R(11,89),m=Math.random()<.5,a=m?s+10:s-10;return{text:`What is ${m?"10 MORE":"10 LESS"} than <b>${s}</b>?`,vis:'<small>🟩 start · 🟧 ? is your answer</small>'+piece(Math.max(0,Math.min(7,Math.floor((s-1)/10)-1)),3,Math.max(0,Math.min(5,(s-1)%10-2)),5,s,a),ch:opts(a,[a+1,a-1,m?s-10:s+10]),ans:a}}},
+1:{name:"🎯 Game 1: Hop to It",n:8,q(){const p=prob();return{text:`Start at <b>${p.s}</b>. Add <b>${p.t} ten${p.t>1?"s":""}</b> and <b>${p.o} one${p.o>1?"s":""}</b>. Hop on the chart, then pick your answer!`,vis:'<div class="wk" id="wk"></div><div class="tools" style="justify-content:center"><button data-m="10">⬇️ +10</button><button data-m="1">➡️ +1</button><button data-m="-10">⬆️ −10</button><button data-m="-1">⬅️ −1</button><button data-m="r">🔄 Back to start</button></div><div id="wks" style="font-weight:700;color:var(--mut)"></div>',ch:opts(p.a,[p.a+10,p.a-10,p.a+1,p.a-1]),ans:p.a,init:b=>wk(b,p.s)}}},
+2:{name:"🧭 Game 2: Chart Moves",n:8,q(){const p=prob(),c=`Down ${p.t}, right ${p.o}`,w=[`Down ${p.o}, right ${p.t}`,`Right ${p.t}, down ${p.o}`,`Down ${p.t+1}, right ${p.o}`,`Down ${p.t}, left ${p.o}`].filter(x=>!(p.t==p.o&&x.startsWith("Down "+p.o+", right"))),ch=sh([c,...sh(w).slice(0,3)]);return{text:`Solve <b>${p.s} + ${p.t*10+p.o}</b>. Use the chart: down for tens, right for ones.`,vis:'<small>🟩 start</small>'+piece(Math.floor((p.s-1)/10),Math.floor((p.a-1)/10)-Math.floor((p.s-1)/10)+1,0,10,p.s,0),ch:opts(p.a,[p.a+10,p.a-10,p.a+1,p.a-1]),ans:p.a}}},
+3:{name:"🔍 Game 3: Mystery Cell",n:8,q(){const r=R(0,6),c=R(0,5),rr=R(0,3),cc=R(0,4),b=(r+rr)*10+c+cc+1;return{text:"Find the number hiding under the ? on the chart.",vis:mini(r,c,b),ch:opts(b,[b+1,b-1,b+10,b-10]),ans:b}}},
+4:{name:"🚀 Game 4: Word Problem Rocket",n:8,q(){const p=prob(),nm=["Mia","Omar","Lina","Sam","Noor","Ali"][R(0,5)],it=["stickers","marbles","stars","books","cards","shells"][R(0,5)],add=p.t*10+p.o;return{text:`${nm} has <b>${p.s}</b> ${it}. ${nm} gets <b>${add}</b> more. How many ${it} now?<br><small style="color:var(--mut)">Hint: down ${p.t} row${p.t>1?"s":""}, then right ${p.o}</small>`,vis:'<small>🟩 start</small>'+piece(Math.floor((p.s-1)/10),Math.floor((p.a-1)/10)-Math.floor((p.s-1)/10)+1,0,10,p.s,0),ch:opts(p.a,[p.a+10,p.a-10,p.a+1,p.a-1]),ans:p.a}}},
+5:{name:"🧱 Warm-up 1: Tens and Ones",n:8,q(){const t=R(1,9),o=R(0,9),n=t*10+o;if(Math.random()<.5){const v='<div class="bl"><div><div class="bg2">'+'<div class="ten"></div>'.repeat(t)+'</div><small>tens = tall sticks</small></div><div><div class="bg2">'+(o?'<div class="one"></div>'.repeat(o):'<span style="font-size:20px">(no ones)</span>')+'</div><small>ones = small squares</small></div></div>';return{text:`How many in all? Count the tens first, then the ones!`,vis:v,ch:opts(n,[o*10+t,n+10,n-10,n+1]),ans:n}}const c=`${t} tens ${o} ones`,w=[`${o} tens ${t} ones`,`${t+1} tens ${o} ones`,`${t} tens ${o+1} ones`,`${t-1} tens ${o} ones`,`${t+2} tens ${o} ones`].filter(x=>x!=c&&!x.startsWith("0 tens"));return{text:`<b>${n}</b> is the same as...`,vis:'<small>🟩 is your number</small>'+piece(Math.max(0,Math.min(7,Math.floor((n-1)/10)-1)),3,0,10,n,0),ch:sh([c,...sh(w).slice(0,3)]),ans:c}}}
+};
+function start(k){const g=G[k],box=$(k==0?"#g0":"#g"+k);let i=0,sc=0,st=0,best=0,done=false;
+function show(){if(i>=g.n){const s=sc>=g.n-1?3:sc>=g.n*.6?2:1;box.innerHTML=`<div class="center"><h2>${g.name}</h2><div class="stars">${"⭐".repeat(s)}</div><p style="font-size:22px"><b>${sc} / ${g.n}</b> correct · best streak ${best} 🔥</p><p>${s==3?"You are a Hundred Chart Champion! 🏆":"Great effort! Play again to earn more stars!"}</p><button class="big" id="ag">Play again 🔄</button></div>`;if(s>1)okS();$("#ag").onclick=()=>start(k);return}
+const q=g.q();done=false;
+box.innerHTML=`<h2>${g.name}</h2><div class="top"><span>Question ${i+1} of ${g.n}</span><span>⭐ ${sc} · 🔥 ${st}</span></div><div class="bar"><i style="width:${i/g.n*100}%"></i></div><div class="q-text">${q.text}</div><div class="center">${q.vis}</div><div class="fb" id="fb"></div>${q.ch?'<div class="ch">'+q.ch.map(c=>`<button data-v="${c}">${c}</button>`).join("")+"</div>":""}`;
+if(q.init)q.init(box);const fin=(good,el)=>{if(done)return;done=true;if(good){sc++;st++;best=Math.max(best,st);okS();confetti();$("#fb").className="fb pop";$("#fb").textContent=PR[R(0,5)];el&&el.classList.add("ok")}else{st=0;noS();$("#fb").className="fb shake";$("#fb").innerHTML=TR[R(0,2)]+` <br>Answer: <b>${q.ans}</b>`;el&&el.classList.add("bad");if(q.click){const t=box.querySelector(`td[data-n="${q.ans}"]`);t&&t.classList.add("ok")}else box.querySelectorAll(".ch button").forEach(b=>{if(b.dataset.v==q.ans)b.classList.add("ok")})}setTimeout(()=>{i++;show()},good?1100:2200)};
+if(q.click)box.querySelector("table").onclick=e=>{const n=e.target.dataset.n;if(n)fin(+n==q.ans,e.target)};
+else box.querySelector(".ch").onclick=e=>{const v=e.target.dataset.v;if(v!==undefined)fin(v==q.ans,e.target)}}
+show()}
+[5,0,1,2,3,4].forEach(k=>{const box=$(k==0?"#g0":"#g"+k),g=G[k],d={5:"A tall blue stick = 1 ten (10) · a small yellow square = 1 one. Count the tens first, then the ones!",0:"Say the answer in your head, then tap. Think: which digit changes?",1:"Use the 120 chart to hop (tap numbers or use the buttons), then pick the answer. DOWN for tens, RIGHT for ones.",2:"Solve each addition. Use the chart piece: DOWN for tens, RIGHT for ones.",3:"Use the pattern: +1 goes right, +10 goes down.",4:"Solve each story using the chart."}[k];box.innerHTML=`<div class="center"><h2>${g.name}</h2><p>${d}</p><button class="big" id="s${k}">Start ▶️</button></div>`;$("#s"+k).onclick=()=>start(k)});
+/* whiteboard */
+const bg=$("#bg"),dr=$("#dr"),bx=bg.getContext("2d"),dx=dr.getContext("2d");
+const cols=["#222222","#e03131","#1971c2","#2f9e44","#f08c00","#9c36b5","#e64980"];let col=cols[0],tool="pen",undo=[],drawing=false;
+$("#sws").innerHTML=cols.map((c,i)=>`<button class="sw ${i?"":"on"}" style="background:${c}" data-c="${c}"></button>`).join("");
+$("#sws").onclick=e=>{const c=e.target.dataset.c;if(!c)return;col=c;document.querySelectorAll(".sw").forEach(b=>b.classList.toggle("on",b.dataset.c==c));if(tool=="er"||tool=="mv")setTool("pen")};
+function setTool(t){tool=t;dr.style.pointerEvents=t=="mv"?"none":"auto";document.querySelectorAll("#tl [data-t]").forEach(b=>b.classList.toggle("on",b.dataset.t==t))}
+$("#tl").onclick=e=>{if(e.target.dataset.t)setTool(e.target.dataset.t)};
+function drawBg(t){bx.fillStyle="#fff";bx.fillRect(0,0,900,520);bx.strokeStyle="#b9c3d6";bx.lineWidth=1;bx.fillStyle="#2b2350";bx.font="bold 24px sans-serif";bx.textAlign="center";bx.textBaseline="middle";
+if(t=="chart"){const w=900/10,h=520/10;for(let r=0;r<10;r++)for(let c=0;c<10;c++){bx.fillStyle=r%2?"#fff4e0":"#eef0ff";bx.fillRect(c*w,r*h,w,h);bx.strokeRect(c*w,r*h,w,h);bx.fillStyle="#2b2350";bx.fillText(r*10+c+1,c*w+w/2,r*h+h/2)}}
+else if(t=="grid"){for(let x=0;x<=900;x+=30){bx.beginPath();bx.moveTo(x,0);bx.lineTo(x,520);bx.stroke()}for(let y=0;y<=520;y+=30){bx.beginPath();bx.moveTo(0,y);bx.lineTo(900,y);bx.stroke()}}
+else if(t=="lines"){for(let y=60;y<520;y+=50){bx.beginPath();bx.moveTo(0,y);bx.lineTo(900,y);bx.stroke()}}
+else if(t=="tens"){for(let r=0;r<5;r++)for(let c=0;c<10;c++){bx.beginPath();bx.arc(60+c*80,60+r*100,28,0,7);bx.fillStyle=r%2?"#ffe3c2":"#d9ddff";bx.fill();bx.stroke()}}}
+const hc=$("#hc120"),hcc=$("#hcc"),hcs=$("#hcs");let hs={s:0,c:0,t:[]};const pal=["#ffe3ec","#fff1d6","#e1f7e7","#dff3f7","#ece6ff","#ffe8d6"];
+hc.innerHTML=Array.from({length:120},(_,i)=>`<div data-n="${i+1}" style="background:${pal[Math.floor(i/10)%6]}">${i+1}</div>`).join("");
+function hr(){hc.querySelectorAll("div").forEach(d=>{const n=+d.dataset.n;d.className=(hs.t.includes(n)?"tr ":"")+(n==hs.s?"st ":"")+(n==hs.c?"cu":"")});if(!hs.s){hcs.textContent="Tap a number to place the frog 🐸";return}const d=hs.c-hs.s,a=Math.abs(d),t=Math.floor(a/10),o=a%10;hcs.textContent=`Start ${hs.s} · Now ${hs.c} · ${d<0?"−":"+"}${a} = ${t} ten${t==1?"":"s"} + ${o} one${o==1?"":"s"}`}
+function hm(n){if(n<1||n>120)return;if(!hs.s){hs.s=n;hs.t=[n]}else hs.t.push(n);hs.c=n;tone(440+n*4,.12,"triangle",0);hr()}
+hc.onclick=e=>{const n=+e.target.dataset.n;if(n)hm(n)};
+hcc.onclick=e=>{const m=e.target.dataset.m;if(m===undefined)return;if(m==="0"){hs={s:0,c:0,t:[]};hr();return}if(!hs.s){hm(1);return}hm(hs.c+ +m)};
+$("#bgs").onchange=e=>{const v=e.target.value;drawBg(v);const on=v=="c120";hc.style.display=on?"grid":"none";hcc.style.display=on?"flex":"none";if(!on&&tool=="mv")setTool("pen")};
+drawBg("c120");setTool("mv");hr();
+const pos=e=>{const r=dr.getBoundingClientRect();return[(e.clientX-r.left)*900/r.width,(e.clientY-r.top)*520/r.height]};
+dr.onpointerdown=e=>{drawing=true;dr.setPointerCapture(e.pointerId);undo.push(dx.getImageData(0,0,900,520));if(undo.length>25)undo.shift();const[x,y]=pos(e);dx.beginPath();dx.moveTo(x,y);dx.lineCap=dx.lineJoin="round";dx.lineWidth=+$("#sz").value*(tool=="hl"?3:tool=="er"?2:1);dx.globalCompositeOperation=tool=="er"?"destination-out":"source-over";dx.globalAlpha=tool=="hl"?.3:1;dx.strokeStyle=col;dx.lineTo(x+.01,y);dx.stroke()};
+dr.onpointermove=e=>{if(!drawing)return;const[x,y]=pos(e);dx.lineTo(x,y);dx.stroke()};
+dr.onpointerup=dr.onpointercancel=()=>{drawing=false;dx.globalAlpha=1;dx.globalCompositeOperation="source-over"};
+$("#un").onclick=()=>{const u=undo.pop();if(u)dx.putImageData(u,0,0)};
+$("#cl").onclick=()=>{undo.push(dx.getImageData(0,0,900,520));dx.clearRect(0,0,900,520)};
+</script></body></html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Grade 3B Lesson 3-6</title>
+<link href="https://fonts.googleapis.com/css2?family=Mrs+Saint+Delafield&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#1a0508;--card:#2b0a10;--red:#e01b24;--gold:#ffc83d;--blue:#2b6cff;--ink:#fff6ee;--ok:#2ecc71;--bad:#ff5c5c;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:radial-gradient(circle at 50% -10%,#6d0d16,var(--bg) 60%) fixed;color:var(--ink);font-family:"Trebuchet MS",Arial,sans-serif;min-height:100vh;padding-bottom:90px}
+header{text-align:center;padding:16px 10px 6px}
+h1{margin:0;font-size:clamp(22px,5vw,38px);letter-spacing:1px;color:var(--gold);text-shadow:0 3px 0 #7a0a12}
+.sub{opacity:.85;font-size:15px}
+.pts{display:inline-block;margin-top:6px;background:var(--red);border:2px solid var(--gold);border-radius:20px;padding:4px 16px;font-weight:bold}
+nav{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;padding:10px}
+nav button,.btn{font:inherit;font-weight:bold;color:#fff;background:linear-gradient(#f0343d,#a80f18);border:2px solid var(--gold);border-radius:12px;padding:10px 16px;cursor:pointer}
+nav button.on{background:linear-gradient(#ffd76a,#e8a500);color:#3a0508}
+main{max-width:860px;margin:0 auto;padding:0 12px}
+.card{background:var(--card);border:2px solid #7a1a22;border-radius:16px;padding:16px;margin:10px 0;box-shadow:0 4px 0 #000}
+h2{margin:0 0 8px;color:var(--gold)}h3{color:#ff8a8a;margin:12px 0 4px}
+.big{font-size:clamp(26px,6vw,40px);text-align:center;font-weight:bold;margin:10px 0}
+.eq{font-size:clamp(20px,5vw,32px);display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center;margin:10px 0}
+.opts{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.opt{font:inherit;font-size:24px;font-weight:bold;min-width:80px;padding:12px;border-radius:12px;border:2px solid var(--gold);background:#3d0f16;color:#fff;cursor:pointer}
+.opt.good{background:var(--ok);color:#052}.opt.wrong{background:var(--bad)}
+.msg{min-height:28px;text-align:center;font-weight:bold;font-size:18px;margin:8px 0}
+.slot{display:inline-flex;align-items:center;justify-content:center;min-width:64px;height:56px;border:3px dashed var(--gold);border-radius:12px;font-weight:bold;background:#3d0f16;color:#fff}
+.slot.locked{opacity:.35}.slot.good{border-style:solid;border-color:var(--ok);background:#14532d}.slot.over{background:#7a1a22}
+.slot.shake{animation:sh .3s}@keyframes sh{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.tile{font-size:24px;font-weight:bold;min-width:60px;padding:10px 14px;text-align:center;border-radius:12px;background:linear-gradient(#ffd76a,#e8a500);color:#3a0508;cursor:grab;border:2px solid #fff;user-select:none}
+.tile.sel{outline:4px solid var(--blue)}
+.bank{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;padding:10px;border-radius:12px;background:#12060a}
+.way{border:2px solid #7a1a22;border-radius:12px;padding:8px;margin:8px 0;background:#220810}
+.way b{color:var(--gold)}
+input.ans{font:inherit;font-size:26px;width:110px;text-align:center;border-radius:10px;border:3px solid var(--gold);background:#12060a;color:#fff;padding:8px}
+.bar{height:12px;background:#12060a;border-radius:8px;overflow:hidden;border:1px solid #7a1a22}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--red),var(--gold));width:0;transition:width .3s}
+ul{margin:4px 0;padding-left:20px}li{margin:4px 0}
+.hide{display:none}.sig{font-family:"Mrs Saint Delafield","Dancing Script","Brush Script MT",cursive;font-size:52px;color:var(--gold);text-align:right;transform:rotate(-4deg);margin:24px 18px 0;text-shadow:0 2px 0 #7a0a12;border-bottom:3px solid #e01b2466;display:inline-block;float:right}#g2i.hide~#g2pad{display:none}#g2pad{display:grid;grid-template-columns:repeat(6,48px);gap:6px;justify-content:center;margin-top:10px}#g2pad button{font:inherit;font-size:22px;font-weight:bold;padding:10px 0;border-radius:10px;border:2px solid var(--gold);background:#3d0f16;color:#fff;cursor:pointer}
+#wb{position:fixed;inset:0;z-index:50;pointer-events:none;touch-action:none}
+#wb.on{pointer-events:auto;cursor:crosshair}
+#tools{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(10px + env(safe-area-inset-bottom,0px));z-index:60;display:flex;gap:6px;align-items:center;background:#000d;border:2px solid var(--gold);border-radius:30px;padding:6px 10px}
+#tools button{font:inherit;border:0;border-radius:20px;padding:8px 12px;font-weight:bold;cursor:pointer;background:var(--red);color:#fff}
+#tools button.on{background:var(--gold);color:#3a0508}
+.c{width:26px;height:26px;border-radius:50%;padding:0!important;border:2px solid #fff!important}
+</style>
+<!-- Shared template: colors, fonts, sounds, buttons, mascots. Keep this. -->
+<link rel="stylesheet" href="../../shared/theme.css">
+<script src="../../shared/theme.js" defer></script>
+</head><body>
+<header><h1>★ HERO SQUAD MISSION ★</h1>
+<div class="sub">Grade 3B · Lesson 3-6 — The Associative Property: Multiply with 3 Factors</div>
+<div class="pts">⚡ Hero Points: <span id="pts">0</span></div></header>
+<nav id="nav"></nav>
+<main>
+<section id="t2" class="hide"><div class="card"><h2>🛡️ Game 1: Drag &amp; Drop – Build Both Ways</h2>
+<div>Drag a number into each empty box. Do the <b>first</b> box before the second!</div><div class="bar"><i id="g1bar"></i></div>
+<div class="big" id="g1t"></div>
+<div class="way"><b>Way 1</b><div class="eq" id="w1"></div></div>
+<div class="way"><b>Way 2</b><div class="eq" id="w2"></div></div>
+<div class="bank" id="bank"></div><div class="msg" id="g1m"></div>
+<div style="text-align:center"><button class="btn hide" id="g1n">Next mission ➜</button></div></div></section>
+
+<section id="t3" class="hide"><div class="card"><h2>🔨 Game 2: Step by Step</h2><div class="bar"><i id="g2bar"></i></div>
+<div class="big" id="g2t"></div><div id="g2s" style="text-align:center;font-size:20px;margin:6px"></div>
+<div class="opts" id="g2o"></div>
+<div style="text-align:center;margin:8px"><input class="ans hide" id="g2i" type="text" readonly> <button class="btn hide" id="g2b">Check</button><div id="g2pad"></div></div>
+<div class="msg" id="g2m"></div><div style="text-align:center"><button class="btn hide" id="g2n">Next mission ➜</button></div></div></section>
+<div class="sig">T.Rana Elsisi</div>
+</main>
+
+<canvas id="wb"></canvas>
+<div id="tools"><button id="pen">✏️ Write</button>
+<button class="c" style="background:#ffe14d" data-c="#ffe14d"></button><button class="c" style="background:#fff" data-c="#ffffff"></button><button class="c" style="background:#3fd0ff" data-c="#3fd0ff"></button><button class="c" style="background:#7dff7d" data-c="#7dff7d"></button>
+<button id="clr">🧽 Clear</button></div>
+
+<script>
+var pts=0;function add(n){pts+=n;document.getElementById("pts").textContent=pts}
+var $=function(i){return document.getElementById(i)};
+var names=["","","Game 1","Game 2"];
+names.forEach(function(n,i){if(!n)return;var b=document.createElement("button");b.textContent=n;b.onclick=function(){show(i)};b.id="nb"+i;$("nav").appendChild(b)});
+function show(i){for(var k=2;k<4;k++){$("t"+k).classList.toggle("hide",k!=i);$("nb"+k).classList.toggle("on",k==i)}clearBoard()}
+show(2);
+
+/* Game 1 drag & drop */
+var P=[[2,3,4],[5,2,3],[3,2,5],[2,5,7],[4,5,2]],gi=0,sel=null,done1=0;
+function g1load(){
+ if(gi>=P.length){$("g1t").textContent="🏆 All missions done!";$("w1").innerHTML="";$("w2").innerHTML="";$("bank").innerHTML="";$("g1n").classList.add("hide");$("g1m").textContent="Same product, any grouping!";$("g1bar").style.width="100%";return}
+ var p=P[gi],a=p[0],b=p[1],c=p[2],A1=a*b,B1=b*c,T=a*b*c;done1=0;sel=null;
+ $("g1t").innerHTML=a+" × "+b+" × "+c+"<div style=\"font-size:16px;font-weight:normal\">Solve it two different ways. Do the ( ) first!</div>";$("g1m").textContent="";$("g1n").classList.add("hide");$("g1bar").style.width=(gi/P.length*100)+"%";
+ $("w1").innerHTML="( "+a+" × "+b+" ) × "+c+" = ";$("w2").innerHTML=a+" × ( "+b+" × "+c+" ) = ";
+ var s=[["A1",A1,"w1","after"],["A2",T,"w1","after"],["B1",B1,"w2","after"],["B2",T,"w2","after"]];
+ // layout: Way1: [A1] × c = [A2] ; Way2: a × [B1] = [B2]
+ $("w1").innerHTML="<b>Way 1:</b> ( "+a+" × "+b+" ) × "+c+"<br>Step 1: "+a+" × "+b+" = "; $("w2").innerHTML="<b>Way 2:</b> "+a+" × ( "+b+" × "+c+" )<br>Step 1: "+b+" × "+c+" = ";
+ mk("w1","A1",A1,null,"");txt("w1","   Step 2: <b id='dA1'>•••</b> × "+c+" = ");mk("w1","A2",T,"A1","");
+ mk("w2","B1",B1,null,"");txt("w2","   Step 2: "+a+" × <b id='dB1'>•••</b> = ");mk("w2","B2",T,"B1","");
+ var vals=[A1,B1,T,T+a,A1+c].filter(function(v,i,s){return s.indexOf(v)==i}).sort(function(x,y){return x-y});
+ $("bank").innerHTML="";vals.forEach(function(v){var t=document.createElement("div");t.className="tile";t.textContent=v;t.style.touchAction="none";t.onpointerdown=function(e){startDrag(e,v,t)};
+  
+  t.onclick=function(){sel=v;document.querySelectorAll(".tile").forEach(function(x){x.classList.remove("sel")});t.classList.add("sel")};$("bank").appendChild(t)})}
+function startDrag(e,v,t){e.preventDefault();var g=t.cloneNode(true);g.style.cssText="position:fixed;z-index:70;pointer-events:none;opacity:.9;left:"+(e.clientX-30)+"px;top:"+(e.clientY-25)+"px";document.body.appendChild(g);var mv=function(ev){g.style.left=(ev.clientX-30)+"px";g.style.top=(ev.clientY-25)+"px"};var up=function(ev){document.removeEventListener("pointermove",mv);document.removeEventListener("pointerup",up);document.removeEventListener("pointercancel",up);g.remove();var el=document.elementFromPoint(ev.clientX,ev.clientY);var s=el&&el.closest?el.closest(".slot"):null;if(s)place(s,v)};document.addEventListener("pointermove",mv);document.addEventListener("pointerup",up);document.addEventListener("pointercancel",up)}
+function txt(w,s){var e=document.createElement("span");e.innerHTML=s;$(w).appendChild(e)}
+function mk(w,id,ans,req,x){var d=document.createElement("div");d.className="slot"+(req?" locked":"");d.id="s"+id;d.dataset.ans=ans;d.dataset.req=req||"";d.textContent="?";
+ d.ondragover=function(e){e.preventDefault();d.classList.add("over")};d.ondragleave=function(){d.classList.remove("over")};
+ d.ondrop=function(e){e.preventDefault();d.classList.remove("over");place(d,+e.dataTransfer.getData("text"))};
+ d.onclick=function(){if(sel!==null)place(d,sel)};$(w).appendChild(d)}
+function place(d,v){if(d.classList.contains("good"))return;
+ if(d.dataset.req&&!$("s"+d.dataset.req).classList.contains("good")){$("g1m").textContent="🔒 Do the first box of this way first!";return}
+ if(v==+d.dataset.ans){d.textContent=v;d.classList.remove("locked");d.classList.add("good");add(10);done1++;var dd=$("d"+d.id.slice(1));if(dd){dd.textContent=v;dd.style.color="var(--gold)";dd.style.fontSize="1.2em"}
+  var o=$("s"+d.id.slice(1)[0]+"2");if(o)o.classList.remove("locked");
+  $("g1m").textContent="✅ Great!";
+  if(done1==4){$("g1m").textContent="🎉 Both ways = "+d.dataset.ans+"! Grouping changed, product did not.";$("g1n").classList.remove("hide");add(20)}}
+ else{d.classList.add("shake");setTimeout(function(){d.classList.remove("shake")},300);$("g1m").textContent="Not quite – check the pair in parentheses.";}}
+$("g1n").onclick=function(){gi++;g1load()};g1load();
+
+/* Game 2 step by step */
+var Q=[[3,2,5],[4,5,2],[2,5,7],[6,2,5],[5,3,2]],qi=0,st=0,pick=0;
+function g2load(){
+ if(qi>=Q.length){$("g2t").textContent="🏆 Hero Master!";$("g2s").textContent="";$("g2o").innerHTML="";$("g2i").classList.add("hide");$("g2b").classList.add("hide");$("g2n").classList.add("hide");$("g2m").textContent="You used the Associative Property like a pro!";$("g2bar").style.width="100%";return}
+ var q=Q[qi];st=0;$("g2bar").style.width=(qi/Q.length*100)+"%";$("g2t").textContent=q[0]+" × "+q[1]+" × "+q[2];$("g2m").textContent="";$("g2n").classList.add("hide");$("g2i").classList.add("hide");$("g2b").classList.add("hide");
+ $("g2s").textContent="Step 1: Which pair will you multiply FIRST?";$("g2o").innerHTML="";
+ [["( "+q[0]+" × "+q[1]+" ) × "+q[2],1],[""+q[0]+" × ( "+q[1]+" × "+q[2]+" )",2]].forEach(function(o){var b=document.createElement("button");b.className="opt";b.style.fontSize="20px";b.textContent=o[0];b.onclick=function(){pick=o[1];st=1;ask()};$("g2o").appendChild(b)})}
+function f1(){var q=Q[qi];return pick==1?q[0]*q[1]:q[1]*q[2]}
+function ask(){var q=Q[qi];$("g2o").innerHTML="";$("g2i").value="";$("g2i").classList.remove("hide");$("g2b").classList.remove("hide");$("g2i").focus();
+ var e1=pick==1?"( "+q[0]+" × "+q[1]+" )":"( "+q[1]+" × "+q[2]+" )";
+ if(st==1)$("g2s").textContent="Step 2: Solve the parentheses: "+e1+" = ?";
+ if(st==2)$("g2s").textContent="Step 3: Now finish: "+(pick==1?f1()+" × "+q[2]:q[0]+" × "+f1())+" = ?";
+ if(st==3)$("g2s").textContent="Step 4: Try the OTHER grouping "+(pick==1?q[0]+" × ( "+q[1]+" × "+q[2]+" )":"( "+q[0]+" × "+q[1]+" ) × "+q[2])+" = ?"}
+$("g2b").onclick=function(){var q=Q[qi],T=q[0]*q[1]*q[2],v=+$("g2i").value;if($("g2i").value==="")return;
+ var need=st==1?f1():T;
+ if(v==need){add(10);$("g2m").textContent="✅ Correct!";if(st<3){st++;ask();$("g2m").textContent="✅ Correct!"}else{$("g2i").classList.add("hide");$("g2b").classList.add("hide");$("g2s").textContent="";$("g2m").textContent="🎉 Both ways = "+T+"! Same product – that is the Associative Property.";add(20);$("g2n").classList.remove("hide")}}
+ else{$("g2m").textContent="Not yet – use the pen to draw the groups and try again.";}};
+$("g2n").onclick=function(){qi++;g2load()};$("g2i").onkeydown=function(e){if(e.key==="Enter")$("g2b").click()};"1234567890⌫".split("").forEach(function(k){var b=document.createElement("button");b.textContent=k;b.onclick=function(){var i=$("g2i");if(k==="⌫")i.value=i.value.slice(0,-1);else if(i.value.length<3)i.value+=k};$("g2pad").appendChild(b)});g2load();
+
+/* Whiteboard */
+var cv=$("wb"),cx=cv.getContext("2d"),col="#ffe14d",on=false,dr=false;
+function rs(){cv.width=innerWidth;cv.height=innerHeight}rs();addEventListener("resize",rs);
+function clearBoard(){if(cx)cx.clearRect(0,0,cv.width,cv.height)}
+$("pen").onclick=function(){on=!on;cv.classList.toggle("on",on);$("pen").classList.toggle("on",on);$("pen").textContent=on?"✋ Answer":"✏️ Write"};
+$("clr").onclick=clearBoard;
+document.querySelectorAll("[data-c]").forEach(function(b){b.onclick=function(){col=b.dataset.c}});
+cv.onpointerdown=function(e){dr=true;cx.beginPath();cx.moveTo(e.clientX,e.clientY);cv.setPointerCapture(e.pointerId)};
+cv.onpointermove=function(e){if(!dr)return;cx.strokeStyle=col;cx.lineWidth=4;cx.lineCap="round";cx.lineJoin="round";cx.lineTo(e.clientX,e.clientY);cx.stroke()};
+cv.onpointerup=function(){dr=false};
+</script></body></html>
