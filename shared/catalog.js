@@ -632,6 +632,11 @@ window.CATALOG = {
    "title": "Tick-Tock Time! Clock",
    "kind": "Interactive tool",
    "href": "student-tools/clock-tick-tock.html"
+  },
+  {
+   "title": "What is Area? (poster)",
+   "kind": "Printable poster",
+   "href": "student-tools/area-definition.png"
   }
  ]
 };
