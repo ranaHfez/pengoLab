@@ -165,6 +165,25 @@ window.CATALOG = {
        "title": "Add Three Numbers",
        "kind": "Interactive lesson",
        "href": "grade-1/topic-5-work-with-addition-and-subtraction-equations/5-4-add-three-numbers.html"
+      },
+      {
+       "lesson": "",
+       "title": "Math Quest: Topics 4 & 5 (review)",
+       "kind": "Practice game",
+       "href": "grade-1/topic-5-work-with-addition-and-subtraction-equations/math-quest-topics-4-and-5.html"
+      }
+     ]
+    },
+    {
+     "topic": 6,
+     "name": "Represent and Interpret Data",
+     "folder": "grade-1/topic-6-represent-and-interpret-data",
+     "lessons": [
+      {
+       "lesson": "6-1",
+       "title": "Organize Data into Three Categories",
+       "kind": "Interactive lesson",
+       "href": "grade-1/topic-6-represent-and-interpret-data/6-1-organize-data-into-three-categories.html"
       }
      ]
     }
@@ -350,6 +369,12 @@ window.CATALOG = {
        "title": "Subtract with Models",
        "kind": "Interactive lesson",
        "href": "grade-2/topic-6-fluently-subtract-within-100/6-1-subtract-with-models.html"
+      },
+      {
+       "lesson": "6-2",
+       "title": "Subtract 2-Digit Numbers Using Models",
+       "kind": "Interactive lesson",
+       "href": "grade-2/topic-6-fluently-subtract-within-100/6-2-subtract-2-digit-numbers.html"
       }
      ]
     }
@@ -516,6 +541,19 @@ window.CATALOG = {
        "title": "Times Table Galaxy",
        "kind": "Practice game",
        "href": "grade-3/topic-5-fluency-with-multiplication-and-division-facts/times-table-galaxy.html"
+      }
+     ]
+    },
+    {
+     "topic": 6,
+     "name": "Connect Area to Multiplication and Addition",
+     "folder": "grade-3/topic-6-connect-area-to-multiplication-and-addition",
+     "lessons": [
+      {
+       "lesson": "6-1",
+       "title": "Area: Cover Regions",
+       "kind": "Interactive lesson",
+       "href": "grade-3/topic-6-connect-area-to-multiplication-and-addition/6-1-cover-regions.html"
       }
      ]
     }
