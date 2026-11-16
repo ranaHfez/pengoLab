@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Cover It! Area Game</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@500;700;800&display=swap">
+<!-- Shared template: colors, fonts, sounds, buttons, mascots. Keep this. -->
+<link rel="stylesheet" href="../shared/theme.css">
+<script src="../shared/theme.js" defer></script>
+<style>
+:root{
+  --bg:#F6F2FC; --paper:#FFFFFF; --ink:#24203A; --muted:#625C78; --line:#DDD5EE;
+  --main:#6A4BC4; --main-d:#4A2F98; --pink:#E4508A; --gold:#F2B632; --red:#D2384F; --ok:#2E8B4A;
+  --main-soft:#ECE6FA; --gold-soft:#FDF2D2; --red-soft:#F9DDE2; --ok-soft:#DFF2E3;
+  --display:"Baloo 2","Comic Sans MS","Trebuchet MS",sans-serif;
+  --body:"Nunito","Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root{
+  --bg:#17141F; --paper:#211D2C; --ink:#EEEAF7; --muted:#B1AAC6; --line:#3A3450;
+  --main:#9C83EE; --main-d:#C3B3F7; --pink:#F27BA8; --gold:#F5C451; --red:#F06A7E; --ok:#6CCB86;
+  --main-soft:#2C2545; --gold-soft:#3A3217; --red-soft:#3D1D23; --ok-soft:#1D3626; color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.5;
+  padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)}
+h1,h2,h3{font-family:var(--display);line-height:1.15;margin:0;text-wrap:balance}
+button{font-family:inherit;cursor:pointer}
+button:focus-visible{outline:3px solid var(--pink);outline-offset:2px}
+.wrap{max-width:980px;margin:0 auto;padding:18px 16px 40px}
+header{text-align:center;margin-bottom:12px}
+header h1{font-size:clamp(1.7rem,4vw,2.5rem);color:var(--main-d)}
+header p{margin:2px 0 0;color:var(--muted);font-weight:700}
+.top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:space-between;margin-bottom:12px}
+.dots{display:flex;gap:7px;flex-wrap:wrap}
+.dots span{width:16px;height:16px;border-radius:50%;background:var(--line)}
+.dots span.done{background:var(--ok)}
+.dots span.cur{background:var(--gold);transform:scale(1.25)}
+.dots span.diff{border-radius:4px}
+.stars{background:var(--gold-soft);border:2px solid var(--gold);border-radius:999px;padding:3px 14px;font-weight:800;font-variant-numeric:tabular-nums}
+.card{background:var(--paper);border:2px solid var(--line);border-radius:22px;padding:18px}
+.qnum{display:inline-block;background:var(--pink);color:#fff;font-family:var(--display);font-weight:800;border-radius:10px;padding:0 10px}
+.qtitle{font-size:clamp(1.25rem,2.8vw,1.6rem);text-align:center;color:var(--main-d);margin:6px 0 2px}
+.msg{min-height:1.6em;text-align:center;font-weight:800;font-size:1.1rem;margin:4px 0 8px}
+.play{display:flex;gap:16px;justify-content:center;align-items:flex-start;flex-wrap:wrap}
+.play svg{max-width:100%;height:auto;touch-action:none;cursor:pointer;user-select:none}
+.side{display:flex;flex-direction:column;gap:10px}
+.pick{display:grid;grid-template-columns:repeat(2,58px);gap:8px;background:var(--main-soft);padding:10px;border-radius:16px}
+.pick .pc{width:58px;height:58px;border-radius:12px;border:3px solid transparent;background:var(--paper);display:grid;place-items:center;padding:0}
+.pick .pc.on{border-color:var(--pink);box-shadow:0 0 0 3px var(--gold-soft)}
+.pick .pc:first-child{grid-column:1 / -1;width:100%}
+.btn{border:0;border-radius:14px;padding:10px 18px;font-weight:800;font-size:1rem;background:var(--main);color:#fff;box-shadow:0 4px 0 var(--main-d);transition:transform .08s}
+.btn:active{transform:translateY(3px)}
+.btn.ghost{background:var(--main-soft);color:var(--main-d);box-shadow:0 4px 0 var(--line)}
+.btn.pink{background:var(--pink);box-shadow:0 4px 0 #A8325F}
+.ask{margin-top:14px}
+.ask .q{font-weight:800;font-size:1.2rem;text-align:center;margin:0 0 10px}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:10px;max-width:780px;margin:0 auto}
+.opt{border:3px solid var(--line);background:var(--paper);color:var(--ink);border-radius:16px;padding:12px 10px;font-size:1.25rem;font-family:var(--display);font-weight:700;transition:transform .1s}
+.opt:hover{transform:translateY(-2px);border-color:var(--main)}
+.opt.ok{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.opt.no{background:var(--red-soft);border-color:var(--red);color:var(--red);animation:shake .3s}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.fb{min-height:1.6em;text-align:center;font-weight:800;font-size:1.1rem;margin-top:10px}
+.next{text-align:center;margin-top:8px}
+.tile{animation:pop .25s cubic-bezier(.3,1.6,.5,1) both;transform-box:fill-box;transform-origin:center}
+@keyframes pop{from{transform:scale(.2)}to{transform:scale(1)}}
+.diffpic{display:flex;justify-content:center;margin:6px 0}
+.diffpic svg{max-width:100%;height:auto}
+.end{text-align:center;padding:26px 10px}
+.end .big{font-size:4.5rem}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:50}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>🧱 Cover It! Find the Area</h1>
+    <p>Cover the region with tiles · no gaps · no overlaps</p>
+  </header>
+  <div class="top"><div class="dots" id="dots"></div><div class="stars" id="stars">⭐ 0</div></div>
+  <div class="card" id="card"></div>
+</div>
+<canvas id="confetti"></canvas>
+
+<script>
+(function(){
+/* ---------- sound ---------- */
+let ac=null;
+function tone(f,d,type,delay){try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();const o=ac.createOscillator(),g=ac.createGain();o.type=type||'sine';o.frequency.value=f;const t=ac.currentTime+(delay||0);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.2,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g).connect(ac.destination);o.start(t);o.stop(t+d+.05)}catch(e){}}
+const yay=()=>{tone(523,.15,'triangle');tone(659,.15,'triangle',.1);tone(784,.25,'triangle',.2)};
+const oops=()=>tone(220,.25,'sawtooth');
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function makeOpts(ans){const s=new Set([ans]);const d=shuffle([1,-1,2,-2,3,4,-3]);for(const x of d){if(s.size>=4)break;const v=ans+x;if(v>0)s.add(v)}return [...s]}
+const dark=()=>matchMedia('(prefers-color-scheme: dark)').matches;
+
+/* ---------- shapes ----------
+ '#' whole square, '.' empty, half squares with the right angle at: a top-left, b top-right, c bottom-left, d bottom-right */
+const S=58,P=1;
+const TATTR='fill="#F2C94C" stroke="#9A6E00" stroke-width="2"';
+function halfPts(k,x,y,s){return {a:[[x,y],[x+s,y],[x,y+s]],b:[[x,y],[x+s,y],[x+s,y+s]],c:[[x,y],[x,y+s],[x+s,y+s]],d:[[x+s,y],[x+s,y+s],[x,y+s]]}[k].map(p=>p.join(',')).join(' ')}
+function piece(p,x,y,s,attrs){return p==='full'?`<rect x="${x+2}" y="${y+2}" width="${s-4}" height="${s-4}" rx="3" ${attrs}/>`:`<polygon points="${halfPts(p,x+2,y+2,s-4)}" ${attrs} stroke-linejoin="round"/>`}
+function parseArt(art){const out=[];art.forEach((row,r)=>[...row].forEach((ch,c)=>{if(ch!=='.')out.push({c,r,k:ch})}));return out}
+function artArea(art){return parseArt(art).reduce((s,x)=>s+(x.k==='#'?1:.5),0)}
+function gridLines(cols,rows,s,col){let g='';for(let i=0;i<=cols;i++)g+=`<line x1="${i*s}" y1="0" x2="${i*s}" y2="${rows*s}" stroke="${col}" stroke-width="1.2"/>`;for(let j=0;j<=rows;j++)g+=`<line x1="0" y1="${j*s}" x2="${cols*s}" y2="${j*s}" stroke="${col}" stroke-width="1.2"/>`;return g}
+
+/* ---------- questions ---------- */
+const Q=[
+ {t:"cover",n:"🧺 Cover the picnic blanket",art:["###","###"]},
+ {t:"cover",n:"🍳 Tile the kitchen floor",art:["####","####","####"]},
+ {t:"cover",n:"🛋️ Carpet the living room",art:["###.","###.","####"]},
+ {t:"cover",n:"🏊 Tile the swimming pool",art:["#####",".###.",".###."]},
+ {t:"cover",n:"➕ Cover the plus sign",art:[".##.","####","####",".##."]},
+ {t:"cover",n:"🧲 Cover the magnet",art:["##.##","##.##","#####"]},
+ {t:"cover",n:"🪜 Cover the stairs",art:["c...","#c..","##c.","###c"]},
+ {t:"cover",n:"🏠 Tile the little house",art:[".dc.","d##c","####","####"]},
+ {t:"cover",n:"🛑 Cover the stop sign",art:["d##c","####","####","b##a"]},
+ {t:"cover",n:"💎 Cover the big gem",art:["d####c","######","######","b####a"]},
+ {t:"diff1"},
+ {t:"diff2"}
+];
+let qi=0,stars=0;
+const card=document.getElementById('card');
+function setStars(){document.getElementById('stars').textContent='⭐ '+stars}
+function dots(){document.getElementById('dots').innerHTML=Q.map((q,i)=>`<span class="${q.t!=='cover'?'diff ':''}${i<qi?'done':i===qi?'cur':''}" title="Question ${i+1}"></span>`).join('')}
+
+/* ---------- answer block (shared) ---------- */
+function askBlock(question,opts,right,okText,hint){
+  const box=document.createElement('div');box.className='ask';
+  box.innerHTML=`<p class="q">${question}</p><div class="opts"></div><p class="fb"></p><div class="next"><button class="btn pink" style="display:none">${qi<Q.length-1?'Next question ➜':'See my stars 🏆'}</button></div>`;
+  const o=box.querySelector('.opts'),fb=box.querySelector('.fb'),nx=box.querySelector('.next button');
+  let first=true,locked=false;
+  opts.forEach(([label,val])=>{const b=document.createElement('button');b.className='opt';b.textContent=label;b.onclick=()=>{
+    if(locked)return;
+    if(val===right){locked=true;b.classList.add('ok');yay();confetti();if(first){stars++;setStars()}fb.style.color='var(--ok)';fb.innerHTML=okText;nx.style.display='inline-block'}
+    else{first=false;b.classList.add('no');oops();fb.style.color='var(--red)';fb.innerHTML=typeof hint==='function'?hint(val):hint;setTimeout(()=>b.classList.remove('no'),400)}
+  };o.appendChild(b)});
+  nx.onclick=()=>{qi++;load();window.scrollTo({top:0,behavior:'smooth'})};
+  return box;
+}
+
+/* ---------- cover question ---------- */
+function coverQ(q){
+  const halves=q.art.some(r=>/[abcd]/.test(r));
+  card.innerHTML=`<div style="text-align:center"><span class="qnum">Question ${qi+1} of ${Q.length}</span></div>
+   <h2 class="qtitle">${q.n}</h2>
+   <p class="msg" id="msg">${halves?'Use whole tiles and half tiles. Tap or drag to cover the region.':'Tap or drag to cover the dashed region.'}</p>
+   <div class="play"><div id="board"></div><div class="side"><div class="pick" id="pick"></div><button class="btn ghost" id="undo">↩️ Undo</button><button class="btn ghost" id="clear">🧹 Clear</button></div></div>
+   <div id="askHere"></div>`;
+  const msg=document.getElementById('msg');
+  const say=(t,c)=>{msg.style.color=c||'var(--ink)';msg.textContent=t};
+  const cells={};parseArt(q.art).forEach(({c,r,k})=>cells[c+','+r]=k);
+  let placed={},order=[],cur='full',mist=0,paint=false,last=null,done=false;
+  // picker
+  const list=halves?['full','a','b','c','d']:['full'];
+  const pick=document.getElementById('pick');
+  function drawPick(){pick.innerHTML=list.map(p=>`<button class="pc${p===cur?' on':''}" data-p="${p}" title="${p==='full'?'Whole tile':'Half tile'}" aria-label="${p==='full'?'Whole tile':'Half tile'}"><svg viewBox="0 0 40 40" width="36" height="36">${piece(p,0,0,40,TATTR)}</svg></button>`).join('');
+    pick.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{cur=b.dataset.p;tone(700,.05,'square');drawPick()})}
+  drawPick();
+  // board
+  const cols=Math.max(...q.art.map(r=>r.length))+P*2,rows=q.art.length+P*2,W=cols*S,H=rows*S;
+  let ghost='';
+  parseArt(q.art).forEach(({c,r,k})=>{const x=(c+P)*S,y=(r+P)*S,at=`fill="${dark()?'#2C2545':'#ECE6FA'}" stroke="#6A4BC4" stroke-width="2.5" stroke-dasharray="7 5"`;
+    ghost+=k==='#'?`<rect x="${x+3}" y="${y+3}" width="${S-6}" height="${S-6}" rx="4" ${at}/>`:`<polygon points="${halfPts(k,x+3,y+3,S-6)}" ${at} stroke-linejoin="round"/>`});
+  document.getElementById('board').innerHTML=`<svg id="sv" viewBox="-2 -2 ${W+4} ${H+4}" width="${Math.min(W+4,560)}" role="img" aria-label="region to cover"><rect width="${W}" height="${H}" fill="${dark()?'#1B2230':'#F7FBFF'}"/>${gridLines(cols,rows,S,dark()?'#4B5A72':'#C9D6E8')}${ghost}<g id="tiles"></g></svg>`;
+  const sv=document.getElementById('sv');
+  const cellAt=e=>{const pt=sv.createSVGPoint();pt.x=e.clientX;pt.y=e.clientY;const p=pt.matrixTransform(sv.getScreenCTM().inverse());return[Math.floor(p.x/S)-P,Math.floor(p.y/S)-P]};
+  function draw(newK){let t='';Object.entries(placed).forEach(([k,p])=>{const [c,r]=k.split(',').map(Number);t+=`<g class="${k===newK?'tile':''}">${piece(p,(c+P)*S,(r+P)*S,S,TATTR)}</g>`});document.getElementById('tiles').innerHTML=t}
+  function place(c,r,tap){
+    const k=c+','+r;if(k===last)return;last=k;
+    const need=cells[k];
+    if(!need){if(tap){oops();mist++;say('Oops! That is outside the region. 🙈','var(--red)')}return}
+    if(placed[k]){if(tap){delete placed[k];order=order.filter(x=>x!==k);tone(300,.08,'square');say('Tile removed. One tile in each place, no overlaps!');draw()}return}
+    const want=need==='#'?'full':need;
+    if(cur!==want){mist++;oops();say(want==='full'?'This place needs a whole tile! 🟨':'This corner needs a half tile. Try another triangle! 📐','var(--red)');return}
+    placed[k]=cur;order.push(k);tone(480+Math.random()*200,.07,'triangle');draw(k);
+    const left=Object.keys(cells).filter(x=>!placed[x]).length;
+    if(left===0)covered();else say(['Nice!','Keep going!','Snug fit!','No gaps, great!','Cover it all!'][Math.floor(Math.random()*5)],'var(--ok)');
+  }
+  sv.addEventListener('pointerdown',e=>{if(done)return;e.preventDefault();paint=true;last=null;const [c,r]=cellAt(e);place(c,r,true)});
+  sv.addEventListener('pointermove',e=>{if(!paint||done)return;const [c,r]=cellAt(e);place(c,r,false)});
+  ['pointerup','pointercancel','pointerleave'].forEach(t=>sv.addEventListener(t,()=>{paint=false}));
+  document.getElementById('undo').onclick=()=>{if(done||!order.length)return;delete placed[order.pop()];tone(300,.08,'square');draw()};
+  document.getElementById('clear').onclick=()=>{if(done)return;placed={};order=[];tone(500,.15,'triangle');draw();say('All clear! Start again.')};
+  function covered(){
+    done=true;paint=false;yay();say(mist?'Covered! 🎉':'Perfect cover, no mistakes! 🌟','var(--ok)');
+    const a=artArea(q.art),pieces=parseArt(q.art).length;
+    let opts=makeOpts(a);if(pieces!==a&&!opts.includes(pieces))opts[opts.findIndex(v=>v!==a)]=pieces;
+    document.getElementById('askHere').appendChild(askBlock('🎉 Covered! What is the area?',shuffle(opts).map(v=>[v+' square units',v]),a,
+      pieces!==a?`Yes! 2 half tiles make 1 square unit. The area is ${a} square units.`:`Yes! The area is ${a} square units.`,
+      v=>v===pieces?'Careful! 2 half tiles make only 1 square unit.':'Count again, row by row.'));
+  }
+}
+
+/* ---------- difference questions ---------- */
+function rectSVG(mode){
+  // 5 by 3 rectangle on a grid
+  const s=50,cols=7,rows=5,W=cols*s,H=rows*s,x0=s,y0=s+10;
+  let inside='';
+  if(mode==='area'){for(let r=0;r<3;r++)for(let c=0;c<5;c++)inside+=piece('full',x0+c*s,y0+r*s,s,TATTR)}
+  else inside=`<rect x="${x0}" y="${y0}" width="${5*s}" height="${3*s}" fill="${dark()?'#2C2545':'#ECE6FA'}"/>`;
+  let edge='';
+  if(mode==='length'){
+    edge=`<line x1="${x0}" y1="${y0}" x2="${x0+5*s}" y2="${y0}" stroke="#E4508A" stroke-width="8" stroke-linecap="round"/>`;
+    for(let i=0;i<=5;i++)edge+=`<line x1="${x0+i*s}" y1="${y0-14}" x2="${x0+i*s}" y2="${y0+2}" stroke="#E4508A" stroke-width="3"/>`;
+    edge+=`<text x="${x0+2.5*s}" y="${y0-22}" text-anchor="middle" font-size="22">📏</text>`;
+  }
+  if(mode==='both'){
+    edge=`<text x="${x0+2.5*s}" y="${y0-16}" text-anchor="middle" font-family="Nunito,sans-serif" font-weight="800" font-size="20" fill="var(--ink)">5 units long</text><text x="${x0+5*s+12}" y="${y0+1.5*s+6}" font-family="Nunito,sans-serif" font-weight="800" font-size="20" fill="var(--ink)">3 units</text>`;
+  }
+  return `<svg viewBox="-2 -2 ${W+70} ${H+16}" width="${W+70}" role="img" aria-label="a rectangle on a grid"><rect y="10" width="${W}" height="${H}" fill="${dark()?'#1B2230':'#F7FBFF'}"/>${gridLines(cols,rows,s,dark()?'#4B5A72':'#C9D6E8').replace(/<line /g,'<line transform="translate(0 10)" ')}${inside}<rect x="${x0}" y="${y0}" width="${5*s}" height="${3*s}" fill="none" stroke="#6A4BC4" stroke-width="3"/>${edge}</svg>`;
+}
+function diffQ(q){
+  card.innerHTML='';
+  const head=document.createElement('div');
+  if(q.t==='diff1'){
+    head.innerHTML=`<div style="text-align:center"><span class="qnum">Question ${qi+1} of ${Q.length}</span></div>
+     <h2 class="qtitle">📏 Area or length?</h2>
+     <p class="msg">Look at the pink line on the side of the rectangle.</p>
+     <div class="diffpic">${rectSVG('length')}</div>`;
+    card.appendChild(head);
+    card.appendChild(askBlock('The pink line measures the …',
+      shuffle([['length of a side, in units','len'],['area, in square units','area']]),'len',
+      'Yes! A line measures <b>length</b>, in <b>units</b>. Area is the space <b>inside</b> the shape, in <b>square units</b>.',
+      'Not quite! A line along the side is a length. Area is the space inside.'));
+  }else{
+    head.innerHTML=`<div style="text-align:center"><span class="qnum">Question ${qi+1} of ${Q.length}</span></div>
+     <h2 class="qtitle">🟨 Length or area?</h2>
+     <p class="msg">This rectangle is 5 units long and 3 units wide.</p>
+     <div class="diffpic">${rectSVG('both')}</div>`;
+    card.appendChild(head);
+    card.appendChild(askBlock('What is the AREA of the rectangle?',
+      shuffle([['5 square units',5],['15 square units',15],['8 square units',8],['3 square units',3]]),15,
+      'Yes! 15 unit squares cover the inside. <b>Length</b> is 5 units (a side). <b>Area</b> is 15 square units (the inside).',
+      v=>v===5||v===3?`${v} units is the <b>length of a side</b>, not the area. Cover the inside with squares and count them!`:'5 + 3 adds two sides. Area is the number of squares inside!'));
+  }
+}
+
+/* ---------- flow ---------- */
+function load(){
+  dots();
+  if(qi>=Q.length){
+    card.innerHTML=`<div class="end"><div class="big">🏆</div><h2 style="font-size:2.1rem;color:var(--main-d)">Great job, Area Expert!</h2><p style="font-weight:800;font-size:1.25rem">You earned ${stars} of ${Q.length} stars.</p><button class="btn pink" id="again">Play again 🔁</button></div>`;
+    document.getElementById('again').onclick=()=>{qi=0;stars=0;setStars();load()};confetti();yay();return;
+  }
+  const q=Q[qi];q.t==='cover'?coverQ(q):diffQ(q);
+}
+
+/* ---------- confetti ---------- */
+function confetti(){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const c=document.getElementById('confetti'),ctx=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;
+  const cols=['#E4508A','#F2B632','#1FA59A','#6A4BC4','#3A8DC9'];
+  const ps=Array.from({length:120},()=>({x:Math.random()*c.width,y:-20-Math.random()*c.height*.5,vx:(Math.random()-.5)*3,vy:2+Math.random()*3,r:Math.random()*6.28,s:6+Math.random()*7,c:cols[Math.floor(Math.random()*5)]}));
+  let t=0;(function f(){ctx.clearRect(0,0,c.width,c.height);ps.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.r+=.1;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.r);ctx.fillStyle=p.c;ctx.fillRect(-p.s/2,-p.s/4,p.s,p.s/2);ctx.restore()});if(++t<180)requestAnimationFrame(f);else ctx.clearRect(0,0,c.width,c.height)})();
+}
+load();
+})();
+</script>
+</body>
+</html>

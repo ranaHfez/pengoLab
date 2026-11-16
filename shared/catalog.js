@@ -554,6 +554,12 @@ window.CATALOG = {
        "title": "Area: Cover Regions",
        "kind": "Interactive lesson",
        "href": "grade-3/topic-6-connect-area-to-multiplication-and-addition/6-1-cover-regions.html"
+      },
+      {
+       "lesson": "6-3",
+       "title": "Area: Standard Units",
+       "kind": "Interactive lesson",
+       "href": "grade-3/topic-6-connect-area-to-multiplication-and-addition/6-3-area-standard-units.html"
       }
      ]
     }
@@ -570,6 +576,11 @@ window.CATALOG = {
    "title": "Abdulrahman's Subtraction Rocket",
    "skill": "Subtraction",
    "href": "games/abdulrahmans-subtraction-rocket.html"
+  },
+  {
+   "title": "Cover It! Area Game",
+   "skill": "Area",
+   "href": "games/cover-it-area-game.html"
   },
   {
    "title": "Frog Hops: Subtraction on a Number Line",
