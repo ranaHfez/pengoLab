@@ -183,11 +183,11 @@
     current: function () { var n = load("rm-student", null); return n && n !== GUEST ? n : null; },
     chosen: function () { return load("rm-student", null) != null; },
     choose: function (name) { save("rm-student", name); },
-    add: function (name, mascotName) {
+    add: function (name, mascotName, grade) {
       name = String(name || "").trim().slice(0, 20);
       if (!name) return null;
       var list = progress.students().filter(function (s) { return s.name.toLowerCase() !== name.toLowerCase(); });
-      list.push({ name: name, mascot: mascotName || "owl" });
+      list.push({ name: name, mascot: mascotName || "owl", grade: grade ? String(grade) : "" });
       list.sort(function (a, b) { return a.name.localeCompare(b.name); });
       save("rm-students", list); progress.choose(name);
       return name;
@@ -200,6 +200,10 @@
     mascotOf: function (name) {
       var s = progress.students().filter(function (x) { return x.name === name; })[0];
       return s ? s.mascot : "owl";
+    },
+    gradeOf: function (name) {
+      var s = progress.students().filter(function (x) { return x.name === name; })[0];
+      return s && s.grade ? s.grade : "";
     },
     of: function (name) { return load("rm-progress-" + (name || progress.current()), {}); },
     get: function (href, name) { return progress.of(name)[pageKey(ROOT + href)] || null; },
