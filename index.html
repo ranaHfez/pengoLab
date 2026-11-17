@@ -119,6 +119,55 @@
     .panel.with-art .side { width: auto; margin: 0 16px 14px; height: auto; aspect-ratio: 1 / 1; object-position: 50% 60%; max-width: calc(100% - 32px); }
   }
 
+  /* ---------- Who is learning? (progress saved on this device) ---------- */
+  .who { margin: 18px 0 0; padding: 16px 18px; }
+  .who h2 { margin: 0 0 4px; font-size: clamp(1.3rem, 3.4vw, 1.7rem); color: var(--rm-g3); }
+  .who p { margin: 0 0 12px; color: var(--rm-ink-soft); font-weight: 700; }
+  .who-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .kid { display: inline-flex; align-items: center; gap: 8px; min-height: 56px; padding: 6px 16px 6px 6px; cursor: pointer;
+         background: var(--rm-bg); color: var(--rm-ink); border: 3px solid var(--rm-line); border-radius: 999px;
+         font: 600 1.15rem var(--rm-font-title); }
+  .kid:hover, .kid:focus-visible { border-color: var(--rm-g3); outline: none; }
+  .kid .face { width: 42px; height: 42px; flex: none; }
+  .kid .face svg, .me .face svg, .pet svg { width: 100%; height: 100%; display: block; }
+  .kid.remove { border-color: var(--rm-wrong); }
+  .kid.remove::after { content: "✕"; color: var(--rm-wrong); margin-left: 4px; }
+  .me { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+  .me .face { width: 64px; height: 64px; flex: none; }
+  .me .hi { flex: 1; min-width: 180px; }
+  .me .hi h2 { margin: 0; }
+  .me .hi p { margin: 2px 0 0; }
+  .new-kid { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 12px; }
+  .new-kid input { min-height: 54px; box-sizing: border-box; flex: 1 1 200px; max-width: 320px; padding: 10px 18px;
+                   font: 700 1.1rem var(--rm-font-body); border-radius: 999px; border: 3px solid var(--rm-line);
+                   background: var(--rm-surface); color: var(--rm-ink); }
+  .new-kid input:focus { outline: none; border-color: var(--rm-g3); }
+  .pets { display: flex; gap: 8px; }
+  .pet { width: 58px; height: 58px; padding: 4px; box-sizing: border-box; cursor: pointer; border-radius: 16px;
+         background: var(--rm-bg); border: 3px solid var(--rm-line); }
+  .pet[aria-pressed="true"] { border-color: var(--rm-g3); background: var(--rm-surface); box-shadow: 0 4px 0 var(--rm-g3); }
+  .pill.done { background: var(--rm-correct); }
+  .pill.star { background: var(--rm-star); color: var(--rm-ink); }
+  .tcount .mine { color: var(--rm-correct); }
+
+  /* ---------- How to use ---------- */
+  .hero-tools { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .hero-tools .search { flex: 1 1 220px; }
+  @media (max-width: 720px) { .hero-tools { justify-content: center; } }
+  dialog.help { width: min(620px, calc(100vw - 32px)); max-height: calc(100vh - 40px); box-sizing: border-box; padding: 22px 24px;
+                border: 4px solid var(--rm-star); border-radius: 26px; background: var(--rm-surface); color: var(--rm-ink);
+                font: 700 1.08rem/1.5 var(--rm-font-body); }
+  dialog.help::backdrop { background: rgba(42, 36, 64, .55); }
+  .help-head { display: flex; align-items: center; gap: 12px; }
+  .help-head [data-mascot] { width: 72px; height: 72px; flex: none; }
+  .help h2 { margin: 0; font-size: 2rem; color: var(--rm-g3); }
+  .help h3 { margin: 16px 0 6px; font: 600 1.35rem var(--rm-font-title); color: var(--rm-g3); }
+  .help-steps, .help-tips { margin: 10px 0 0; padding-left: 1.4em; }
+  .help-tips { list-style: none; padding-left: 0; }
+  .help li { margin-bottom: 8px; }
+  .help .pill { white-space: nowrap; }
+  .help-close { text-align: center; margin: 18px 0 0; }
+
   .empty { text-align: center; color: var(--rm-ink-soft); font-weight: 700; padding: 20px; }
   footer { display: flex; align-items: center; justify-content: center; gap: 10px; color: var(--rm-ink-soft); padding: 0 16px 30px; font-weight: 800; }
   footer img { width: 40px; height: 40px; }
@@ -136,19 +185,47 @@
     </div>
     <h1>Maths Lessons Library</h1>
     <p id="totals"></p>
-    <input class="search" id="search" type="search" placeholder="🔎 Find a lesson…" aria-label="Find a lesson">
+    <div class="hero-tools">
+      <input class="search" id="search" type="search" placeholder="🔎 Find a lesson…" aria-label="Find a lesson">
+      <button class="rm-btn rm-btn--star" type="button" id="help-open">❓ How to use</button>
+    </div>
   </div>
 </header>
 
 <main class="rm-main">
+  <section class="rm-card who" id="who" aria-live="polite"></section>
   <div class="picker" role="tablist" aria-label="Choose a grade" id="tabs"></div>
   <div id="view"></div>
 </main>
+<dialog class="help" id="help" aria-labelledby="help-title">
+  <div class="help-head">
+    <span data-mascot="owl"></span>
+    <h2 id="help-title">How to use</h2>
+  </div>
+  <ol class="help-steps">
+    <li><b>Say who you are.</b> Tap your name. New here? Tap <b>➕ New name</b>, type your first name, pick a friend and tap <b>Save</b>.</li>
+    <li><b>Find a lesson.</b> Tap your grade, open a topic and tap a lesson. You can also type in the 🔎 box.</li>
+    <li><b>Learn and play!</b> Tap 🏠 at the bottom of a lesson to come back here.</li>
+    <li><b>See your progress.</b> A lesson you opened gets <span class="pill done">✓ Opened</span>. A lesson you finished gets <span class="pill star">⭐ Done</span>.</li>
+  </ol>
+  <h3>Keep your progress safe</h3>
+  <ul class="help-tips">
+    <li>📱 Your stars are saved <b>on this device, in this browser</b>. Use the same one next time.</li>
+    <li>🧹 Clearing the browser history, or a private window, removes your stars.</li>
+    <li>👫 Sharing a tablet? Tap <b>Not …?</b> and choose your own name before you start.</li>
+    <li>🧑‍🏫 Teacher on the board? Tap <b>Just looking</b> so nothing is saved.</li>
+    <li>🔒 Use only your first name. Nothing is sent over the internet.</li>
+  </ul>
+  <p class="help-close"><button class="rm-btn rm-btn--big" type="button" id="help-close">Got it! 👍</button></p>
+</dialog>
+
 <footer><img src="shared/img/pengo-badge.png" alt=""> T. Rana Elsisi</footer>
 
 <script>
-(function () {
+// Runs after shared/theme.js (which is deferred) so RM.progress is ready.
+document.addEventListener("DOMContentLoaded", function () {
   var C = window.CATALOG;
+  var P = window.RM && RM.progress;
   var IMG = "shared/img/";
   var GRADE = {
     1: { color: "var(--rm-g1)", label: "Grade 1", art: "grade-1.jpg", alt: "Grade 1: Pengo with ten frames and a number line" },
@@ -207,10 +284,100 @@
     var num = item.lesson ? '<span class="pill">Lesson ' + esc(item.lesson) + "</span>" : "";
     var kind = '<span class="pill kind">' + esc(kindText) + "</span>";
     var thumb = item.image ? '<img class="thumb" src="' + href(item.image) + '" alt="" loading="lazy">' : "";
+    var p = mine(item), badge = "";
+    if (p && p.d) badge = '<span class="pill star">⭐ ' + (p.s ? p.s + " " : "") + "Done</span>";
+    else if (p) badge = '<span class="pill done">✓ Opened</span>';
     return '<a class="lesson" style="--c:' + color + '" href="' + href(item.href) + '"' + rtl + '>' + thumb +
            '<span class="row"><img class="ico" src="' + IMG + icon + '" alt=""><span class="txt">' +
-           '<span class="top">' + num + kind + "</span><strong>" + esc(item.title) + "</strong></span></span></a>";
+           '<span class="top">' + num + kind + badge + "</span><strong>" + esc(item.title) + "</strong></span></span></a>";
   }
+
+  // ---------- Who is learning? ----------
+  var who = document.getElementById("who"), removing = false, adding = false, pet = "owl";
+  var progressNow = {};
+  function mine(item) { return P && P.current() ? progressNow[P.key(RM.root + item.href)] || null : null; }
+  function allItems() {
+    var a = C.games.concat(TOOLS);
+    C.grades.forEach(function (g) { g.topics.forEach(function (t) { a = a.concat(t.lessons); }); });
+    return a;
+  }
+
+  function renderWho() {
+    if (!P) { who.hidden = true; return; }
+    var name = P.current(), kids = P.students();
+    progressNow = name ? P.of(name) : {};
+    if (name && !removing && !adding) {
+      var opened = 0, done = 0;
+      allItems().forEach(function (x) { var p = mine(x); if (p) { opened++; if (p.d) done++; } });
+      who.innerHTML = '<div class="me"><span class="face">' + RM.mascot(P.mascotOf(name)) + '</span>' +
+        '<div class="hi"><h2>Hi, ' + esc(name) + '! 👋</h2><p>✓ ' + plural(opened, "lesson") + " opened · ⭐ " + done + " finished</p></div>" +
+        '<button class="rm-btn rm-btn--ghost" type="button" data-act="change">Not ' + esc(name) + "?</button></div>";
+      return;
+    }
+    if (!name && P.chosen() && !removing && !adding) {   // "Just looking" (teacher on the board)
+      who.innerHTML = '<div class="me"><div class="hi"><p>Progress is not being saved.</p></div>' +
+        '<button class="rm-btn rm-btn--ghost" type="button" data-act="change">Choose my name</button></div>';
+      return;
+    }
+    var html = "<h2>" + (removing ? "Tap a name to remove it" : "Who is learning today?") + "</h2>" +
+               "<p>" + (removing ? "Their stars on this device will be deleted." : "Your stars are saved on this device.") + "</p>" +
+               '<div class="who-row">';
+    kids.forEach(function (k) {
+      html += '<button class="kid' + (removing ? " remove" : "") + '" type="button" data-kid="' + esc(k.name) + '">' +
+              '<span class="face">' + RM.mascot(k.mascot) + "</span>" + esc(k.name) + "</button>";
+    });
+    if (removing) html += '<button class="rm-btn rm-btn--ghost" type="button" data-act="stop">Done</button>';
+    else if (!adding) {
+      html += '<button class="rm-btn" type="button" data-act="add">➕ New name</button>' +
+              '<button class="rm-btn rm-btn--ghost" type="button" data-act="guest">Just looking</button>' +
+              (kids.length ? '<button class="rm-btn rm-btn--ghost" type="button" data-act="remove">Remove a name</button>' : "");
+    }
+    html += "</div>";
+    if (adding) {
+      html += '<form class="new-kid" id="new-kid"><input id="kid-name" maxlength="20" autocomplete="off" placeholder="Your first name" aria-label="Your first name">' +
+              '<span class="pets" role="group" aria-label="Pick a friend">' + RM.mascots.map(function (m) {
+                return '<button class="pet" type="button" data-pet="' + m + '" aria-pressed="' + (m === pet) + '">' + RM.mascot(m) + "</button>";
+              }).join("") + "</span>" +
+              '<button class="rm-btn" type="submit">Save</button>' +
+              '<button class="rm-btn rm-btn--ghost" type="button" data-act="cancel">Cancel</button></form>';
+    }
+    who.innerHTML = html;
+    if (adding) document.getElementById("kid-name").focus();
+  }
+
+  who.addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    var act = b.dataset.act;
+    if (b.dataset.pet) {
+      pet = b.dataset.pet; RM.sound.pop();
+      Array.prototype.forEach.call(who.querySelectorAll(".pet"), function (x) { x.setAttribute("aria-pressed", String(x === b)); });
+      return;
+    }
+    if (b.dataset.kid != null) {
+      var n = b.dataset.kid;
+      if (removing) {
+        if (!confirm("Remove " + n + " and their stars from this device?")) return;
+        P.remove(n); if (!P.students().length) removing = false;
+      } else { P.choose(n); RM.sound.correct(); RM.say("Hi " + n + "!"); }
+      renderWho(); render(); return;
+    }
+    if (!act || b.type === "submit") return;
+    RM.sound.click();
+    if (act === "change") { try { localStorage.removeItem("rm-student"); } catch (x) {} }
+    if (act === "guest") P.choose(P.GUEST);
+    if (act === "add") { adding = true; pet = "owl"; }
+    if (act === "cancel") adding = false;
+    if (act === "remove") removing = true;
+    if (act === "stop") removing = false;
+    renderWho(); render();
+  });
+  who.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var n = P.add(document.getElementById("kid-name").value, pet);
+    if (!n) { document.getElementById("kid-name").focus(); return; }
+    adding = false; RM.sound.win(); RM.say("Welcome " + n + "!");
+    renderWho(); render();
+  });
 
   function head(G, countText) {
     return '<div class="grade-head" style="--c:' + G.color + '"><img src="' + IMG + 'pengo-badge.png" alt=""><h2>' +
@@ -241,9 +408,11 @@
         var ls = t.lessons.filter(function (l) { return !q || (l.title + " " + l.lesson + " " + t.name + " " + l.kind).toLowerCase().indexOf(q) >= 0; });
         if (!ls.length && q) return;
         count += ls.length;
+        var seen = ls.filter(function (l) { return mine(l); }).length;
         block += '<details class="topic" style="--c:' + G.color + '"' + (q ? " open" : "") + '><summary>' +
                  '<span class="tnum">' + t.topic + '</span><span class="tname">' + esc(t.name) + '</span>' +
-                 '<span class="tcount">' + plural(ls.length, "lesson") + '</span><span class="chev">▶</span></summary>' +
+                 '<span class="tcount">' + (seen ? '<span class="mine">✓ ' + seen + "/" + ls.length + "</span>" : plural(ls.length, "lesson")) +
+                 '</span><span class="chev">▶</span></summary>' +
                  (ls.length ? '<div class="grid">' + ls.map(function (l) { return card(l, G.color); }).join("") + "</div>"
                             : '<p class="empty">No lessons yet</p>') + "</details>";
       });
@@ -255,9 +424,25 @@
     document.body.dataset.grade = current;
   }
 
+  // ---------- How to use ----------
+  var help = document.getElementById("help");
+  document.getElementById("help-open").onclick = function () {
+    if (window.RM) RM.sound.click();
+    if (help.showModal) help.showModal(); else help.setAttribute("open", "");
+    help.scrollTop = 0;   // start reading at the top, not at the "Got it!" button
+  };
+  document.getElementById("help-close").onclick = function () {
+    if (window.RM) RM.sound.click();
+    if (help.close) help.close(); else help.removeAttribute("open");
+  };
+  help.addEventListener("click", function (e) { if (e.target === help && help.close) help.close(); });   // tap outside to close
+
   search.addEventListener("input", render);
+  renderWho();
   render();
-})();
+  // Coming back with the browser's Back button: show the newest ✓ and ⭐.
+  window.addEventListener("pageshow", function (e) { if (e.persisted) { renderWho(); render(); } });
+});
 </script>
 </body>
 </html>

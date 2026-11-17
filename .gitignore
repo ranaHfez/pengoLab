@@ -6,3 +6,5 @@ Stusents tools/
 /Grade 2/
 /Grade 3/
 /General Games/
+# Local test server settings for Claude (not part of the website)
+.claude/

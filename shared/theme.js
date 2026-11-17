@@ -12,6 +12,8 @@
      RM.confetti()                     confetti burst for a finished game
      RM.check(button, isRight)         colour an answer tile + play a sound
      RM.muted / RM.setMuted(true)      shared mute (remembered per device)
+     RM.progress.done(stars)           mark this lesson finished for the child
+                                       (RM.confetti() does this too)
 
    Characters: owl (Ollie), bear (Bobo), frog (Hoppy), robot (Zip).
    ========================================================================== */
@@ -133,6 +135,7 @@
 
   // ---------- Confetti ----------
   function confetti(n) {
+    if (window.RM && RM.progress) RM.progress.done();   // a finished game counts as a finished lesson
     var box = document.createElement("div");
     box.className = "rm-confetti";
     var colors = ["#ff8a3d", "#2bb673", "#3d7bff", "#b44cff", "#ffc83d", "#ff6fb1"];
@@ -158,6 +161,59 @@
     return isRight;
   }
 
+  // ---------- Student progress (saved on this device only, no server) ----------
+  // Children pick their name on the home page. Every lesson they open gets a ✓,
+  // and a lesson that calls RM.confetti() or RM.progress.done(stars) gets ⭐.
+  // Nothing is sent anywhere: it lives in this browser's localStorage.
+  var GUEST = "__guest";
+  function load(key, fallback) {
+    try { var v = JSON.parse(localStorage.getItem(key)); return v == null ? fallback : v; } catch (e) { return fallback; }
+  }
+  function save(key, value) { try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) {} }
+  function pageKey(url) {
+    var u = String(url || location.href).split(/[?#]/)[0];
+    if (ROOT && u.indexOf(ROOT) === 0) u = u.slice(ROOT.length);
+    try { u = decodeURIComponent(u); } catch (e) {}
+    return u.replace(/index\.html$/, "");
+  }
+  var progress = {
+    GUEST: GUEST,
+    key: pageKey,
+    students: function () { return load("rm-students", []); },
+    current: function () { var n = load("rm-student", null); return n && n !== GUEST ? n : null; },
+    chosen: function () { return load("rm-student", null) != null; },
+    choose: function (name) { save("rm-student", name); },
+    add: function (name, mascotName) {
+      name = String(name || "").trim().slice(0, 20);
+      if (!name) return null;
+      var list = progress.students().filter(function (s) { return s.name.toLowerCase() !== name.toLowerCase(); });
+      list.push({ name: name, mascot: mascotName || "owl" });
+      list.sort(function (a, b) { return a.name.localeCompare(b.name); });
+      save("rm-students", list); progress.choose(name);
+      return name;
+    },
+    remove: function (name) {
+      save("rm-students", progress.students().filter(function (s) { return s.name !== name; }));
+      try { localStorage.removeItem("rm-progress-" + name); } catch (e) {}
+      if (load("rm-student", null) === name) { try { localStorage.removeItem("rm-student"); } catch (e) {} }
+    },
+    mascotOf: function (name) {
+      var s = progress.students().filter(function (x) { return x.name === name; })[0];
+      return s ? s.mascot : "owl";
+    },
+    of: function (name) { return load("rm-progress-" + (name || progress.current()), {}); },
+    get: function (href, name) { return progress.of(name)[pageKey(ROOT + href)] || null; },
+    mark: function (stars, done) {
+      var name = progress.current(); if (!name) return;
+      var all = progress.of(name), k = pageKey(), p = all[k] || {};
+      p.o = p.o || Date.now();
+      if (done) p.d = 1;
+      if (typeof stars === "number" && stars > (p.s || 0)) p.s = stars;
+      all[k] = p; save("rm-progress-" + name, all);
+    },
+    done: function (stars) { progress.mark(stars, true); }
+  };
+
   function setMuted(v) {
     muted = !!v; window.RM.muted = muted;
     try { localStorage.setItem("rm-muted", muted ? "1" : "0"); } catch (e) {}
@@ -173,6 +229,14 @@
     d.className = "rm-dock";
     d.setAttribute("aria-label", "Lesson library");
     d.innerHTML = '<a href="' + ROOT + 'index.html" title="All lessons" aria-label="Back to all lessons">🏠</a>';
+    var who = progress.current();
+    if (who) {   // show whose progress is being saved
+      var me = document.createElement("span");
+      me.className = "rm-dock-me"; me.title = "Saving for " + who;
+      me.setAttribute("aria-label", "Saving progress for " + who);
+      me.innerHTML = mascot(progress.mascotOf(who));
+      d.appendChild(me);
+    }
     // New template lessons ask for the shared mute button with data-rm-sound on <body>.
     if (document.body.hasAttribute("data-rm-sound")) {
       var b = document.createElement("button");
@@ -188,10 +252,11 @@
     root: ROOT, muted: muted, setMuted: setMuted,
     sound: sound, say: say,
     mascot: mascot, placeMascot: placeMascot, mascots: Object.keys(MASCOTS), cheer: cheer,
-    confetti: confetti, check: check
+    confetti: confetti, check: check, progress: progress
   };
 
   function ready() {
+    if (!document.body.hasAttribute("data-rm-no-dock")) progress.mark();   // ✓ this lesson was opened
     dock();
     Array.prototype.forEach.call(document.querySelectorAll("[data-mascot]"), function (el) { placeMascot(el); });
   }
