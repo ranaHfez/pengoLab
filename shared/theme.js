@@ -6,10 +6,12 @@
 
      RM.sound.click() / correct() / wrong() / win() / pop()
      RM.say("Great job!")              read text aloud (lang optional: "ar")
+     RM.voice("great-job", "Great job!")  play Rana's recording, or read the text
      RM.mascot("owl")                  SVG text for a cartoon character
      RM.placeMascot(el, "owl")         put a character inside an element
      RM.cheer(el)                      bounce a mascot + correct sound
      RM.confetti()                     confetti burst for a finished game
+     RM.sticker("great-job")           pop one of Pengo's stickers on the screen
      RM.check(button, isRight)         colour an answer tile + play a sound
      RM.muted / RM.setMuted(true)      shared mute (remembered per device)
      RM.progress.done(stars)           mark this lesson finished for the child
@@ -88,19 +90,28 @@
     loadVoices();
     try { speechSynthesis.addEventListener("voiceschanged", loadVoices); } catch (e) {}
   }
+  // A natural, child-like voice: Edge's "Ana" is a real child's voice. Otherwise a soft
+  // female voice (natural ones first), spoken a little higher so it sounds young.
+  var CHILD = /\bana\b|maisie|\bkid|child/i;
+  var FEMALE = /aria|jenny|emma|ava|michelle|ashley|cora|elizabeth|amber|libby|sonia|maisie|natasha|clara|samantha|karen|moira|tessa|fiona|victoria|allison|susan|hazel|zira|google us english|google uk english female|salma|zariyah|amany|fatima|mouna|laila|layla|hoda|sana|reem|mariam|maryam|amina|noura/i;
+  var MALE = /david|mark|george|guy|andrew|brian|christopher|eric|roger|steffan|ryan|thomas|daniel|alex|fred|naayf|hamed|shakir|bassel|omar|hamdan|taim|moaz|ali\b|maged|majed|tarik|tariq|google uk english male/i;
   function bestVoice(lang) {
     var want = lang === "ar" ? "ar" : "en";
-    var best = null, bestScore = -1;
+    var best = null, bestScore = -1e9;
     voices.forEach(function (v) {
       var l = (v.lang || "").toLowerCase().replace("_", "-");
       if (l.indexOf(want) !== 0) return;
       var n = v.name || "", s = 0;
-      if (/natural|neural|online/i.test(n)) s += 50;           // Edge's lifelike voices
+      if (CHILD.test(n)) s += 200;                             // a real child's voice
+      if (/natural|neural|online/i.test(n)) s += 60;           // Edge's lifelike voices
       if (/google/i.test(n)) s += 30;                          // Chrome's voices
-      if (/siri|premium|enhanced|samantha|ava|aria|jenny|emma|libby|sonia|zariyah|hamed|salma|shakir/i.test(n)) s += 20;
-      if (want === "en" && /en-(us|gb)/.test(l)) s += 5;
-      if (/zira|hazel|susan|karen|moira|tessa|fiona/i.test(n)) s += 3;   // warm teacher-like voices on older devices
-      if (/espeak|desktop/i.test(n)) s -= 20;                   // older, robotic voices
+      if (/siri|premium|enhanced/i.test(n)) s += 30;           // iPad / Mac high-quality voices
+      if (FEMALE.test(n)) s += 40;
+      if (MALE.test(n)) s -= 80;
+      if (want === "en" && /en-us/.test(l)) s += 6;
+      if (want === "en" && /en-gb/.test(l)) s += 4;
+      if (want === "ar" && /ar-eg/.test(l)) s += 6;            // Egyptian Arabic
+      if (/espeak|desktop/i.test(n)) s -= 30;                   // older, robotic voices
       if (s > bestScore) { best = v; bestScore = s; }
     });
     return best;
@@ -113,10 +124,35 @@
       var u = new SpeechSynthesisUtterance(text);
       var v = bestVoice(lang);
       if (v) { u.voice = v; u.lang = v.lang; }
-      else u.lang = lang === "ar" ? "ar-SA" : (lang || "en-US");
-      u.rate = 0.92; u.pitch = 1.0;   // a calm, friendly teacher pace; no squeaky pitch
+      else u.lang = lang === "ar" ? "ar-EG" : (lang || "en-US");
+      // A child's voice needs no change. A grown-up voice is raised a little so it sounds young,
+      // but not so much that it sounds like a cartoon.
+      var isChild = v && CHILD.test(v.name);
+      u.pitch = isChild ? 1.05 : (v && MALE.test(v.name) ? 1.6 : 1.35);
+      u.rate = isChild ? 0.95 : 1.0;
       speechSynthesis.speak(u);
     } catch (e) {}
+  }
+
+  // ---------- Rana's own recorded voice ----------
+  // Recordings live in shared/voice/ as <lang>-<id>.<ext>, e.g. en-great-job.mp3.
+  // Add each recording here once its file is in shared/voice/:  "en-great-job": "mp3"
+  // A sentence with no recording yet is read by the computer voice instead.
+  var VOICE_FILES = {
+  };
+  var voicePlayer = null;
+  function voice(id, text, lang) {
+    if (muted) return;
+    var key = (lang === "ar" ? "ar" : "en") + "-" + id, ext = VOICE_FILES[key];
+    if (!ext) { say(text, lang); return; }
+    try {
+      if ("speechSynthesis" in window) speechSynthesis.cancel();
+      if (voicePlayer) voicePlayer.pause();
+      voicePlayer = new Audio(ROOT + "shared/voice/" + key + "." + ext);
+      voicePlayer.onerror = function () { say(text, lang); };
+      var p = voicePlayer.play();
+      if (p && p.catch) p.catch(function () { say(text, lang); });
+    } catch (e) { say(text, lang); }
   }
 
   // ---------- Cartoon characters ----------
@@ -196,6 +232,21 @@
     setTimeout(function () { box.remove(); }, 3800);
   }
 
+  // ---------- Pengo stickers (shared/img/sticker-<name>.png) ----------
+  // RM.sticker("great-job") pops a big sticker on the screen for a moment.
+  var STICKERS = ["great-job", "well-done", "math-star", "amazing", "keep-going", "you-did-it",
+                  "super-effort", "great-progress", "brilliant", "so-proud", "keep-trying", "fantastic"];
+  function sticker(name) {
+    if (STICKERS.indexOf(name) < 0) name = STICKERS[Math.floor(Math.random() * 10)];
+    var old = document.querySelector(".rm-sticker-pop"); if (old) old.remove();
+    var img = document.createElement("img");
+    img.className = "rm-sticker-pop"; img.alt = name.replace(/-/g, " ");
+    img.src = ROOT + "shared/img/sticker-" + name + ".png";
+    document.body.appendChild(img);
+    setTimeout(function () { img.remove(); }, 1900);
+    return img;
+  }
+
   // ---------- Answer checking helper ----------
   function check(btn, isRight) {
     if (btn) {
@@ -253,6 +304,7 @@
     of: function (name) { return load("rm-progress-" + (name || progress.current()), {}); },
     get: function (href, name) { return progress.of(name)[pageKey(ROOT + href)] || null; },
     mark: function (stars, done) {
+      if (document.body && document.body.hasAttribute("data-rm-no-dock")) return;   // the home page is not a lesson
       var name = progress.current(); if (!name) return;
       var all = progress.of(name), k = pageKey(), p = all[k] || {};
       p.o = p.o || Date.now();
@@ -299,13 +351,29 @@
 
   window.RM = {
     root: ROOT, muted: muted, setMuted: setMuted,
-    sound: sound, say: say,
+    sound: sound, say: say, voice: voice,
     mascot: mascot, placeMascot: placeMascot, mascots: Object.keys(MASCOTS), cheer: cheer,
-    confetti: confetti, check: check, progress: progress
+    confetti: confetti, check: check, progress: progress, sticker: sticker, stickers: STICKERS
   };
 
+  // Older lessons have their own end-of-game celebration (confetti(), finish(), …).
+  // When one of those runs, give the lesson its ⭐ Done too, without editing each lesson.
+  var END_FUNCTIONS = ["finish", "finishQ", "endGame", "celebrate", "confetti", "confettiBurst"];
+  function watchOwnCelebrations() {
+    END_FUNCTIONS.forEach(function (n) {
+      var f = window[n];
+      if (typeof f !== "function" || f.rmWatched) return;
+      var wrapped = function () {
+        try { progress.done(); } catch (e) {}
+        return f.apply(this, arguments);
+      };
+      wrapped.rmWatched = true;
+      try { window[n] = wrapped; } catch (e) {}
+    });
+  }
+
   function ready() {
-    if (!document.body.hasAttribute("data-rm-no-dock")) progress.mark();   // ✓ this lesson was opened
+    if (!document.body.hasAttribute("data-rm-no-dock")) { progress.mark(); watchOwnCelebrations(); }   // ✓ this lesson was opened
     dock();
     Array.prototype.forEach.call(document.querySelectorAll("[data-mascot]"), function (el) { placeMascot(el); });
   }

@@ -1,5 +1,6 @@
 // List of every lesson shown on the home page (index.html).
 // When you add a lesson, add one line to the right topic below.
+// "added": "YYYY-MM-DD" shows a New! ribbon on the card for 14 days.
 window.CATALOG = {
  "grades": [
   {
@@ -170,7 +171,8 @@ window.CATALOG = {
        "lesson": "",
        "title": "Math Quest: Topics 4 & 5 (review)",
        "kind": "Practice game",
-       "href": "grade-1/topic-5-work-with-addition-and-subtraction-equations/math-quest-topics-4-and-5.html"
+       "href": "grade-1/topic-5-work-with-addition-and-subtraction-equations/math-quest-topics-4-and-5.html",
+       "added": "2026-11-15"
       }
      ]
     },
@@ -183,7 +185,8 @@ window.CATALOG = {
        "lesson": "6-1",
        "title": "Organize Data into Three Categories",
        "kind": "Interactive lesson",
-       "href": "grade-1/topic-6-represent-and-interpret-data/6-1-organize-data-into-three-categories.html"
+       "href": "grade-1/topic-6-represent-and-interpret-data/6-1-organize-data-into-three-categories.html",
+       "added": "2026-11-15"
       }
      ]
     }
@@ -374,7 +377,8 @@ window.CATALOG = {
        "lesson": "6-2",
        "title": "Subtract 2-Digit Numbers Using Models",
        "kind": "Interactive lesson",
-       "href": "grade-2/topic-6-fluently-subtract-within-100/6-2-subtract-2-digit-numbers.html"
+       "href": "grade-2/topic-6-fluently-subtract-within-100/6-2-subtract-2-digit-numbers.html",
+       "added": "2026-11-15"
       }
      ]
     }
@@ -553,13 +557,15 @@ window.CATALOG = {
        "lesson": "6-1",
        "title": "Area: Cover Regions",
        "kind": "Interactive lesson",
-       "href": "grade-3/topic-6-connect-area-to-multiplication-and-addition/6-1-cover-regions.html"
+       "href": "grade-3/topic-6-connect-area-to-multiplication-and-addition/6-1-cover-regions.html",
+       "added": "2026-11-15"
       },
       {
        "lesson": "6-3",
        "title": "Area: Standard Units",
        "kind": "Interactive lesson",
-       "href": "grade-3/topic-6-connect-area-to-multiplication-and-addition/6-3-area-standard-units.html"
+       "href": "grade-3/topic-6-connect-area-to-multiplication-and-addition/6-3-area-standard-units.html",
+       "added": "2026-11-16"
       }
      ]
     }
@@ -580,7 +586,8 @@ window.CATALOG = {
   {
    "title": "Cover It! Area Game",
    "skill": "Area",
-   "href": "games/cover-it-area-game.html"
+   "href": "games/cover-it-area-game.html",
+       "added": "2026-11-16"
   },
   {
    "title": "Frog Hops: Subtraction on a Number Line",
@@ -647,7 +654,8 @@ window.CATALOG = {
   {
    "title": "What is Area? (poster)",
    "kind": "Printable poster",
-   "href": "student-tools/area-definition.png"
+   "href": "student-tools/area-definition.png",
+       "added": "2026-11-15"
   }
  ]
 };

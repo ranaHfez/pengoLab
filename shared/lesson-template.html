@@ -71,7 +71,7 @@
   document.getElementById("next").onclick = function () {
     RM.sound.click();
     i++;
-    if (i >= items.length) { RM.sound.win(); RM.confetti(); RM.say("You did it! Super star!"); i = 0; }
+    if (i >= items.length) { RM.sound.win(); RM.confetti(); RM.voice("super-star", "You did it! You're a super star!"); i = 0; }
     show();
   };
   show();

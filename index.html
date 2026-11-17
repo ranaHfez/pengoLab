@@ -6,10 +6,11 @@
 <title>Maths Lessons Library</title>
 <link rel="icon" href="shared/img/pengo-badge.png">
 <!-- Shared template: colors, fonts, sounds, buttons, mascots. Keep this. -->
-<!-- ?v=… makes browsers fetch the newest copy after an update. Raise the number when theme.css, theme.js or catalog.js change. -->
-<link rel="stylesheet" href="shared/theme.css?v=4">
-<script src="shared/theme.js?v=4" defer></script>
-<script src="shared/catalog.js?v=4"></script>
+<!-- ?v=… makes browsers fetch the newest copy after an update. Raise the number when a shared file (theme, home, catalog) changes. -->
+<link rel="stylesheet" href="shared/theme.css?v=10">
+<link rel="stylesheet" href="shared/home.css?v=10">
+<script src="shared/theme.js?v=10" defer></script>
+<script src="shared/catalog.js?v=10"></script>
 <style>
   /* Pictures used on this page live in shared/img/ (made from the Pic folder). */
   body.rm-page { background: var(--rm-bg) url("shared/img/pattern-math-doodles.jpg") 0 0 / 520px auto; }
@@ -185,17 +186,19 @@
 <body class="rm-page" data-rm-no-dock>
 
 <header class="hero">
-  <img class="hero-art" src="shared/img/hero-pengo-adventure.jpg" alt="Pengo the penguin and two children learning maths with a clock, cubes and a number line">
+  <img class="hero-art" src="shared/img/hero-pengo-lab.jpg" alt="Pengo the penguin in his Pingo Lab hoodie and two children learning maths with a clock, cubes and a number line">
   <div class="hero-text">
     <div class="brand">
-      <img src="shared/img/pengo-badge.png" alt="">
-      <span class="rm-kicker">enVision Math · Grades 1–3</span>
+      <img src="shared/img/pengo.png" alt="Pengo">
+      <span class="rm-kicker" data-t="kicker">enVision Math · Grades 1–3</span>
     </div>
-    <h1>Maths Lessons Library</h1>
+    <h1 data-t="title">Maths Lessons Library</h1>
     <p id="totals"></p>
     <div class="hero-tools">
       <input class="search" id="search" type="search" placeholder="🔎 Find a lesson…" aria-label="Find a lesson">
-      <button class="rm-btn rm-btn--star" type="button" id="help-open">❓ How to use</button>
+      <button class="rm-btn rm-btn--star" type="button" id="help-open" data-t="helpBtn">❓ How to use</button>
+      <button class="rm-btn rm-btn--ghost round" type="button" id="theme-btn">🌙</button>
+      <button class="rm-btn rm-btn--ghost" type="button" id="lang-btn" lang="ar">عربي</button>
     </div>
   </div>
 </header>
@@ -203,296 +206,67 @@
 <main class="rm-main">
   <section class="rm-card who" id="who" aria-live="polite"></section>
   <div class="picker" role="tablist" aria-label="Choose a grade" id="tabs"></div>
+  <section class="rm-card daily" id="daily"></section>
   <div id="view"></div>
+
+  <section class="rm-card about" id="about">
+    <img src="shared/img/teacher-and-pengo.jpg" alt="The teacher and Pengo in a classroom" loading="lazy">
+    <div>
+      <h2 data-t="aboutTitle">About the teacher</h2>
+      <!-- Rana: change this text in shared/home.js (aboutText) -->
+      <p data-t="aboutText"></p>
+    </div>
+  </section>
 </main>
+
+<!-- How to use (the words are in shared/home.js, in English and Arabic) -->
 <dialog class="help" id="help" aria-labelledby="help-title">
   <div class="help-head">
     <span data-mascot="owl"></span>
     <h2 id="help-title">How to use</h2>
   </div>
-  <ol class="help-steps">
-    <li><b>Say who you are.</b> Tap your name. New here? Tap <b>➕ New name</b>, type your first name, pick a friend, tap your grade and tap <b>Save</b>. Your grade's lessons open for you.</li>
-    <li><b>Find a lesson.</b> Tap your grade, open a topic and tap a lesson. You can also type in the 🔎 box.</li>
-    <li><b>Learn and play!</b> Tap 🏠 at the bottom of a lesson to come back here.</li>
-    <li><b>See your progress.</b> A lesson you opened gets <span class="pill done">✓ Opened</span>. A lesson you finished gets <span class="pill star">⭐ Done</span>.</li>
-  </ol>
-  <h3>Keep your progress safe</h3>
-  <ul class="help-tips">
-    <li>📱 Your stars are saved <b>on this device, in this browser</b>. Use the same one next time.</li>
-    <li>🧹 Clearing the browser history, or a private window, removes your stars.</li>
-    <li>👫 Sharing a tablet? Tap <b>Not …?</b> and choose your own name before you start.</li>
-    <li>🧑‍🏫 Teacher on the board? Tap <b>Just looking</b> so nothing is saved.</li>
-    <li>🔒 Use only your first name. Nothing is sent over the internet.</li>
-  </ul>
-  <p class="help-close"><button class="rm-btn rm-btn--big" type="button" id="help-close">Got it! 👍</button></p>
+  <ol class="help-steps" id="help-steps"></ol>
+  <h3 id="help-safe">Keep your progress safe</h3>
+  <ul class="help-tips" id="help-tips"></ul>
+  <p class="help-close">
+    <button class="rm-btn rm-btn--ghost" type="button" id="tour-again">🐧 Show me the tour</button>
+    <button class="rm-btn rm-btn--big" type="button" id="help-close" data-close>Got it! 👍</button>
+  </p>
 </dialog>
 
-<footer><img src="shared/img/pengo-badge.png" alt=""> T. Rana Elsisi</footer>
+<!-- My badges and Pengo's prizes -->
+<dialog class="help badgesd" id="badges" aria-labelledby="badges-title">
+  <div class="help-head"><h2 id="badges-title" data-t="badgesTitle">My badges</h2></div>
+  <div id="badges-body"></div>
+  <p class="help-close"><button class="rm-btn rm-btn--big" type="button" data-close data-t="close">Close</button></p>
+</dialog>
 
-<script>
-// Runs after shared/theme.js (which is deferred) so RM.progress is ready.
-document.addEventListener("DOMContentLoaded", function () {
-  var C = window.CATALOG;
-  var P = window.RM && RM.progress;
-  // A browser can still hold an older shared/theme.js for a few minutes after an update.
-  // Fill in anything it is missing so the lesson list always shows.
-  if (P && !P.gradeOf) P.gradeOf = function () { return ""; };
-  var IMG = "shared/img/";
-  var GRADE = {
-    1: { color: "var(--rm-g1)", label: "Grade 1", art: "grade-1.jpg", alt: "Grade 1: Pengo with ten frames and a number line" },
-    2: { color: "var(--rm-g2)", label: "Grade 2", art: "grade-2.jpg", alt: "Grade 2: Pengo with a hundred chart, coins and a clock" },
-    3: { color: "var(--rm-g3)", label: "Grade 3", art: "grade-3.jpg", alt: "Grade 3: Pengo with an array of apples, 3 × 4 = 12" },
-    games: { color: "var(--rm-games)", label: "Games", icon: "icon-game.png" },
-    tools: { color: "var(--rm-pink)", label: "Student Tools", icon: "icon-print.png", side: "teacher-and-pengo.jpg",
-             sideAlt: "A teacher and Pengo looking at a hundred chart", note: "Tools you can use in any lesson." }
-  };
-  // Which little picture goes with each kind of card
-  var KIND_ICON = { "Games": "icon-game.png", "Practice game": "icon-game.png", "Quiz": "icon-quiz.png", "Printable PDF": "icon-print.png", "Printable poster": "icon-print.png" };
-  var TOOLS = C.tools || [];
-  var tabs = document.getElementById("tabs"), view = document.getElementById("view"), search = document.getElementById("search");
+<!-- Certificate for a finished topic -->
+<dialog class="help certd" id="certd" aria-label="Certificate">
+  <div id="cert-body"></div>
+  <p class="help-close no-print">
+    <button class="rm-btn rm-btn--star rm-btn--big" type="button" id="cert-print" data-t="print">🖨️ Print</button>
+    <button class="rm-btn rm-btn--ghost" type="button" data-close data-t="close">Close</button>
+  </p>
+</dialog>
 
-  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
-  function href(h) { return h.split("/").map(encodeURIComponent).join("/"); }
-  function isArabic(s) { return /[؀-ۿ]/.test(s); }
-  function plural(n, word) { return n + " " + word + (n === 1 ? "" : "s"); }
+<!-- Welcome tour (first visit) -->
+<div class="tour" id="tour" hidden role="dialog" aria-live="polite" aria-label="Welcome tour">
+  <img src="shared/img/pengo.png" alt="Pengo">
+  <div class="tour-bubble">
+    <p id="tour-text"></p>
+    <div class="tour-row">
+      <span class="tour-dots" id="tour-dots"></span>
+      <button class="rm-btn rm-btn--ghost" type="button" id="tour-skip">Skip</button>
+      <button class="rm-btn" type="button" id="tour-next">Next ▶</button>
+    </div>
+  </div>
+</div>
 
-  var counts = { games: C.games.length, tools: TOOLS.length }, total = 0;
-  C.grades.forEach(function (g) {
-    counts[g.grade] = 0;
-    g.topics.forEach(function (t) { counts[g.grade] += t.lessons.length; });
-    total += counts[g.grade];
-  });
-  document.getElementById("totals").textContent = total + " lessons · " + C.games.length + " games" + (TOOLS.length ? " · " + TOOLS.length + " tools" : "");
+<div class="toast" id="toast" hidden role="status"></div>
 
-  var keys = C.grades.map(function (g) { return g.grade; }).concat(["games"]).concat(TOOLS.length ? ["tools"] : []);
-  var current = "1";
-  try { current = localStorage.getItem("rm-home-tab") || "1"; } catch (e) {}
-  if (P && P.current() && P.gradeOf(P.current())) current = P.gradeOf(P.current());   // start in the child's own grade
-  if (keys.map(String).indexOf(current) < 0) current = "1";
+<footer><img src="shared/img/pengo.png" alt=""> <span data-t="footer">T. Rana Elsisi</span></footer>
 
-  keys.forEach(function (k) {
-    var G = GRADE[k], b = document.createElement("button"), wide = !G.art;
-    var count = wide ? plural(counts[k], k === "games" ? "game" : "tool") : plural(counts[k], "lesson");
-    b.className = "pick" + (wide ? " wide" : ""); b.type = "button"; b.setAttribute("role", "tab"); b.dataset.key = k;
-    b.style.setProperty("--c", G.color);
-    b.setAttribute("aria-label", G.label + ", " + count);
-    b.innerHTML = wide
-      ? '<img class="ico" src="' + IMG + G.icon + '" alt=""><span class="lab">' + esc(G.label) + "<small>" + count + "</small></span>"
-      : '<img class="art" src="' + IMG + G.art + '" alt="' + esc(G.alt) + '"><span class="lab">' + count + "</span>";
-    b.onclick = function () {
-      current = String(k); try { localStorage.setItem("rm-home-tab", current); } catch (e) {}
-      if (window.RM) RM.sound.click();
-      search.value = ""; render();
-      // On small screens the list is below the pictures: bring it into view.
-      if (view.getBoundingClientRect().top > window.innerHeight * 0.75) view.scrollIntoView({ behavior: "smooth", block: "start" });
-    };
-    tabs.appendChild(b);
-  });
-
-  function card(item, color) {
-    var rtl = isArabic(item.title) ? ' dir="rtl"' : "";
-    var kindText = item.kind || item.skill || "";
-    var icon = KIND_ICON[item.kind] || (item.skill ? "icon-game.png" : "icon-lesson.png");
-    var num = item.lesson ? '<span class="pill">Lesson ' + esc(item.lesson) + "</span>" : "";
-    var kind = '<span class="pill kind">' + esc(kindText) + "</span>";
-    var thumb = item.image ? '<img class="thumb" src="' + href(item.image) + '" alt="" loading="lazy">' : "";
-    var p = mine(item), badge = "";
-    if (p && p.d) badge = '<span class="pill star">⭐ ' + (p.s ? p.s + " " : "") + "Done</span>";
-    else if (p) badge = '<span class="pill done">✓ Opened</span>';
-    return '<a class="lesson" style="--c:' + color + '" href="' + href(item.href) + '"' + rtl + '>' + thumb +
-           '<span class="row"><img class="ico" src="' + IMG + icon + '" alt=""><span class="txt">' +
-           '<span class="top">' + num + kind + badge + "</span><strong>" + esc(item.title) + "</strong></span></span></a>";
-  }
-
-  // ---------- Who is learning? ----------
-  var who = document.getElementById("who"), removing = false, adding = false, pet = "owl", newGrade = "";
-  var progressNow = {};
-  function mine(item) { return P && P.current() ? progressNow[P.key(RM.root + item.href)] || null : null; }
-  function allItems() {
-    var a = C.games.concat(TOOLS);
-    C.grades.forEach(function (g) { g.topics.forEach(function (t) { a = a.concat(t.lessons); }); });
-    return a;
-  }
-
-  function renderWho() {
-    if (!P) { who.hidden = true; return; }
-    var name = P.current(), kids = P.students();
-    progressNow = name ? P.of(name) : {};
-    if (name && !removing && !adding) {
-      var opened = 0, done = 0;
-      allItems().forEach(function (x) { var p = mine(x); if (p) { opened++; if (p.d) done++; } });
-      who.innerHTML = '<div class="me"><span class="face">' + RM.mascot(P.mascotOf(name)) + '</span>' +
-        '<div class="hi"><h2>Hi, ' + esc(name) + '! 👋</h2><p>' +
-        (P.gradeOf(name) ? "Grade " + P.gradeOf(name) + " · " : "") +
-        "✓ " + plural(opened, "lesson") + " opened · ⭐ " + done + " finished</p>" +
-        (P.gradeOf(name) ? "" : '<p class="grades"><b>Which grade are you in?</b>' + gradeButtons("") + "</p>") + "</div>" +
-        '<button class="rm-btn rm-btn--ghost" type="button" data-act="change">Not ' + esc(name) + "?</button></div>";
-      return;
-    }
-    if (!name && P.chosen() && !removing && !adding) {   // "Just looking" (teacher on the board)
-      who.innerHTML = '<div class="me"><div class="hi"><p>Progress is not being saved.</p></div>' +
-        '<button class="rm-btn rm-btn--ghost" type="button" data-act="change">Choose my name</button></div>';
-      return;
-    }
-    var html = "<h2>" + (removing ? "Tap a name to remove it" : "Who is learning today?") + "</h2>" +
-               "<p>" + (removing ? "Their stars on this device will be deleted." : "Your stars are saved on this device.") + "</p>" +
-               '<div class="who-row">';
-    kids.forEach(function (k) {
-      html += '<button class="kid' + (removing ? " remove" : "") + '" type="button" data-kid="' + esc(k.name) + '">' +
-              '<span class="face">' + RM.mascot(k.mascot) + "</span>" + esc(k.name) + "</button>";
-    });
-    if (removing) html += '<button class="rm-btn rm-btn--ghost" type="button" data-act="stop">Done</button>';
-    else if (!adding) {
-      html += '<button class="rm-btn" type="button" data-act="add">➕ New name</button>' +
-              '<button class="rm-btn rm-btn--ghost" type="button" data-act="guest">Just looking</button>' +
-              (kids.length ? '<button class="rm-btn rm-btn--ghost" type="button" data-act="remove">Remove a name</button>' : "");
-    }
-    html += "</div>";
-    if (adding) {
-      html += '<form class="new-kid" id="new-kid"><input id="kid-name" maxlength="20" autocomplete="off" placeholder="Your first name" aria-label="Your first name">' +
-              '<span class="pets" role="group" aria-label="Pick a friend">' + RM.mascots.map(function (m) {
-                return '<button class="pet" type="button" data-pet="' + m + '" aria-pressed="' + (m === pet) + '">' + RM.mascot(m) + "</button>";
-              }).join("") + "</span>" +
-              '<span class="grades" role="group" aria-label="My grade"><b>My grade:</b>' + gradeButtons(newGrade) + "</span>" +
-              '<button class="rm-btn" type="submit">Save</button>' +
-              '<button class="rm-btn rm-btn--ghost" type="button" data-act="cancel">Cancel</button></form>';
-    }
-    who.innerHTML = html;
-    if (adding) document.getElementById("kid-name").focus();
-  }
-
-  function gradeButtons(selected) {
-    return C.grades.map(function (g) {
-      var k = String(g.grade);
-      return '<button class="gr" type="button" data-grade-pick="' + k + '" style="--c:' + GRADE[k].color + '" aria-pressed="' +
-             (k === selected) + '">' + k + "</button>";
-    }).join("");
-  }
-  // Open the child's own grade on the home page.
-  function openGrade(g) {
-    if (!g || !GRADE[g]) return;
-    current = String(g);
-    try { localStorage.setItem("rm-home-tab", current); } catch (x) {}
-  }
-
-  who.addEventListener("click", function (e) {
-    var b = e.target.closest("button"); if (!b) return;
-    var act = b.dataset.act;
-    if (b.dataset.gradePick) {
-      var g = b.dataset.gradePick; RM.sound.pop();
-      if (adding) {   // still filling in the New name form
-        newGrade = g;
-        Array.prototype.forEach.call(who.querySelectorAll(".gr"), function (x) { x.setAttribute("aria-pressed", String(x === b)); });
-        var hint = document.getElementById("grade-hint"); if (hint) hint.remove();
-        return;
-      }
-      var me = P.current();   // a child saved before grades existed picks one now
-      if (me) P.add(me, P.mascotOf(me), g);
-      openGrade(g); renderWho(); render(); return;
-    }
-    if (b.dataset.pet) {
-      pet = b.dataset.pet; RM.sound.pop();
-      Array.prototype.forEach.call(who.querySelectorAll(".pet"), function (x) { x.setAttribute("aria-pressed", String(x === b)); });
-      return;
-    }
-    if (b.dataset.kid != null) {
-      var n = b.dataset.kid;
-      if (removing) {
-        if (!confirm("Remove " + n + " and their stars from this device?")) return;
-        P.remove(n); if (!P.students().length) removing = false;
-      } else { P.choose(n); openGrade(P.gradeOf(n)); RM.sound.correct(); RM.say("Hi " + n + "!"); }
-      renderWho(); render(); return;
-    }
-    if (!act || b.type === "submit") return;
-    RM.sound.click();
-    if (act === "change") { try { localStorage.removeItem("rm-student"); } catch (x) {} }
-    if (act === "guest") P.choose(P.GUEST);
-    if (act === "add") { adding = true; pet = "owl"; newGrade = ""; }
-    if (act === "cancel") adding = false;
-    if (act === "remove") removing = true;
-    if (act === "stop") removing = false;
-    renderWho(); render();
-  });
-  who.addEventListener("submit", function (e) {
-    e.preventDefault();
-    var input = document.getElementById("kid-name");
-    if (!input.value.trim()) { input.focus(); return; }
-    if (!newGrade) {   // the grade is needed so the right lessons open
-      if (!document.getElementById("grade-hint")) {
-        who.querySelector(".grades").insertAdjacentHTML("afterend", '<p class="hint" id="grade-hint">👆 Tap your grade</p>');
-      }
-      RM.sound.wrong(); RM.say("Tap your grade"); return;
-    }
-    var n = P.add(input.value, pet, newGrade);
-    openGrade(newGrade);
-    adding = false; RM.sound.win(); RM.say("Welcome " + n + "!");
-    renderWho(); render();
-  });
-
-  function head(G, countText) {
-    return '<div class="grade-head" style="--c:' + G.color + '"><img src="' + IMG + 'pengo-badge.png" alt=""><h2>' +
-           esc(G.label) + "</h2><small>" + countText + "</small></div>";
-  }
-
-  function render() {
-    var q = search.value.trim().toLowerCase();
-    Array.prototype.forEach.call(tabs.children, function (b) { b.setAttribute("aria-selected", String(!q && b.dataset.key === current)); });
-    var html = "";
-    var shown = q ? keys : [current];
-
-    shown.forEach(function (k) {
-      var G = GRADE[k];
-      if (k === "games" || k === "tools") {
-        var items = (k === "games" ? C.games : TOOLS).filter(function (x) { return !q || (x.title + " " + (x.skill || "") + " " + (x.kind || "") + " " + G.label).toLowerCase().indexOf(q) >= 0; });
-        if (!items.length) return;
-        var cards = '<div class="grid">' + items.map(function (x) { return card(x, G.color); }).join("") + "</div>";
-        html += head(G, plural(items.length, k === "games" ? "game" : "tool"));
-        html += G.side
-          ? '<div class="rm-card panel with-art"><img class="side" src="' + IMG + G.side + '" alt="' + esc(G.sideAlt) + '"><div><p class="panel-note">' + esc(G.note) + "</p>" + cards + "</div></div>"
-          : '<div class="rm-card panel">' + cards + "</div>";
-        return;
-      }
-      var g = C.grades.filter(function (x) { return String(x.grade) === String(k); })[0];
-      var block = "", count = 0;
-      g.topics.forEach(function (t) {
-        var ls = t.lessons.filter(function (l) { return !q || (l.title + " " + l.lesson + " " + t.name + " " + l.kind).toLowerCase().indexOf(q) >= 0; });
-        if (!ls.length && q) return;
-        count += ls.length;
-        var seen = ls.filter(function (l) { return mine(l); }).length;
-        block += '<details class="topic" style="--c:' + G.color + '"' + (q ? " open" : "") + '><summary>' +
-                 '<span class="tnum">' + t.topic + '</span><span class="tname">' + esc(t.name) + '</span>' +
-                 '<span class="tcount">' + (seen ? '<span class="mine">✓ ' + seen + "/" + ls.length + "</span>" : plural(ls.length, "lesson")) +
-                 '</span><span class="chev">▶</span></summary>' +
-                 (ls.length ? '<div class="grid">' + ls.map(function (l) { return card(l, G.color); }).join("") + "</div>"
-                            : '<p class="empty">No lessons yet</p>') + "</details>";
-      });
-      if (!block) return;
-      html += head(G, plural(count, "lesson")) + block;
-    });
-
-    view.innerHTML = html || '<p class="empty">No lessons match “' + esc(q) + '”.</p>';
-    document.body.dataset.grade = current;
-  }
-
-  // ---------- How to use ----------
-  var help = document.getElementById("help");
-  document.getElementById("help-open").onclick = function () {
-    if (window.RM) RM.sound.click();
-    if (help.showModal) help.showModal(); else help.setAttribute("open", "");
-    help.scrollTop = 0;   // start reading at the top, not at the "Got it!" button
-  };
-  document.getElementById("help-close").onclick = function () {
-    if (window.RM) RM.sound.click();
-    if (help.close) help.close(); else help.removeAttribute("open");
-  };
-  help.addEventListener("click", function (e) { if (e.target === help && help.close) help.close(); });   // tap outside to close
-
-  search.addEventListener("input", render);
-  try { renderWho(); } catch (e) { who.hidden = true; }   // the lessons must show even if the name box fails
-  render();
-  // Coming back with the browser's Back button: show the newest ✓ and ⭐.
-  window.addEventListener("pageshow", function (e) { if (e.persisted) { renderWho(); render(); } });
-});
-</script>
+<script src="shared/home.js?v=10" defer></script>
 </body>
 </html>
