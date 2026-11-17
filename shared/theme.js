@@ -41,35 +41,80 @@
     if (ctx.state === "suspended") ctx.resume();
     return ctx;
   }
-  function tone(freq, start, dur, type, vol) {
+  // Soft "bell" notes: a quick start, then a slow natural fade, like a
+  // xylophone or music box, instead of a flat electronic beep.
+  var master = null;
+  function out(c) {
+    if (!master) {   // one gentle filter for every sound: takes the harsh edge off
+      master = c.createBiquadFilter();
+      master.type = "lowpass"; master.frequency.value = 3200;
+      master.connect(c.destination);
+    }
+    return master;
+  }
+  function bell(freq, start, dur, vol, bend) {
     var c = audio(); if (!c || muted) return;
-    var o = c.createOscillator(), g = c.createGain(), t = c.currentTime + start;
-    o.type = type || "sine";
-    o.frequency.setValueAtTime(freq, t);
-    g.gain.setValueAtTime(0.0001, t);
-    g.gain.exponentialRampToValueAtTime(vol || 0.25, t + 0.02);
-    g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-    o.connect(g); g.connect(c.destination);
-    o.start(t); o.stop(t + dur + 0.05);
+    var t = c.currentTime + (start || 0), v = vol || 0.2, d = dur || 0.6;
+    // the main note plus two quiet overtones gives a warm, wooden/bell colour
+    [[1, 1], [2, 0.18], [3.01, 0.06]].forEach(function (h) {
+      var o = c.createOscillator(), g = c.createGain();
+      o.type = "sine";
+      o.frequency.setValueAtTime(freq * h[0], t);
+      if (bend) o.frequency.exponentialRampToValueAtTime(freq * h[0] * bend, t + d * 0.6);
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(v * h[1], t + 0.012);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + d / h[0]);   // higher overtones fade first
+      o.connect(g); g.connect(out(c));
+      o.start(t); o.stop(t + d + 0.05);
+    });
   }
   var sound = {
-    click: function () { tone(660, 0, 0.08, "triangle", 0.15); },
-    pop: function () { tone(880, 0, 0.06, "sine", 0.2); tone(1320, 0.05, 0.08, "sine", 0.15); },
-    correct: function () { tone(523, 0, 0.12, "triangle"); tone(659, 0.1, 0.12, "triangle"); tone(784, 0.2, 0.22, "triangle"); },
-    wrong: function () { tone(330, 0, 0.18, "sawtooth", 0.12); tone(247, 0.16, 0.26, "sawtooth", 0.12); },
+    click: function () { bell(1200, 0, 0.09, 0.08); },                                 // light tap
+    pop: function () { bell(520, 0, 0.18, 0.16, 1.9); },                                 // bubble "bloop"
+    correct: function () { bell(784, 0, 0.5, 0.2); bell(1047, 0.11, 0.8, 0.2); },        // happy "ding-ding"
+    wrong: function () { bell(392, 0, 0.35, 0.12, 0.92); bell(330, 0.16, 0.5, 0.11, 0.92); },   // soft "uh-oh", not a buzzer
     win: function () {
-      [523, 659, 784, 1047, 784, 1047].forEach(function (f, i) { tone(f, i * 0.12, 0.2, "triangle", 0.22); });
+      [523, 659, 784, 1047].forEach(function (f, i) { bell(f, i * 0.11, 0.7, 0.18); });
+      bell(1319, 0.5, 1.2, 0.16); bell(1047, 0.5, 1.2, 0.12);                           // sparkly last chord
     }
   };
 
   // ---------- Read aloud ----------
+  // Use the most natural voice this device has. Edge has "Natural" voices,
+  // Chrome has "Google" voices, iPads have "Samantha"/"Siri" voices.
+  var voices = [];
+  function loadVoices() { try { voices = speechSynthesis.getVoices() || []; } catch (e) {} }
+  if ("speechSynthesis" in window) {
+    loadVoices();
+    try { speechSynthesis.addEventListener("voiceschanged", loadVoices); } catch (e) {}
+  }
+  function bestVoice(lang) {
+    var want = lang === "ar" ? "ar" : "en";
+    var best = null, bestScore = -1;
+    voices.forEach(function (v) {
+      var l = (v.lang || "").toLowerCase().replace("_", "-");
+      if (l.indexOf(want) !== 0) return;
+      var n = v.name || "", s = 0;
+      if (/natural|neural|online/i.test(n)) s += 50;           // Edge's lifelike voices
+      if (/google/i.test(n)) s += 30;                          // Chrome's voices
+      if (/siri|premium|enhanced|samantha|ava|aria|jenny|emma|libby|sonia|zariyah|hamed|salma|shakir/i.test(n)) s += 20;
+      if (want === "en" && /en-(us|gb)/.test(l)) s += 5;
+      if (/zira|hazel|susan|karen|moira|tessa|fiona/i.test(n)) s += 3;   // warm teacher-like voices on older devices
+      if (/espeak|desktop/i.test(n)) s -= 20;                   // older, robotic voices
+      if (s > bestScore) { best = v; bestScore = s; }
+    });
+    return best;
+  }
   function say(text, lang) {
     if (muted || !("speechSynthesis" in window)) return;
     try {
       speechSynthesis.cancel();
+      if (!voices.length) loadVoices();
       var u = new SpeechSynthesisUtterance(text);
-      u.lang = lang === "ar" ? "ar-SA" : (lang || "en-US");
-      u.rate = 0.9; u.pitch = 1.1;
+      var v = bestVoice(lang);
+      if (v) { u.voice = v; u.lang = v.lang; }
+      else u.lang = lang === "ar" ? "ar-SA" : (lang || "en-US");
+      u.rate = 0.92; u.pitch = 1.0;   // a calm, friendly teacher pace; no squeaky pitch
       speechSynthesis.speak(u);
     } catch (e) {}
   }
