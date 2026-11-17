@@ -32,7 +32,8 @@
   // ======================================================================
   // Words in English and Arabic
   // ======================================================================
-  var lang = get("rm-lang", "en") === "ar" ? "ar" : "en";
+  // The home page is in English. (The Arabic words below are kept in case Rana wants the switch back.)
+  var lang = "en";
   var WORDS = {
     en: {
       title: "Maths Lessons Library", kicker: "enVision Math · Grades 1–3", search: "🔎 Find a lesson…",
@@ -746,15 +747,10 @@
     document.title = t("title");
     Array.prototype.forEach.call(document.querySelectorAll("[data-t]"), function (el) { el.textContent = t(el.getAttribute("data-t")); });
     search.placeholder = t("search"); search.setAttribute("aria-label", t("search").replace("🔎 ", ""));
-    var lb = $("lang-btn"); lb.textContent = t("langBtn"); lb.title = t("langName"); lb.setAttribute("aria-label", t("langName"));
     var total = 0; C.grades.forEach(function (g) { total += counts[g.grade]; });
     $("totals").textContent = count(total, "lesson") + " · " + count(C.games.length, "game") + (TOOLS.length ? " · " + count(TOOLS.length, "tool") : "");
     fillHelp(); applyTheme(); buildTabs();
   }
-  $("lang-btn").onclick = function () {
-    lang = lang === "ar" ? "en" : "ar"; set("rm-lang", lang); sound("click");
-    applyLang(); refresh();
-  };
 
   // ======================================================================
   // Start
