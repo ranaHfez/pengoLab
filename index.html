@@ -6,9 +6,10 @@
 <title>Maths Lessons Library</title>
 <link rel="icon" href="shared/img/pengo-badge.png">
 <!-- Shared template: colors, fonts, sounds, buttons, mascots. Keep this. -->
-<link rel="stylesheet" href="shared/theme.css">
-<script src="shared/theme.js" defer></script>
-<script src="shared/catalog.js"></script>
+<!-- ?v=… makes browsers fetch the newest copy after an update. Raise the number when theme.css, theme.js or catalog.js change. -->
+<link rel="stylesheet" href="shared/theme.css?v=4">
+<script src="shared/theme.js?v=4" defer></script>
+<script src="shared/catalog.js?v=4"></script>
 <style>
   /* Pictures used on this page live in shared/img/ (made from the Pic folder). */
   body.rm-page { background: var(--rm-bg) url("shared/img/pattern-math-doodles.jpg") 0 0 / 520px auto; }
@@ -233,6 +234,9 @@
 document.addEventListener("DOMContentLoaded", function () {
   var C = window.CATALOG;
   var P = window.RM && RM.progress;
+  // A browser can still hold an older shared/theme.js for a few minutes after an update.
+  // Fill in anything it is missing so the lesson list always shows.
+  if (P && !P.gradeOf) P.gradeOf = function () { return ""; };
   var IMG = "shared/img/";
   var GRADE = {
     1: { color: "var(--rm-g1)", label: "Grade 1", art: "grade-1.jpg", alt: "Grade 1: Pengo with ten frames and a number line" },
@@ -484,7 +488,7 @@ document.addEventListener("DOMContentLoaded", function () {
   help.addEventListener("click", function (e) { if (e.target === help && help.close) help.close(); });   // tap outside to close
 
   search.addEventListener("input", render);
-  renderWho();
+  try { renderWho(); } catch (e) { who.hidden = true; }   // the lessons must show even if the name box fails
   render();
   // Coming back with the browser's Back button: show the newest ✓ and ⭐.
   window.addEventListener("pageshow", function (e) { if (e.persisted) { renderWho(); render(); } });
