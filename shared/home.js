@@ -205,7 +205,6 @@
         : '<img class="art" src="' + IMG + G.art + '" alt="' + esc(G.alt) + '"><span class="lab">' + n + "</span>";
       b.onclick = function () {
         current = k; set("rm-home-tab", current); sound("click");
-        if (GRADE[k].art) pickGrade(k);   // a grade was chosen: the daily challenge follows it
         search.value = ""; openTopic = null; render(); renderDaily();
         if (view.getBoundingClientRect().top > window.innerHeight * 0.75) view.scrollIntoView({ behavior: "smooth", block: "start" });
       };
@@ -496,7 +495,7 @@
   }
   function openGrade(g) {
     if (!g || !GRADE[g]) return;
-    current = String(g); set("rm-home-tab", current); pickGrade(current);
+    current = String(g); set("rm-home-tab", current);
   }
   function refresh() { renderWho(); renderDaily(); render(); }
 
@@ -574,7 +573,7 @@
   // ======================================================================
   // Daily challenge: one question a day for the child's grade
   // ======================================================================
-  function dailyKey() { return "rm-daily-" + ((P && P.current()) || "__device"); }
+  function dailyKey() { return "rm-daily-" + ((P && P.current()) || ""); }
   function dailyData() { return getJSON(dailyKey(), {}); }
   function rng(seed) {   // small seeded random numbers, so everyone gets the same question today
     var h = 1779033703 ^ seed.length;
@@ -584,16 +583,11 @@
       return ((h ^= h >>> 16) >>> 0) / 4294967296;
     };
   }
-  // The daily challenge waits until the child picks a grade (a grade picture, or their saved grade),
-  // then follows the grade they picked. Remembered only for this visit.
-  function pickGrade(g) { try { sessionStorage.setItem("rm-grade-picked", g); } catch (e) {} }
-  function pickedGrade() { try { return sessionStorage.getItem("rm-grade-picked") || ""; } catch (e) { return ""; } }
+  // The daily challenge is only for a child who chose their name and their grade,
+  // and it is always their own grade's challenge (browsing other grades does not change it).
   function dailyGrade() {
-    var own = P && P.current() && P.gradeOf(P.current());
-    if (own && !pickedGrade()) pickGrade(own);
-    var g = pickedGrade();
-    if (!g) return null;
-    return GRADE[current] && GRADE[current].art ? current : g;
+    var name = P && P.current();
+    return (name && P.gradeOf(name)) || null;
   }
   function question(g) {
     var r = rng(today() + "-g" + g), int = function (a, b) { return a + Math.floor(r() * (b - a + 1)); };
@@ -617,11 +611,8 @@
   }
   function renderDaily() {
     var box = $("daily"), g = dailyGrade();
-    if (!g) {   // no grade picked yet: ask for one first
-      box.style.setProperty("--c", "var(--rm-games)");
-      box.innerHTML = '<div class="dhead"><h2>' + t("daily") + '</h2></div><p class="dwait">' + t("dailyPick") + "</p>";
-      return;
-    }
+    box.hidden = !g;   // no name + grade chosen: no challenge at all
+    if (!g) { box.innerHTML = ""; return; }
     var q = question(g), d = dailyData(), doneToday = d.last === today();
     box.dataset.grade = g; box.dataset.ans = q.ans;   // the answer is checked against exactly this question
     var streakNow = d.last === today() || d.last === today(-1) ? d.streak || 0 : 0;
