@@ -187,6 +187,34 @@ window.CATALOG = {
        "kind": "Interactive lesson",
        "href": "grade-1/topic-6-represent-and-interpret-data/6-1-organize-data-into-three-categories.html",
        "added": "2026-11-15"
+      },
+      {
+       "lesson": "6-2",
+       "title": "Collect and Represent Data",
+       "kind": "Interactive lesson",
+       "href": "grade-1/topic-6-represent-and-interpret-data/6-2-collect-and-represent-data.html",
+       "added": "2026-11-24"
+      },
+      {
+       "lesson": "6-3",
+       "title": "Interpret Data",
+       "kind": "Interactive lesson",
+       "href": "grade-1/topic-6-represent-and-interpret-data/6-3-interpret-data.html",
+       "added": "2026-11-24"
+      }
+     ]
+    },
+    {
+     "topic": 7,
+     "name": "Extend the Counting Sequence",
+     "folder": "grade-1/topic-7-extend-the-counting-sequence",
+     "lessons": [
+      {
+       "lesson": "7-1",
+       "title": "Count by 10s to 120",
+       "kind": "Interactive lesson",
+       "href": "grade-1/topic-7-extend-the-counting-sequence/7-1-count-by-10s-to-120.html",
+       "added": "2026-11-24"
       }
      ]
     }
@@ -381,6 +409,34 @@ window.CATALOG = {
        "added": "2026-11-15"
       }
      ]
+    },
+    {
+     "topic": 7,
+     "name": "Solve More Addition and Subtraction Problems",
+     "folder": "grade-2/topic-7-solve-more-addition-and-subtraction-problems",
+     "lessons": [
+      {
+       "lesson": "7-2",
+       "title": "Mixed Practice",
+       "kind": "Interactive lesson",
+       "href": "grade-2/topic-7-solve-more-addition-and-subtraction-problems/7-2-mixed-practice.html",
+       "added": "2026-11-24"
+      },
+      {
+       "lesson": "7-5",
+       "title": "Two-Step Problems",
+       "kind": "Interactive lesson",
+       "href": "grade-2/topic-7-solve-more-addition-and-subtraction-problems/7-5-two-step-problems.html",
+       "added": "2026-11-24"
+      },
+      {
+       "lesson": "7-6",
+       "title": "Make True Equations",
+       "kind": "Interactive lesson",
+       "href": "grade-2/topic-7-solve-more-addition-and-subtraction-problems/7-6-make-true-equations.html",
+       "added": "2026-11-24"
+      }
+     ]
     }
    ]
   },
@@ -566,6 +622,34 @@ window.CATALOG = {
        "kind": "Interactive lesson",
        "href": "grade-3/topic-6-connect-area-to-multiplication-and-addition/6-3-area-standard-units.html",
        "added": "2026-11-16"
+      },
+      {
+       "lesson": "6-4",
+       "title": "Area of Squares and Rectangles",
+       "kind": "Interactive lesson",
+       "href": "grade-3/topic-6-connect-area-to-multiplication-and-addition/6-4-area-of-squares-and-rectangles.html",
+       "added": "2026-11-24"
+      },
+      {
+       "lesson": "6-5",
+       "title": "Area and the Distributive Property",
+       "kind": "Interactive lesson",
+       "href": "grade-3/topic-6-connect-area-to-multiplication-and-addition/6-5-area-and-the-distributive-property.html",
+       "added": "2026-11-24"
+      }
+     ]
+    },
+    {
+     "topic": 7,
+     "name": "Represent and Interpret Data",
+     "folder": "grade-3/topic-7-represent-and-interpret-data",
+     "lessons": [
+      {
+       "lesson": "7-1",
+       "title": "Read Picture Graphs and Bar Graphs",
+       "kind": "Interactive lesson",
+       "href": "grade-3/topic-7-represent-and-interpret-data/7-1-read-picture-graphs-and-bar-graphs.html",
+       "added": "2026-11-24"
       }
      ]
     }
