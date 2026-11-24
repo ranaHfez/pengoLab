@@ -149,7 +149,12 @@ body[data-grade="tools"] { --rm-accent: var(--rm-pink); }
 .rm-dock {
   position: fixed; left: 12px; bottom: 12px; z-index: 2147483000;
   display: flex; gap: 8px; font-family: "Fredoka", "Segoe UI", system-ui, sans-serif;
+  /* Undo lesson styles written for every <nav> (some lessons make all navs a white sticky bar) */
+  top: auto; right: auto; width: auto; height: auto; margin: 0; padding: 0;
+  background: none; border: 0; box-shadow: none; flex-wrap: nowrap; align-items: center;
 }
+/* Lessons with their own pen button pinned bottom-left: sit above it instead of on top of it */
+body:has(#penBtn) .rm-dock { bottom: 88px; }
 .rm-dock a, .rm-dock button {
   all: unset; box-sizing: border-box; cursor: pointer;
   width: 48px; height: 48px; border-radius: 50%;
